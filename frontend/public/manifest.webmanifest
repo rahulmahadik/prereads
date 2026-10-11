@@ -4,8 +4,8 @@
   "description": "Book recommendations, and what to read before the book you want.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#F5F7F6",
-  "theme_color": "#F5F7F6",
+  "background_color": "#F3F6F9",
+  "theme_color": "#F3F6F9",
   "icons": [
     { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" },
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
