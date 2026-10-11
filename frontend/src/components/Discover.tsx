@@ -342,7 +342,6 @@ export default function Discover({ initialText = "" }: { initialText?: string })
           <ReadinessMeter level={r.level} hours={r.hours} compact />
           <span className="rec-foot">
             <span className={`where ${r.status.startsWith("Available") ? "ok" : r.status.startsWith("Not there") ? "alt" : "no"}`}>{r.status}</span>
-            {r.hot_at.length > 0 && <span className="badge hot small">{t("home.hotAt", { branch: r.hot_at[0] })}</span>}
             {r.is_target && r.before_count > 0 && <span className="hint">{t("disc.preFirst", { n: r.before_count })}</span>}
           </span>
         </span>

@@ -60,10 +60,6 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
   const [mode, setMode] = useState<Mode>("ask");
   const [resetKey, setResetKey] = useState(0);
   const [settings, setSettings] = useState(false);
-  const [modeLabel, setModeLabel] = useState<Key | "">("");
-  useEffect(() => {
-    api.mode().then((m) => setModeLabel(m.prototype ? "home.mode.prototype" : m.demo ? "home.mode.demo" : "home.mode.real")).catch(() => setModeLabel(""));
-  }, [settings]);
   const startOver = () => {
     setMode("ask");
     setQ("");
@@ -172,7 +168,7 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
         </h1>
         <span className="head-actions">
           <button type="button" className="mode-chip" onClick={() => setSettings(true)} aria-haspopup="dialog" title={t("home.dataMode")}>
-            ⚙️ {t(modeLabel || "home.settings")}
+            ⚙️ {t("home.settings")}
           </button>
           <LanguagePicker />
           <button
@@ -284,11 +280,11 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
       {popular.length > 0 && (
         <section className="row-section">
           <div className="row-head">
-            <h3>🔥 {t("home.popular")}</h3>
+            <h3>⭐ {t("home.popular")}</h3>
             <span className="hint">
               {popularMeta.source === "nlb-dataset" && popularMeta.dataset
                 ? t("home.popularFrom", { dataset: popularMeta.dataset, year: String(popularMeta.year ?? "") })
-                : <>{t("home.popularHint")}{popular[0]?.demo ? t("home.demoData") : ""}</>}
+                : t("home.popularHint")}
             </span>
             {popular.length > 6 && (
               <button type="button" className="link-btn inline" onClick={() => setShowAllPopular((v) => !v)}>
@@ -306,7 +302,6 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
               <button key={b.id} type="button" className="row-item" role="listitem" onClick={() => go(b.id, b.title, b.author)}>
                 <Cover book={asBook(b)} size="m" />
                 <span className="row-title">{b.title}</span>
-                {b.hot_at[0] && <span className="row-badge">{t("home.hotAt", { branch: b.hot_at[0] })}</span>}
               </button>
             ))}
           </div>

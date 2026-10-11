@@ -11,7 +11,6 @@ export function ShelfTalkers({ route, qr, onDone }: { route: Route; qr: boolean[
   const target = route.stops.find((s) => s.role === "target")!;
   const picks = route.stops.filter((s) => s.role === "before");
   const branch = getBranch();
-  const demo = route.stops.some((s) => s.availability.some((a) => a.demo));
 
   useEffect(() => {
     window.addEventListener("afterprint", onDone);
@@ -55,12 +54,6 @@ export function ShelfTalkers({ route, qr, onDone }: { route: Route; qr: boolean[
                 {t("talker.scan")}
                 <br />
                 {t("talker.foot")}
-                {demo && (
-                  <>
-                    <br />
-                    {t("talker.demo")}
-                  </>
-                )}
               </p>
             </div>
           </article>

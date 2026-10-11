@@ -43,7 +43,9 @@ def test_topic_returns_verified_options_and_a_trace(monkeypatch):
     assert "Searching the catalogue" in steps and "Checking shelves" in steps
     search = next(s for s in r["trace"] if s["step"] == "Searching the catalogue")
     assert f"from {len(_verified_ids())} books" in search["detail"]
-    assert "demo data" in next(s for s in r["trace"] if s["step"] == "Checking shelves")["detail"]
+    shelves = next(s for s in r["trace"] if s["step"] == "Checking shelves")["detail"]
+    assert "on a shelf now" in shelves and "demo" not in shelves
+    assert not any("sample" in m or "demo" in m for m in r["messages"])
     # tapping an option continues to the level step, then branch, then a result with a trace
     r = c.post("/api/chat", json={"text": "0", "state": r["state"]}).json()
     assert r["state"]["step"] == "level"

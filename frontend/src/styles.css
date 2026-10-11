@@ -504,6 +504,9 @@ html.senior .stop-label {
   margin-top: 36px;
   border-top: 1px solid var(--rule);
   padding-top: 12px;
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .sr-only {

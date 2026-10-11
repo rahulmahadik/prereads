@@ -312,14 +312,6 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
               )}
             </div>
           )}
-          <div className="badges">
-            {demand.hot_branches.map((b) => (
-              <span className="badge hot" key={b}>
-                {t("book.hotAt", { branch: shortBranch(b) })}
-              </span>
-            ))}
-            {demand.hidden_gem && <span className="badge gem">{t("book.gem")}</span>}
-          </div>
           <a className="reserve-link" href={nlbSearchUrl(book.title, book.isbn)} target="_blank" rel="noopener">
             {reserveLabel} ↗
           </a>
@@ -396,7 +388,6 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
         </button>
       </div>
       {reading && access?.gid ? <SampleReader gutenbergId={access.gid} onClose={() => setReading(false)} /> : null}
-      <p className="swipe-hint hint">{t("book.swipe")}</p>
       <footer className="footer">{t("home.footer")}</footer>
 
       <Sheet open={ask} title={t("book.askTitle")} onClose={() => setAsk(false)}>

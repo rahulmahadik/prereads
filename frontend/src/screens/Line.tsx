@@ -229,7 +229,7 @@ export default function Line({ id, title, author }: { id: string; title: string;
               </p>
             )}
             {skipped > 0 && <p className="hint">{tn("line.skipped", skipped)}</p>}
-            {visibleBefore.length > 0 && <p className="hint">{t("line.tapHint")}</p>}
+            {doneBefore > 0 && <p className="hint">{t("line.done", { done: doneBefore, total: visibleBefore.length })}</p>}
             {trip && (
               <p className="trip-note" role="note">
                 <strong>{sameShelfText(trip)}</strong>

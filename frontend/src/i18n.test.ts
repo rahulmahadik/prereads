@@ -26,7 +26,7 @@ describe("dictionaries", () => {
     expect(bad).toEqual([]);
   });
   it("keeps the product name and the reading-path term", () => {
-    for (const l of LANGS) expect(t("home.sub", undefined, l.id)).toContain("PreReads");
+    for (const l of LANGS) expect(t("share.cardFoot", undefined, l.id)).toContain("PreReads");
     expect(t("line.title", undefined, "zh")).toContain("阅读路线");
     expect(t("line.title", undefined, "ms").toLowerCase()).toContain("laluan bacaan");
     expect(t("line.title", undefined, "ta")).toContain("வாசிப்புப் பாதை");
@@ -35,9 +35,9 @@ describe("dictionaries", () => {
 
 describe("t", () => {
   it("interpolates {name} and leaves unknown placeholders alone", () => {
-    expect(t("home.hotAt", { branch: "Bishan" }, "en")).toBe("Hot at Bishan");
-    expect(t("home.hotAt", { branch: "Bishan" }, "zh")).toBe("Bishan 热门");
-    expect(t("home.hotAt", {}, "en")).toBe("Hot at {branch}");
+    expect(t("line.status.available", { branch: "Bishan" }, "en")).toBe("Available at Bishan");
+    expect(t("line.status.available", { branch: "Bishan" }, "zh")).toBe("Bishan 可借");
+    expect(t("line.status.available", {}, "en")).toBe("Available at {branch}");
     expect(t("trip.sameShelf", { n: 2, dewey: "332" }, "en")).toBe("2 of your PreReads are on the same shelf (332) — grab them in one trip");
   });
   it("picks plurals", () => {
@@ -49,11 +49,11 @@ describe("t", () => {
     const saved = DICTS.zh["home.popular"];
     delete DICTS.zh["home.popular"];
     try {
-      expect(t("home.popular", undefined, "zh")).toBe("Popular right now");
+      expect(t("home.popular", undefined, "zh")).toBe("Readers' picks");
     } finally {
       DICTS.zh["home.popular"] = saved;
     }
-    expect(t("home.popular", undefined, "zh")).toBe("近期热门");
+    expect(t("home.popular", undefined, "zh")).toBe("读者精选");
   });
 });
 
@@ -83,12 +83,12 @@ describe("getLang / setLang", () => {
     setLang("ms");
     expect(s.getItem("prereads.lang")).toBe("ms");
     expect(getLang()).toBe("ms");
-    expect(t("home.popular")).toBe("Popular sekarang");
+    expect(t("home.popular")).toBe("Pilihan pembaca");
     expect(voiceLang()).toBe("ms-MY");
     vi.stubGlobal("localStorage", { getItem: () => { throw new Error("blocked"); }, setItem: () => { throw new Error("blocked"); } });
     expect(getLang()).toBe("en");
     expect(() => setLang("zh")).not.toThrow();
-    expect(t("home.popular")).toBe("近期热门");
+    expect(t("home.popular")).toBe("读者精选");
     expect(voiceLang()).toBe("zh-CN");
     setLang("en");
   });

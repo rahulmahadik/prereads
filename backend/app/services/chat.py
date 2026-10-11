@@ -9,7 +9,7 @@ retrieval-augmented over our own data:
               (discover._catalogue), keyword scoring as the fallback
   choose      the local model picks the best 3 FROM the retrieved list; any id outside
               it is dropped (never an unverified book); top 3 by score without a model
-  shelves     reader-facing status for each option (demo data is labelled)
+  shelves     reader-facing status for each option (the source is shown in Settings)
 
 Every reply carries `trace`: the steps that actually ran, with real counts and timings.
 
@@ -408,10 +408,9 @@ def starter_options(cat: list[dict], n_groups: int = 3) -> tuple[list[ChatOption
     opts = [ChatOption(label=label, value=f"topic:{label}", hint=f"{n} books") for label, _, n in counts]
     pop = _popular(cat)[:1]
     for p in pop:
-        opts.append(ChatOption(label=p["title"], value=f"book:{p['id']}", hint="Popular right now" + (" · sample data" if p["demo"] else "")))
-    detail = f"{len(counts)} subjects{' and the most wanted title' if pop else ''} from {len(cat)} books"
-    if pop and pop[0]["demo"]:
-        detail += " · demand is demo data"
+        opts.append(ChatOption(label=p["title"], value=f"book:{p['id']}", hint="Readers' pick"))
+    extra = " and a readers' pick" if pop else ""
+    detail = f"{len(counts)} subjects{extra} from {len(cat)} books"
     return opts, detail
 
 
@@ -432,17 +431,11 @@ def _cand(e: dict) -> dict:
 
 def _shelf_step(tr: Trace, entries: list[dict]) -> None:
     with tr.step("Checking shelves") as s:
-        on = 0
-        demo = False
-        for e in entries:
-            status, d = _status(e)
-            demo = demo or d
-            on += status.startswith("Available")
-        s.detail = f"{on} of {len(entries)} on a shelf now, across {len(BRANCHES)} libraries" + (" · demo data" if demo else "")
+        on = sum(_status(e)[0].startswith("Available") for e in entries)
+        s.detail = f"{on} of {len(entries)} on a shelf now, across {len(BRANCHES)} libraries"
 
 
 # ----------------------------------------------------------------------- flow
-SAMPLE_MARK = " (sample shelf data)"   # once per reply wherever shelf status is stated as fact
 LEVELS = [("New to this", "1"), ("Read a bit", "3"), ("Know it well", "4")]
 
 
@@ -473,23 +466,15 @@ def _clarify(tr: Trace, cat: list[dict], lead: str) -> ChatReply:
     with tr.step("Looking at what we have") as s:
         opts, s.detail = starter_options(cat)
     return ChatReply(
-        messages=[lead, "Pick a subject below, or tell me a topic, a title or an author you like."],
+        messages=[lead, "These subjects have the most books."],
         options=opts, state=ChatState(), trace=tr.steps,
     )
-
-
-def _demo_mark(text: str) -> str:
-    """Add the sample-data mark once: before a closing full stop, else at the end."""
-    return text[:-1] + SAMPLE_MARK + "." if text.endswith(".") else text + SAMPLE_MARK
 
 
 def _offer(tr: Trace, state: ChatState, picks: list[tuple[dict, str]], messages: list[str]) -> ChatReply:
     _shelf_step(tr, [e for e, _ in picks])
     state.step = "pick"
     state.candidates = [_cand(e) for e, _ in picks]
-    # The option hints state shelf status; say once per reply that it is sample data.
-    if messages and any(_status(e)[1] for e, _ in picks):
-        messages = messages[:-1] + [_demo_mark(messages[-1])]
     return ChatReply(messages=messages, options=[_book_option(i, e, r) for i, (e, r) in enumerate(picks)], state=state, trace=tr.steps)
 
 
@@ -534,7 +519,7 @@ def _recommend(tr: Trace, state: ChatState, cat: list[dict], hits: list[tuple[di
         lead = "I don't have much on that, but these come closest." if weak else f"Here are {len(picks)} good places to start."
     else:
         lead = f"I don't have much on {about}, but these come closest." if weak else f"Here are {len(picks)} good places to start on {about}."
-    return _offer(tr, state, picks, [lead, "Tap one to see what to read first and where it is."])
+    return _offer(tr, state, picks, [lead])
 
 
 def _find_named(tr: Trace, state: ChatState, cat: list[dict], intent: Intent, text: str, nearest: Optional[list[tuple[dict, str]]] = None) -> ChatReply:
@@ -642,15 +627,13 @@ def _finish(state: ChatState) -> ChatReply:
             if chosen and best:
                 status = f"not on the shelf at {_short_branch(chosen.branch)}; {status}"
         where = _short_branch(BRANCHES.get(state.branch or "", "")) or "all libraries"
-        s.detail = f"{start.book.title} at {where}: {status}" + (" · demo data" if any(a.demo for a in av) else "")
+        s.detail = f"{start.book.title} at {where}: {status}"
     if focus is not None and focus.role != "target":
         lead = f"{start.book.title} is on the reading path to {target.book.title}, about {round(start.readiness.hours)} hours. It's {status}."
     elif before:
         lead = f"{len(before)} {'book' if len(before) == 1 else 'books'} before {target.book.title}, about {round(hours)} hours. Start with {start.book.title} — {status}."
     else:
         lead = f"You can start {target.book.title} today — {status}."
-    if any(a.demo for a in av):
-        lead = _demo_mark(lead)
     result = {
         "book_id": route.target_id,
         "title": target.book.title,
@@ -672,7 +655,6 @@ def _finish(state: ChatState) -> ChatReply:
         msgs.append(start.readiness.one_line)
     if start.readiness.assumed_concepts:
         msgs.append("It helps to know: " + ", ".join(start.readiness.assumed_concepts[:4]) + ".")
-    msgs.append("Open it to read the description, try a free sample where there is one, and get directions to the shelf.")
     result["start_about"] = about or ""
     return ChatReply(messages=msgs, state=state, result=result, trace=tr.steps)
 
@@ -691,7 +673,7 @@ def _step(turn: ChatTurn) -> ChatReply:
     text = (turn.text or "").strip()
 
     if text.lower() in ("start over", "restart", "reset"):
-        return ChatReply(messages=["Fresh start. Tell me a book, an author, or something you want to learn."], state=ChatState())
+        return ChatReply(messages=["Fresh start. What would you like to read about?"], state=ChatState())
 
     if state.step in ("start", "done") or (state.step == "pick" and not text.isdigit()):
         return _start(ChatState(), text)
@@ -700,7 +682,7 @@ def _step(turn: ChatTurn) -> ChatReply:
         i = int(text)
         if 0 <= i < len(state.candidates):
             return _choose_book(state, state.candidates[i])
-        return ChatReply(messages=["Pick one of the options above."], options=[ChatOption(label=f"{h['title']} — {h['author']}", value=str(i)) for i, h in enumerate(state.candidates)], state=state)
+        return ChatReply(messages=["Which of these would you like?"], options=[ChatOption(label=f"{h['title']} — {h['author']}", value=str(i)) for i, h in enumerate(state.candidates)], state=state)
 
     if state.step == "level":
         try:
@@ -714,7 +696,7 @@ def _step(turn: ChatTurn) -> ChatReply:
         state.branch = text if text in BRANCHES else None
         return _finish(state)
 
-    return ChatReply(messages=["Type a title, author or topic to start again."], state=ChatState())
+    return ChatReply(messages=["What would you like to read about next?"], state=ChatState())
 
 
 # --------------------------------------------------------------------- browse
