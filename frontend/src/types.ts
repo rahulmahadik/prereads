@@ -70,6 +70,11 @@ export interface AskResponse {
 export interface Branch {
   code: string;
   name: string;
+  lat?: number;
+  lng?: number;
+  address?: string;
+  /** Daily opening hours in Singapore time. Typical hours, not live. */
+  hours?: { open: string; close: string };
 }
 
 export interface Need {
@@ -117,4 +122,19 @@ export interface DiscoverResponse {
   offset: number;
   limit: number;
   has_more: boolean;
+}
+
+export interface Neighbour {
+  id: string;
+  title: string;
+  author: string;
+  reason: string;
+  level: number;
+  hours: number;
+  status: string;
+  line_id: string;
+  line_title: string;
+  line_author: string;
+  is_target: boolean;
+  similarity: number;
 }

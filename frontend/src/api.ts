@@ -1,4 +1,4 @@
-import type { AskResponse, Branch, DiscoverResponse, ResolveHit, Route } from "./types";
+import type { Neighbour, AskResponse, Branch, DiscoverResponse, ResolveHit, Route } from "./types";
 
 // Same-origin by default. For the mobile shell (WebView) or a split deploy, set
 // VITE_API_BASE=https://your-api.example.com at build time.
@@ -32,6 +32,8 @@ export const api = {
     if (author) p.set("author", author);
     return fetch(url(`/api/route?${p.toString()}`)).then((r) => json<Route>(r));
   },
+  similar: (id: string, branch: string) =>
+    fetch(url(`/api/similar?id=${encodeURIComponent(id)}${branch ? `&branch=${encodeURIComponent(branch)}` : ""}`)).then((r) => json<{ books: Neighbour[] }>(r)),
   branches: () => fetch(url("/api/branches")).then((r) => json<{ branches: Branch[] }>(r)),
   browse: (by: "author" | "category") => fetch(url(`/api/browse?by=${by}`)).then((r) => json<{ groups: { label: string; count: number; ids: string[] }[] }>(r)),
   browseBooks: (ids: string[]) => fetch(url(`/api/browse?ids=${encodeURIComponent(ids.join(","))}`)).then((r) => json<{ books: { id: string; title: string; author: string }[] }>(r)),

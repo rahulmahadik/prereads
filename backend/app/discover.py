@@ -19,7 +19,7 @@ from typing import Literal, Optional
 
 from pydantic import BaseModel, Field
 
-from . import config, llm
+from . import config, embeddings, llm
 from .availability import BRANCHES, get_availability, get_demand
 from .catalog import nlb, openlibrary_search_many, resolve
 from .engine import heuristic_readiness
@@ -233,8 +233,19 @@ def _expand(tokens: set[str]) -> set[str]:
 
 
 # ------------------------------------------------------------------ scoring
-def score(entry: dict, need: Need, proposed_titles: dict[str, str], branch: Optional[str]) -> tuple[float, str]:
-    """Return (fit 0-1, why). Topic match carries most weight; then level, time, branch."""
+def semantic_topic(sim: float) -> float:
+    """Centred nomic-embed-text cosine -> topic strength. Unrelated ~0, a clear match ~0.25.
+    Capped at 0.8 so an explicit keyword or model-proposed match (1.0) still ranks first."""
+    return max(0.0, min(0.8, (sim - 0.10) / 0.15))
+
+
+def entry_text(e: dict) -> str:
+    return f"{e['title']} by {e['author']}. {e['category']}. {', '.join(e['subjects'])}. {', '.join(e['concepts'])}. {e['one_line']}"
+
+
+def score(entry: dict, need: Need, proposed_titles: dict[str, str], branch: Optional[str], semantic: float = 0.0) -> tuple[float, str]:
+    """Return (fit 0-1, why). Topic match carries most weight; then level, time, branch.
+    `semantic` is the embedding similarity strength; the keyword matcher still runs and the stronger signal wins."""
     why = ""
     topic = 0.0
     tt = _tokens(entry["title"]) | _tokens(" ".join(entry["subjects"])) | _tokens(" ".join(entry["concepts"]))
@@ -246,6 +257,7 @@ def score(entry: dict, need: Need, proposed_titles: dict[str, str], branch: Opti
     if nt:
         hits = nt & tt
         topic = min(1.0, len(hits) / 2)          # two overlapping concepts = a confident match
+    topic = max(topic, semantic)
     key = entry["title"].lower()
     if key in proposed_titles:
         topic = max(topic, 1.0)
@@ -383,8 +395,14 @@ def discover(req: DiscoverRequest) -> DiscoverResponse:
     proposed_titles = {p.title.lower(): p.why for p in proposed}
     on = set(req.filters)
     results: list[Recommendation] = []
-    for e in _catalogue():
-        fit, why = score(e, need, proposed_titles, req.branch)
+    cat = _catalogue()
+    # Shortlist by embedding similarity (local nomic-embed-text); the keyword matcher stays as fallback.
+    sims: dict[str, float] = {}
+    ranked = embeddings.rank(" ".join([need.summary] + need.topics), [(e["id"], entry_text(e)) for e in cat], top_k=40)
+    if ranked is not None:
+        sims = dict(ranked)
+    for e in cat:
+        fit, why = score(e, need, proposed_titles, req.branch, semantic_topic(sims.get(e["id"], 0.0)))
         if fit <= 0:
             continue
         status, names = status_for(e, req.branch)
@@ -436,3 +454,106 @@ def discover(req: DiscoverRequest) -> DiscoverResponse:
 
 def to_json(resp: DiscoverResponse) -> str:
     return json.dumps(resp.model_dump())
+
+
+# ------------------------------------------------------------------ neighbours
+def _shared(a: dict, b: dict) -> list[str]:
+    """Readable concepts/subjects two catalogue entries have in common."""
+    short = lambda xs: [x for x in xs if len(x.split()) <= 3]  # noqa: E731 - catalogue subject strings can be noisy
+    la = {x.lower(): x for x in short(a["subjects"] + a["concepts"])}
+    lb = {x.lower() for x in short(b["subjects"] + b["concepts"])}
+    return [la[k] for k in la if k in lb]
+
+
+class Neighbour(BaseModel):
+    id: str
+    reason: str
+
+
+class Neighbours(BaseModel):
+    picks: list[Neighbour]
+
+
+NEIGHBOURS_SYSTEM = (
+    "You are a public-library readers' advisor. A reader liked BOOK. From CANDIDATES pick the 3 they would "
+    "most enjoy next. reason: one plain sentence, at most 16 words, naming the shared idea or why it follows "
+    "naturally. Use only ids from CANDIDATES."
+)
+SIMILAR_DIR = config.CACHE_DIR / "similar"
+
+
+def _llm_neighbours(me: dict, cands: list[dict], k: int) -> Optional[list[tuple[dict, str]]]:
+    """Model picks + reasons among verified candidates; cached on disk. None when unavailable."""
+    import hashlib
+
+    key = hashlib.sha1((me["id"] + "|" + ",".join(c["id"] for c in cands)).encode()).hexdigest()[:16]
+    path = SIMILAR_DIR / f"{key}.json"
+    by_id = {c["id"]: c for c in cands}
+    if path.exists():
+        picks = Neighbours.model_validate_json(path.read_text()).picks
+    else:
+        if not config.llm_enabled():
+            return None
+        user = json.dumps({
+            "BOOK": {"title": me["title"], "author": me["author"], "about": me["subjects"][:5] + me["concepts"][:4]},
+            "CANDIDATES": [{"id": c["id"], "title": c["title"], "author": c["author"], "about": c["subjects"][:4] + c["concepts"][:3]} for c in cands],
+        }, ensure_ascii=False)
+        r = llm.structured(Neighbours, NEIGHBOURS_SYSTEM, user)
+        if r is None:
+            return None
+        SIMILAR_DIR.mkdir(parents=True, exist_ok=True)
+        path.write_text(r.model_dump_json())
+        picks = r.picks
+    out = [(by_id[p.id], p.reason.strip()) for p in picks if p.id in by_id]   # never a book outside the verified shortlist
+    return out[:k] or None
+
+
+def topic_text(e: dict) -> str:
+    """What a book is about (no readiness prose), for book-to-book neighbours."""
+    return f"{e['title']}. {e['category']}. {', '.join(e['subjects'])}. {', '.join(e['concepts'])}"
+
+
+def similar(book_id: str, branch: Optional[str] = None, k: int = 3) -> list[dict]:
+    """'Because you liked...' - k catalogue-verified neighbours of a book, each with a one-line reason.
+    Embedding similarity when the local model is up, shared subjects/concepts otherwise. Never the book's own line."""
+    cat = _catalogue()
+    me = next((e for e in cat if e["id"] == book_id), None) or next((e for e in cat if e["line_id"] == book_id and e["is_target"]), None)
+    if me is None:
+        return []
+    pool = [e for e in cat if e["id"] != me["id"] and e["line_id"] != me["line_id"]]
+    ranked = embeddings.rank(topic_text(me), [(e["id"], topic_text(e)) for e in pool], top_k=len(pool), query_prefix="search_document: ")
+    by_id = {e["id"]: e for e in pool}
+    if ranked is not None:
+        boosted = [(by_id[i], sim + 0.08 * len(_shared(me, by_id[i])) + (0.1 if by_id[i]["category"] == me["category"] else 0)) for i, sim in ranked]
+        shortlist = sorted(boosted, key=lambda x: -x[1])[:10]
+        chosen = _llm_neighbours(me, [e for e, _ in shortlist], k)
+        sims = dict((e["id"], sim) for e, sim in shortlist)
+        picks = [(e, sims[e["id"]]) for e, _ in chosen] if chosen else shortlist[:k]
+        reasons = {e["id"]: r for e, r in (chosen or [])}
+    else:
+        scored = sorted(((len(_shared(me, e)), e) for e in pool), key=lambda x: -x[0])  # keyword fallback
+        picks = [(e, float(n)) for n, e in scored[:k] if n > 0]
+        reasons = {}
+    out = []
+    for e, sim in picks:
+        shared = _shared(me, e)
+        if e["id"] in reasons:
+            reason = reasons[e["id"]]
+        elif shared:
+            reason = f"Also about {', '.join(shared[:2]).lower()}."
+        elif e["category"] == me["category"]:
+            reason = f"More {e['category'].lower()}, from another angle."
+        else:
+            reason = "Covers nearby ground."
+        if e["level"] < me["level"]:
+            reason += " A gentler read."
+        elif e["level"] > me["level"]:
+            reason += " A step up."
+        status, _ = status_for(e, branch)
+        line = next((x for x in seeds() if (x.get("isbn") or x.get("id")) == e["line_id"]), {})
+        out.append({
+            "id": e["id"], "title": e["title"], "author": e["author"], "reason": reason, "level": e["level"], "hours": e["hours"],
+            "status": status, "line_id": e["line_id"], "line_title": line.get("title", e["title"]), "line_author": line.get("author", e["author"]),
+            "is_target": e["is_target"], "similarity": round(sim, 3),
+        })
+    return out

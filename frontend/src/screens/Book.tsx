@@ -8,7 +8,7 @@ import { parseCallNumber, stepsFor } from "../components/WayfindMap";
 import WayfindMap from "../components/WayfindMap";
 import { Sheet, TopBar, getBranch, nlbSearchUrl, shelfStatus, shortBranch, useBack, useReadSet } from "../components/ui";
 import { navigate } from "../router";
-import type { Route, Stop } from "../types";
+import type { Neighbour, Route, Stop } from "../types";
 
 export default function Book({ id, title, author, stopId }: { id: string; title: string; author: string; stopId: string }) {
   const goBack = useBack("line");
@@ -21,6 +21,7 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
   const [readSet, toggleRead] = useReadSet();
   const [shownLibs, setShownLibs] = useState(0);   // 0 = collapsed (status block only)
   const branchPref = getBranch();
+  const [similar, setSimilar] = useState<Neighbour[]>([]);
 
   useEffect(() => {
     api
@@ -32,6 +33,20 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
   const stops = route?.stops ?? [];
   const idx = stops.findIndex((s) => s.book.id === stopId);
   const stop: Stop | undefined = stops[idx];
+  const stopBookId = stop?.book.id;
+
+  useEffect(() => {
+    setSimilar([]);
+    if (!stopBookId) return;
+    let live = true;
+    api
+      .similar(stopBookId, branchPref)
+      .then((r) => live && setSimilar(r.books))
+      .catch(() => live && setSimilar([]));
+    return () => {
+      live = false;
+    };
+  }, [stopBookId, branchPref]);
 
   const go = (i: number) => {
     const s = stops[i];
@@ -234,6 +249,24 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
             Find it at {shortBranch(wayfind.branch)} <span className="hint">· {wayfind.callNumber}</span>
           </h3>
           <WayfindMap target={wayfind} />
+        </section>
+      )}
+
+      {similar.length > 0 && (
+        <section className="section similar-section" aria-label={`Because you liked ${book.title}`}>
+          <h3 className="small-h">Because you liked {book.title}</h3>
+          <ul className="similar-list">
+            {similar.map((n) => (
+              <li key={n.id}>
+                <button type="button" className="similar-item" onClick={() => navigate("book", { id: n.line_id, title: n.line_title, author: n.line_author, stop: n.id })}>
+                  <strong>{n.title}</strong>
+                  <span className="hint">{n.author}</span>
+                  <span className="similar-why">{n.reason}</span>
+                  <span className={`where ${n.status.startsWith("Available") ? "ok" : n.status.startsWith("Not") ? "alt" : "no"}`}>{n.status}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 

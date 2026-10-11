@@ -16,7 +16,7 @@ from .availability import BRANCHES
 from .catalog import nlb, NLBClient, openlibrary_search_many, resolve
 from .engine import build_route, find_seed, load_index, load_route, save_index, save_route, seeds
 from .chat import ChatReply, ChatTurn, books_for, browse, step
-from .discover import DiscoverRequest, DiscoverResponse, discover
+from .discover import DiscoverRequest, DiscoverResponse, discover, similar
 from . import stt
 from .tts import synthesize
 from .models import AskRequest, AskResponse, Route, ScanResult
@@ -25,6 +25,22 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(messag
 log = logging.getLogger("prereads.api")
 
 app = FastAPI(title="PreReads", version="0.1.0")
+
+
+@app.on_event("startup")
+def _warm_embeddings() -> None:
+    """Embed the catalogue in the background so the first discovery request is fast."""
+    import threading
+
+    from . import discover as _d, embeddings as _e
+
+    def run():
+        try:
+            _e.warm([_d.entry_text(x) for x in _d._catalogue()] + [_d.topic_text(x) for x in _d._catalogue()])
+        except Exception:  # noqa: BLE001
+            pass
+
+    threading.Thread(target=run, daemon=True).start()
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 
@@ -143,6 +159,12 @@ def discover_(req: DiscoverRequest):
     if len(req.text.strip()) < 2:
         raise HTTPException(422, "Tell me a little more.")
     return discover(req)
+
+
+@app.get("/api/similar")
+def similar_(id: str, branch: Optional[str] = None):
+    """'Because you liked...': three catalogue-verified neighbours with a one-line reason."""
+    return {"books": similar(id, branch or None)}
 
 
 class TtsRequest(BaseModel):

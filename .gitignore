@@ -226,3 +226,5 @@ node_modules/
 backend/data/cache/tts/
 backend/data/cache/embeddings/
 backend/data/models/
+.claude/worktrees/
+backend/data/cache/similar/

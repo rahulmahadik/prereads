@@ -58,6 +58,20 @@ def score_readiness(book: Book, seed: Optional[dict] = None) -> tuple[Readiness,
 
 
 # ------------------------------------------------------------------ candidates
+def _by_similarity(target: Book, items: list[dict]) -> list[dict]:
+    """Order model proposals by embedding similarity to the target, so the verify/judge budget
+    (first 8 before, 6 after) goes to the most related books. No-op when embeddings are down."""
+    from . import embeddings
+
+    if len(items) < 2:
+        return items
+    q = f"{target.title}. {', '.join(target.subjects[:8])}. {target.summary[:400]}"
+    ranked = embeddings.rank(q, [(str(i), f"{x.get('title', '')} by {x.get('author', '')}. {x.get('why', '')}") for i, x in enumerate(items)], top_k=len(items), query_prefix="search_document: ")
+    if ranked is None:
+        return items
+    return [items[int(i)] for i, _ in ranked]
+
+
 def propose(target: Book, seed: Optional[dict] = None) -> tuple[CandidateList, str]:
     def tagged(items: list[dict]) -> list[dict]:
         return [{**i, "_seed": True} for i in items]   # human-verified picks may use seed fallback
@@ -65,6 +79,7 @@ def propose(target: Book, seed: Optional[dict] = None) -> tuple[CandidateList, s
     if config.llm_enabled():
         c = llm.candidates(target)
         if c and (c.before or c.after):
+            c.before, c.after = _by_similarity(target, c.before), _by_similarity(target, c.after)
             # Librarian seed picks first; LLM picks must verify in a catalogue or be dropped.
             if seed:
                 c.before = tagged(seed.get("before", [])) + c.before
