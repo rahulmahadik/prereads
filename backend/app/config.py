@@ -35,7 +35,7 @@ LOCAL_VISION_MODEL: str = os.getenv("LOCAL_VISION_MODEL", "qwen2.5vl:7b").strip(
 LOCAL_EMBED_MODEL: str = os.getenv("LOCAL_EMBED_MODEL", "nomic-embed-text").strip()
 # Tried in order when a configured model is not pulled yet, so the app degrades instead of breaking.
 LOCAL_LLM_FALLBACKS: list[str] = [m.strip() for m in os.getenv("LOCAL_LLM_FALLBACKS", "gemma3:12b,qwen3.6:35b-a3b").split(",") if m.strip()]
-LOCAL_HEAVY_FALLBACKS: list[str] = [m.strip() for m in os.getenv("LOCAL_HEAVY_FALLBACKS", "qwen3.6:35b-a3b,gemma3:12b").split(",") if m.strip()]
+LOCAL_HEAVY_FALLBACKS: list[str] = [m.strip() for m in os.getenv("LOCAL_HEAVY_FALLBACKS", "gemma3:12b,qwen3.6:35b-a3b").split(",") if m.strip()]
 LOCAL_VISION_FALLBACKS: list[str] = [m.strip() for m in os.getenv("LOCAL_VISION_FALLBACKS", "gemma3:12b").split(",") if m.strip()]
 LOCAL_TIMEOUT: float = float(os.getenv("LOCAL_TIMEOUT", "60"))
 

@@ -15,7 +15,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from app import config  # noqa: E402
+from app import config, llm  # noqa: E402
 from app.engine import build_route, load_index, load_route, save_index, save_route, seeds  # noqa: E402
 
 
@@ -26,7 +26,8 @@ def main() -> int:
     ap.add_argument("--refresh", action="store_true", help="rebuild even if cached")
     args = ap.parse_args()
 
-    print(f"mode: {config.mode()}")
+    llm.HEAVY = True
+    print(f"mode: {config.mode()}  heavy model: {llm.resolve_model('heavy')}")
     index = {e["id"]: e for e in load_index()}
     done = failed = skipped = 0
     for i, seed in enumerate(seeds()):
