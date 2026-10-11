@@ -498,7 +498,7 @@ def _ask(tr: Trace, request: str, hits: list[tuple[dict, float, str]], step_name
         return None, "no model"
     with tr.step(step_name) as s:
         res, why_not = ask_model(request, hits)
-        s.detail = (f"{res.kind}: {res.value.strip()} · local model {_model_name()}" if config.AI_PROVIDER == "ollama" else f"{res.kind}: {res.value.strip()} · {_model_name()}") if res else why_not
+        s.detail = (f"{res.kind}: {res.value.strip()} · model {_model_name()}" if config.AI_PROVIDER == "ollama" else f"{res.kind}: {res.value.strip()} · {_model_name()}") if res else why_not
     return res, why_not
 
 

@@ -8,7 +8,7 @@ Your reading path shows each book's reading level, hours, the shelf status per l
 Live demo: https://prereads.vitbhatti.com
 Design: [Figma screens with desktop and phone clickable prototypes](https://www.figma.com/design/c5wM6zZUx2NT91NIEYwbFZ) and [FigJam architecture diagrams](https://www.figma.com/board/5TEfAaBhbQFeLO91qIPSuP)
 
-All AI runs locally on-device (open models via Ollama), with no cloud AI calls by default.
+PreReads uses open-source AI models via Ollama.
 
 Built for the Common Ground makeathon (Design × Tech), Singapore, 11 Oct 2026, by team
 "404 Not Found". Not an NLB product. Book data comes from Open Library, library
@@ -229,7 +229,7 @@ browsers and WebViews, and any line is linkable.
 
 Every book, path and set of picks has a **Listen** button; the discovery box and the chat have
 a mic for voice input. Speech-to-text is `faster-whisper` large-v3-turbo (`/api/stt`) and the
-natural voice is Kokoro (`/api/tts`, cached), both on the laptop. If either is missing the
+natural voice is Kokoro (`/api/tts`, cached), both open source. If either is missing the
 browser's built-in speech is used, so it still works. See `docs/GAPS_VS_NLB.md`.
 
 ## 10. Web first, mobile later

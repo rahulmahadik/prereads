@@ -91,7 +91,7 @@ def test_model_pick_outside_retrieved_list_is_dropped(monkeypatch):
     detail = next(s for s in r["trace"] if s["step"] == "Choosing the best 3")["detail"]
     assert "test-model picked 1 of" in detail and "1 unknown id dropped" in detail
     understood = next(s for s in r["trace"] if s["step"] == "Understanding your request")["detail"]
-    assert "local model test-model" in understood
+    assert "model test-model" in understood
 
 
 def test_named_book_and_nearest_when_missing(monkeypatch):

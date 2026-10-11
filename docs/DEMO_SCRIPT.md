@@ -22,7 +22,7 @@ Record on a phone-width screen with Ollama running so the AI is live. Per-branch
 | 0:42-0:47 | Scroll to Because you liked... | "Picks tied to books you already like." |
 | 0:47-0:52 | Heart a book; open My shelf | "My shelf: hours left on each path. Stays on this phone." |
 | 0:52-0:56 | Senior mode on; share QR | "Large text. Share the path by QR." |
-| 0:56-1:00 | Laptop with Ollama running, then title card | "All AI runs on this laptop. PreReads. Not an NLB product." |
+| 0:56-1:00 | Title card | "PreReads. What to read before the book you want. prereads.vitbhatti.com" |
 
 ## Finalist pitch (2 minutes, 16:30)
 

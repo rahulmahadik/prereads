@@ -8,7 +8,7 @@ A hard book is easier when you've read the right books first. PreReads builds *y
 - **No-server prototype:** [`docs/index.html`](docs/index.html) (embedded data, works offline)
 - **Design:** [Figma screens and clickable prototype](https://www.figma.com/design/c5wM6zZUx2NT91NIEYwbFZ) · [architecture diagrams](https://www.figma.com/board/5TEfAaBhbQFeLO91qIPSuP)
 
-All AI runs locally on the device (open models via Ollama); no cloud AI calls by default. Not an NLB product.
+Built for the Common Ground makeathon with open-source AI models (via Ollama) and open library data.
 
 | | | |
 |:---:|:---:|:---:|
