@@ -3216,3 +3216,31 @@ html.senior .reader-page { font-size: calc(var(--reader-size) * var(--fs-scale))
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* responsive pass: chat header, layering, line lengths, desktop discovery */
+.chat-head { gap: 8px; }
+.chat-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.chat-head-actions { display: flex; flex: 0 0 auto; gap: 6px; align-items: center; }
+.chat-head-actions .icon-btn { width: var(--tap); height: var(--tap); min-height: 0; flex: 0 0 auto; display: inline-grid; place-items: center; }
+.chat-restart { white-space: nowrap; min-height: var(--tap); }
+@media (max-width: 380px) {
+  .chat-restart-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .chat-head { padding-left: 12px; }
+}
+/* the floating chat button never sits above a sheet, the reader or full-screen map */
+body:has(.sheet-backdrop) .chat-fab, body:has(.reader) .chat-fab, body:has(.wf-fs) .chat-fab { display: none; }
+.sheet-backdrop { z-index: 70; }
+.reader { z-index: 80; }
+/* readable line lengths */
+.rec-why, .rec-blurb, .map-note, p.hint.map-note, .about-text, .why, .stop-why { max-width: 72ch; }
+/* desktop discovery: two columns of cards instead of one stretched column */
+@media (min-width: 1024px) {
+  .rec-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .rec-list > li { margin: 0; }
+  .chat-panel.max { max-width: 860px; top: 72px; }
+}
+/* small fallback covers: keep the title inside the tile */
+.cover.cover-s .cover-title, .cover-s .cover-title { font-size: 9px; line-height: 1.15; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; }
+@media (max-width: 340px) {
+  .home-head, .hero, .row-section { padding-left: 12px; padding-right: 12px; }
+}
