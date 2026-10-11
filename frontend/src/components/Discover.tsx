@@ -6,14 +6,10 @@ import ListenButton from "./ListenButton";
 import { canListen, listen, picksScript } from "../speech";
 import { AvailToggle, getBranch, getOnlyAvailable, setOnlyAvailable } from "./ui";
 import { navigate } from "../router";
+import { getLang, t, tn, useLang, voiceLang } from "../i18n";
 import type { DiscoverResponse, FilterChip, Recommendation } from "../types";
 
-const EXAMPLES = [
-  "I want to understand investing but I only have 2 weeks",
-  "Something simple about the universe for this weekend",
-  "How the brain makes decisions — I've read a bit",
-  "AI for a beginner who knows some Python",
-];
+const EXAMPLE_KEYS = ["disc.ex1", "disc.ex2", "disc.ex3", "disc.ex4"] as const;
 
 // Fields the backend adds for two-phase discovery (optional, so older servers and the prototype still fit).
 type Rec = Recommendation & { ai_pick?: boolean };
@@ -29,13 +25,13 @@ const OTHER_CAP = 6; // deep-only catalogue books (not model picks) shown under 
 function needSummary(d: Phased): string {
   const n = d.need;
   const bits: string[] = [];
-  if (n.topics.length) bits.push(`about ${n.topics.slice(0, 3).join(", ")}`);
-  if (n.level) bits.push(n.level <= 1 ? "for a newcomer" : n.level <= 3 ? "for someone who's read a bit" : "for someone who knows the field");
-  if (n.max_hours) bits.push(`within about ${Math.round(n.max_hours)} hours`);
-  if (n.age_group && n.age_group !== "adult") bits.push(`for a ${n.age_group}`);
+  if (n.topics.length) bits.push(t("disc.need.about", { topics: n.topics.slice(0, 3).join(t("disc.need.sep")) }));
+  if (n.level) bits.push(t(n.level <= 1 ? "disc.need.new" : n.level <= 3 ? "disc.need.some" : "disc.need.expert"));
+  if (n.max_hours) bits.push(t("disc.need.hours", { n: Math.round(n.max_hours) }));
+  if (n.age_group && n.age_group !== "adult") bits.push(t("disc.need.age", { age: n.age_group }));
   if (n.mood) bits.push(n.mood);
-  if (n.language) bits.push(`in ${n.language}`);
-  return bits.length ? `Books ${bits.join(", ")}` : "Here's what fits";
+  if (n.language) bits.push(t("disc.need.lang", { lang: n.language }));
+  return bits.length ? t("disc.need.books", { bits: bits.join(t("disc.need.sep")) }) : t("disc.need.fits");
 }
 
 /** Keep the chip row stable on a re-run of the same request: old order and labels, new on/off, new chips last. */
@@ -49,10 +45,10 @@ function mergeChips(prev: FilterChip[], next: FilterChip[]): FilterChip[] {
 /** Honest copy for how a list was made. The main list is always the fast one; the AI's own picks
  * carry the "llm" copy in their section. A fast list with no AI pass to follow says the AI is off. */
 function engineNote(engine: string, deep?: DeepKind | null): string {
-  if (engine === "fast") return deep === "ai" ? "Instant matches from the catalogue" : "Matched with built-in rules (local AI is off)";
-  if (engine === "llm") return "Picked with the local AI on this device";
-  if (engine.startsWith("prototype")) return "Prototype: matches from embedded data";
-  return "Matched with built-in rules (local AI is off)";
+  if (engine === "fast") return t(deep === "ai" ? "disc.engine.instant" : "disc.engine.rules");
+  if (engine === "llm") return t("disc.engine.llm");
+  if (engine.startsWith("prototype")) return t("disc.engine.proto");
+  return t("disc.engine.rules");
 }
 
 const sameIds =(a: FilterChip[], b: FilterChip[]) => a.length === b.length && a.every((c, i) => c.id === b[i].id && c.on === b[i].on);
@@ -60,6 +56,7 @@ const sameIds =(a: FilterChip[], b: FilterChip[]) => a.length === b.length && a.
 const key = (r: Rec) => r.title.trim().toLowerCase();
 
 export default function Discover({ initialText = "" }: { initialText?: string }) {
+  const lang = useLang();
   const [text, setText] = useState(initialText);
   const [res, setRes] = useState<Phased | null>(null);
   const [chips, setChips] = useState<FilterChip[]>([]);
@@ -132,7 +129,7 @@ export default function Discover({ initialText = "" }: { initialText?: string })
     const timer = window.setTimeout(() => ctl.abort(), DEEP_TIMEOUT_MS);
     setDeep({ phase: "busy", kind });
     try {
-      const d = (await api.discover(q, getBranch(), sent, 0, DEEP_LIMIT, { mode: "deep", signal: ctl.signal })) as Phased;
+      const d = (await api.discover(q, getBranch(), sent, 0, DEEP_LIMIT, { mode: "deep", signal: ctl.signal, lang: getLang() })) as Phased;
       const cur = resRef.current;
       if (my !== seq.current || !cur) return;
       const shownIds = new Set(cur.results.map((r) => r.id));
@@ -164,7 +161,7 @@ export default function Discover({ initialText = "" }: { initialText?: string })
     setError("");
     const sent = withAvail(f, availRef.current);
     try {
-      const r = (await api.discover(q, getBranch(), sent, 0, PAGE, { mode: "fast" })) as Phased;
+      const r = (await api.discover(q, getBranch(), sent, 0, PAGE, { mode: "fast", lang: getLang() })) as Phased;
       if (my !== seq.current) return;
       commit(r);
       setChips((prev) => (sameQuery && prev.length ? mergeChips(prev, r.chips) : r.chips));
@@ -188,7 +185,7 @@ export default function Discover({ initialText = "" }: { initialText?: string })
     setMore(true);
     try {
       // Paging stays on the fast path.
-      const r = (await api.discover(lastQuery.current, getBranch(), withAvail(filters, availRef.current), res.offset + res.limit, PAGE, { mode: "fast" })) as Phased;
+      const r = (await api.discover(lastQuery.current, getBranch(), withAvail(filters, availRef.current), res.offset + res.limit, PAGE, { mode: "fast", lang: getLang() })) as Phased;
       if (my !== seq.current) return;
       const cur = resRef.current ?? res;
       const seen = new Set([...cur.results, ...ai.picks, ...ai.others].map((x) => x.id));
@@ -247,8 +244,8 @@ export default function Discover({ initialText = "" }: { initialText?: string })
         <Cover book={{ id: r.id, title: r.title, author: r.author, subjects: [], summary: "", source: "seed" }} size="m" level={r.level} />
         <span className="rec-main">
           <span className="rec-kicker">
-            {aiPick && <span className="badge ai-pick small" title="Suggested by the local AI, then checked in the catalogue">AI pick</span>}
-            <span className="fit" title="How well it fits your request">{Math.round(r.fit * 100)}% fit</span>
+            {aiPick && <span className="badge ai-pick small" title={t("disc.aiPickTip")}>{t("disc.aiPick")}</span>}
+            <span className="fit" title={t("disc.fitTip")}>{t("disc.fit", { n: Math.round(r.fit * 100) })}</span>
             {" · "}{r.category}
           </span>
           <strong className="rec-title">{r.title}</strong>
@@ -257,8 +254,8 @@ export default function Discover({ initialText = "" }: { initialText?: string })
           <ReadinessMeter level={r.level} hours={r.hours} compact />
           <span className="rec-foot">
             <span className={`where ${r.status.startsWith("Available") ? "ok" : r.status.startsWith("Not there") ? "alt" : "no"}`}>{r.status}</span>
-            {r.hot_at.length > 0 && <span className="badge hot small">Hot at {r.hot_at[0]}</span>}
-            {r.is_target && r.before_count > 0 && <span className="hint">{r.before_count} PreReads first</span>}
+            {r.hot_at.length > 0 && <span className="badge hot small">{t("home.hotAt", { branch: r.hot_at[0] })}</span>}
+            {r.is_target && r.before_count > 0 && <span className="hint">{t("disc.preFirst", { n: r.before_count })}</span>}
           </span>
         </span>
         <span className="chev" aria-hidden="true">›</span>
@@ -268,11 +265,8 @@ export default function Discover({ initialText = "" }: { initialText?: string })
 
   const extraCount = ai.picks.length + ai.others.length;
   const at = res ? Math.min(ai.at, res.results.length) : 0;
-  const deepLabel = deep.kind === "ai" ? "Asking the local AI for more picks…" : "Searching the catalogue for more…";
-  const doneLabel =
-    deep.kind === "ai" && ai.picks.length
-      ? `${ai.picks.length} more ${ai.picks.length === 1 ? "pick" : "picks"} from the AI below`
-      : `${extraCount} more from the catalogue below`;
+  const deepLabel = t(deep.kind === "ai" ? "disc.deep.ai" : "disc.deep.cat");
+  const doneLabel = deep.kind === "ai" && ai.picks.length ? tn("disc.done.ai", ai.picks.length) : t("disc.done.cat", { n: extraCount });
 
   return (
     <section className="discover">
@@ -285,35 +279,38 @@ export default function Discover({ initialText = "" }: { initialText?: string })
         }}
       >
         <label htmlFor="want" className="sr-only">
-          Tell PreReads what you want
+          {t("disc.label")}
         </label>
         <div className="discover-input">
           <span className="big-icon" aria-hidden="true">✨</span>
-          <input id="want" value={text} onChange={(e) => setText(e.target.value)} placeholder="Tell me what you want to read or learn, in your own words…" autoComplete="off" />
+          <input id="want" value={text} onChange={(e) => setText(e.target.value)} placeholder={t("disc.placeholder")} autoComplete="off" />
           {text && (
-            <button type="button" className="clear-btn" onClick={reset} aria-label="Clear and start over" title="Clear">
+            <button type="button" className="clear-btn" onClick={reset} aria-label={t("disc.clearAria")} title={t("disc.clear")}>
               ✕
             </button>
           )}
           {canListen() && (
-            <button type="button" className={`mic-btn ${hearing ? "on" : ""}`} onClick={voiceIn} aria-label="Say what you want" title="Say it instead" disabled={busy}>
+            <button type="button" className={`mic-btn ${hearing ? "on" : ""}`} onClick={voiceIn} aria-label={t("disc.say")} title={t("disc.sayTitle")} disabled={busy}>
               {hearing ? "●" : "🎤"}
             </button>
           )}
           <button type="submit" className="primary" disabled={busy || text.trim().length < 2}>
-            {busy ? "Thinking…" : "Find"}
+            {busy ? t("disc.thinking") : t("disc.find")}
           </button>
         </div>
       </form>
 
       {!res && !busy && (
         <div className="examples">
-          <span className="hint">Try:</span>
-          {EXAMPLES.map((ex) => (
-            <button key={ex} type="button" className="example" onClick={() => { setText(ex); setFilters([]); run(ex, []); }}>
-              {ex}
-            </button>
-          ))}
+          <span className="hint">{t("disc.try")}</span>
+          {EXAMPLE_KEYS.map((k) => {
+            const ex = t(k);
+            return (
+              <button key={k} type="button" className="example" onClick={() => { setText(ex); setFilters([]); run(ex, []); }}>
+                {ex}
+              </button>
+            );
+          })}
         </div>
       )}
 
@@ -344,17 +341,18 @@ export default function Discover({ initialText = "" }: { initialText?: string })
             <span className="need-actions">
               <ListenButton
                 id="picks"
-                label="Listen to the picks"
+                label={t("disc.listenPicks")}
+                lang={voiceLang(lang)}
                 text={() => picksScript({ summary: needSummary(res), picks: [...res.results, ...ai.picks].map((r) => ({ title: r.title, author: r.author, why: r.why, status: r.status })) })}
               />
               <button type="button" className="secondary start-over" onClick={reset}>
-                ↺ Start over
+                ↺ {t("disc.startOver")}
               </button>
             </span>
           </div>
 
-          <div className="chips-row" role="group" aria-label="Filters generated from your request">
-            <AvailToggle on={onlyAvail} onChange={flipAvail} label={getBranch() ? "Only on the shelf at my library" : "Only available now"} />
+          <div className="chips-row" role="group" aria-label={t("disc.filters")}>
+            <AvailToggle on={onlyAvail} onChange={flipAvail} label={getBranch() ? t("disc.onlyShelf") : t("avail.only")} />
             {chips.filter((c) => c.kind !== "branch").map((c) => (
               <button key={c.id} type="button" className={`fchip ${c.on ? "on" : ""}`} aria-pressed={c.on} onClick={() => toggle(c.id)}>
                 {c.on ? "✓ " : ""}{c.label}
@@ -379,27 +377,27 @@ export default function Discover({ initialText = "" }: { initialText?: string })
           )}
 
           <div ref={listRef}>
-            {res.results.length === 0 && extraCount === 0 && <p className="hint">Nothing matches all those filters. Turn one off, or tell me more.</p>}
+            {res.results.length === 0 && extraCount === 0 && <p className="hint">{t("disc.empty")}</p>}
             {res.total > 0 && (
               <p className="hint count-line">
-                Showing {res.results.length} of {res.total} {res.total === 1 ? "book" : "books"}
+                {tn("disc.count", res.total, { shown: res.results.length, total: res.total })}
               </p>
             )}
 
             <ol className="rec-list">{res.results.slice(0, extraCount ? at : undefined).map((r, i) => card(r, i))}</ol>
 
             {extraCount > 0 && (
-              <section className="ai-picks" id="ai-picks" aria-label={ai.picks.length ? "More picks from the AI" : "More from the catalogue"}>
-                <h3 className="ai-head">{ai.picks.length ? "More picks from the AI" : "More from the catalogue"}</h3>
+              <section className="ai-picks" id="ai-picks" aria-label={t(ai.picks.length ? "disc.moreAi" : "disc.moreCat")}>
+                <h3 className="ai-head">{t(ai.picks.length ? "disc.moreAi" : "disc.moreCat")}</h3>
                 {ai.picks.length > 0 && (
                   <>
-                    <p className="hint ai-note">{engineNote("llm")}, each one checked in the catalogue.</p>
+                    <p className="hint ai-note">{t("disc.aiNote")}</p>
                     <ol className="rec-list">{ai.picks.map((r, i) => card(r, i, true))}</ol>
                   </>
                 )}
                 {ai.others.length > 0 && (
                   <>
-                    {ai.picks.length > 0 && <h4 className="ai-sub">Also in the catalogue</h4>}
+                    {ai.picks.length > 0 && <h4 className="ai-sub">{t("disc.alsoCat")}</h4>}
                     <ol className="rec-list">{ai.others.map((r, i) => card(r, i))}</ol>
                   </>
                 )}
@@ -412,7 +410,7 @@ export default function Discover({ initialText = "" }: { initialText?: string })
           <div className="more-row">
             {res.has_more && (
               <button type="button" className="secondary load-more" onClick={loadMore} disabled={more}>
-                {more ? "Loading…" : `Load more (${Math.max(0, res.total - (res.offset + res.limit))} left)`}
+                {more ? t("common.loading") : t("disc.loadMore", { n: Math.max(0, res.total - (res.offset + res.limit)) })}
               </button>
             )}
             {res.results.length > PAGE && (
@@ -425,7 +423,7 @@ export default function Discover({ initialText = "" }: { initialText?: string })
                   document.querySelector(".discover-results")?.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
               >
-                Show less
+                {t("common.showLess")}
               </button>
             )}
           </div>

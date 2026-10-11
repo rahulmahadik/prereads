@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { t, useLang } from "../i18n";
 
 export default function OfflineBadge() {
+  useLang();
   const [online, setOnline] = useState(() => (typeof navigator === "undefined" ? true : navigator.onLine));
   useEffect(() => {
     const on = () => setOnline(true);
@@ -14,7 +16,7 @@ export default function OfflineBadge() {
   }, []);
   return (
     <div className="offline-badge-wrap" aria-live="polite">
-      {!online && <span className="offline-badge">Offline — showing paths saved on this device</span>}
+      {!online && <span className="offline-badge">{t("offline.badge")}</span>}
     </div>
   );
 }

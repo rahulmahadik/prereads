@@ -16,6 +16,7 @@ import {
   FIC_ROWS, FIC_SECTIONS, FIC_W, FIC_X, H, KIDS, MAIN_X, NF_AISLE_Y, NF_H, NF_LABELS, NF_W, NF_Y, ROW_NAMES, UNIT_H, W, DOOR_Y,
   hash, locate, parseCallNumber, planFor, planSignature, routeFor, stepsFor,
 } from "../wayfind";
+import { t, useLang, type Key } from "../i18n";
 
 export { parseCallNumber, stepsFor };
 
@@ -37,7 +38,7 @@ const ARRIVE_AT = WALK_AT + WALK_MS;
 const HL_MS = 300;
 
 const SVC_ICON: Record<string, string> = { toilets: "🚻", lift: "🛗", stairs: "" };
-const SVC_NAME: Record<string, string> = { toilets: "Toilets", lift: "Lift", stairs: "Stairs" };
+const SVC_NAME: Record<string, Key> = { toilets: "wf.svc.toilets", lift: "wf.svc.lift", stairs: "wf.svc.stairs" };
 
 // --- drawing helpers -----------------------------------------------------------
 /** A double-sided shelf range with book spines on both faces. */
@@ -150,25 +151,26 @@ function ShelfFace({ x, y, row, slot, label, seed }: { x: number; y: number; row
 }
 
 export default function WayfindMap({ target }: { target: Target }) {
+  const lang = useLang();
   const parsed = useMemo(() => parseCallNumber(target.callNumber), [target.callNumber]);
   const seedKey = target.code || target.branch;
   const plan = useMemo(() => planFor(seedKey), [seedKey]);
-  const spot = useMemo(() => locate(parsed, plan), [parsed, plan]);
+  const spot = useMemo(() => locate(parsed, plan), [parsed, plan, lang]);
   const route = useMemo(() => routeFor(parsed, plan, spot), [parsed, plan, spot]);
-  const steps = useMemo(() => stepsFor(parsed, target.callNumber, seedKey), [parsed, target.callNumber, seedKey]);
+  const steps = useMemo(() => stepsFor(parsed, target.callNumber, seedKey), [parsed, target.callNumber, seedKey, lang]);
   const [run, setRun] = useState(0);
   const replay = () => setRun((r) => r + 1);
   const runKey = `${run}-${target.callNumber}-${planSignature(plan)}`;
   const [tx, ty] = spot.stand.map((v) => Math.round(v));
   const nf = parsed.kind === "nonfiction";
   const marks = route.marks;
-  const svcLabel = plan.services.map((s) => SVC_NAME[s]).join(" · ");
+  const svcLabel = plan.services.map((s) => t(SVC_NAME[s])).join(" · ");
   const faceX = Math.min(W - 24 - 172, Math.max(24, (spot.bayLabelX ?? tx) - 86));
 
   return (
     <div className="wayfind wf2">
       <div className="wf-map-wrap">
-      <svg className="map floorplan" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Floor-plan directions to ${target.callNumber} at ${target.branch}: ${spot.label}`}>
+      <svg className="map floorplan" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t("wf.svg", { call: target.callNumber, branch: target.branch, label: spot.label })}>
         <defs>
           <pattern id="carpet" width="8" height="8" patternUnits="userSpaceOnUse">
             <rect width="8" height="8" fill="#eef1f5" />
@@ -218,7 +220,7 @@ export default function WayfindMap({ target }: { target: Target }) {
           );
         })}
         <text x={plan.servicesX + 80} y={NF_Y + 78} textAnchor="middle" className="wf-dewey-dir">
-          {plan.flip ? "999 ← 000 · Dewey order" : "Dewey order · 000 → 999"}
+          {t(plan.flip ? "wf.dewey.rev" : "wf.dewey.fwd")}
         </text>
 
         {/* toilets, lift, stairs */}
@@ -247,7 +249,7 @@ export default function WayfindMap({ target }: { target: Target }) {
               <text x={FIC_X + FIC_W + 8} y={y + 13} className="row-label">{FIC_SECTIONS[r]}</text>
             </g>
           ))}
-          <text x={FIC_X} y={FIC_ROWS[0] - 26} className="zone-title">📖 Fiction · A–Z by author</text>
+          <text x={FIC_X} y={FIC_ROWS[0] - 26} className="zone-title">{t("wf.fiction")}</text>
           <Armchair x={FIC_X + 200} y={FIC_ROWS[4] + 26} />
           <Armchair x={FIC_X + 228} y={FIC_ROWS[4] + 26} />
         </g>
@@ -261,10 +263,10 @@ export default function WayfindMap({ target }: { target: Target }) {
           <Armchair x={716} y={224} />
           <Armchair x={690} y={254} />
           <Armchair x={716} y={254} />
-          <text x={456} y={220} className="zone-title">☕ Reading lounge</text>
+          <text x={456} y={220} className="zone-title">{t("wf.lounge")}</text>
           <LongTable x={470} y={318} w={270} />
           <LongTable x={470} y={360} w={270} />
-          <text x={456} y={303} className="zone-title">💻 Study & computers</text>
+          <text x={456} y={303} className="zone-title">{t("wf.study")}</text>
         </g>
 
         {/* children's corner */}
@@ -275,22 +277,22 @@ export default function WayfindMap({ target }: { target: Target }) {
           ))}
           <circle cx={KIDS.x + 36} cy={KIDS.y + 90} r="10" className="beanbag" />
           <circle cx={KIDS.x + 62} cy={KIDS.y + 98} r="10" className="beanbag" />
-          <text x={KIDS.x + 14} y={KIDS.y + 24} className="zone-title">🧸 Children's corner</text>
+          <text x={KIDS.x + 14} y={KIDS.y + 24} className="zone-title">{t("wf.kids")}</text>
         </g>
 
         {/* counter, self-checkout, new arrivals (near entrance) */}
         <g className="service">
           <path d="M 150 460 Q 150 434 176 434 L 330 434 Q 356 434 356 460 L 356 478 L 150 478 Z" className="counter" />
-          <text x="253" y="462" textAnchor="middle" className="counter-label">🛎️ Information & returns</text>
+          <text x="253" y="462" textAnchor="middle" className="counter-label">{t("wf.info")}</text>
           {[0, 1, 2].map((i) => (
             <g key={i}>
               <rect x={440 + i * 36} y="448" width="24" height="24" rx="5" className="kiosk" />
               <rect x={446 + i * 36} y="453" width="12" height="9" rx="1" className="screen" />
             </g>
           ))}
-          <text x="490" y="490" textAnchor="middle" className="svc-caption">Self-checkout</text>
+          <text x="490" y="490" textAnchor="middle" className="svc-caption">{t("wf.selfco")}</text>
           <rect x="44" y="438" width="84" height="40" rx="6" className="display" />
-          <text x="86" y="462" textAnchor="middle" className="svc-caption">✨ New arrivals</text>
+          <text x="86" y="462" textAnchor="middle" className="svc-caption">{t("wf.new")}</text>
         </g>
 
         {/* entrance: security gates + sliding doors */}
@@ -299,7 +301,7 @@ export default function WayfindMap({ target }: { target: Target }) {
           <rect x={plan.doorX + 26} y="508" width="8" height="20" rx="2" className="gate" />
           <rect x={plan.doorX - 40} y={H - 16} width="36" height="8" rx="2" className="door" />
           <rect x={plan.doorX + 4} y={H - 16} width="36" height="8" rx="2" className="door" />
-          <text x={plan.doorX + (plan.doorX > MAIN_X ? -54 : 54)} y={H - 24} textAnchor={plan.doorX > MAIN_X ? "end" : "start"} className="zone-title">🚪 Entrance</text>
+          <text x={plan.doorX + (plan.doorX > MAIN_X ? -54 : 54)} y={H - 24} textAnchor={plan.doorX > MAIN_X ? "end" : "start"} className="zone-title">{t("wf.entrance")}</text>
         </g>
 
         {plan.plants.map(([px, py]) => (
@@ -320,7 +322,7 @@ export default function WayfindMap({ target }: { target: Target }) {
             <circle r="7" className="wf-here-dot" />
             <g transform={`translate(${plan.doorX > MAIN_X ? 22 : -22} -16)`}>
               <rect x={plan.doorX > MAIN_X ? 0 : -86} y="-12" width="86" height="22" rx="11" className="wf-here-tag" />
-              <text x={plan.doorX > MAIN_X ? 43 : -43} y="4" textAnchor="middle" className="wf-here-text">You are here</text>
+              <text x={plan.doorX > MAIN_X ? 43 : -43} y="4" textAnchor="middle" className="wf-here-text">{t("wf.here")}</text>
             </g>
           </g>
           <g className="wf-walker" style={{ offsetPath: `path("${route.d}")`, "--wf-d": `${WALK_AT}ms`, "--wf-ms": `${WALK_MS}ms` } as CSSProperties}>
@@ -351,8 +353,8 @@ export default function WayfindMap({ target }: { target: Target }) {
           </g>
         )}
       </svg>
-      <button type="button" className="wf-replay" onClick={replay} aria-label="Replay the route">
-        <span aria-hidden="true">↻</span> Replay
+      <button type="button" className="wf-replay" onClick={replay} aria-label={t("wf.replayAria")}>
+        <span aria-hidden="true">↻</span> {t("wf.replay")}
       </button>
       </div>
 
@@ -363,7 +365,7 @@ export default function WayfindMap({ target }: { target: Target }) {
           const last = i === steps.length - 1;
           return (
             <li key={i} className={last ? "wf-last" : ""} style={{ "--wf-d": `${i === 0 ? WALK_AT - 200 : Math.round(from)}ms`, "--wf-ms": `${Math.max(300, Math.round(to - from))}ms`, animationDelay: `${120 + i * 80}ms` } as CSSProperties}>
-              <button type="button" className="wf-step" onClick={replay} title="Replay the route">
+              <button type="button" className="wf-step" onClick={replay} title={t("wf.replayAria")}>
                 <span className="step-icon" aria-hidden="true">{s.icon}</span>
                 <span>{s.text}</span>
               </button>
@@ -372,7 +374,7 @@ export default function WayfindMap({ target }: { target: Target }) {
         })}
       </ol>
       <p className="hint map-note">
-        Schematic, not to scale: a sketch of how {target.branch ? target.branch.replace(/\s+(public|regional)?\s*library$/i, "") : "this library"} lays out its shelves (non-fiction in Dewey order, fiction A–Z, children's in its own corner). Follow the call-number signs for the exact range. Tap a step to replay.
+        {t("wf.note", { place: target.branch ? target.branch.replace(/\s+(public|regional)?\s*library$/i, "") : t("wf.thisLibrary") })}
       </p>
     </div>
   );

@@ -1,3 +1,4 @@
+import { getLang } from "./i18n";
 import type { Neighbour, AskResponse, Branch, DiscoverResponse, ResolveHit, Route } from "./types";
 
 // Same-origin by default. For the mobile shell (WebView) or a split deploy, set
@@ -37,22 +38,22 @@ const live = {
   branches: () => fetch(url("/api/branches")).then((r) => json<{ branches: Branch[] }>(r)),
   browse: (by: "author" | "category") => fetch(url(`/api/browse?by=${by}`)).then((r) => json<{ groups: { label: string; count: number; ids: string[] }[] }>(r)),
   browseBooks: (ids: string[]) => fetch(url(`/api/browse?ids=${encodeURIComponent(ids.join(","))}`)).then((r) => json<{ books: { id: string; title: string; author: string }[] }>(r)),
-  chat: (text: string, state: unknown) =>
-    fetch(url("/api/chat"), { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, state }) }).then((r) =>
+  chat: (text: string, state: unknown, lang?: string) =>
+    fetch(url("/api/chat"), { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, state, lang: lang ?? getLang() }) }).then((r) =>
       json<{ messages: string[]; options: { label: string; value: string }[]; state: { step: string }; result?: { book_id: string; title: string; author: string; level: number; branch: string; start_id: string; start_title: string; start_status: string } | null }>(r),
     ),
   // mode "fast" (default): no model, no network, well under a second. "deep": the local AI's picks too (slow).
-  discover: (text: string, branch: string, filters: string[], offset = 0, limit = 10, opts: { mode?: "fast" | "deep"; signal?: AbortSignal } = {}) =>
-    fetch(url("/api/discover"), { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, branch: branch || null, filters, offset, limit, mode: opts.mode ?? "fast" }), signal: opts.signal }).then((r) =>
+  discover: (text: string, branch: string, filters: string[], offset = 0, limit = 10, opts: { mode?: "fast" | "deep"; signal?: AbortSignal; lang?: string } = {}) =>
+    fetch(url("/api/discover"), { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, branch: branch || null, filters, offset, limit, mode: opts.mode ?? "fast", lang: opts.lang ?? getLang() }), signal: opts.signal }).then((r) =>
       json<DiscoverResponse>(r),
     ),
   targets: () => fetch(url("/api/targets")).then((r) => json<{ targets: { id: string; title: string; author: string; unfinished?: boolean }[] }>(r)),
   popular: (limit = 12) => fetch(url(`/api/popular?limit=${limit}`)).then((r) => json<{ popular: { id: string; title: string; author: string; category: string; hot_at: string[]; queue: number; score: number; demo: boolean }[] }>(r)),
-  ask: (target_id: string, intent: "why_before" | "time_budget" | "large_print", weeks?: number) =>
+  ask: (target_id: string, intent: "why_before" | "time_budget" | "large_print", weeks?: number, lang?: string) =>
     fetch(url("/api/ask"), {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ target_id, intent, weeks }),
+      body: JSON.stringify({ target_id, intent, weeks, lang: lang ?? getLang() }),
     }).then((r) => json<AskResponse>(r)),
   scan: (file: File) => {
     const fd = new FormData();

@@ -3,6 +3,7 @@
  * and a per-branch schematic floor plan (seeded by the branch, so each library looks
  * different but always the same). WayfindMap.tsx only draws what this returns.
  */
+import { t, type Key } from "./i18n";
 
 export const W = 800;
 export const H = 560;
@@ -174,19 +175,19 @@ export function locate(p: Parsed, plan: Plan): Spot {
     const gx = side > 0 ? bx + NF_W + 10 : bx - 10;
     const sy = y + 4 + (p.slot ?? 0.5) * (UNIT_H - 8);
     const rowName = ROW_NAMES[p.shelfRow ?? 1];
-    return { stand: [gx, sy], unitRect: { x: bx, y, w: NF_W, h: UNIT_H }, bayLabelX: bx + NF_W / 2, rowName, label: `Shelf ${u + 1} · ${rowName} row` };
+    return { stand: [gx, sy], unitRect: { x: bx, y, w: NF_W, h: UNIT_H }, bayLabelX: bx + NF_W / 2, rowName, label: t("wf.label.shelf", { n: u + 1, row: t(`wf.rowL.${rowName}` as Key) }) };
   }
   if (p.kind === "fiction") {
     const row = p.row ?? 2;
     const within = (cutterFraction(p.author) * 26 - row * 5) / (row === 4 ? 6 : 5);
     const x = FIC_X + 12 + within * (FIC_W - 24);
-    return { stand: [Math.min(FIC_X + FIC_W - 8, Math.max(FIC_X + 8, x)), FIC_ROWS[row] + 28], unitRect: { x: FIC_X, y: FIC_ROWS[row], w: FIC_W, h: 18 }, label: `Fiction ${FIC_SECTIONS[row]}` };
+    return { stand: [Math.min(FIC_X + FIC_W - 8, Math.max(FIC_X + 8, x)), FIC_ROWS[row] + 28], unitRect: { x: FIC_X, y: FIC_ROWS[row], w: FIC_W, h: 18 }, label: t("wf.label.fiction", { section: FIC_SECTIONS[row] }) };
   }
   if (p.kind === "children") {
     const row = Math.min(2, Math.floor(cutterFraction(p.author) * 3));
-    return { stand: [KIDS.x + 170, KIDS.y + 23 + row * 28], unitRect: { x: KIDS.x + 180, y: KIDS.y + 16 + row * 28, w: 100, h: 14 }, label: `Children's shelf ${row + 1}` };
+    return { stand: [KIDS.x + 170, KIDS.y + 23 + row * 28], unitRect: { x: KIDS.x + 180, y: KIDS.y + 16 + row * 28, w: 100, h: 14 }, label: t("wf.label.kids", { n: row + 1 }) };
   }
-  return { stand: [MAIN_X, 470], label: "Information counter" };
+  return { stand: [MAIN_X, 470], label: t("wf.label.info") };
 }
 
 export interface Route {
@@ -237,34 +238,35 @@ export interface Step { icon: string; text: string }
 export function stepsFor(p: Parsed, callNumber: string, branch?: string): Step[] {
   const plan = branch ? planFor(branch) : null;
   const short = callNumber.replace(LANG, "").trim();
+  const dirWord = (d: "left" | "right") => t(d === "left" ? "wf.dir.left" : "wf.dir.right");
   const enter =
-    !plan || plan.doorX === MAIN_X ? "Go through the gates and walk straight up the main aisle, past the counter." :
-    `Go in, turn ${plan.doorX < MAIN_X ? "right" : "left"}, then walk up the main aisle past the counter.`;
+    !plan || plan.doorX === MAIN_X ? t("wf.enter.straight") :
+    t("wf.enter.turn", { dir: dirWord(plan.doorX < MAIN_X ? "right" : "left") });
   if (p.kind === "nonfiction" && p.bayIndex !== undefined) {
     const spot = plan ? locate(p, plan) : null;
     const dir = spot ? (spot.stand[0] < MAIN_X ? "left" : "right") : "";
     const rowName = ROW_NAMES[p.shelfRow ?? 1];
-    const where = (p.slot ?? 0.5) < 0.34 ? "near the left end" : (p.slot ?? 0.5) > 0.66 ? "near the right end" : "about halfway along";
+    const where = t((p.slot ?? 0.5) < 0.34 ? "wf.where.left" : (p.slot ?? 0.5) > 0.66 ? "wf.where.right" : "wf.where.mid");
     return [
       { icon: "🚪", text: enter },
-      { icon: dir === "right" ? "↱" : "↰", text: dir ? `At the top of the aisle, turn ${dir} along the non-fiction bays.` : "At the top of the aisle, follow the non-fiction bays in Dewey order." },
-      { icon: "📚", text: `Walk to the ${p.bayIndex}00s bay (${NF_LABELS[p.bayIndex]}) and stop at shelf ${(p.unit ?? 0) + 1} from the aisle.` },
-      { icon: "🔎", text: `${rowName[0].toUpperCase()}${rowName.slice(1)} row, ${where}: look for ${short}.` },
+      { icon: dir === "right" ? "↱" : "↰", text: dir ? t("wf.nf.turn", { dir: dirWord(dir) }) : t("wf.nf.follow") },
+      { icon: "📚", text: t("wf.nf.bay", { n: p.bayIndex, range: NF_LABELS[p.bayIndex], shelf: (p.unit ?? 0) + 1 }) },
+      { icon: "🔎", text: t("wf.nf.row", { row: t(`wf.rowU.${rowName}` as Key), where, call: short }) },
     ];
   }
   if (p.kind === "children") {
     return [
       { icon: "🚪", text: enter },
-      { icon: "↱", text: "Turn right into the children's corner, the one with the round rug." },
-      { icon: "🔎", text: p.author ? `The low shelves run by author: look for ${p.author}.` : `Look for ${short} on the spines.` },
+      { icon: "↱", text: t("wf.kids.turn") },
+      { icon: "🔎", text: p.author ? t("wf.kids.author", { author: p.author }) : t("wf.look", { call: short }) },
     ];
   }
   if (p.kind === "fiction") {
     return [
       { icon: "🚪", text: enter },
-      { icon: "↰", text: `Turn left into the fiction stacks and go to the ${FIC_SECTIONS[p.row ?? 2]} row.` },
-      { icon: "🔎", text: p.author ? `Fiction is shelved A–Z by author surname: find ${p.author}.` : `Look for ${short} on the spines.` },
+      { icon: "↰", text: t("wf.fic.turn", { section: FIC_SECTIONS[p.row ?? 2] }) },
+      { icon: "🔎", text: p.author ? t("wf.fic.author", { author: p.author }) : t("wf.look", { call: short }) },
     ];
   }
-  return [{ icon: "🛎️", text: "Ask at the counter: this call number doesn't match a zone on the map." }];
+  return [{ icon: "🛎️", text: t("wf.ask") }];
 }

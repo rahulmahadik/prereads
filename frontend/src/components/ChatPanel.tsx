@@ -3,6 +3,7 @@ import { api } from "../api";
 import { navigate } from "../router";
 import { setBranch, setReaderLevel } from "./ui";
 import { canListen, listen, speak, stop } from "../speech";
+import { getLang, t, tn, useLang, voiceLang, type Key } from "../i18n";
 
 interface Option {
   label: string;
@@ -18,6 +19,7 @@ interface TraceStep {
 
 type Item =
   | { kind: "msg"; from: "bot" | "me"; text: string }
+  | { kind: "hello" }
   | { kind: "trace"; steps: TraceStep[]; open: boolean };
 
 type ChatState = { step: string; book_id?: string | null; focus_id?: string | null; candidates?: unknown[]; level?: number | null; branch?: string | null };
@@ -41,19 +43,18 @@ interface Reply {
   trace?: TraceStep[];
 }
 
-const GREETING = "Hi! Tell me a book, an author, or something you want to learn. I'll find what to read first and where it is on a shelf.";
-
 // Progress only: these advance on a timer while a request is in flight. The real steps come back in `trace`.
-const PROGRESS_START = ["Understanding your request…", "Searching the catalogue…", "Checking shelves…", "Writing an answer…"];
-const PROGRESS_FINISH = ["Building your reading path…", "Checking shelves…", "Writing an answer…"];
+const PROGRESS_START: Key[] = ["chat.p.understand", "chat.p.search", "chat.p.shelves", "chat.p.write"];
+const PROGRESS_FINISH: Key[] = ["chat.p.build", "chat.p.shelves", "chat.p.write"];
 
-const fresh = (): Item[] => [{ kind: "msg", from: "bot", text: GREETING }];
+const fresh = (): Item[] => [{ kind: "hello" }];
 
 const fmtMs = (ms: number) => (ms < 1000 ? `${Math.max(0, Math.round(ms))} ms` : `${(ms / 1000).toFixed(1)} s`);
 
 const reducedMotion = () => typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
-function Progress({ steps }: { steps: string[] }) {
+function Progress({ steps }: { steps: Key[] }) {
+  useLang();
   const [phase, setPhase] = useState(0);
   const [shown, setShown] = useState(false);
   useEffect(() => {
@@ -66,11 +67,11 @@ function Progress({ steps }: { steps: string[] }) {
   }, [steps]);
   if (!shown) return <div className="bubble bot typing" aria-hidden="true">…</div>;
   return (
-    <ol className="chat-steps live" role="status" aria-label="Working on it">
+    <ol className="chat-steps live" role="status" aria-label={t("chat.workingAria")}>
       {steps.slice(0, phase + 1).map((s, i) => (
         <li key={s} className={i < phase ? "done" : "now"}>
           <span className="chat-step-mark" aria-hidden="true">{i < phase ? "✓" : ""}</span>
-          <span className="chat-step-name">{s}</span>
+          <span className="chat-step-name">{t(s)}</span>
         </li>
       ))}
     </ol>
@@ -83,7 +84,7 @@ function TraceRow({ steps, open, onToggle }: { steps: TraceStep[]; open: boolean
     <div className="chat-trace">
       <button type="button" className="chat-trace-toggle" aria-expanded={open} onClick={onToggle}>
         <span aria-hidden="true" className="chat-trace-caret">{open ? "▾" : "▸"}</span>
-        How I found this · {steps.length} {steps.length === 1 ? "step" : "steps"} · {fmtMs(total)}
+        {tn("chat.trace", steps.length, { time: fmtMs(total) })}
       </button>
       {open && (
         <ol className="chat-steps">
@@ -104,6 +105,7 @@ function TraceRow({ steps, open, onToggle }: { steps: TraceStep[]; open: boolean
 }
 
 export default function ChatPanel() {
+  useLang();
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState<Item[]>(fresh);
   const [options, setOptions] = useState<Option[]>([]);
@@ -111,7 +113,7 @@ export default function ChatPanel() {
   const [result, setResult] = useState<Result | null>(null);
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
-  const [progress, setProgress] = useState<string[]>(PROGRESS_START);
+  const [progress, setProgress] = useState<Key[]>(PROGRESS_START);
   const [voice, setVoice] = useState(() => {
     try {
       return localStorage.getItem("prereads.voice") === "1";
@@ -143,7 +145,7 @@ export default function ChatPanel() {
   const loadStarters = async () => {
     const id = reqId.current;
     try {
-      const r = (await api.chat("", { step: "start" })) as Reply;
+      const r = (await api.chat("", { step: "start" }, getLang())) as Reply;
       if (id === reqId.current) setOptions(r.options);
     } catch {
       /* the greeting still works without chips */
@@ -169,7 +171,7 @@ export default function ChatPanel() {
     setBusy(true);
     setText("");
     try {
-      const r = (await api.chat(value, state)) as Reply;
+      const r = (await api.chat(value, state, getLang())) as Reply;
       if (id !== reqId.current) return; // started over meanwhile
       const trace = r.trace ?? [];
       const add: Item[] = [];
@@ -179,12 +181,12 @@ export default function ChatPanel() {
       }
       add.push(...r.messages.map((t) => ({ kind: "msg" as const, from: "bot" as const, text: t })));
       setItems((m) => [...m.map((x) => (x.kind === "trace" && x.open && traces.current > 1 ? { ...x, open: false } : x)), ...add]);
-      if (voice) speak(r.messages.join(" ") + (r.options.length ? " Your options are: " + r.options.map((o) => o.label).join(", ") + "." : ""), "chat");
+      if (voice) speak(r.messages.join(" ") + (r.options.length ? " " + t("chat.options", { list: r.options.map((o) => o.label).join(", ") }) : ""), "chat", voiceLang());
       setOptions(r.options);
       setState(r.state);
       setResult(r.result ?? null);
     } catch (e) {
-      if (id === reqId.current) setItems((m) => [...m, { kind: "msg", from: "bot", text: (e as Error).message || "Something went wrong. Try again." }]);
+      if (id === reqId.current) setItems((m) => [...m, { kind: "msg", from: "bot", text: (e as Error).message || t("chat.error") }]);
     } finally {
       if (id === reqId.current) {
         setBusy(false);
@@ -227,31 +229,35 @@ export default function ChatPanel() {
 
   return (
     <>
-      <button type="button" className={`chat-fab ${open ? "hide" : ""}`} onClick={() => setOpen(true)} aria-label="Ask PreReads">
-        <span aria-hidden="true">💬</span> Ask PreReads
+      <button type="button" className={`chat-fab ${open ? "hide" : ""}`} onClick={() => setOpen(true)} aria-label={t("chat.ask")}>
+        <span aria-hidden="true">💬</span> {t("chat.ask")}
       </button>
 
       {open && (
-        <div className="chat-panel" role="dialog" aria-label="Ask PreReads">
+        <div className="chat-panel" role="dialog" aria-label={t("chat.ask")}>
           <div className="chat-head">
             <span className="chat-title">
-              <span aria-hidden="true">📚</span> Ask PreReads
+              <span aria-hidden="true">📚</span> {t("chat.ask")}
             </span>
             <span className="chat-head-actions">
-              <button type="button" className={`icon-btn small ${voice ? "on" : ""}`} onClick={() => setVoice((v) => !v)} aria-pressed={voice} aria-label="Read replies aloud" title="Read replies aloud">
+              <button type="button" className={`icon-btn small ${voice ? "on" : ""}`} onClick={() => setVoice((v) => !v)} aria-pressed={voice} aria-label={t("chat.voice")} title={t("chat.voice")}>
                 🔊
               </button>
               <button type="button" className="chat-restart" onClick={reset} disabled={items.length <= 1 && !busy}>
-                <span aria-hidden="true">↺</span> Start over
+                <span aria-hidden="true">↺</span> {t("chat.startOver")}
               </button>
-              <button type="button" className="icon-btn small" onClick={() => setOpen(false)} aria-label="Close">
+              <button type="button" className="icon-btn small" onClick={() => setOpen(false)} aria-label={t("common.close")}>
                 ✕
               </button>
             </span>
           </div>
           <div className="chat-body" role="log" aria-live="polite" aria-relevant="additions">
             {items.map((m, i) =>
-              m.kind === "trace" ? (
+              m.kind === "hello" ? (
+                <div key={i} className="bubble bot">
+                  {t("chat.greeting")}
+                </div>
+              ) : m.kind === "trace" ? (
                 <TraceRow key={i} steps={m.steps} open={m.open} onToggle={() => toggleTrace(i)} />
               ) : (
                 <div key={i} className={`bubble ${m.from}`}>
@@ -273,10 +279,10 @@ export default function ChatPanel() {
             {result && !busy && (
               <div className="chat-result">
                 <button type="button" className="primary" onClick={openDirections}>
-                  🧭 Directions to {result.start_title}
+                  {t("chat.directions", { title: result.start_title })}
                 </button>
                 <button type="button" className="secondary" onClick={openLine}>
-                  See the whole path
+                  {t("chat.wholePath")}
                 </button>
               </div>
             )}
@@ -293,8 +299,8 @@ export default function ChatPanel() {
               ref={inputRef}
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder={busy ? "Working on it…" : state.step === "start" ? "A title, author or topic…" : "Or type your answer…"}
-              aria-label="Message"
+              placeholder={t(busy ? "chat.ph.working" : state.step === "start" ? "chat.ph.start" : "chat.ph.answer")}
+              aria-label={t("chat.message")}
               autoComplete="off"
               enterKeyHint="send"
               disabled={busy}
@@ -303,8 +309,8 @@ export default function ChatPanel() {
               <button
                 type="button"
                 className={`icon-btn small ${hearing ? "on" : ""}`}
-                aria-label="Speak your message"
-                title="Speak"
+                aria-label={t("chat.speakAria")}
+                title={t("chat.speak")}
                 disabled={busy}
                 onClick={async () => {
                   setHearing(true);
@@ -321,7 +327,7 @@ export default function ChatPanel() {
                 {hearing ? "●" : "🎤"}
               </button>
             )}
-            <button type="submit" className="primary" disabled={busy || !text.trim()} aria-label="Send">
+            <button type="submit" className="primary" disabled={busy || !text.trim()} aria-label={t("chat.send")}>
               ➤
             </button>
           </form>
