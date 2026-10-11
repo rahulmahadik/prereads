@@ -6,6 +6,7 @@ export interface Book {
   year?: number | null;
   pages?: number | null;
   subjects: string[];
+  audience?: string[];
   summary: string;
   cover_url?: string | null;
   source: string;
