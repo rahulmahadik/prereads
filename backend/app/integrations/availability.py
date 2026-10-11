@@ -14,6 +14,7 @@ import logging
 from collections import defaultdict
 
 from .catalog import _pick, nlb
+from ..core import config
 from ..core.models import Availability, Book, Demand
 
 log = logging.getLogger("prereads.availability")
@@ -181,8 +182,9 @@ def live_demand(book: Book, availability: list[Availability]) -> Demand | None:
 
 
 def get_availability(book: Book) -> list[Availability]:
-    """Live NLB rows when keys are set and NLB returns items, else the labelled demo table."""
-    if nlb().enabled():
+    """Live NLB rows when the data source is the API and NLB returns items, else the labelled
+    demo table (no open dataset has per-branch copies, so "dataset" also uses the demo table)."""
+    if config.effective_data_source() == "api" and nlb().enabled():
         rows = live_availability(book)
         if rows:
             return rows
@@ -192,7 +194,7 @@ def get_availability(book: Book) -> list[Availability]:
 def get_demand(book: Book, availability: list[Availability]) -> Demand:
     """Live demand only alongside live availability; never mixes live demand with demo copies.
     A live lookup that fails gives an empty (non-demo) Demand rather than invented numbers."""
-    if nlb().enabled() and availability and not availability[0].demo:
+    if config.effective_data_source() == "api" and nlb().enabled() and availability and not availability[0].demo:
         d = live_demand(book, availability)
         if d is not None:
             return d

@@ -2,8 +2,7 @@
 
 Each fetcher returns a small normalized dict of the fields it found, ``{}`` when the
 source has no matching record, or raises ``SourceError`` on a network / HTTP failure
-(failures are not cached, empty results are). Measured coverage and terms of use:
-internal/BOOK_DATA_SOURCES.md.
+(failures are not cached, empty results are). Data-source credits and terms: README.md.
 
   overdrive    NLB's OverDrive (Libby) catalogue, thunder API, library key "nlb": real NLB
                digital-collection records. description, subjects, cover, audience.

@@ -1,7 +1,7 @@
 {
   "source": "data.gov.sg",
   "dataset_id": "d_27b8dae65d9ca1539e14d09578b17cbf",
-  "hours_note": "Typical hours, check NLB.",
+  "hours_note": "7 branches use NLB's published hours; the rest are typical hours, check NLB.",
   "libraries": [
     {
       "name": "Ang Mo Kio Public Library",
@@ -12,7 +12,11 @@
         "open": "10:00",
         "close": "21:00"
       },
-      "hours_source": "default"
+      "hours_source": "default",
+      "hours_as_of": "2026-10-11",
+      "hours_url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/ang-mo-kio-library",
+      "status": "closed",
+      "notice": "Ang Mo Kio Library will be closed from 1 Aug 2026 for relocation."
     },
     {
       "name": "Bedok Public Library",
@@ -34,7 +38,10 @@
         "open": "10:00",
         "close": "21:00"
       },
-      "hours_source": "default"
+      "hours_source": "NLB",
+      "hours_as_of": "2026-10-11",
+      "hours_url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/bishan-library",
+      "extended_open": "09:00"
     },
     {
       "name": "Bukit Batok Public Library",
@@ -42,10 +49,13 @@
       "lat": 1.349498,
       "lng": 103.749285,
       "hours": {
-        "open": "10:00",
+        "open": "11:00",
         "close": "21:00"
       },
-      "hours_source": "default"
+      "hours_source": "NLB",
+      "hours_as_of": "2026-10-11",
+      "hours_url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/bukit-batok-library",
+      "extended_open": "09:00"
     },
     {
       "name": "Bukit Panjang Public Library",
@@ -67,7 +77,9 @@
         "open": "10:00",
         "close": "21:00"
       },
-      "hours_source": "default"
+      "hours_source": "NLB",
+      "hours_as_of": "2026-10-11",
+      "hours_url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/central-library"
     },
     {
       "name": "Cheng San Public Library",
@@ -144,7 +156,9 @@
         "open": "10:00",
         "close": "21:00"
       },
-      "hours_source": "default"
+      "hours_source": "NLB",
+      "hours_as_of": "2026-10-11",
+      "hours_url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/jurong-west-library"
     },
     {
       "name": "Marine Parade Public Library",
@@ -188,8 +202,11 @@
         "open": "10:00",
         "close": "21:00"
       },
-      "hours_source": "default",
-      "source": "manual"
+      "hours_source": "NLB",
+      "source": "manual",
+      "hours_as_of": "2026-10-11",
+      "hours_url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/punggol-library",
+      "extended_open": "09:00"
     },
     {
       "name": "Queenstown Public Library",
@@ -244,7 +261,10 @@
         "open": "10:00",
         "close": "21:00"
       },
-      "hours_source": "default"
+      "hours_source": "NLB",
+      "hours_as_of": "2026-10-11",
+      "hours_url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/tampines-library",
+      "extended_open": "09:00"
     },
     {
       "name": "Toa Payoh Public Library",
@@ -266,7 +286,10 @@
         "open": "10:00",
         "close": "21:00"
       },
-      "hours_source": "default"
+      "hours_source": "NLB",
+      "hours_as_of": "2026-10-11",
+      "hours_url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/woodlands-library",
+      "extended_open": "09:00"
     },
     {
       "name": "Yishun Public Library",

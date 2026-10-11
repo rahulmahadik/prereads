@@ -70,11 +70,11 @@ export default function DigitalCopies({ title, author }: { title: string; author
           {t("dig.sample")} ↗
         </a>
       )}
-      {gid && (
+      {gid ? (
         <button type="button" className="link-btn online-link" onClick={() => setReading(true)}>
           {t("dig.readHere")}
         </button>
-      )}
+      ) : null}
       {o.gutenberg && (
         <a className="link-btn online-link" href={o.gutenberg.read_url} target="_blank" rel="noreferrer">
           {t("dig.gutenberg")} ↗

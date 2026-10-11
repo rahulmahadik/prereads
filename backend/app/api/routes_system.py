@@ -1,11 +1,11 @@
 """System endpoints: health check and the runtime mode switch.
 
 `/api/mode` lets the Settings sheet turn demo data, the AI provider and live NLB
-calls on and off without a restart. The overrides live in `core.config.RUNTIME`.
+calls on and off, and pick the shelf data source (auto | demo | dataset | api), without a restart. The overrides live in `core.config.RUNTIME`.
 """
 from __future__ import annotations
 
-from typing import Optional
+from typing import Literal, Optional
 
 from fastapi import APIRouter
 from pydantic import BaseModel
@@ -20,6 +20,7 @@ class ModeRequest(BaseModel):
     demo: Optional[bool] = None
     use_llm: Optional[bool] = None
     use_nlb: Optional[bool] = None
+    data_source: Optional[Literal["auto", "demo", "dataset", "api"]] = None
 
 
 @router.get("/health")
@@ -42,4 +43,6 @@ def set_mode(req: ModeRequest):
         config.RUNTIME["use_llm"] = req.use_llm
     if req.use_nlb is not None:
         config.RUNTIME["use_nlb"] = req.use_nlb
+    if req.data_source is not None:
+        config.RUNTIME["data_source"] = req.data_source
     return {**config.mode_info(), "cached_routes": len(load_index())}

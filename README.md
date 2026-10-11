@@ -107,6 +107,22 @@ Switch modes by editing `.env` and restarting. After adding keys, rebuild the ca
 make precompute       # --refresh with the local models; ~20–60 s per title
 ```
 
+### Data sources
+
+Shelf data comes from one of three sources, set by `DATA_SOURCE` in `.env` (`auto` by default)
+or at runtime from **Settings → Shelf data** (`POST /api/mode {"data_source": ...}`):
+
+| Source | What it gives | Label in the UI |
+|---|---|---|
+| `api` | NLB Catalogue v2: per-branch copies, call numbers, checkout trends. Needs `NLB_API_KEY` + `NLB_APP_CODE`. | none (live) |
+| `dataset` | NLB open data in `backend/data/nlb/`: real opening hours from the nlb.gov.sg library pages, and all-of-NLB yearly loans and digital use (data.gov.sg, Singapore Open Data Licence). No per-title or per-branch loans exist as open data, so copies and "Popular right now" stay demo. | "Hours from NLB, checked <date>", "NLB in <year>: …" |
+| `demo` | The deterministic demo table. | "(demo data)" |
+
+`auto` picks `api` when both NLB keys are set, else `dataset` when `backend/data/nlb/` has files, else `demo`.
+Rebuild the open data with `cd backend && .venv/bin/python scripts/fetch_nlb_datasets.py`
+(set `DATAGOV_API_KEY` to avoid rate limits; Playwright reads the hours), then
+`.venv/bin/python scripts/fetch_libraries.py --hours-only` to copy the hours into `libraries.json`.
+
 ## 3. Getting the NLB key
 
 Apply at https://go.gov.sg/nlblabs-form (NLB Labs). Approval comes by email with an
@@ -153,7 +169,7 @@ in the route JSON if a pick disappears.
 ## 6. Tests
 
 ```bash
-make test   # backend pytest (38 tests) + frontend vitest (29 tests)
+make test   # backend pytest (77 tests) + frontend vitest (56 tests)
 ```
 
 `make eval` re-scores the cached paths with the heavy local model and reports rule
@@ -222,3 +238,15 @@ preview when downloads are blocked). To wrap it as a mobile app later, see
 - `docs/MOBILE_SHELL.md` — wrapping the web app in a WebView (Capacitor) later
 - `docs/BACKLOG.md` — prioritised feature backlog after the build
 - `docs/GAPS_VS_NLB.md` — what NLB's portals lack and how PreReads fills it
+
+## Credits and data sources
+
+- [Open Library](https://openlibrary.org): catalogue checks, descriptions, subjects, covers and Dewey classes (data released under CC0).
+- [data.gov.sg](https://data.gov.sg): NLB library locations and NLB open datasets (Singapore Open Data Licence).
+- NLB's digital collection via its public OverDrive catalogue (`thunder.api.overdrive.com`): eBook and audiobook copies, holds and publisher samples. Light, cached, user-triggered lookups; not an official integration.
+- [Project Gutenberg](https://www.gutenberg.org) via [Gutendex](https://gutendex.com): public-domain texts for "read the first chapter".
+- Local models via [Ollama](https://ollama.com) (gpt-oss, Gemma 3, Qwen2.5-VL, nomic-embed-text), [faster-whisper](https://github.com/SYSTRAN/faster-whisper) and [Kokoro](https://github.com/thewh1teagle/kokoro-onnx), each under its own licence.
+- Fonts: Atkinson Hyperlegible, Fraunces, Noto Sans SC and Noto Sans Tamil from Google Fonts (SIL Open Font License).
+
+PreReads is not an NLB product. Shelf availability, queue lengths and trends are demo data unless NLB Catalogue API keys are configured.
+

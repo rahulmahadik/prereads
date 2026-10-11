@@ -1,0 +1,74 @@
+{
+  "source": "NLB",
+  "origin": "nlb.gov.sg library pages",
+  "as_of": "2026-10-11",
+  "branches": {
+    "bishan": {
+      "name": "Bishan Public Library",
+      "url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/bishan-library",
+      "status": "open",
+      "open": "10:00",
+      "close": "21:00",
+      "extended_open": "09:00",
+      "public_holidays": "closed"
+    },
+    "jurongwest": {
+      "name": "Jurong West Public Library",
+      "url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/jurong-west-library",
+      "status": "open",
+      "open": "10:00",
+      "close": "21:00",
+      "public_holidays": "closed"
+    },
+    "tampines": {
+      "name": "Tampines Regional Library",
+      "url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/tampines-library",
+      "status": "open",
+      "open": "10:00",
+      "close": "21:00",
+      "extended_open": "09:00",
+      "public_holidays": "closed"
+    },
+    "woodlands": {
+      "name": "Woodlands Regional Library",
+      "url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/woodlands-library",
+      "status": "open",
+      "open": "10:00",
+      "close": "21:00",
+      "extended_open": "09:00",
+      "public_holidays": "closed"
+    },
+    "central": {
+      "name": "Central Public Library",
+      "url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/central-library",
+      "status": "open",
+      "open": "10:00",
+      "close": "21:00",
+      "public_holidays": "closed"
+    },
+    "punggol": {
+      "name": "Punggol Regional Library",
+      "url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/punggol-library",
+      "status": "open",
+      "open": "10:00",
+      "close": "21:00",
+      "extended_open": "09:00",
+      "public_holidays": "closed"
+    },
+    "bukitbatok": {
+      "name": "Bukit Batok Library",
+      "url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/bukit-batok-library",
+      "status": "open",
+      "open": "11:00",
+      "close": "21:00",
+      "extended_open": "09:00",
+      "public_holidays": "closed"
+    },
+    "angmokio": {
+      "name": "Ang Mo Kio Public Library",
+      "url": "https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations/libraries/ang-mo-kio-library",
+      "status": "closed",
+      "notice": "Ang Mo Kio Library will be closed from 1 Aug 2026 for relocation."
+    }
+  }
+}

@@ -1,0 +1,1218 @@
+{
+  "source": "data.gov.sg",
+  "as_of": "2026-10-11",
+  "licence": "Singapore Open Data Licence v1.0 (https://data.gov.sg/open-data-licence)",
+  "count": 110,
+  "datasets": [
+    {
+      "id": "d_6a8d81084dfcb26248545b8a91362ce6",
+      "name": "Catalogue Search",
+      "agency": "National Library Board",
+      "format": "API",
+      "coverage": [
+        null,
+        null
+      ],
+      "updated": "2025-02-27"
+    },
+    {
+      "id": "d_27b8dae65d9ca1539e14d09578b17cbf",
+      "name": "Libraries",
+      "agency": "National Library Board",
+      "format": "GEOJSON",
+      "coverage": [
+        null,
+        null
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_7e11775ef59f13278e1848cde57ce53a",
+      "name": "Library",
+      "agency": "National Library Board",
+      "format": "API",
+      "coverage": [
+        null,
+        null
+      ],
+      "updated": "2025-02-27"
+    },
+    {
+      "id": "d_a6d93a061d4148fe55106a28ddd6193c",
+      "name": "NLB Name Authorities Attributes",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2019-02-15",
+        "2026-04-30"
+      ],
+      "updated": "2026-04-16"
+    },
+    {
+      "id": "d_68955b7991bedbe6d888ad5182974e4f",
+      "name": "NLB Name Authorities Relationships",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2019-02-15",
+        "2026-04-30"
+      ],
+      "updated": "2026-04-16"
+    },
+    {
+      "id": "d_bf36da418f88e5485aff69079694ecef",
+      "name": "National Library Board Library Reach Index, Collections And Loans, Annual",
+      "agency": "Singapore Department of Statistics",
+      "format": "CSV",
+      "coverage": [
+        "1960-01-01",
+        "2024-12-31"
+      ],
+      "updated": "2025-10-15"
+    },
+    {
+      "id": "d_ec5e08ce1e8bfe7a2f016ecc250d085a",
+      "name": "National Library Singapore Archived Websites 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-09-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_f9f2e3a4d03b5d264a24df2a8aae2d84",
+      "name": "National Library Singapore Digital Collection by Subject- Arts 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-12-01",
+        "2025-12-31"
+      ],
+      "updated": "2025-04-11"
+    },
+    {
+      "id": "d_077b765202cd793a3757175d91fd2086",
+      "name": "National Library Singapore Digital Collection by Subject- Communications 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-12-01",
+        "2025-12-31"
+      ],
+      "updated": "2025-03-28"
+    },
+    {
+      "id": "d_140b4084019afb04e68f3f96a024fd34",
+      "name": "National Library Singapore Digital Collection by Subject- Community and Social Services 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-12-01",
+        "2025-12-31"
+      ],
+      "updated": "2025-03-28"
+    },
+    {
+      "id": "d_33a99b8455574623be85ba7990025dbe",
+      "name": "National Library Singapore Digital Collection by Subject- Economy 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-12-01",
+        "2025-12-31"
+      ],
+      "updated": "2025-03-28"
+    },
+    {
+      "id": "d_b1be448874d1702cc2a4b5e5ba2a5459",
+      "name": "National Library Singapore Digital Collection by Subject- Education 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-12-01",
+        "2025-12-31"
+      ],
+      "updated": "2025-03-28"
+    },
+    {
+      "id": "d_877195fb0082e6d5b8d9f84310813d9d",
+      "name": "National Library Singapore Digital Collection by Subject- Events 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-12-01",
+        "2025-12-31"
+      ],
+      "updated": "2025-03-28"
+    },
+    {
+      "id": "d_230fa5ba8184303b89c6ad1bcfd95932",
+      "name": "National Library Singapore Digital Collection by Subject- Geography and Travels 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-12-01",
+        "2025-12-31"
+      ],
+      "updated": "2025-03-28"
+    },
+    {
+      "id": "d_3ad712851d7716ab4e1a03093109c9f1",
+      "name": "National Library Singapore Digital Collection by Subject- Heritage and Culture 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-12-01",
+        "2025-12-31"
+      ],
+      "updated": "2025-03-28"
+    },
+    {
+      "id": "d_770b024d6771a978f69037b6203fdcfa",
+      "name": "National Library Singapore Digital Collection by Subject- Nature and Environment 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-12-01",
+        "2025-12-31"
+      ],
+      "updated": "2025-03-28"
+    },
+    {
+      "id": "d_7e101a0fbd261084167236519c1d013c",
+      "name": "National Library Singapore Digital Collection by Subject- Organisations 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-12-01",
+        "2025-12-31"
+      ],
+      "updated": "2025-03-28"
+    },
+    {
+      "id": "d_2ef2e92263572574eec2cc117fed9a9d",
+      "name": "National Library Singapore Digital Collection by Subject- Personalities 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-12-01",
+        "2025-12-31"
+      ],
+      "updated": "2025-03-28"
+    },
+    {
+      "id": "d_5fc4de804aa42eceaf0cdc7455142002",
+      "name": "National Library Singapore Digital Collection by Subject- Politics and Government 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-12-01",
+        "2025-12-31"
+      ],
+      "updated": "2025-03-28"
+    },
+    {
+      "id": "d_e0665957b2396f91ea0cec35e68ef4a4",
+      "name": "National Library Singapore Digital Collection by Subject- Sports and Recreation 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-12-01",
+        "2025-12-31"
+      ],
+      "updated": "2025-03-28"
+    },
+    {
+      "id": "d_b8db614e45bfd16204f1322f3800c0a5",
+      "name": "National Library Singapore Digital Collection by Subject- Streets and Places 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-12-01",
+        "2025-12-31"
+      ],
+      "updated": "2025-03-28"
+    },
+    {
+      "id": "d_5f87f8972b8631eb15f3ed88031427c8",
+      "name": "National Library Singapore Digital Materials by Subject - Transportation 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        null,
+        null
+      ],
+      "updated": "2025-03-28"
+    },
+    {
+      "id": "d_837344f69211296ed8c03b7c2553a34f",
+      "name": "National Library Singapore Digitised Books and Magazines 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_4982d51eb70e64dbd0f4a3f524015480",
+      "name": "National Library Singapore Digitised Documents and Manuscripts 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_1a94953c006ff5c29929cce48db535de",
+      "name": "National Library Singapore Digitised Ephemera 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_d269162117ff494b2832723e18b10e88",
+      "name": "National Library Singapore Digitised Images",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-04-01",
+        "2025-04-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_5d624e3d2f8c0ba248ad14fac6181642",
+      "name": "National Library Singapore Digitised Maps 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_e2dbd202d93678942e6af31342cd2b91",
+      "name": "National Library Singapore Digitised Music Albums, Lyrics and Music Scores 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_7cb942a9fdbcb374fd8eac241081dbe4",
+      "name": "National Library Singapore Digitised Sound and Video Recordings 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_2c0eb3e7e92a449ce0de635d3aa43d83",
+      "name": "National Library Singapore Online Articles 2024",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_df2600491078803976ef85f455172b26",
+      "name": "Newspapers-Bintang Pranakan-1930 to 1931",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_6dcc38d29a428b3ca5f9e0563d6298cf",
+      "name": "Newspapers-Bintang Timor-1894",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_957300730389bb7144054a06e340696f",
+      "name": "Newspapers-Comrade-1946",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_259427b26f58f92762229a5da33b95f4",
+      "name": "Newspapers-Daily Advertiser-1890 to 1894",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-09-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_c96c2331c9b19d68ee2e66171805984c",
+      "name": "Newspapers-Eastern Daily Mail and Straits Morning Advertiser-1905 to 1907",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_434d294555cbb371da63e9770d5b4ca1",
+      "name": "Newspapers-Indian Daily Mail-1946 to 1947",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_8da33537d8112093ea230332db01896b",
+      "name": "Newspapers-Indian Daily Mail-1949 to 1953",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_c0df31b2deb4f30411c6cee433ec2fbb",
+      "name": "Newspapers-Indo-Chinese Patriot-1900",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_d5f109cb55452e28d6946be9efab96de",
+      "name": "Newspapers-Kabar Slalu-1924",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_674f5a706704032cef2c83dba00bec55",
+      "name": "Newspapers-Kabar Uchapan Baru-1926 to 1931",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_c4af00c7483ec17fcd440ac8a0c52530",
+      "name": "Newspapers-Malacca Guardian-1928 to 1929",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_99cf3841d550550458ba7b818ac4b0f9",
+      "name": "Newspapers-Malaya Tribune-1914 to 1918",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_913f85ef12abf463af174d20f977188a",
+      "name": "Newspapers-Malaya Tribune-1919 to 1923",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_4061fb8858d333344a1cf1feb046ec29",
+      "name": "Newspapers-Malaya Tribune-1924 to 1928",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_b721192180f5c1fe669414650a6f7d75",
+      "name": "Newspapers-Malaya Tribune-1929 to 1933",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_aa56cfd7dd8efa83312292fdcb2b2aec",
+      "name": "Newspapers-Malaya Tribune-1934 to 1938",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_e4809434f8db0007bbf4490e139d6685",
+      "name": "Newspapers-Malaya Tribune-1939 to 1942",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_35edcd8fbe08f517e1c23470f996dadc",
+      "name": "Newspapers-Malaya Tribune-1945 to 1949",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_786b21b8e9b2e5a9bfbbda09188184a0",
+      "name": "Newspapers-Malaya Tribune-1950 to 1951",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_a96e4adfcdcd7a168a95a59fca64da60",
+      "name": "Newspapers-Malayan Saturday Post-1924 to 1928",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_fdea4eac6191291d3620a7ff866d2780",
+      "name": "Newspapers-Malayan Saturday Post-1929 to 1933",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_00515e7c3a51c289ff488ff3f7528d1e",
+      "name": "Newspapers-Mid-day Herald-1895 to 1898",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_0e03b5f9acd1c4ef447f4c6cd5bfd32a",
+      "name": "Newspapers-Morning Tribune-1927",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_8b7214b5e37966ded68f92d698e113e7",
+      "name": "Newspapers-Morning Tribune-1936 to 1941",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_b1233478b7e05f5fb6211edc9ab449e7",
+      "name": "Newspapers-Morning Tribune-1946 to 1949",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_29c621045011e19ccff74461ef4d67ac",
+      "name": "Newspapers-Pinang Gazette and Straits Chronicle-1838 to 1839",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_f81f3ae8743b587a0eda4b44c2ed6f4d",
+      "name": "Newspapers-Pinang Gazette and Straits Chronicle-1856",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_af5ea97030fed0db57e14efbe2bd93fd",
+      "name": "Newspapers-Pinang Gazette and Straits Chronicle-1879",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_28b3a85568eb8e82a0c13749afa96061",
+      "name": "Newspapers-Pinang Gazette and Straits Chronicle-1886 to 1890",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_1cb3d6e4ab7e93448361745cf80419c9",
+      "name": "Newspapers-Pinang Gazette and Straits Chronicle-1891 to 1897",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_2a81c69204884bcb90870217cf8baad6",
+      "name": "Newspapers-Pinang Gazette and Straits Chronicle-1899 to 1905",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_8ce983e6b90d94010dbcd10a24ded26e",
+      "name": "Newspapers-Pinang Gazette and Straits Chronicle-1906 to 1910",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-04-02"
+    },
+    {
+      "id": "d_edf8dcabefecac5d2df4a1f740ac2c3e",
+      "name": "Newspapers-Pinang Gazette and Straits Chronicle-1911 to 1915",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_4e02194b4b37fb47acdd56bffc30d01c",
+      "name": "Newspapers-Pinang Gazette and Straits Chronicle-1916 to 1920",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_ccd91859f4d954aaeb79930bb177caff",
+      "name": "Newspapers-Pinang Gazette and Straits Chronicle-1921 to 1925",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_5dcdd526f0628d4761a5e60b8ba1de79",
+      "name": "Newspapers-Pinang Gazette and Straits Chronicle-1926 to 1930",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_c176529dae89e86a696620cd6dfc446f",
+      "name": "Newspapers-Pinang Gazette and Straits Chronicle-1931 to 1935",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_80a623950e82ff14b5bf26518cbdd310",
+      "name": "Newspapers-Pinang Gazette and Straits Chronicle-1936 to 1941",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_939c55df2b0e9451c31f25c17836f8c3",
+      "name": "Newspapers-Prince of Wales Island Gazette-1833",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_bc1c53268697009babf3918cd37771b7",
+      "name": "Newspapers-Shonan Times (Syonan Shimbun)-1942 to 1945",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_0d77d715e4db728f806bd01f7ba0371a",
+      "name": "Newspapers-Singapore Chronicle and Commercial Register-1827 to 1831",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_537ab93bef232df3b883e0477858205a",
+      "name": "Newspapers-Singapore Chronicle and Commercial Register-1832 to 1837",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_d35d2d0a53b43d45fa58286dc0e23fd2",
+      "name": "Newspapers-Singapore Standard-1950 to 1953",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_b172ca710adce670bc058f3c11d518c7",
+      "name": "Newspapers-Singapore Weekly Herald-1888 to 1889",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_5f41191b7b5f7f7aa56a91e382463797",
+      "name": "Newspapers-Straits Advocate-1889",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_b063f5a2559352d7ee3ea4cda0a1ecd3",
+      "name": "Newspapers-Straits Chinese Herald-1894",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_8d3647bf2946589e07b4cde4143bddad",
+      "name": "Newspapers-Straits Daily Advertiser-1900",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_642550222dea9b6eba88bd21bdaca1fa",
+      "name": "Newspapers-Straits Echo-1903 to 1904",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_80d80e9fe2d1e0f1617c83a3937f0f5d",
+      "name": "Newspapers-Straits Echo-1905 to 1909",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_8ff0050ff9ab94b500b278cf97acd2f5",
+      "name": "Newspapers-Straits Echo-1910 to 1914",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_bc269bdf18f07f1c980e995e151fe3e1",
+      "name": "Newspapers-Straits Echo-1915 to 1918",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_1a0e13ffcdd67a3954f12cec0b63a1d1",
+      "name": "Newspapers-Straits Eurasian Advocate-1888",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_50251bdaf3c3e076cccb960a605726c5",
+      "name": "Newspapers-Straits Mail-1894 to 1895",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_cce6ead0b8ca810f9ad625d4a3a114d8",
+      "name": "Newspapers-Straits Observer (Singapore)-1874 to 1876",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_210e7366a96ea6ef6ff109f8819dff13",
+      "name": "Newspapers-Straits Observer (Singapore)-1897",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_5334f6305b1bc4abb9a62083ff5357b6",
+      "name": "Newspapers-Straits Telegraph and Daily Advertiser-1899",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_b1cf00e204e35e07d4ec45abb91b8077",
+      "name": "Newspapers-Sunday Standard-1950 to 1953",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_4145f481381104e8acac1ca8f99fdbbc",
+      "name": "Newspapers-Sunday Tribune (Singapore)-1933 to 1937",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_8697c0e4f0b625531be10cb8db1032bb",
+      "name": "Newspapers-Sunday Tribune (Singapore)-1938 to 1941",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_ffa948e85a23f815cf4355e47b387232",
+      "name": "Newspapers-Sunday Tribune (Singapore)-1945 to 1950",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_6fe660ee98460d1be880580f99e86da1",
+      "name": "Newspapers-Syonan Shimbun Fortnightly-1945",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_6ef475f33c2d51eda249b8266a4acca3",
+      "name": "Newspapers-The Malacca Weekly Chronicle and Mercantile Advertiser-1888 to 1889",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_e42d38f5b5012fa208783f9c8729f47b",
+      "name": "Newspapers-The Malacca Weekly-1888 to 1889",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_2d3523431e6788da59b87ad624d571b3",
+      "name": "Newspapers-The Penang Patriot-1898 to 1900",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_227eeceb49248626c991e8af1b7adde0",
+      "name": "Newspapers-The Penang Standard and Mercantile Advertiser-1879",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_86739674f299989f01899688877282ba",
+      "name": "Newspapers-The Penang Times-1882",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_362cc124d3971ee36e7e47a3b4c4d02f",
+      "name": "Newspapers-The Straits Chronicle-1945 to 1946",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_79532f897cd4489d1f2f98b9fda25b4e",
+      "name": "Newspapers-The Straits Echo (Mail Edition)-1904 to 1907",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_408fba8dd27c95c31bb5d462171c74f8",
+      "name": "Newspapers-The Straits Echo (Mail Edition)-1908 to 1911",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_7daf3cec5d6d840ed2cbb3f5f2941079",
+      "name": "Newspapers-The Straits Echo (Mail Edition)-1913 to 1916",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_a4cc0a6658e4ae8ee28549a834a5f9ee",
+      "name": "Newspapers-The Straits Echo (Mail Edition)-1917 to 1920",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_a73c21356e8c8168d20832bc50f72a90",
+      "name": "Newspapers-The Straits Echo (Mail Edition)-1922 to 1926",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_66160334994304e9a21d42ae2e32a5c7",
+      "name": "Newspapers-The Straits Echo (Mail Edition)-1927 to 1931",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-04-02"
+    },
+    {
+      "id": "d_4c3c3d7e5b29722187d69fe226a0acb7",
+      "name": "Newspapers-The Straits Independent and Penang Chronicle-1889 to 1892",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_722c16f37860ad31d697d609c7f81be1",
+      "name": "Newspapers-The Straits Independent and Penang Chronicle-1894 to 1896",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_8229ae99eb503b45b075067b87184cfe",
+      "name": "Newspapers-The Straits Maritime Journal and General News-1895 to 1896",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_459adb15c1cabfd2e0212a923989b892",
+      "name": "Newspapers-Weekly Sun-1910 to 1913",
+      "agency": "National Library Board",
+      "format": "CSV",
+      "coverage": [
+        "2024-03-01",
+        "2025-03-01"
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_9606da8c76387bf74627b3e7797f781d",
+      "name": "Street and Places",
+      "agency": "National Library Board",
+      "format": "GEOJSON",
+      "coverage": [
+        null,
+        null
+      ],
+      "updated": "2024-06-06"
+    },
+    {
+      "id": "d_bdc72edbd61f04946913f47d079240e7",
+      "name": "Title Recommendation",
+      "agency": "National Library Board",
+      "format": "API",
+      "coverage": [
+        null,
+        null
+      ],
+      "updated": "2025-02-27"
+    },
+    {
+      "id": "d_39d77f60d11fbb9c85cb102e59ca0d08",
+      "name": "eResource Search",
+      "agency": "National Library Board",
+      "format": "API",
+      "coverage": [
+        null,
+        null
+      ],
+      "updated": "2025-02-27"
+    }
+  ]
+}

@@ -16,7 +16,19 @@ export interface ModeInfo {
   env_demo: boolean;
   cached_routes: number;
   prototype?: boolean;
+  /** Shelf data source asked for (auto | demo | dataset | api) and the one in use (demo | dataset | api). */
+  data_source?: DataSource;
+  data_source_effective?: Exclude<DataSource, "auto">;
+  dataset_as_of?: string | null;
 }
+
+export type DataSource = "auto" | "demo" | "dataset" | "api";
+
+const SOURCES: { id: Exclude<DataSource, "auto">; label: "settings.src.demo" | "settings.src.dataset" | "settings.src.api" }[] = [
+  { id: "demo", label: "settings.src.demo" },
+  { id: "dataset", label: "settings.src.dataset" },
+  { id: "api", label: "settings.src.api" },
+];
 
 function Pill({ ok, text }: { ok: boolean; text: string }) {
   return <span className={`status-pill ${ok ? "ok" : "no"}`}>{text}</span>;
@@ -32,7 +44,7 @@ export default function SettingsSheet({ open, onClose }: { open: boolean; onClos
     if (open) load();
   }, [open]);
 
-  const set = async (patch: Partial<Pick<ModeInfo, "demo" | "use_llm" | "use_nlb">>) => {
+  const set = async (patch: Partial<Pick<ModeInfo, "demo" | "use_llm" | "use_nlb" | "data_source">>) => {
     setBusy(true);
     try {
       setInfo(await api.setMode(patch));
@@ -63,6 +75,24 @@ export default function SettingsSheet({ open, onClose }: { open: boolean; onClos
               <span>{t("settings.realSub")}</span>
             </button>
           </div>
+
+          <h3 className="small-h">{t("settings.shelfData")}</h3>
+          <div className="mode-switch shelf-src" role="radiogroup" aria-label={t("settings.shelfData")}>
+            {SOURCES.map((o) => {
+              const on = (info.data_source_effective ?? "demo") === o.id;
+              const locked = o.id === "api" && !info.nlb_key;
+              return (
+                <button key={o.id} type="button" role="radio" aria-checked={on} className={`mode-opt ${on ? "on" : ""}`} disabled={busy || info.prototype || locked} onClick={() => set({ data_source: o.id })}>
+                  <strong>{t(o.label)}</strong>
+                  {locked && <span>{t("settings.src.needsKey")}</span>}
+                </button>
+              );
+            })}
+          </div>
+          <p className="hint">
+            {t("settings.src.now", { source: t(SOURCES.find((o) => o.id === (info.data_source_effective ?? "demo"))!.label) })}
+            {info.dataset_as_of ? ` · ${t("settings.src.asOf", { date: info.dataset_as_of })}` : ""}
+          </p>
 
           <ul className="keys">
             {info.provider === "ollama" ? (

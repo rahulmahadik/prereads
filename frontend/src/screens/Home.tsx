@@ -21,7 +21,26 @@ interface Popular extends Target {
   hot_at: string[];
   queue: number;
   demo: boolean;
+  /** "api" (NLB checkout trends), "nlb-dataset" (open data) or "demo". */
+  source?: string;
 }
+
+/** All-of-NLB annual aggregates from the open dataset (never per title). */
+interface NlbFacts {
+  year: number;
+  physical_loans: number;
+  digital_usage?: number | null;
+  dataset?: string;
+}
+
+interface PopularMeta {
+  source?: string;
+  dataset?: string;
+  year?: number;
+  facts?: NlbFacts | null;
+}
+
+const millions = (n?: number | null) => (n ? (n / 1e6).toFixed(1) : "0");
 
 type Mode = "ask" | "title" | "scan";
 
@@ -53,6 +72,7 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
   const [hitsMeta, setHitsMeta] = useState<{ total: number; has_more: boolean; offset: number; limit: number }>({ total: 0, has_more: false, offset: 0, limit: 8 });
   const [targets, setTargets] = useState<Target[]>([]);
   const [popular, setPopular] = useState<Popular[]>([]);
+  const [popularMeta, setPopularMeta] = useState<PopularMeta>({});
   const [showAllPopular, setShowAllPopular] = useState(false);
   const [showAllUnfinished, setShowAllUnfinished] = useState(false);
   const [error, setError] = useState("");
@@ -63,7 +83,13 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
 
   useEffect(() => {
     api.targets().then((r) => setTargets(r.targets)).catch(() => setTargets([]));
-    api.popular(12).then((r) => setPopular(r.popular)).catch(() => setPopular([]));
+    api
+      .popular(12)
+      .then((r) => {
+        setPopular(r.popular);
+        setPopularMeta(r as unknown as PopularMeta);
+      })
+      .catch(() => setPopular([]));
   }, []);
 
   useEffect(() => {
@@ -242,13 +268,22 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
         <section className="row-section">
           <div className="row-head">
             <h3>🔥 {t("home.popular")}</h3>
-            <span className="hint">{t("home.popularHint")}{popular[0]?.demo ? t("home.demoData") : ""}</span>
+            <span className="hint">
+              {popularMeta.source === "nlb-dataset" && popularMeta.dataset
+                ? t("home.popularFrom", { dataset: popularMeta.dataset, year: String(popularMeta.year ?? "") })
+                : <>{t("home.popularHint")}{popular[0]?.demo ? t("home.demoData") : ""}</>}
+            </span>
             {popular.length > 6 && (
               <button type="button" className="link-btn inline" onClick={() => setShowAllPopular((v) => !v)}>
                 {showAllPopular ? t("home.showFewer") : t("home.seeAll", { n: popular.length })}
               </button>
             )}
           </div>
+          {popularMeta.facts && (
+            <p className="hint">
+              {t("home.nlbFacts", { year: String(popularMeta.facts.year), loans: millions(popularMeta.facts.physical_loans), digital: millions(popularMeta.facts.digital_usage) })}
+            </p>
+          )}
           <div className={`book-row ${showAllPopular ? "grid" : ""}`} role="list">
             {(showAllPopular ? popular : popular.slice(0, 6)).map((b) => (
               <button key={b.id} type="button" className="row-item" role="listitem" onClick={() => go(b.id, b.title, b.author)}>

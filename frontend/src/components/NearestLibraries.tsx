@@ -5,6 +5,9 @@ import type { Branch } from "../types";
 
 type Status = "idle" | "locating" | "denied" | "unavailable" | "ready";
 
+/** /api/branches extras: where the hours came from, and NLB's closure notice. */
+type BranchInfo = Branch & { hours_source?: string | null; hours_as_of?: string | null; status?: string; notice?: string | null };
+
 const shortName = (n: string) => n.replace(/\s+(Regional|Public)?\s*Library$/i, "").trim() || n;
 
 export default function NearestLibraries({ branches, onPick }: { branches: Branch[]; onPick: (code: string) => void }) {
@@ -41,10 +44,12 @@ export default function NearestLibraries({ branches, onPick }: { branches: Branc
         <>
           <ul className="nearest-list">
             {nearest.map((b) => {
-              const s = openState(b.hours, now);
+              const info = b as BranchInfo;
+              const shut = info.status === "closed";
+              const s = shut ? { open: false } : openState(b.hours, now);
               // 24-hour times outside English ("21:00"); "9pm" in English, as geo.ts writes it.
               const clock = (hhmm: string) => (lang === "en" ? clockLabel(hhmm) : hhmm);
-              const label = !b.hours ? t("near.noHours") : s.open ? t("near.open", { time: clock(b.hours.close) }) : t("near.closed", { time: clock(b.hours.open) });
+              const label = shut ? t("near.tempClosed") : !b.hours ? t("near.noHours") : s.open ? t("near.open", { time: clock(b.hours.close) }) : t("near.closed", { time: clock(b.hours.open) });
               return (
                 <li key={b.code}>
                   <button type="button" className="nearest-item" onClick={() => onPick(b.code)}>
@@ -52,12 +57,23 @@ export default function NearestLibraries({ branches, onPick }: { branches: Branc
                     <span className="nearest-meta">
                       {formatKm(b.km)} · <span className={s.open ? "nearest-open" : "nearest-closed"}>{label}</span>
                     </span>
+                    {shut && info.notice && <span className="nearest-meta">{info.notice}</span>}
                   </button>
                 </li>
               );
             })}
           </ul>
-          <p className="hint">{t("near.typical")}</p>
+          {(() => {
+            const shown = nearest as BranchInfo[];
+            const nlb = shown.find((b) => b.hours_source === "NLB" && b.hours_as_of);
+            const typical = shown.some((b) => b.hours_source !== "NLB" && b.status !== "closed");
+            return (
+              <>
+                {nlb && <p className="hint">{t("near.nlbHours", { date: nlb.hours_as_of! })}</p>}
+                {(typical || !nlb) && <p className="hint">{t("near.typical")}</p>}
+              </>
+            );
+          })()}
         </>
       )}
     </div>

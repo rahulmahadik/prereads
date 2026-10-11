@@ -51,17 +51,34 @@ def _libraries_by_key() -> dict:
         return {}
 
 
+TYPICAL_HOURS = {"open": "10:00", "close": "21:00"}
+
+
 @router.get("/branches")
 def branches():
-    """Every branch code with name, lat/lng, address and hours; location fields are None when unknown."""
+    """Every branch code with name, lat/lng, address and hours; location fields are None when unknown.
+
+    Hours: NLB's published hours (hours_source "NLB", hours_as_of) when libraries.json has them,
+    else the typical 10:00-21:00 ("default"). DATA_SOURCE=demo forces the typical hours.
+    status "closed" + notice when NLB lists the branch as closed (e.g. relocation)."""
+    from ..integrations import nlb_datasets
+
+    src = nlb_datasets.source()
     libs = _libraries_by_key()
     out = []
     for c, n in BRANCHES.items():
         lib = libs.get(_branch_key(n), {})
-        out.append({
+        real = src != "demo" and lib.get("hours_source") == "NLB"
+        row = {
             "code": c, "name": n,
             "lat": lib.get("lat"), "lng": lib.get("lng"),
-            "address": lib.get("address"), "hours": lib.get("hours"),
-            "hours_source": lib.get("hours_source"),
-        })
-    return {"branches": out}
+            "address": lib.get("address"),
+            "hours": lib.get("hours") if real or src != "demo" else (TYPICAL_HOURS if lib else None),
+            "hours_source": "NLB" if real else ("default" if lib else None),
+            "hours_as_of": lib.get("hours_as_of") if real else None,
+        }
+        if src != "demo" and lib.get("status") == "closed":
+            row["status"], row["notice"], row["hours_as_of"] = "closed", lib.get("notice"), lib.get("hours_as_of")
+        out.append(row)
+    any_real = any(r["hours_source"] == "NLB" for r in out)
+    return {"branches": out, "source": "nlb-dataset" if any_real else "demo", "as_of": nlb_datasets.as_of() if any_real else None}

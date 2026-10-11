@@ -69,16 +69,31 @@ NLB_TRENDS_DURATION: str = os.getenv("NLB_TRENDS_DURATION", "past30days")
 
 OPENLIBRARY_BASE: str = "https://openlibrary.org"
 
+# data.gov.sg (NLB open datasets, library list). Optional key, sent as x-api-key only when set;
+# anonymous calls work but are rate-limited hard. Never logged.
+DATAGOV_API_KEY: str = os.getenv("DATAGOV_API_KEY", "").strip()
+
+# Where shelf data (hours, popularity, demand) comes from:
+#   auto     api if both NLB keys are set, else dataset if data/nlb/ has derived data, else demo
+#   demo     the labelled deterministic demo table only
+#   dataset  NLB open data where it exists (hours, aggregates), demo for the rest (labelled)
+#   api      the NLB Catalogue v2 API (falls back to dataset, then demo, when a key is missing)
+DATA_SOURCES = ("auto", "demo", "dataset", "api")
+DATA_SOURCE: str = os.getenv("DATA_SOURCE", "auto").strip().lower()
+if DATA_SOURCE not in DATA_SOURCES:
+    DATA_SOURCE = "auto"
+
 DATA_DIR: Path = ROOT / "data"
 CACHE_DIR: Path = DATA_DIR / "cache"
 ROUTES_DIR: Path = CACHE_DIR / "routes"
 ROUTES_DIR.mkdir(parents=True, exist_ok=True)
+NLB_DATA_DIR: Path = DATA_DIR / "nlb"       # derived NLB open data (scripts/fetch_nlb_datasets.py)
 
 HTTP_TIMEOUT: float = float(os.getenv("HTTP_TIMEOUT", "12"))
 
 
 # Runtime overrides (set from the Settings sheet via /api/mode). None = use .env.
-RUNTIME: dict[str, Optional[bool]] = {"demo": None, "use_llm": None, "use_nlb": None}
+RUNTIME: dict[str, Optional[object]] = {"demo": None, "use_llm": None, "use_nlb": None, "data_source": None}
 
 
 def effective_demo() -> bool:
@@ -123,6 +138,31 @@ def nlb_enabled() -> bool:
     return True if RUNTIME["use_nlb"] is None else bool(RUNTIME["use_nlb"])
 
 
+def requested_data_source() -> str:
+    """The data source asked for: the /api/mode override, else DATA_SOURCE from .env."""
+    v = RUNTIME.get("data_source")
+    return v if v in DATA_SOURCES else DATA_SOURCE
+
+
+def has_dataset() -> bool:
+    """Is there derived NLB open data in data/nlb/ (any *.json)?"""
+    try:
+        return any(NLB_DATA_DIR.glob("*.json"))
+    except OSError:
+        return False
+
+
+def effective_data_source() -> str:
+    """demo | dataset | api, after resolving auto and falling back when the asked source is missing.
+    api needs nlb_enabled() (both keys, not in demo, NLB switch on); dataset needs derived data."""
+    asked = requested_data_source()
+    if asked == "demo":
+        return "demo"
+    if asked in ("api", "auto") and nlb_enabled():
+        return "api"
+    return "dataset" if has_dataset() else "demo"
+
+
 def mode() -> str:
     """Short label such as "demo" or "ollama+openlibrary+demo-availability"; also part of cache keys."""
     if effective_demo():
@@ -144,7 +184,17 @@ def mode_info() -> dict:
         "use_nlb": nlb_enabled(),
         "mode": mode(),
         "env_demo": DEMO,
+        "data_source": requested_data_source(),
+        "data_source_effective": effective_data_source(),
+        "env_data_source": DATA_SOURCE,
+        "dataset_as_of": _dataset_as_of(),
     }
+
+
+def _dataset_as_of() -> Optional[str]:
+    from ..integrations import nlb_datasets  # local import: integrations import config
+
+    return nlb_datasets.as_of()
 
 
 def ollama_info() -> dict:

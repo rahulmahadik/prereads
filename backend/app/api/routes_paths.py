@@ -120,4 +120,16 @@ def popular(limit: int = 12):
             "queue": t.demand.reservations, "score": round(score, 2), "demo": t.demand.demo,
         })
     rows.sort(key=lambda x: (-x["score"], x["title"]))
-    return {"popular": rows[:limit]}
+    rows = rows[:limit]
+    # Per-title demand is live only from the NLB API (checkout trends); no open dataset has
+    # per-title loans, so without the API the rows stay demo. The dataset adds an honest
+    # all-of-NLB aggregate (loans, digital use) for the year it covers.
+    from ..integrations import nlb_datasets
+
+    src = nlb_datasets.source()
+    live = bool(rows) and src == "api" and not any(r["demo"] for r in rows)
+    source = "api" if live else "demo"
+    for r in rows:
+        r["source"] = source
+    facts = nlb_datasets.headline() if src in ("api", "dataset") else None
+    return {"popular": rows, "source": source, "as_of": None, "facts": facts}

@@ -38,6 +38,32 @@ const live = {
   branches: () => fetch(url("/api/branches")).then((r) => json<{ branches: Branch[] }>(r)),
   browse: (by: "author" | "category") => fetch(url(`/api/browse?by=${by}`)).then((r) => json<{ groups: { label: string; count: number; ids: string[] }[] }>(r)),
   browseBooks: (ids: string[]) => fetch(url(`/api/browse?ids=${encodeURIComponent(ids.join(","))}`)).then((r) => json<{ books: { id: string; title: string; author: string }[] }>(r)),
+  /** Streams the real steps as the server runs them (NDJSON), then resolves with the reply. */
+  chatStream: async (text: string, state: unknown, lang: string | undefined, onEvent: (e: { type: string; step?: string; detail?: string; ms?: number }) => void) => {
+    const res = await fetch(url("/api/chat/stream"), { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, state, lang: lang ?? getLang() }) });
+    if (!res.ok || !res.body) throw new Error(`stream ${res.status}`);
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let buf = "";
+    let reply: unknown = null;
+    for (;;) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let nl: number;
+      while ((nl = buf.indexOf("\n")) >= 0) {
+        const line = buf.slice(0, nl).trim();
+        buf = buf.slice(nl + 1);
+        if (!line) continue;
+        const e = JSON.parse(line);
+        if (e.type === "reply") reply = e.reply;
+        else if (e.type === "error") throw new Error(e.message);
+        else onEvent(e);
+      }
+    }
+    if (!reply) throw new Error("no reply");
+    return reply;
+  },
   chat: (text: string, state: unknown, lang?: string) =>
     fetch(url("/api/chat"), { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, state, lang: lang ?? getLang() }) }).then((r) =>
       json<{ messages: string[]; options: { label: string; value: string }[]; state: { step: string }; result?: { book_id: string; title: string; author: string; level: number; branch: string; start_id: string; start_title: string; start_status: string } | null }>(r),
