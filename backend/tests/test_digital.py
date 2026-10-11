@@ -64,3 +64,14 @@ def test_cache_hit(monkeypatch):
     digital._mem.clear()  # disk cache still serves
     digital.lookup("Thinking, Fast and Slow", "Daniel Kahneman")
     assert len(calls) == 1
+
+
+def test_ebook_sample_url(monkeypatch):
+    it = _item("ebook")
+    it["sample"] = {"href": "https://samples.overdrive.com/?crid=X"}
+    au = _item("audiobook")
+    au["sample"] = {"href": "https://samples.overdrive.com/?crid=Y"}
+    monkeypatch.setattr(digital.httpx, "get", lambda *a, **k: Resp([it, au]))
+    d = digital.lookup("Thinking, Fast and Slow", "Daniel Kahneman")
+    assert d["ebook"]["sample_url"] == "https://samples.overdrive.com/?crid=X"
+    assert "sample_url" not in d["audiobook"]

@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import re
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, HTTPException, Query
 
 from ..core import config
 from ..integrations.availability import BRANCHES
@@ -17,6 +17,23 @@ router = APIRouter(prefix="/api", tags=["library"])
 def digital_copies(title: str = Query(..., min_length=1), author: str = ""):
     from ..integrations.digital import lookup
     return lookup(title, author)
+
+
+@router.get("/online")
+def online_copies(title: str = Query(..., min_length=1), author: str = ""):
+    """Legally free online copies (Project Gutenberg, Open Library); {} when none or on failure."""
+    from ..integrations.online import lookup
+    return lookup(title, author)
+
+
+@router.get("/online/chapter")
+def online_chapter(gutenberg_id: int = Query(..., gt=0)):
+    """First chapter of a public-domain Project Gutenberg book, for the in-app reader."""
+    from ..integrations.online import chapter
+    data = chapter(gutenberg_id)
+    if not data:
+        raise HTTPException(404, "No readable first chapter found")
+    return data
 
 
 def _branch_key(name: str) -> str:

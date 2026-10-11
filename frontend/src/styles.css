@@ -2848,3 +2848,20 @@ html:lang(ms) .action-bar { grid-template-columns: 1fr 1fr 1fr; }
 .node-btn { min-width: var(--tap); min-height: var(--tap); }
 .link-btn:not(.inline) { min-height: var(--tap); }
 .more-row .link-btn.inline { min-height: var(--tap); display: inline-flex; align-items: center; }
+
+/* book content: description on cards and a full first paragraph on the book page */
+.rec-blurb { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--muted); font-size: 15px; line-height: 1.45; margin-top: 2px; }
+.page-right .about { margin-top: 0; padding-bottom: 12px; border-bottom: 1px solid var(--rule); margin-bottom: 14px; }
+.about-text.clamped { -webkit-line-clamp: 9; }
+
+/* read online */
+.online-link { min-height: 44px; display: inline-flex; align-items: center; }
+.reader { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; background: var(--paper-page); color: var(--ink); }
+.reader-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 16px; padding-top: calc(8px + env(safe-area-inset-top, 0px)); border-bottom: 1px solid var(--rule); }
+.reader-progress { color: var(--muted); font-size: max(16px, var(--fs)); min-width: 0; overflow-wrap: anywhere; }
+.reader-page { flex: 1; overflow-y: auto; width: 100%; max-width: 38em; margin: 0 auto; padding: 24px 20px calc(48px + env(safe-area-inset-bottom, 0px)); font-family: var(--serif); font-size: 19px; line-height: 1.6; }
+.reader-page h2 { font-size: 1.4em; line-height: 1.25; margin: 0 0 1em; }
+.reader-page p { margin: 0 0 1em; }
+.reader-page .reader-book { font-family: inherit; color: var(--muted); font-size: 0.85em; margin-bottom: 0.4em; }
+.reader-foot { margin-top: 2em; padding-top: 1em; border-top: 1px solid var(--rule); color: var(--muted); font-size: max(16px, 0.85em); }
+html.senior .reader-page { font-size: 22px; }

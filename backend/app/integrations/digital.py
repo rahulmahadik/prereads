@@ -69,6 +69,10 @@ def _parse(items: list[dict], title: str, author: str) -> dict:
         if cur is None:
             out[kind] = {"owned": owned, "available": avail, "holds": holds,
                          "url": f"{SITE}/media/{rid}" if rid else search_url(title)}
+            sample = (it.get("sample") or {}).get("href")
+            if kind == "ebook" and sample:
+                cur = out[kind]
+                cur["sample_url"] = sample  # publisher-provided opening chapters
         else:  # several editions of the same format: add up
             cur["owned"] += owned
             cur["available"] += avail

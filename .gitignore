@@ -238,3 +238,4 @@ backend/data/cache/digital/
 backend/data/cache/enrich/
 backend/data/cache/reading_age/
 .run/
+backend/data/cache/online/

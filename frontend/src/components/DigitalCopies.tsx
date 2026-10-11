@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { t, tn, useLang } from "../i18n";
+import SampleReader from "./SampleReader";
 
-type Format = { owned: number; available: number; holds: number; url: string } | null;
+type Format = { owned: number; available: number; holds: number; url: string; sample_url?: string } | null;
+type Online = {
+  gutenberg?: { url: string; read_url: string; formats: string[] } | null;
+  openlibrary?: { access: "public" | "borrowable"; url: string; read_url: string } | null;
+};
 type Digital = {
   live: boolean;
   ebook?: Format;
@@ -17,6 +22,8 @@ function describe(f: NonNullable<Format>): { text: string; cls: "ok" | "alt" | "
 export default function DigitalCopies({ title, author }: { title: string; author?: string }) {
   useLang();
   const [d, setD] = useState<Digital | null>(null);
+  const [o, setO] = useState<Online>({});
+  const [reading, setReading] = useState(false);
   useEffect(() => {
     let off = false;
     setD(null);
@@ -25,6 +32,11 @@ export default function DigitalCopies({ title, author }: { title: string; author
       .then((r) => (r.ok ? r.json() : { live: false }))
       .then((j) => !off && setD(j))
       .catch(() => !off && setD({ live: false }));
+    setO({});
+    fetch(`/api/online?${q}`)
+      .then((r) => (r.ok ? r.json() : {}))
+      .then((j) => !off && setO(j || {}))
+      .catch(() => !off && setO({}));
     return () => {
       off = true;
     };
@@ -34,6 +46,7 @@ export default function DigitalCopies({ title, author }: { title: string; author
   const rows: [string, Format | undefined][] = d?.live
     ? [[t("dig.ebook"), d.ebook], [t("dig.audio"), d.audiobook]]
     : [];
+  const gid = Number(o.gutenberg?.url.match(/\/ebooks\/(\d+)/)?.[1]) || 0;
   const found = rows.filter(([, f]) => f);
 
   return (
@@ -52,6 +65,28 @@ export default function DigitalCopies({ title, author }: { title: string; author
           </div>
         );
       })}
+      {d?.live && d.ebook?.sample_url && (
+        <a className="link-btn online-link" href={d.ebook.sample_url} target="_blank" rel="noreferrer">
+          {t("dig.sample")} ↗
+        </a>
+      )}
+      {gid && (
+        <button type="button" className="link-btn online-link" onClick={() => setReading(true)}>
+          {t("dig.readHere")}
+        </button>
+      )}
+      {o.gutenberg && (
+        <a className="link-btn online-link" href={o.gutenberg.read_url} target="_blank" rel="noreferrer">
+          {t("dig.gutenberg")} ↗
+        </a>
+      )}
+      {o.openlibrary && (
+        <a className="link-btn online-link" href={o.openlibrary.read_url} target="_blank" rel="noreferrer">
+          {o.openlibrary.access === "public" ? t("dig.olPublic") : t("dig.olBorrow")} ↗
+        </a>
+      )}
+      {o.openlibrary?.access === "borrowable" && <p className="hint">{t("dig.olNote")}</p>}
+      {reading && gid && <SampleReader gutenbergId={gid} onClose={() => setReading(false)} />}
       {d?.live && found.length === 0 && <p className="hint">{t("dig.notIn")}</p>}
       {d?.live && <p className="hint">{t("dig.live")}</p>}
       {(!d?.live || found.length === 0) && d && (
