@@ -23,7 +23,7 @@ function hash(s: string): number {
   return Math.abs(h);
 }
 
-export function bindingFor(book: Book) {
+function bindingFor(book: Book) {
   return BINDINGS[hash(book.title) % BINDINGS.length];
 }
 

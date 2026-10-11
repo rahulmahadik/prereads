@@ -6,12 +6,12 @@ export type Resolved = Exclude<Theme, "system">;
 export type Font = "sans" | "serif";
 export type Size = "sm" | "md" | "lg";
 
-export const THEMES: Theme[] = ["system", "light", "dark", "sepia"];
-export const FONTS: Font[] = ["sans", "serif"];
-export const SIZES: Size[] = ["sm", "md", "lg"];
+const THEMES: Theme[] = ["system", "light", "dark", "sepia"];
+const FONTS: Font[] = ["sans", "serif"];
+const SIZES: Size[] = ["sm", "md", "lg"];
 
 /** --fs-scale per step: A− / A / A+. Senior mode multiplies on top (its own base sizes). */
-export const SIZE_SCALE: Record<Size, number> = { sm: 0.9, md: 1, lg: 1.15 };
+const SIZE_SCALE: Record<Size, number> = { sm: 0.9, md: 1, lg: 1.15 };
 
 /** Browser chrome colour per theme (matches --paper). */
 export const THEME_COLOR: Record<Resolved, string> = { light: "#F3F6F9", dark: "#0F1720", sepia: "#F4ECD8" };
@@ -55,7 +55,7 @@ export const getSize = (): Size => {
   return isSize(v) ? v : "md";
 };
 
-export function systemPrefersDark(): boolean {
+function systemPrefersDark(): boolean {
   try {
     return typeof matchMedia === "function" && matchMedia("(prefers-color-scheme: dark)").matches;
   } catch {
@@ -154,7 +154,7 @@ export function initAppearance() {
   }
 }
 
-export interface Appearance {
+interface Appearance {
   theme: Theme;
   resolved: Resolved;
   font: Font;

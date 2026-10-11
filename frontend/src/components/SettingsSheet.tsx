@@ -22,7 +22,7 @@ const SIZE_OPTS: { id: Size; text: string; label: Key }[] = [
 ];
 
 /** Theme · Font · Text size as 44px segmented controls; each applies at once and is remembered on this device. */
-export function AppearanceSection() {
+function AppearanceSection() {
   useLang();
   const look = useAppearance();
   return (
@@ -82,7 +82,7 @@ export interface ModeInfo {
   dataset_as_of?: string | null;
 }
 
-export type DataSource = "auto" | "demo" | "dataset" | "api";
+type DataSource = "auto" | "demo" | "dataset" | "api";
 
 const SOURCES: { id: Exclude<DataSource, "auto">; label: "settings.src.demo" | "settings.src.dataset" | "settings.src.api" }[] = [
   { id: "demo", label: "settings.src.demo" },

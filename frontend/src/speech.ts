@@ -2,7 +2,7 @@
    speak(text): tries the server's natural voice (/api/tts); if unavailable, uses
    the browser's best built-in voice. Only one thing speaks at a time.
    listen(): browser speech recognition for voice input (Chrome/Edge/Safari).
-   lang is a BCP-47 code (en-SG, zh-CN, ms-MY, ta-IN; see voiceLang() in i18n.ts). The local natural
+   lang is a BCP-47 code (en-SG, zh-CN, ms-MY, ta-IN; see voiceLang() in i18n.ts). The natural
    voice (Kokoro) is English-only, so other languages go straight to the browser voice. */
 import { currentLang, t } from "./i18n";
 
@@ -111,7 +111,7 @@ type RecognitionCtor = new () => {
   stop: () => void;
 };
 
-let serverStt: boolean | null = null; // learned on first call: is /api/stt (local faster-whisper) available?
+let serverStt: boolean | null = null; // learned on first call: is /api/stt (faster-whisper) available?
 
 export function canListen(): boolean {
   const w = window as unknown as { SpeechRecognition?: RecognitionCtor; webkitSpeechRecognition?: RecognitionCtor };
@@ -206,8 +206,6 @@ function listenBrowser(lang: string): Promise<string> {
 }
 
 /* ---------------- narration scripts ---------------- */
-const short = (b: string) => b.replace(" Public Library", "").replace(" Regional Library", "").replace(" Library", "");
-
 /** "Level n of 5: …" words, in the current UI language. */
 export const LEVEL_WORDS: Record<number, string> = {
   get 1() { return t("level.words.1"); },
@@ -242,5 +240,3 @@ export function picksScript(o: { summary: string; picks: { title: string; author
   const items = o.picks.slice(0, 3).map((p, i) => `${["First", "Second", "Third"][i]}: ${p.title}, by ${p.author}. ${p.why} ${p.status}.`);
   return `${o.summary}. Here are my top picks. ${items.join(" ")}`;
 }
-
-export { short as shortBranchName };

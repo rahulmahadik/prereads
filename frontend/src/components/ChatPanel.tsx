@@ -151,7 +151,7 @@ export default function ChatPanel() {
   const ctrl = useRef<AbortController | null>(null);
   const lastSend = useRef<{ value: string; label?: string } | null>(null);
   const [failed, setFailed] = useState(false);
-  const CHAT_TIMEOUT_MS = 60000; // the local model normally answers in ~5 s; past this, say so instead of spinning
+  const CHAT_TIMEOUT_MS = 60000; // the model normally answers in ~5 s; past this, say so instead of spinning
   const cancel = () => {
     ctrl.current?.abort("cancel");
     ctrl.current = null;

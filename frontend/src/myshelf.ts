@@ -14,7 +14,7 @@ export interface Heart {
   at: number;
 }
 
-export interface PathEntry {
+interface PathEntry {
   id: string;
   title: string;
   author: string;
@@ -22,7 +22,7 @@ export interface PathEntry {
   at: number;
 }
 
-export interface PathProgress extends PathEntry {
+interface PathProgress extends PathEntry {
   done: number;
   total: number;
   hoursLeft: number;

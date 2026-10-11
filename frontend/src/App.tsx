@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "./router";
 import Home from "./screens/Home";
-import Ready from "./screens/Ready";
 import Line from "./screens/Line";
 import Book from "./screens/Book";
 import Meet from "./screens/Meet";
@@ -24,8 +23,7 @@ export default function App() {
   const common = { id: p.id ?? "", title: p.title ?? "", author: p.author ?? "" };
 
   let screen = <Home senior={senior} onSenior={() => setSenior((v) => !v)} />;
-  if (loc.screen === "ready" && p.id) screen = <Ready {...common} />;
-  else if (loc.screen === "line" && p.id) screen = <Line {...common} />;
+  if (loc.screen === "line" && p.id) screen = <Line {...common} />;
   else if (loc.screen === "meet" && p.id) screen = <Meet {...common} />;
   else if (loc.screen === "book" && p.id && p.stop) screen = <Book {...common} stopId={p.stop} />;
   return (

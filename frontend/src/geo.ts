@@ -1,16 +1,16 @@
 import type { Branch } from "./types";
 
-export interface Hours {
+interface Hours {
   open: string; // "10:00", Singapore time
   close: string; // "21:00"
 }
 
-export interface OpenState {
+interface OpenState {
   open: boolean;
   label: string;
 }
 
-export type WithDistance<T> = T & { km: number };
+type WithDistance<T> = T & { km: number };
 
 const R_KM = 6371;
 const rad = (d: number) => (d * Math.PI) / 180;

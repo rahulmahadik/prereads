@@ -13,7 +13,7 @@ import type { DiscoverResponse, FilterChip, Recommendation } from "../types";
 const EXAMPLE_KEYS = ["disc.ex1", "disc.ex2", "disc.ex3", "disc.ex4"] as const;
 
 // Fields the backend adds for two-phase discovery (optional, so older servers and the prototype still fit).
-// ai_rank: the deep pass's rerank (1 = the local AI's best match); its `why` is then the AI's own reason.
+// ai_rank: the deep pass's rerank (1 = the AI's best match); its `why` is then the AI's own reason.
 type Rec = Recommendation & { ai_pick?: boolean; ai_rank?: number | null };
 type Phased = Omit<DiscoverResponse, "results"> & { results: Rec[]; deep?: "ai" | "catalogue" | null; ai?: "ok" | "busy" | "off" | null };
 type DeepKind = "ai" | "catalogue";

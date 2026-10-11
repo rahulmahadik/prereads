@@ -11,9 +11,9 @@ export const MAIN_X = 390;          // centre aisle
 export const NF_Y = 58;             // non-fiction ranges top
 export const NF_H = 96;             // three shelf units of 32
 export const NF_W = 34;
-export const NF_STEP = 54;
+const NF_STEP = 54;
 export const NF_AISLE_Y = 172;      // cross aisle under the ranges
-export const UNITS = 3;
+const UNITS = 3;
 export const UNIT_H = NF_H / UNITS;
 export const DOOR_Y = H - 18;
 export const FIC_ROWS = [222, 264, 306, 348, 390];
@@ -28,7 +28,7 @@ export const NF_LABELS = [
 export const FIC_SECTIONS = ["A–E", "F–J", "K–O", "P–T", "U–Z"];
 export const ROW_NAMES = ["top", "middle", "bottom"] as const;
 
-export type Kind = "nonfiction" | "fiction" | "children" | "unknown";
+type Kind = "nonfiction" | "fiction" | "children" | "unknown";
 
 export interface Parsed {
   kind: Kind;
@@ -64,7 +64,7 @@ const LANG = /^(english|chinese|malay|tamil|eng|chi|mal|tam)\b\s*/i;
 const plain = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "");
 
 /** Author cutter -> 0..1 in A..Z order (first three letters). */
-export function cutterFraction(author?: string): number {
+function cutterFraction(author?: string): number {
   if (!author) return 0.5;
   const a = plain(author).toUpperCase().replace(/[^A-Z]/g, "");
   let f = 0;
@@ -76,7 +76,7 @@ export function cutterFraction(author?: string): number {
   return Math.min(0.999, Math.max(0, f));
 }
 
-export function fictionSection(author?: string): number {
+function fictionSection(author?: string): number {
   const a = plain(author || "M").toUpperCase().replace(/[^A-Z]/g, "") || "M";
   return Math.min(4, Math.floor((a.charCodeAt(0) - 65) / 5));
 }
@@ -114,7 +114,7 @@ export function parseCallNumber(callNumber: string): Parsed {
 }
 
 // --- per-branch plan ------------------------------------------------------------
-export type Service = "toilets" | "lift" | "stairs";
+type Service = "toilets" | "lift" | "stairs";
 
 export interface Plan {
   key: string;
@@ -127,7 +127,7 @@ export interface Plan {
   plants: [number, number][];
 }
 
-export function branchKey(branch: string): string {
+function branchKey(branch: string): string {
   return plain(branch || "").toLowerCase().replace(/\b(public|regional|library|libraries)\b/g, "").replace(/[^a-z0-9]+/g, " ").trim();
 }
 
@@ -304,7 +304,7 @@ const easePage = bezier(0.22, 0.61, 0.36, 1);   // --ease-page
 const easePop = bezier(0.34, 1.56, 0.64, 1);    // slight overshoot
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
-export interface Frame {
+interface Frame {
   pulse: number;      // 0-1 phase of the "You are here" ripple, -1 when still
   draw: number;       // 0-1 of the route drawn
   shadow: number;     // 0-1 opacity of the route's soft shadow

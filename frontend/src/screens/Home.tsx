@@ -70,7 +70,6 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
   };
   const [q, setQ] = useState("");
   const [hits, setHits] = useState<ResolveHit[]>([]);
-  const [hitsMeta, setHitsMeta] = useState<{ total: number; has_more: boolean; offset: number; limit: number }>({ total: 0, has_more: false, offset: 0, limit: 8 });
   const [targets, setTargets] = useState<Target[]>([]);
   const [popular, setPopular] = useState<Popular[]>([]);
   const [popularMeta, setPopularMeta] = useState<PopularMeta>({});
@@ -102,10 +101,7 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
     timer.current = window.setTimeout(() => {
       api
         .resolve(q.trim(), 0, 8)
-        .then((r) => {
-          setHits(r.results);
-          setHitsMeta({ total: r.total, has_more: r.has_more, offset: r.offset, limit: r.limit });
-        })
+        .then((r) => setHits(r.results))
         .catch(() => setHits([]));
     }, 160);
     return () => window.clearTimeout(timer.current);

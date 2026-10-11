@@ -13,7 +13,7 @@
  * step puts the walker there. The loop pauses off-screen and in a hidden tab; with reduced
  * motion the finished route is shown still. "Full screen" opens the same map over the page.
  */
-import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from "react";
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 import { createPortal } from "react-dom";
 import {
   FIC_ROWS, FIC_SECTIONS, FIC_W, FIC_X, H, KIDS, MAIN_X, NF_AISLE_Y, NF_H, NF_LABELS, NF_W, NF_Y, ROW_NAMES, UNIT_H, W, DOOR_Y,
@@ -24,7 +24,7 @@ import { t, useLang, type Key } from "../i18n";
 
 export { parseCallNumber, stepsFor };
 
-export interface Target {
+interface Target {
   callNumber: string;
   branch: string;
   /** optional branch code; the plan is seeded by it when given, else by the branch name */

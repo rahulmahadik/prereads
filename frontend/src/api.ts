@@ -6,7 +6,7 @@ import type { Neighbour, AskResponse, Branch, DiscoverResponse, ResolveHit, Rout
 const BASE: string = (import.meta.env.VITE_API_BASE as string | undefined)?.replace(/\/$/, "") ?? "";
 const url = (path: string) => `${BASE}${path}`;
 
-export type Suggestions = { suggestions: { text: string; kind: string; source: string }[]; lang: string; from: string };
+type Suggestions = { suggestions: { text: string; kind: string; source: string }[]; lang: string; from: string };
 
 async function json<T>(res: Response): Promise<T> {
   if (!res.ok) {
@@ -26,7 +26,6 @@ const live = {
   mode: () => fetch(url("/api/mode")).then((r) => json<import("./components/SettingsSheet").ModeInfo>(r)),
   setMode: (patch: { demo?: boolean; use_llm?: boolean; use_nlb?: boolean }) =>
     fetch(url("/api/mode"), { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(patch) }).then((r) => json<import("./components/SettingsSheet").ModeInfo>(r)),
-  health: () => fetch(url("/api/health")).then((r) => json<{ ok: boolean; mode: string; cached_routes: number }>(r)),
   resolve: (q: string, offset = 0, limit = 8) =>
     fetch(url(`/api/resolve?q=${encodeURIComponent(q)}&offset=${offset}&limit=${limit}`)).then((r) => json<{ results: ResolveHit[]; total: number; offset: number; limit: number; has_more: boolean }>(r)),
   route: (id: string, title?: string, author?: string) => {
@@ -38,8 +37,6 @@ const live = {
   similar: (id: string, branch: string) =>
     fetch(url(`/api/similar?id=${encodeURIComponent(id)}${branch ? `&branch=${encodeURIComponent(branch)}` : ""}`)).then((r) => json<{ books: Neighbour[] }>(r)),
   branches: () => fetch(url("/api/branches")).then((r) => json<{ branches: Branch[] }>(r)),
-  browse: (by: "author" | "category") => fetch(url(`/api/browse?by=${by}`)).then((r) => json<{ groups: { label: string; count: number; ids: string[] }[] }>(r)),
-  browseBooks: (ids: string[]) => fetch(url(`/api/browse?ids=${encodeURIComponent(ids.join(","))}`)).then((r) => json<{ books: { id: string; title: string; author: string }[] }>(r)),
   /** Streams the real steps as the server runs them (NDJSON), then resolves with the reply. */
   chatStream: async (text: string, state: unknown, lang: string | undefined, onEvent: (e: { type: string; step?: string; detail?: string; ms?: number }) => void, signal?: AbortSignal) => {
     const res = await fetch(url("/api/chat/stream"), { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, state, lang: lang ?? getLang() }), signal });
@@ -70,7 +67,7 @@ const live = {
     fetch(url("/api/chat"), { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, state, lang: lang ?? getLang() }) }).then((r) =>
       json<{ messages: string[]; options: { label: string; value: string }[]; state: { step: string }; result?: { book_id: string; title: string; author: string; level: number; branch: string; start_id: string; start_title: string; start_status: string } | null }>(r),
     ),
-  // mode "fast" (default): no model, no network, well under a second. "deep": the local AI's picks too (slow).
+  // mode "fast" (default): no model, no network, well under a second. "deep": the AI's picks too (slow).
   discover: (text: string, branch: string, filters: string[], offset = 0, limit = 10, opts: { mode?: "fast" | "deep"; signal?: AbortSignal; lang?: string } = {}) =>
     fetch(url("/api/discover"), { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, branch: branch || null, filters, offset, limit, mode: opts.mode ?? "fast", lang: opts.lang ?? getLang() }), signal: opts.signal }).then((r) =>
       json<DiscoverResponse>(r),
@@ -126,7 +123,7 @@ function protoDiscover(text: string, filters: string[], offset: number, limit: n
   const total = rows.length;
   rows = rows.slice(offset, offset + limit);
   return {
-    need: { summary: "Prototype search: simple keyword match over the embedded demo catalogue (no AI).", topics: q.slice(0, 4) },
+    need: { summary: "Keyword match over the embedded catalogue.", topics: q.slice(0, 4) },
     chips: [],
     results: rows.map(({ e, score }) => ({ id: e.id, line_id: e.line_id, is_target: e.is_target, title: e.title, author: e.author, category: e.category, level: e.level, hours: e.hours, why: e.why, fit: Math.min(1, score / top), status: e.status, available_at: e.available_at, hot_at: e.hot_at, before_count: e.before_count })),
     engine: "prototype-keyword",
@@ -140,7 +137,6 @@ function protoDiscover(text: string, filters: string[], offset: number, limit: n
 const proto = {
   mode: () => wait({ ...P.mode, prototype: true }),
   setMode: () => wait({ ...P.mode, prototype: true }),
-  health: () => wait({ ok: true, mode: "prototype", cached_routes: Object.keys(P.routes).length }),
   resolve: (q: string, offset = 0, limit = 8) => {
     const ql = q.toLowerCase().trim();
     const hits = (P.index as ResolveHit[])
@@ -151,8 +147,6 @@ const proto = {
   route: (id: string) => (P.routes[id] ? wait(P.routes[id] as Route) : fail("Not in the prototype's embedded data. Run the repo locally for the full catalogue.")),
   similar: (id: string) => wait({ books: (P.similar[id] || []) as Neighbour[] }),
   branches: () => wait({ branches: P.branches as Branch[] }),
-  browse: (by: "author" | "category") => wait({ groups: P.browse[by] || [] }),
-  browseBooks: (ids: string[]) => wait({ books: ids.map((i) => P.books[i]).filter(Boolean) }),
   targets: () => wait({ targets: P.targets }),
   popular: (limit = 12) => wait({ popular: (P.popular as any[]).slice(0, limit) }),
 };

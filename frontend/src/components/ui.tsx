@@ -108,7 +108,7 @@ export function shortBranch(b: string): string {
 /* ------------------------------------------------------- shelf status */
 import type { Availability, Stop } from "../types";
 
-export type ShelfStatus =
+type ShelfStatus =
   | { kind: "available"; branch: string; code: string; callNumber: string; others: number }
   | { kind: "elsewhere"; branch: string; code: string; callNumber: string; here: string }
   | { kind: "waiting"; callNumber: string }

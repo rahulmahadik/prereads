@@ -7,7 +7,7 @@ export function deweyClass(callNumber: string | undefined | null): string | null
   return m ? m[1] : null;
 }
 
-export interface ShelfGroup {
+interface ShelfGroup {
   dewey: string;
   stops: Stop[];
 }
