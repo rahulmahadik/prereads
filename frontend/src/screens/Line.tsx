@@ -255,7 +255,6 @@ export default function Line({ id, title, author }: { id: string; title: string;
               </ul>
             </details>
           )}
-          <p className="hint demo-foot">{stops.some((s) => s.availability.some((a) => a.demo)) ? t("line.demoShelf") : ""}{t("common.notNlb")}</p>
           </div>
 
           <Sheet open={walk} title={t("line.whichLibrary")} onClose={() => setWalk(false)}>

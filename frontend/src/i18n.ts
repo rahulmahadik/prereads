@@ -66,7 +66,7 @@ const en = {
   "home.hotAt": "Hot at {branch}",
   "home.unfinished": "Books people start and never finish",
   "home.unfinishedHint": "The ones a reading path helps most",
-  "home.footer": "All AI runs locally on this device. Built on Open Library and data.gov.sg. Not an NLB product.",
+  "home.footer": "All AI runs locally on this device. Built on Open Library, NLB open data and data.gov.sg.",
 
   "line.title": "Your reading path",
   "line.share": "Share this path",
@@ -287,7 +287,7 @@ const en = {
   "talker.meta": "Level {n} of 5: {words} · about {hours} hours",
   "talker.call": "Call number",
   "talker.scan": "Scan for the whole reading path.",
-  "talker.foot": "PreReads · Not an NLB product",
+  "talker.foot": "PreReads",
   "talker.demo": "Shelf data is demo",
 
   "dig.title": "Read or borrow it digitally",
@@ -491,7 +491,7 @@ const zh: Dict = {
   "home.hotAt": "{branch} 热门",
   "home.unfinished": "很多人读到一半就放弃的书",
   "home.unfinishedHint": "最需要一条阅读路线的书",
-  "home.footer": "所有 AI 都在这台设备上本地运行。数据来自 Open Library 和 data.gov.sg。非 NLB 官方产品。",
+  "home.footer": "所有 AI 都在这台设备上本地运行。数据来自 Open Library 和 data.gov.sg。",
 
   "line.title": "你的阅读路线",
   "line.share": "分享这条阅读路线",
@@ -712,7 +712,7 @@ const zh: Dict = {
   "talker.meta": "难度 {n}/5：{words} · 大约 {hours} 小时",
   "talker.call": "索书号",
   "talker.scan": "扫码查看完整的阅读路线。",
-  "talker.foot": "PreReads · 非 NLB 官方产品",
+  "talker.foot": "PreReads",
   "talker.demo": "书架数据为演示数据",
 
   "dig.title": "在线阅读或借阅电子版",
@@ -913,7 +913,7 @@ const ms: Dict = {
   "home.hotAt": "Laris di {branch}",
   "home.unfinished": "Buku yang orang mula baca tetapi tidak habis",
   "home.unfinishedHint": "Buku yang paling terbantu oleh laluan bacaan",
-  "home.footer": "Semua AI berjalan secara setempat pada peranti ini. Dibina atas Open Library dan data.gov.sg. Bukan produk NLB.",
+  "home.footer": "Semua AI berjalan secara setempat pada peranti ini. Dibina atas Open Library dan data.gov.sg.",
 
   "line.title": "Laluan bacaan anda",
   "line.share": "Kongsi laluan bacaan ini",
@@ -1134,7 +1134,7 @@ const ms: Dict = {
   "talker.meta": "Tahap {n} daripada 5: {words} · lebih kurang {hours} jam",
   "talker.call": "Nombor panggilan",
   "talker.scan": "Imbas untuk laluan bacaan penuh.",
-  "talker.foot": "PreReads · Bukan produk NLB",
+  "talker.foot": "PreReads",
   "talker.demo": "Data rak ialah data demo",
 
   "dig.title": "Baca atau pinjam secara digital",
@@ -1335,7 +1335,7 @@ const ta: Dict = {
   "home.hotAt": "{branch}-இல் பிரபலம்",
   "home.unfinished": "பலர் தொடங்கி முடிக்காத நூல்கள்",
   "home.unfinishedHint": "வாசிப்புப் பாதை அதிகம் உதவும் நூல்கள்",
-  "home.footer": "எல்லா AI-யும் இந்தச் சாதனத்திலேயே இயங்குகிறது. Open Library, data.gov.sg அடிப்படையில் உருவாக்கப்பட்டது. இது NLB தயாரிப்பு அல்ல.",
+  "home.footer": "எல்லா AI-யும் இந்தச் சாதனத்திலேயே இயங்குகிறது. Open Library, data.gov.sg அடிப்படையில் உருவாக்கப்பட்டது.",
 
   "line.title": "உங்கள் வாசிப்புப் பாதை",
   "line.share": "இந்த வாசிப்புப் பாதையைப் பகிர்",
@@ -1556,7 +1556,7 @@ const ta: Dict = {
   "talker.meta": "நிலை {n}/5: {words} · சுமார் {hours} மணி நேரம்",
   "talker.call": "அழைப்பு எண்",
   "talker.scan": "முழு வாசிப்புப் பாதைக்கு ஸ்கேன் செய்யுங்கள்.",
-  "talker.foot": "PreReads · NLB தயாரிப்பு அல்ல",
+  "talker.foot": "PreReads",
   "talker.demo": "அலமாரித் தரவு மாதிரியானது",
 
   "dig.title": "டிஜிட்டலாகப் படிக்கலாம் அல்லது இரவல் பெறலாம்",

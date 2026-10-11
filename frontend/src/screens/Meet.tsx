@@ -94,7 +94,6 @@ export default function Meet({ id, title, author }: { id: string; title: string;
               <span className="chev" aria-hidden="true">›</span>
             </button>
           )}
-          <p className="hint demo-foot">{t("common.notNlb")}</p>
         </>
       )}
     </main>

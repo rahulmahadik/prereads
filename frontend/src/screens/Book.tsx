@@ -288,7 +288,6 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
           <a className="reserve-link" href={nlbSearchUrl(book.title, book.isbn)} target="_blank" rel="noopener">
             {reserveLabel} ↗
           </a>
-          {(availability.some((a) => a.demo) || demand.demo) && <p className="demo-note">{t("book.demoNote", { extra: queue ? t("book.demoQueue") : "" })}</p>}
 
           <DigitalCopies title={book.title} author={book.author} />
 
