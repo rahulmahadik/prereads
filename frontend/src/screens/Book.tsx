@@ -47,7 +47,10 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
   }, [id, title, author]);
 
   const stops = route?.stops ?? [];
-  const idx = stops.findIndex((s) => s.book.id === stopId);
+  // A shared or older link can name the path's target id while the target stop shows a different
+  // (better) edition; fall back to the target stop so the page never stays on the skeleton.
+  let idx = stops.findIndex((s) => s.book.id === stopId);
+  if (idx < 0 && route) idx = stops.findIndex((s) => s.role === "target");
   const stop: Stop | undefined = stops[idx];
   const stopBookId = stop?.book.id;
 

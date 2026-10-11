@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { t, useLang } from "../i18n";
 
 type Chapter = {
@@ -36,7 +37,8 @@ export default function SampleReader({ gutenbergId, onClose }: { gutenbergId: nu
     };
   }, [onClose]);
 
-  return (
+  // Portal to <body>: the book card is transformed (page-turn animation), which would trap a fixed overlay inside it.
+  return createPortal(
     <div className="reader" role="dialog" aria-modal="true" aria-label={c?.title || t("dig.readHere")}>
       <div className="reader-bar">
         <span className="reader-progress">
@@ -65,6 +67,7 @@ export default function SampleReader({ gutenbergId, onClose }: { gutenbergId: nu
           </a>
         </footer>
       </article>
-    </div>
+    </div>,
+    document.body,
   );
 }

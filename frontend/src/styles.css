@@ -2865,3 +2865,78 @@ html:lang(ms) .action-bar { grid-template-columns: 1fr 1fr 1fr; }
 .reader-page .reader-book { font-family: inherit; color: var(--muted); font-size: 0.85em; margin-bottom: 0.4em; }
 .reader-foot { margin-top: 2em; padding-top: 1em; border-top: 1px solid var(--rule); color: var(--muted); font-size: max(16px, 0.85em); }
 html.senior .reader-page { font-size: 22px; }
+
+/* final QA */
+/* Phones: the chat button is a round icon so it doesn't sit over the try-chips, stop cards and book text. */
+@media (max-width: 520px) {
+  /* font-size 0 hides the visible label whatever its markup; the button keeps its aria-label. */
+  .chat-fab { width: 56px; height: 56px; min-height: 56px; padding: 0; justify-content: center; font-size: 0; gap: 0; overflow: hidden; }
+  .chat-fab > span[aria-hidden="true"] { font-size: 24px; line-height: 1; }
+  .chat-fab .fab-label { display: none; }
+  /* Book: wrap long titles at word boundaries (hyphenate) instead of splitting a word across lines. */
+  .title-row > :first-child { overflow-wrap: break-word; hyphens: auto; }
+  .book-title { font-size: clamp(26px, 7.4vw, var(--fs-xl)); }
+  html.senior .page-left { flex-direction: column; }
+  html.senior .book-title { font-size: clamp(28px, 8vw, 34px); }
+  /* Bottom action bar: three buttons always fit, text wraps inside a button rather than off the screen. */
+  .action-bar { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) auto; gap: 6px; padding-left: 10px; padding-right: 10px; }
+  .bar-btn { min-width: 0; padding: 0 10px; white-space: normal; text-align: center; line-height: 1.15; }
+  html.senior .bar-btn { font-size: calc(var(--fs) * 0.85); }
+  /* Stop cards: the level pill stacks level and meaning instead of breaking mid-pill. */
+  .meter.compact .level-pill { border-radius: 10px; align-items: flex-start; }
+  .meter.compact .level-pill-text { flex-direction: column; gap: 0; }
+  .meter.compact .level-pill-sep { display: none; }
+}
+/* Tap targets (44px, 52px in senior mode) for the controls the earlier pass missed. */
+.avail-toggle, .mic-btn, .mode-chip, .lang-pill, .clear-btn { min-height: var(--tap); }
+.mic-btn, .clear-btn { min-width: var(--tap); }
+.link-btn.inline { min-height: var(--tap); display: inline-flex; align-items: center; }
+.wordmark-btn { min-height: var(--tap); display: inline-flex; align-items: center; }
+/* Home rows: readable captions and badges. */
+.row-title { font-size: max(15px, calc(var(--fs) * 0.8)); }
+.row-badge { font-size: max(14px, calc(var(--fs) * 0.72)); }
+/* Procedural covers: a little more room and a slightly smaller title so long words (Introduction, Architecture) fit. */
+.cover-title { hyphens: auto; }
+.cover-m .cover-text { padding-right: 5px; }
+.cover-m .cover-title { font-size: 12px; letter-spacing: -0.01em; }
+/* Read or borrow digitally: one aligned list, not floating links. */
+.digital { gap: 2px; }
+.digital .online-link { padding: 0; justify-self: start; text-align: left; margin-top: 0; }
+.digital .row-head { margin-bottom: 4px; }
+/* Desktop book page: the cover column stays in view while the right page scrolls; readable line length. */
+@media (min-width: 760px) {
+  .book { align-items: start; }
+  .page-left { position: sticky; top: 16px; border-right: 0; }
+  .page-right { border-left: 1px dashed var(--rule); min-height: 100%; }
+  .page-right .why, .page-right .about-text { max-width: 62ch; }
+}
+
+/* chat: bigger panel, maximise toggle, live step details */
+@media (min-width: 760px) {
+  .chat-panel { width: min(520px, calc(100vw - 48px)); height: min(760px, calc(100vh - 48px)); }
+}
+.chat-panel { height: min(88vh, 760px); }
+.chat-panel.max { inset: 0; width: 100vw; height: 100dvh; border-radius: 0; }
+@media (min-width: 760px) {
+  .chat-panel.max { inset: 24px; width: auto; height: auto; max-width: 980px; margin: 0 auto; border-radius: var(--radius-lg); }
+}
+.chat-panel.max .bubble { max-width: 70ch; }
+.chat-step-detail { display: block; margin-left: 28px; color: var(--muted); font-size: 14px; }
+
+/* final QA (2) */
+.start-over { min-height: var(--tap); }
+.chip-row select { min-height: 36px; min-width: 52px; font-size: inherit; }
+/* Desktop book page: title on its own row, Listen and save together under it. */
+@media (min-width: 760px) {
+  .title-row { justify-content: flex-start; }
+  .title-row > :first-child { flex-basis: 100%; }
+}
+/* "Because you liked": three cards side by side on a laptop instead of three stretched rows. */
+@media (min-width: 900px) {
+  .similar-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .similar-list li { display: flex; }
+  .similar-item { align-content: start; }
+}
+/* Home row badges read as tags when a long branch name wraps. */
+.row-badge { display: inline-block; border-radius: 10px; line-height: 1.25; padding: 3px 8px; text-align: center; }
+.reader-foot .link-btn { display: inline-flex; align-items: center; min-height: var(--tap); margin-top: 4px; }
