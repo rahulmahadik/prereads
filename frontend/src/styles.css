@@ -2951,3 +2951,10 @@ html.senior .reader-page { font-size: 22px; }
 .mark-read { margin-top: 8px; min-height: var(--tap); padding: 0 14px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface); color: var(--ink); font: inherit; cursor: pointer; }
 .mark-read.on { background: var(--stamp-soft); border-color: var(--stamp); color: var(--stamp); }
 .action-bar .bar-btn.on { color: var(--hot); }
+
+/* real covers */
+.cover-img { background: transparent; border-radius: inherit; }
+
+/* chat: cancel and retry */
+.chat-cancel, .chat-retry { align-self: flex-start; min-height: var(--tap); margin: 4px 0 0 4px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); font: inherit; cursor: pointer; }
+.chat-retry { border-color: var(--line); color: var(--line); font-weight: 600; }

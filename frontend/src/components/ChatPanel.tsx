@@ -147,6 +147,14 @@ export default function ChatPanel() {
       return !v;
     });
   const [live, setLive] = useState<LiveStep[] | null>(null);
+  const ctrl = useRef<AbortController | null>(null);
+  const lastSend = useRef<{ value: string; label?: string } | null>(null);
+  const [failed, setFailed] = useState(false);
+  const CHAT_TIMEOUT_MS = 60000; // the local model normally answers in ~5 s; past this, say so instead of spinning
+  const cancel = () => {
+    ctrl.current?.abort("cancel");
+    ctrl.current = null;
+  };
   const [items, setItems] = useState<Item[]>(fresh);
   const [options, setOptions] = useState<Option[]>([]);
   const [state, setState] = useState<ChatState>({ step: "start" });
@@ -215,6 +223,12 @@ export default function ChatPanel() {
     setText("");
     try {
       setLive([]);
+      setFailed(false);
+      lastSend.current = { value, label };
+      cancel();
+      const ac = new AbortController();
+      ctrl.current = ac;
+      const timer = window.setTimeout(() => ac.abort("timeout"), CHAT_TIMEOUT_MS);
       let r: Reply;
       try {
         r = (await api.chatStream(value, state, getLang(), (e) => {
@@ -230,11 +244,22 @@ export default function ChatPanel() {
             }
             return list;
           });
-        })) as Reply;
-      } catch {
-        setLive(null); // streaming unavailable: plain request, timer-based progress
-        r = (await api.chat(value, state, getLang())) as Reply;
+        }, ac.signal)) as Reply;
+      } catch (err) {
+        window.clearTimeout(timer);
+        if (ac.signal.aborted) {
+          if (ac.signal.reason === "cancel" || id !== reqId.current) return; // cancelled by the reader
+          throw new Error(t("chat.err.timeout", { s: Math.round(CHAT_TIMEOUT_MS / 1000) }));
+        }
+        if (!navigator.onLine) throw new Error(t("chat.err.offline"));
+        // streaming unavailable (old proxy, etc.): one plain request with the same timeout
+        setLive(null);
+        r = (await Promise.race([
+          api.chat(value, state, getLang()),
+          new Promise((_, rej) => window.setTimeout(() => rej(new Error(t("chat.err.timeout", { s: Math.round(CHAT_TIMEOUT_MS / 1000) }))), CHAT_TIMEOUT_MS)),
+        ])) as Reply;
       }
+      window.clearTimeout(timer);
       if (id !== reqId.current) return; // started over meanwhile
       const trace = r.trace ?? [];
       const add: Item[] = [];
@@ -249,7 +274,12 @@ export default function ChatPanel() {
       setState(r.state);
       setResult(r.result ?? null);
     } catch (e) {
-      if (id === reqId.current) setItems((m) => [...m, { kind: "msg", from: "bot", text: (e as Error).message || t("chat.error") }]);
+      if (id === reqId.current) {
+        const msg = (e as Error).message || "";
+        const text = /^stream 5\d\d|HTTP 5\d\d|^5\d\d/.test(msg) ? t("chat.err.server") : msg || t("chat.error");
+        setItems((m) => [...m, { kind: "msg", from: "bot", text }]);
+        setFailed(true);
+      }
     } finally {
       if (id === reqId.current) {
         setLive(null);
@@ -260,6 +290,8 @@ export default function ChatPanel() {
   };
 
   const reset = () => {
+    cancel();
+    setFailed(false);
     reqId.current += 1;
     traces.current = 0;
     setItems(fresh());
@@ -313,7 +345,7 @@ export default function ChatPanel() {
               <button type="button" className="chat-restart" onClick={reset} disabled={items.length <= 1 && !busy}>
                 <span aria-hidden="true">↺</span> {t("chat.startOver")}
               </button>
-              <button type="button" className="icon-btn small" onClick={() => setOpen(false)} aria-label={t("common.close")}>
+              <button type="button" className="icon-btn small" onClick={() => { cancel(); reqId.current += 1; setBusy(false); setLive(null); setOpen(false); }} aria-label={t("common.close")}>
                 ✕
               </button>
             </span>
@@ -348,6 +380,16 @@ export default function ChatPanel() {
               ),
             )}
             {busy && (live ? <LiveSteps steps={live} /> : <Progress steps={progress} />)}
+            {busy && (
+              <button type="button" className="chat-cancel" onClick={() => { cancel(); reqId.current += 1; setBusy(false); setLive(null); setItems((m) => [...m, { kind: "msg", from: "bot", text: t("chat.cancelled") }]); }}>
+                {t("chat.cancel")}
+              </button>
+            )}
+            {!busy && failed && lastSend.current && (
+              <button type="button" className="chat-retry" onClick={() => { const l = lastSend.current!; setItems((m) => m.slice(0, -2)); send(l.value, l.label); }}>
+                ↻ {t("chat.retry")}
+              </button>
+            )}
             {!busy && options.length > 0 && (
               <div className={`chat-options ${bookChoices ? "stacked" : ""}`}>
                 {options.map((o) => (

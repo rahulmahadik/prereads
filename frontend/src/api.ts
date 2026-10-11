@@ -39,8 +39,8 @@ const live = {
   browse: (by: "author" | "category") => fetch(url(`/api/browse?by=${by}`)).then((r) => json<{ groups: { label: string; count: number; ids: string[] }[] }>(r)),
   browseBooks: (ids: string[]) => fetch(url(`/api/browse?ids=${encodeURIComponent(ids.join(","))}`)).then((r) => json<{ books: { id: string; title: string; author: string }[] }>(r)),
   /** Streams the real steps as the server runs them (NDJSON), then resolves with the reply. */
-  chatStream: async (text: string, state: unknown, lang: string | undefined, onEvent: (e: { type: string; step?: string; detail?: string; ms?: number }) => void) => {
-    const res = await fetch(url("/api/chat/stream"), { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, state, lang: lang ?? getLang() }) });
+  chatStream: async (text: string, state: unknown, lang: string | undefined, onEvent: (e: { type: string; step?: string; detail?: string; ms?: number }) => void, signal?: AbortSignal) => {
+    const res = await fetch(url("/api/chat/stream"), { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, state, lang: lang ?? getLang() }), signal });
     if (!res.ok || !res.body) throw new Error(`stream ${res.status}`);
     const reader = res.body.getReader();
     const dec = new TextDecoder();

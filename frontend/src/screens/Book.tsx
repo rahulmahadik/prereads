@@ -209,7 +209,7 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
             <div className="title-row">
               <h1 className="book-title">{book.title}</h1>
               <ListenButton id={`book:${book.id}`} text={narration} label={t("book.listen")} lang={voiceLang(lang)} />
-              <HeartButton book={{ id: book.id, title: book.title, author: book.author, lineId: id, lineTitle: title, lineAuthor: author }} />
+              <HeartButton book={{ id: book.id, title: book.title, author: book.author, lineId: id, lineTitle: title, lineAuthor: author, cover_url: book.cover_url }} />
             </div>
             <p className="book-author">
               {book.author}
@@ -391,7 +391,7 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
             {inSomewhere ? t("book.reserve") : queue ? t("book.waitlistN", { n: queue }) : t("book.waitlist")}
           </a>
         )}
-        <button type="button" className={`bar-btn ${isHearted(book.id) ? "on" : ""}`} aria-pressed={isHearted(book.id)} onClick={() => toggleHeart({ id: book.id, title: book.title, author: book.author, lineId: id, lineTitle: title, lineAuthor: author })}>
+        <button type="button" className={`bar-btn ${isHearted(book.id) ? "on" : ""}`} aria-pressed={isHearted(book.id)} onClick={() => toggleHeart({ id: book.id, title: book.title, author: book.author, lineId: id, lineTitle: title, lineAuthor: author, cover_url: book.cover_url })}>
           {isHearted(book.id) ? `♥ ${t("book.saved")}` : `♡ ${t("book.save")}`}
         </button>
       </div>
