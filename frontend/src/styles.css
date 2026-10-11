@@ -3251,3 +3251,8 @@ body:has(.sheet-backdrop) .chat-fab, body:has(.reader) .chat-fab, body:has(.wf-f
   .wayfind.wf2 .wf-map-wrap svg.floorplan { width: 100%; height: auto; max-height: 72vh; }
   .wayfind.wf2 .wf-steps, .wayfind.wf2 ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
 }
+
+/* recording indicator next to the mic */
+.rec-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--hot); animation: rec-pulse 1s ease-in-out infinite; }
+@keyframes rec-pulse { 50% { opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) { .rec-dot { animation: none; } }

@@ -1,3 +1,4 @@
+import MicIcon from "./MicIcon";
 import { useEffect, useRef, useState } from "react";
 import { api } from "../api";
 import { navigate } from "../router";
@@ -450,7 +451,7 @@ export default function ChatPanel() {
                   }
                 }}
               >
-                {hearing ? "●" : "🎤"}
+                {hearing ? <span className="rec-dot" aria-hidden="true" /> : <MicIcon />}
               </button>
             )}
             <button type="submit" className="primary" disabled={busy || !text.trim()} aria-label={t("chat.send")}>

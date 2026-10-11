@@ -78,13 +78,17 @@ def test_no_match(monkeypatch):
     assert online.lookup("Python Crash Course", "Eric Matthes") == {"gutenberg": None, "openlibrary": None}
 
 
-def test_error_gives_empty_and_is_not_cached(monkeypatch):
+def test_error_gives_empty_and_is_remembered_briefly(monkeypatch):
     def boom(*a, **k):
         raise httpx.ConnectError("down")
     monkeypatch.setattr(online.httpx, "get", boom)
     assert online.lookup("Meditations", "Marcus Aurelius") == {}
     calls = []
     monkeypatch.setattr(online.httpx, "get", fake(GUT, {"docs": []}, calls))
+    assert online.lookup("Meditations", "Marcus Aurelius") == {}   # remembered for an hour: no new wait
+    assert not calls
+    k = online._key("Meditations", "Marcus Aurelius")
+    online._mem[k] = (online._mem[k][0] - 3601, online._mem[k][1])  # an hour later it is retried
     assert online.lookup("Meditations", "Marcus Aurelius")["gutenberg"]
     assert calls
 

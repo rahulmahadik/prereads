@@ -641,7 +641,8 @@ def build_chips(need: Need, results: list[Recommendation], branch: Optional[str]
             cats.append(r.category)
     for c in cats[:4]:
         chips.append(FilterChip(id=f"category:{c}", label=c, kind="category", value=c))
-    if need.age_group:
+    said_age = any(w in (need.summary or "").lower() for words, _ in _AGE_WORDS for w in words)
+    if need.age_group and said_age:  # a model's guess alone never filters by age
         chips.append(FilterChip(id=f"age:{need.age_group}", label={"child": "For children", "teen": "For teens", "adult": "For adults"}[need.age_group], kind="age", value=need.age_group, on=True))
     if need.language:
         chips.append(FilterChip(id=f"language:{need.language}", label=f"In {need.language}", kind="language", value=need.language))

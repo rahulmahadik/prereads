@@ -94,5 +94,8 @@ if _dist.exists():
         """Static file if it exists, else index.html (the hash router takes over)."""
         file = _dist / path
         if path and file.exists() and file.is_file():
-            return FileResponse(file)
-        return FileResponse(_dist / "index.html")
+            # the service worker, page shell and manifest must never be cached by the CDN,
+            # or phones keep running an old app after a deploy
+            fresh = path in ("sw.js", "index.html", "manifest.webmanifest")
+            return FileResponse(file, headers={"Cache-Control": "no-cache"} if fresh else None)
+        return FileResponse(_dist / "index.html", headers={"Cache-Control": "no-cache"})

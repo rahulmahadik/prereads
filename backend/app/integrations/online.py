@@ -132,10 +132,11 @@ def lookup(title: str, author: str = "") -> dict[str, Any]:
         except Exception:
             data[name] = None
             failed += 1
-    if failed == 2:
-        return {}
     if failed:
-        return data  # partial answer: shown, but not cached so the next visit retries
+        # a slow or failed source is remembered for an hour (memory only), so the next visit
+        # doesn't wait again; it is retried after that
+        _mem[k] = (time.time() - TTL + 3600, {} if failed == 2 else data)
+        return {} if failed == 2 else data
     _mem[k] = (time.time(), data)
     _write_disk(k, data)
     return data

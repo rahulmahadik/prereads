@@ -1,3 +1,4 @@
+import MicIcon from "./MicIcon";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { api } from "../api";
 import Cover from "./Cover";
@@ -405,7 +406,7 @@ export default function Discover({ initialText = "" }: { initialText?: string })
           )}
           {canListen() && (
             <button type="button" className={`mic-btn ${hearing ? "on" : ""}`} onClick={voiceIn} aria-label={t("disc.say")} title={t("disc.sayTitle")} disabled={busy}>
-              {hearing ? "●" : "🎤"}
+              {hearing ? <span className="rec-dot" aria-hidden="true" /> : <MicIcon />}
             </button>
           )}
           <button type="submit" className="primary" disabled={busy || text.trim().length < 2}>
