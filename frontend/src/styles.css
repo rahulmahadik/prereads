@@ -2515,3 +2515,6 @@ body { background: var(--paper); }
 .nearest-meta { font-size: 14px; color: var(--muted); }
 .nearest-open { color: var(--stamp); }
 .nearest-closed { color: var(--muted); }
+/* share by QR */
+.share-qr { margin: 12px 0 0; display: grid; justify-items: start; gap: 6px; }
+.share-qr svg { width: min(100%, 200px); height: auto; border: 1.5px solid var(--rule); border-radius: var(--radius); display: block; }
