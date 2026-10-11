@@ -9,6 +9,7 @@ harder book before an easier one or pad the line with the same author.
 from __future__ import annotations
 
 import json
+import re
 import logging
 from datetime import datetime, timezone
 from typing import Optional
@@ -108,6 +109,12 @@ def judge_pair(a: Book, b: Book, ra: Readiness, rb: Readiness, why: str) -> tupl
 
 
 # ---------------------------------------------------------------------- rules
+def _title_key(title: str) -> str:
+    """Editions share a title; compare on the main title, lower-cased, without punctuation."""
+    main = re.split(r"[:(]", title or "", maxsplit=1)[0]
+    return re.sub(r"[^a-z0-9]+", " ", main.lower()).strip()
+
+
 def _dedupe_author(stops: list[Stop]) -> list[Stop]:
     seen: set[str] = set()
     out: list[Stop] = []
@@ -125,7 +132,7 @@ def apply_rules(target: Stop, before: list[Stop], after: list[Stop], notes: list
     kept_before = []
     for s in before:
         if s.readiness.level >= t:
-            notes.append(f"dropped '{s.book.title}' from before-line: not easier than the target")
+            notes.append(f"dropped '{s.book.title}' from the reading path: not easier than your book")
             continue
         if s.confidence < MIN_CONFIDENCE:
             notes.append(f"dropped '{s.book.title}': confidence {s.confidence:.2f} < {MIN_CONFIDENCE}")
@@ -142,16 +149,18 @@ def apply_rules(target: Stop, before: list[Stop], after: list[Stop], notes: list
     kept_before = ramp[-MAX_BEFORE:] if len(ramp) > MAX_BEFORE else ramp
 
     kept_after = []
-    before_ids = {s.book.id for s in kept_before}
+    before_ids = {s.book.id for s in kept_before} | {_title_key(s.book.title) for s in kept_before}
+    seen_after: set[str] = set()
     for s in after:
-        if s.book.id in before_ids:
-            notes.append(f"dropped '{s.book.title}' from after-line: already a before-stop")
+        if s.book.id in before_ids or _title_key(s.book.title) in before_ids:
+            notes.append(f"dropped '{s.book.title}' from next reads: already a PreRead")
             continue
         if s.readiness.level < t - 1:
-            notes.append(f"dropped '{s.book.title}' from after-line: much easier than the target")
+            notes.append(f"dropped '{s.book.title}' from next reads: much easier than your book")
             continue
-        if s.confidence < MIN_CONFIDENCE or s.book.id == target.book.id:
+        if s.confidence < MIN_CONFIDENCE or s.book.id == target.book.id or _title_key(s.book.title) in seen_after:
             continue
+        seen_after.add(_title_key(s.book.title))
         kept_after.append(s)
     # An author's own follow-on is a natural next stop, so no author de-dupe here.
     kept_after = sorted(kept_after, key=lambda s: (s.readiness.level, -s.confidence))[:MAX_AFTER]
