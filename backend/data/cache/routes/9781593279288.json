@@ -1,0 +1,389 @@
+{
+  "target_id": "9781593279288",
+  "stops": [
+    {
+      "role": "target",
+      "order": 0,
+      "book": {
+        "id": "9781593276034",
+        "title": "Python crash course",
+        "author": "Eric Matthes",
+        "isbn": "9781593276034",
+        "brn": null,
+        "year": 2015,
+        "pages": 543,
+        "ddc": null,
+        "subjects": [
+          "Python (Computer program language)",
+          "Python (computer program language)"
+        ],
+        "summary": "A fast-paced introduction to programming in Python, followed by three projects: a game, data visualizations and a web app.",
+        "cover_url": "https://covers.openlibrary.org/b/id/8245395-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 1,
+        "hours": 15.0,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": "A true beginner's book: no programming experience needed, and you build small projects as you go."
+      },
+      "why": "A true beginner's book: no programming experience needed, and you build small projects as you go.",
+      "confidence": 1.0,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.1 MAT",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 005.1 MAT",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 005.1 MAT",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 005.1 MAT",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 005.1 MAT",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 1,
+      "book": {
+        "id": "9789864762729",
+        "title": "Automate the Boring Stuff with Python",
+        "author": "Al Sweigart",
+        "isbn": "9789864762729",
+        "brn": null,
+        "year": 2015,
+        "pages": 506,
+        "ddc": null,
+        "subjects": [
+          "Python (Computer program language)",
+          "Computer programming",
+          "Programming Languages",
+          "COMPUTERS",
+          "General",
+          "Python (computer program language)",
+          "Mathematics",
+          "Python",
+          "python",
+          "programming"
+        ],
+        "summary": "If you've ever spent hours renaming files or updating hundreds of spreadsheet cells, you know how tedious tasks like these can be. But what if you could have your computer do them for you?\r\nIn Automate the Boring Stuff with Python, you'll learn how to use Python to write programs that do in minutes what would take you hours to do by hand—no prior programming experience required. Once you've mastered the basics of programming, you'll create Python programs that effortlessly perform useful and impressive feats of automation to:\r\n\r\n- Search for text in a file or across multiple files\r\n- Create, update, move, and rename files and folders\r\n- Search the Web and download online content\r\n- Update and format data in Excel spreadsheets of any size\r\n- Split, merge, watermark, and encrypt PDFs\r\n- Send reminder emails and text notifications\r\n- Fill out online forms\r\n\r\nStep-by-step instructions walk you through each program, and practice projects at the end of each chapter challenge you to improve those programs and use your newfound skills to automate similar tasks.\r\nDon't spend your time doing work a well-trained monkey could do. Even if you've never written a line of code, you can make your computer do the grunt work. Learn how in Automate the Boring Stuff with Python.[  (Source)][1]\r\n\r\n\r\n  [1]: http://www.amazon.com/Automate-Boring-Stuff-Python-Programming/dp/1593275994",
+        "cover_url": "https://covers.openlibrary.org/b/id/7363640-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 2,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Basic computer literacy",
+          "File systems (folders, files)",
+          "Spreadsheets (Excel or similar)",
+          "Internet browsing",
+          "Email"
+        ],
+        "style_tags": [],
+        "one_line": "This book will teach you to automate tasks with Python, so be prepared to learn some basic programming concepts – it's a friendly introduction, though!"
+      },
+      "why": "Put the basics to work on everyday tasks: files, spreadsheets, PDFs and the web.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 576.8 SWE",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 576.8 SWE",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 576.8 SWE",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 576.8 SWE",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 576.8 SWE",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 576.8 SWE",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Ang Mo Kio Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 2,
+      "book": {
+        "id": "9788575224625",
+        "title": "Fluent Python",
+        "author": "Luciano Ramalho",
+        "isbn": "9788575224625",
+        "brn": null,
+        "year": 2015,
+        "pages": 821,
+        "ddc": null,
+        "subjects": [
+          "Python (Computer program language)",
+          "Computer programming",
+          "Object-oriented programming languages",
+          "Object-oriented programming (computer science)",
+          "Python (computer program language)",
+          "Python (Langage de programmation)",
+          "Langages orientés objet (Informatique)",
+          "COMPUTERS",
+          "Programming Languages",
+          "Python",
+          "Aa76.73.p98"
+        ],
+        "summary": "Python's simplicity lets you become productive quickly, but this often means you aren't using everything it has to offer. With this hands-on guide, you'll learn how to write effective, idiomatic Python code by leveraging its best—and...",
+        "cover_url": "https://covers.openlibrary.org/b/id/8743408-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {
+          "summary": "overdrive"
+        }
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 25.0,
+        "assumed_concepts": [
+          "Variables",
+          "Functions",
+          "Data Structures (lists, dictionaries)",
+          "Basic Object-Oriented Principles (classes, objects)",
+          "Command Line Interface"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive deep – this book assumes you already know the basics of programming and have some experience with Python!"
+      },
+      "why": "When you're ready, learn to write Python the way the language intends.",
+      "confidence": 0.9,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.1 RAM",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 005.1 RAM",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 005.1 RAM",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 005.1 RAM",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 3,
+      "book": {
+        "id": "9781098121228",
+        "title": "Python Data Science Handbook",
+        "author": "Jake VanderPlas",
+        "isbn": "9781098121228",
+        "brn": null,
+        "year": 2016,
+        "pages": 548,
+        "ddc": null,
+        "subjects": [
+          "Python (Computer program language)",
+          "Data mining",
+          "COMPUTERS",
+          "General",
+          "Datenanalyse",
+          "Datenmanagement",
+          "Python"
+        ],
+        "summary": "**Revision History**\r\nDecember 2016: First Edition\r\n2016-11-17: First Release",
+        "cover_url": "https://covers.openlibrary.org/b/id/8512092-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 20.0,
+        "assumed_concepts": [
+          "Basic programming concepts",
+          "Command line interface",
+          "NumPy arrays",
+          "Pandas DataFrames",
+          "Statistical concepts (mean, standard deviation)",
+          "Data visualization principles"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive into the world of data analysis with Python – a little programming experience will make this a really rewarding journey!"
+      },
+      "why": "Expanding on the data visualization project in the target book, this provides a comprehensive introduction to data analysis and scientific computing using Python.",
+      "confidence": 0.9,
+      "availability": [
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 576.8 VAN",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 576.8 VAN",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 576.8 VAN",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 576.8 VAN",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 576.8 VAN",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Central Public Library",
+          "Punggol Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    }
+  ],
+  "generated_at": "2026-10-11T04:55:40.033767+00:00",
+  "engine": "llm",
+  "notes": [
+    "unverified, dropped: Python for Kids: A Playful Introduction to Programming",
+    "unverified, dropped: Think Like a Programmer: An Introduction to Creative Problem Solving",
+    "unverified, dropped: Coding with Scratch Made Easy: A Step-by-Step Visual Guide to Coding",
+    "unverified, dropped: Hello World! Computer Programming for Kids and Other Beginners",
+    "dropped 'Automate the Boring Stuff with Python' from before-line: not easier than the target",
+    "dropped 'Head First Programming' from before-line: not easier than the target"
+  ]
+}

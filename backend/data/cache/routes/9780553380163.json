@@ -32,9 +32,14 @@
         "summary": "Follows the adventures of a young boy and his neighbor friend as they travel through a computer portal into outer space, where they explore such mysteries as black holes and the origins of the universe, while trying to evade an evil scientist.",
         "cover_url": "https://covers.openlibrary.org/b/id/6681655-M.jpg",
         "reservations": 0,
-        "audience": [],
+        "audience": [
+          "Young adult"
+        ],
         "source": "openlibrary",
-        "ddc": "520.83"
+        "ddc": "520.83",
+        "field_sources": {
+          "audience": "overdrive"
+        }
       },
       "readiness": {
         "level": 2,
@@ -117,7 +122,7 @@
       "order": 1,
       "book": {
         "id": "9780147543912",
-        "title": "Seven Brief Lessons on Physics 8-Copy Counter Display",
+        "title": "Seven Brief Lessons on Physics",
         "author": "Carlo Rovelli",
         "isbn": "9780147543912",
         "brn": null,
@@ -226,7 +231,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "523.1"
+        "ddc": "523.1",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -336,7 +342,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "530.11"
+        "ddc": "530.11",
+        "field_sources": {}
       },
       "readiness": {
         "level": 4,
@@ -447,11 +454,15 @@
           "Cosmologia",
           "Time"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "One of TIME’s Ten Best Nonfiction Books of the Decade \"Meet the new Stephen Hawking . . . The Order of Time is a dazzling book.\" —The Sunday Times From the bestselling author of Seven Brief...",
+        "cover_url": "https://img3.od-cdn.com/ImageType-400/1523-1/685/796/B7/{685796B7-1433-428B-9ABC-54F81FD32800}Img400.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "seed",
+        "field_sources": {
+          "summary": "overdrive",
+          "cover_url": "overdrive"
+        }
       },
       "readiness": {
         "level": 4,
@@ -565,7 +576,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "523.1"
+        "ddc": "523.1",
+        "field_sources": {}
       },
       "readiness": {
         "level": 4,

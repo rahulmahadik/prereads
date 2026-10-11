@@ -1,0 +1,599 @@
+{
+  "target_id": "9781492056355",
+  "stops": [
+    {
+      "role": "before",
+      "order": 0,
+      "book": {
+        "id": "9781593276034",
+        "title": "Python crash course",
+        "author": "Eric Matthes",
+        "isbn": "9781593276034",
+        "brn": null,
+        "year": 2015,
+        "pages": 543,
+        "ddc": null,
+        "subjects": [
+          "Python (Computer program language)",
+          "Python (computer program language)"
+        ],
+        "summary": "",
+        "cover_url": "https://covers.openlibrary.org/b/id/8245395-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 2,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "variables",
+          "loops",
+          "functions",
+          "data types (integers, strings)",
+          "basic algebra"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive into the world of coding – a little bit of logical thinking will go a long way!"
+      },
+      "why": "Python Crash Course will give you a solid foundation in the core programming concepts like variables and loops, which are essential building blocks you'll use extensively in Fluent Python's more advanced topics.",
+      "confidence": 0.9,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.1 MAT",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 005.1 MAT",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 005.1 MAT",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 005.1 MAT",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 005.1 MAT",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 1,
+      "book": {
+        "id": "9780138172275",
+        "title": "Effective Python",
+        "author": "Brett Slatkin",
+        "isbn": "9780138172275",
+        "brn": null,
+        "year": 2015,
+        "pages": 480,
+        "ddc": "005.133",
+        "subjects": [
+          "Python (Computer program language)",
+          "Computer programming",
+          "Python (programspråk)",
+          "Programmering",
+          "Python (Lenguaje de programación para computadora)",
+          "Programación de computadoras",
+          "Programming Languages"
+        ],
+        "summary": "The Python programming language has unique strengths and charms that can be hard to grasp. Many programmers familiar with other languages often approach Python from a limited mindset instead of embracing its full expressivity. Some programmers go too far in the other direction, overusing Python features that can cause big problems later.\r\n\r\nEffective Python provides insight into the Pythonic way of writing programs: the best way to use Python. It builds on a fundamental understanding of the language that I assume you already have. Novice programmers will learn the best practices of Python’s capabilities. Experienced programmers will learn how to embrace the strangeness of a new tool with confidence.  -[(Source)][1]\r\n\r\n\r\n  [1]: http://www.effectivepython.com/",
+        "cover_url": "https://covers.openlibrary.org/b/id/7363706-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "variables",
+          "functions",
+          "loops",
+          "data structures (lists, dictionaries)",
+          "object-oriented programming basics"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive deeper – this book assumes you already know the basics of programming and have some Python experience, and it'll show you how to write truly *elegant* Python code."
+      },
+      "why": "Effective Python lays a solid foundation with core concepts like data structures and basic object-oriented programming, which will make understanding the more advanced techniques and standard library usage in Fluent Python much smoother.",
+      "confidence": 0.9,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.133 SLA",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 005.133 SLA",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 005.133 SLA",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 005.133 SLA",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 005.133 SLA",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 005.133 SLA",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 005.133 SLA",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Woodlands Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 2,
+      "book": {
+        "id": "9780134692883",
+        "title": "Learn Python 3 the Hard Way",
+        "author": "Zed Shaw",
+        "isbn": "9780134692883",
+        "brn": null,
+        "year": 2017,
+        "pages": 320,
+        "ddc": null,
+        "subjects": [
+          "Python (Computer program language)",
+          "Problems, exercises",
+          "Computer programming",
+          "COMPUTERS",
+          "Programming Languages",
+          "Python (Computer program language) -- Problems, exercises, etc",
+          "Computer programming -- Problems, exercises, etc"
+        ],
+        "summary": "xx, 297 pages : 24 cm",
+        "cover_url": "https://covers.openlibrary.org/b/id/8510257-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Variables",
+          "Functions",
+          "Loops",
+          "Basic Algebra",
+          "Text Editors"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to type – this book teaches Python by having you write code from the very beginning, so a little comfort with basic computer concepts will be really helpful!"
+      },
+      "why": "While 'Fluent Python' delves into more advanced topics, 'Learn Python 3 the Hard Way' will give you a solid foundation in core programming concepts like variables and loops, which are essential for understanding the more complex ideas presented in 'Fluent Python'.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.1 SHA",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 005.1 SHA",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 005.1 SHA",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 005.1 SHA",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 005.1 SHA",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 005.1 SHA",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 005.1 SHA",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 005.1 SHA",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "target",
+      "order": 3,
+      "book": {
+        "id": "9788575224625",
+        "title": "Fluent Python",
+        "author": "Luciano Ramalho",
+        "isbn": "9788575224625",
+        "brn": null,
+        "year": 2015,
+        "pages": 821,
+        "ddc": null,
+        "subjects": [
+          "Python (Computer program language)",
+          "Computer programming",
+          "Object-oriented programming languages",
+          "Object-oriented programming (computer science)",
+          "Python (computer program language)",
+          "Python (Langage de programmation)",
+          "Langages orientés objet (Informatique)",
+          "COMPUTERS",
+          "Programming Languages",
+          "Python",
+          "Aa76.73.p98"
+        ],
+        "summary": "A deep tour of idiomatic Python: data model, sequences, functions as objects, classes, protocols, generators, concurrency and metaprogramming.",
+        "cover_url": "https://covers.openlibrary.org/b/id/8743408-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 4,
+        "hours": 45.0,
+        "assumed_concepts": [
+          "Python basics",
+          "functions and classes",
+          "iterators and generators",
+          "the standard library"
+        ],
+        "style_tags": [],
+        "one_line": "Written for people who already code in Python and want to write it the way the language intends."
+      },
+      "why": "Written for people who already code in Python and want to write it the way the language intends.",
+      "confidence": 1.0,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.1 RAM",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 005.1 RAM",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 005.1 RAM",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 005.1 RAM",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 4,
+      "book": {
+        "id": "9781492052203",
+        "title": "Architecture Patterns with Python",
+        "author": "Harry J.W. Percival, Bob Gregory",
+        "isbn": "9781492052203",
+        "brn": null,
+        "year": 2020,
+        "pages": 280,
+        "ddc": null,
+        "subjects": [
+          "python",
+          "test-driven development",
+          "domain-driven design",
+          "event-driven architecture",
+          "microservices",
+          "CQRS",
+          "dependency injection",
+          "Computer science"
+        ],
+        "summary": "",
+        "cover_url": "https://covers.openlibrary.org/b/id/12423995-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 8.0,
+        "assumed_concepts": [
+          "Object-Oriented Programming",
+          "REST APIs",
+          "Basic Database Concepts",
+          "Version Control (e.g., Git)",
+          "Command Line Interface"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive into how to structure your Python projects for maximum flexibility and scalability – a little coding experience will really help you get the most out of this!"
+      },
+      "why": "Takes good Python up to the level of whole applications: domain models, tests and events.",
+      "confidence": 0.9,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.1 PER",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 005.1 PER",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 005.1 PER",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 005.1 PER",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 005.1 PER",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Woodlands Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 5,
+      "book": {
+        "id": "9781492055020",
+        "title": "High Performance Python: Practical Performant Programming for Humans",
+        "author": "Micha Gorelick, Ian Ozsvald",
+        "isbn": "9781492055020",
+        "brn": null,
+        "year": 2014,
+        "pages": 370,
+        "ddc": null,
+        "subjects": [
+          "Python (Computer program language)",
+          "High performance computing",
+          "Computer algorithms",
+          "Open source software"
+        ],
+        "summary": "",
+        "cover_url": "https://covers.openlibrary.org/b/id/8513749-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Data Structures (lists, dictionaries)",
+          "Basic Python Syntax",
+          "Functions & Modules",
+          "Object-Oriented Programming (classes)",
+          "Command Line Interface"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive into the nitty-gritty of how Python code *really* runs – a little programming experience will help you appreciate the insights!"
+      },
+      "why": "When idiomatic code needs to be fast: profiling, NumPy, compiling and concurrency.",
+      "confidence": 0.9,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.1 GOR",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 005.1 GOR",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 005.1 GOR",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 005.1 GOR",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 005.1 GOR",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Jurong West Public Library",
+          "Tampines Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    }
+  ],
+  "generated_at": "2026-10-11T04:59:24.716930+00:00",
+  "engine": "llm",
+  "notes": [
+    "unverified, dropped: Think Python: How to Think Like a Computer Scientist"
+  ]
+}

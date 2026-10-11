@@ -151,7 +151,7 @@
         "style_tags": [],
         "one_line": "Get ready to challenge your assumptions about the world – this book will show you how our instincts often mislead us, and how to think more clearly about global trends."
       },
-      "why": "Understanding basic statistics and correlation versus causation in *Factfulness* will give you a solid foundation for interpreting the economic data and charts presented in *Capital in the Twenty-First Century*.",
+      "why": "Understanding basic statistics and correlation versus causation in Factfulness will give you a solid foundation for interpreting the economic data and charts presented in Capital in the Twenty-First Century.",
       "confidence": 0.8,
       "availability": [
         {
@@ -233,7 +233,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/8097878-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -343,10 +344,13 @@
           "Economic history"
         ],
         "summary": "Piketty's analysis of wealth and income inequality across two centuries.",
-        "cover_url": null,
+        "cover_url": "https://img2.od-cdn.com/ImageType-400/7847-1/{2B4A656F-5110-495D-894E-0CC5348B4C48}IMG400.JPG",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "seed",
+        "field_sources": {
+          "cover_url": "overdrive"
+        }
       },
       "readiness": {
         "level": 5,
@@ -454,7 +458,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "305"
+        "ddc": "305",
+        "field_sources": {}
       },
       "readiness": {
         "level": 5,
@@ -545,7 +550,7 @@
   "notes": [
     "unverified, dropped: Freakonomics",
     "'A short history of nearly everything' judged unrelated (0.80), not placed before",
-    "dropped 'The Price of Inequality' from after-line: much easier than the target",
-    "dropped 'The Shock Doctrine' from after-line: much easier than the target"
+    "dropped 'The Price of Inequality' from next reads: much easier than the target",
+    "dropped 'The Shock Doctrine' from next reads: much easier than the target"
   ]
 }

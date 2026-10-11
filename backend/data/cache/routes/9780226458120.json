@@ -48,7 +48,7 @@
           "Theory"
         ],
         "style_tags": [],
-        "one_line": "Get ready to think critically about how science *really* works – it's more than just experiments and facts!"
+        "one_line": "Get ready to think critically about how science really works – it's more than just experiments and facts!"
       },
       "why": "Reading 'What is this thing called science?' will give you a solid grounding in the philosophical concepts like falsification and induction that Kuhn frequently references and builds upon in 'The Structure of Scientific Revolutions,' making his arguments much more accessible.",
       "confidence": 0.9,
@@ -136,7 +136,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/8283901-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -151,7 +152,7 @@
         "style_tags": [],
         "one_line": "Get ready for a sweeping, beautiful journey through the history of science and our place in the universe – it's a lot to take in, but incredibly rewarding!"
       },
-      "why": "Reading *Cosmos* first will give you a good foundation in the scientific method and historical context, which will be helpful for understanding Kuhn's discussion of how scientific theories evolve and are sometimes overturned.",
+      "why": "Reading Cosmos first will give you a good foundation in the scientific method and historical context, which will be helpful for understanding Kuhn's discussion of how scientific theories evolve and are sometimes overturned.",
       "confidence": 0.8,
       "availability": [
         {
@@ -246,7 +247,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/8364866-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -348,7 +350,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/6566386-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 4,
@@ -577,11 +580,15 @@
           "open_syllabus_project",
           "Long Now Manual for Civilization"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "Upon its first English publication in 1959, Popper's The Logic of Scientific Discovery revolutionized thinking about the scientific method. Largely an exploration of the \"demarcation problem,\" or what distinguishes science from non-science,...",
+        "cover_url": "https://img3.od-cdn.com/ImageType-400/2343-1/{3A8C9D2F-95C4-4117-BFD0-48B2868FD10A}IMG400.JPG",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "seed",
+        "field_sources": {
+          "summary": "overdrive",
+          "cover_url": "overdrive"
+        }
       },
       "readiness": {
         "level": 4,
@@ -595,7 +602,7 @@
           "Empiricism"
         ],
         "style_tags": [],
-        "one_line": "Get ready to challenge how you think about what it *means* for something to be scientific – this book dives deep into the philosophy behind how science actually works."
+        "one_line": "Get ready to challenge how you think about what it means for something to be scientific – this book dives deep into the philosophy behind how science actually works."
       },
       "why": "The view Kuhn pushed against.",
       "confidence": 0.7,

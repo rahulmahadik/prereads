@@ -34,7 +34,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/8814155-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 2,
@@ -133,7 +134,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/11112952-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 2,

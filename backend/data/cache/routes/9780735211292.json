@@ -30,7 +30,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/12539702-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 1,
@@ -138,7 +139,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/9261174-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 1,
@@ -248,7 +250,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/9078085-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 2,
@@ -357,7 +360,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/7988607-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,

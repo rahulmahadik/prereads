@@ -1,0 +1,525 @@
+{
+  "target_id": "9780199678112",
+  "stops": [
+    {
+      "role": "before",
+      "order": 0,
+      "book": {
+        "id": "9781101946596",
+        "title": "Life 3.0",
+        "author": "Max Tegmark",
+        "isbn": "9781101946596",
+        "brn": null,
+        "year": 2017,
+        "pages": 384,
+        "ddc": "006.3",
+        "subjects": [
+          "Moral and ethical aspects",
+          "Technological forecasting",
+          "Social aspects",
+          "Philosophy",
+          "Artificial intelligence",
+          "Automation",
+          "nyt:business-books=2017-09-10",
+          "New York Times bestseller",
+          "Technology, social aspects",
+          "Human-computer interaction",
+          "Information society",
+          "TECHNOLOGY & ENGINEERING / Robotics",
+          "SCIENCE / Experiments & Projects",
+          "TECHNOLOGY & ENGINEERING / Inventions",
+          "Automata"
+        ],
+        "summary": "\"How will artificial intelligence affect crime, war, justice, jobs, society and our very sense of being human? The rise of AI has the potential to transform our future more than any other technology--and there's nobody better qualified or situated to explore that future than Max Tegmark, an MIT professor who's helped mainstream research on how to keep AI beneficial. How can we grow our prosperity through automation without leaving people lacking income or purpose? What career advice should we give today's kids? How can we make future AI systems more robust, so that they do what we want without crashing, malfunctioning or getting hacked? Should we fear an arms race in lethal autonomous weapons? Will machines eventually outsmart us at all tasks, replacing humans on the job market and perhaps altogether? Will AI help life flourish like never before or give us more power than we can handle? What sort of future do you want? This book empowers you to join what may be the most important conversation of our time. It doesn't shy away from the full range of viewpoints or from the most controversial issues--from superintelligence to meaning, consciousness and the ultimate physical limits on life in the cosmos.\"--Jacket.",
+        "cover_url": "https://covers.openlibrary.org/b/id/10239283-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Artificial Intelligence (AI)",
+          "Automation",
+          "Machine Learning",
+          "Ethics",
+          "Exponential Technological Growth"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to think big about the future – this book explores complex ideas about AI and its impact on humanity, so a basic understanding of technology and some philosophical curiosity will help you enjoy the journey."
+      },
+      "why": "Life 3.0 introduces many of the core concepts of AI and exponential technological growth that Superintelligence builds upon, so reading it first will give you a good foundation for understanding Bostrom's more complex arguments about superintelligence.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 006.3 TEG",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 006.3 TEG",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 006.3 TEG",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 006.3 TEG",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Woodlands Regional Library",
+          "Central Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 1,
+      "book": {
+        "id": "9780525558620",
+        "title": "Human Compatible",
+        "author": "Stuart J. Russell",
+        "isbn": "9780525558620",
+        "brn": null,
+        "year": 2019,
+        "pages": 349,
+        "ddc": "006.301",
+        "subjects": [
+          "Safety measures",
+          "Risk assessment",
+          "Social aspects",
+          "Accidents",
+          "Artificial intelligence",
+          "Automation",
+          "Science",
+          "Biotechnology",
+          "Computer industry",
+          "Robotics",
+          "Nonfiction",
+          "Long Now Manual for Civilization"
+        ],
+        "summary": "\"In the popular imagination, superhuman artificial intelligence is an approaching tidal wave that threatens not just jobs and human relationships, but civilization itself. Conflict between humans and machines is seen as inevitable and its outcome all too predictable. In this groundbreaking book, distinguished AI researcher Stuart Russell argues that this scenario can be avoided, but only if we rethink AI from the ground up. Russell begins by exploring the idea of intelligence in humans and in machines. He describes the near-term benefits we can expect, from intelligent personal assistants to vastly accelerated scientific research, and outlines the AI breakthroughs that still have to happen before we reach superhuman AI. He also spells out the ways humans are already finding to misuse AI, from lethal autonomous weapons to viral sabotage. If the predicted breakthroughs occur and superhuman AI emerges, we will have created entities far more powerful than ourselves. How can we ensure they never, ever, have power over us? Russell suggests that we can rebuild AI on a new foundation, according to which machines are designed to be inherently uncertain about the human preferences they are required to satisfy. Such machines would be humble, altruistic, and committed to pursue our objectives, not theirs. This new foundation would allow us to create machines that are provably deferential and provably beneficial. In a 2014 editorial co-authored with Stephen Hawking, Russell wrote, \"Success in creating AI would be the biggest event in human history. Unfortunately, it might also be the last.\" Solving the problem of control over AI is not just possible; it is the key that unlocks a future of unlimited promise\"--",
+        "cover_url": "https://covers.openlibrary.org/b/id/11264186-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Machine Learning",
+          "Algorithms",
+          "Neural Networks",
+          "Ethics",
+          "Game Theory"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to think deeply about the future of AI and how we can ensure it aligns with human values – it's a fascinating, but complex, conversation!"
+      },
+      "why": "Reading 'Human Compatible' will give you a good overview of machine learning and algorithms, which will be helpful for understanding the technical foundations that Bostrom discusses in 'Superintelligence'.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 006.301 RUS",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 006.301 RUS",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 006.301 RUS",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 006.301 RUS",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Woodlands Regional Library",
+          "Punggol Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 2,
+      "book": {
+        "id": "9780393635829",
+        "title": "The Alignment Problem",
+        "author": "Brian Christian",
+        "isbn": "9780393635829",
+        "brn": null,
+        "year": 2020,
+        "pages": 356,
+        "ddc": null,
+        "subjects": [
+          "Science",
+          "Artificial intelligence",
+          "Computers, social aspects",
+          "Cognitive science",
+          "Moral and ethical aspects",
+          "Social aspects",
+          "Machine learning",
+          "Safety measures",
+          "Software failures",
+          "Social values",
+          "Intelligence artificielle",
+          "Aspect moral",
+          "Aspect social",
+          "Apprentissage automatique",
+          "Sécurité"
+        ],
+        "summary": "\"A jaw-dropping exploration of everything that goes wrong when we build AI systems-and the movement to fix them. Today's \"machine-learning\" systems, trained by data, are so effective that we've invited them to see and hear for us-and to make decisions on our behalf. But alarm bells are ringing. Systems cull résumés until, years later, we discover that they have inherent gender biases. Algorithms decide bail and parole-and appear to assess black and white defendants differently. We can no longer assume that our mortgage application, or even our medical tests, will be seen by human eyes. And autonomous vehicles on our streets can injure or kill. When systems we attempt to teach will not, in the end, do what we want or what we expect, ethical and potentially existential risks emerge. Researchers call this the alignment problem. In best-selling author Brian Christian's riveting account, we meet the alignment problem's \"first-responders,\" and learn their ambitious plan to solve it before our hands are completely off the wheel\"--Provided by publisher.",
+        "cover_url": "https://covers.openlibrary.org/b/id/10678431-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Machine Learning",
+          "Algorithms",
+          "Bias (in data)",
+          "Ethics",
+          "Cognitive Bias"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to think critically about how the technology shaping our lives is built and what values it reflects – it's a fascinating, important, and sometimes unsettling read!"
+      },
+      "why": "Reading 'The Alignment Problem' will give you a good foundation in understanding the practical challenges of machine learning and bias, which are essential concepts for grappling with Bostrom's more theoretical exploration of superintelligence.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 153.4 CHR",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 153.4 CHR",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 153.4 CHR",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 153.4 CHR",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Punggol Regional Library",
+          "Bukit Batok Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "target",
+      "order": 3,
+      "book": {
+        "id": "9781501227745",
+        "title": "Superintelligence",
+        "author": "Nick Bostrom",
+        "isbn": "9781501227745",
+        "brn": null,
+        "year": 2014,
+        "pages": 352,
+        "ddc": null,
+        "subjects": [
+          "Moral and ethical aspects",
+          "Cognitive science",
+          "Artificial intelligence",
+          "Social aspects",
+          "Philosophy",
+          "Computers and civilization",
+          "Intelligence artificielle",
+          "Philosophie",
+          "Aspect social",
+          "Aspect moral",
+          "Sciences cognitives",
+          "COMPUTERS",
+          "General",
+          "Société de l'information",
+          "Artificiell intelligens"
+        ],
+        "summary": "The human brain has some capabilities that the brains of other animals lack. It is to these distinctive capabilities that our species owes its dominant position. Other animals have stronger muscles or sharper claws, but we have cleverer brains. If machine brains one day come to surpass human brains in general intelligence, then this new superintelligence could become very powerful. As the fate of the gorillas now depends more on us humans than on the gorillas themselves, so the fate of our species then would come to depend on the actions of the machine superintelligence. But we have one advantage: we get to make the first move. Will it be possible to construct a seed AI or otherwise to engineer initial conditions so as to make an intelligence explosion survivable? How could one achieve a controlled detonation? To get closer to an answer to this question, we must make our way through a fascinating landscape of topics and considerations. Read the book and learn about oracles, genies, singletons; about boxing methods, tripwires, and mind crime; about humanity's cosmic endowment and differential technological development; indirect normativity, instrumental convergence, whole brain emulation and technology couplings; Malthusian economics and dystopian evolution; artificial intelligence, and biological cognitive enhancement, and collective intelligence.",
+        "cover_url": "https://covers.openlibrary.org/b/id/8039542-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 4,
+        "hours": 14.0,
+        "assumed_concepts": [
+          "what machine learning can and can't do",
+          "basic probability",
+          "philosophical argument"
+        ],
+        "style_tags": [],
+        "one_line": "Dense, careful philosophy about very capable AI; easier once you know what today's AI actually does."
+      },
+      "why": "Dense, careful philosophy about very capable AI; easier once you know what today's AI actually does.",
+      "confidence": 1.0,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 153.4 BOS",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 153.4 BOS",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 153.4 BOS",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 153.4 BOS",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 153.4 BOS",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 153.4 BOS",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 153.4 BOS",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library",
+          "Jurong West Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 4,
+      "book": {
+        "id": "9780316484893",
+        "title": "The Precipice",
+        "author": "Toby Ord",
+        "isbn": "9780316484893",
+        "brn": null,
+        "year": 2020,
+        "pages": 480,
+        "ddc": null,
+        "subjects": [
+          "Sociology",
+          "Natural disasters",
+          "Climatic changes",
+          "Science, popular works",
+          "Ethics"
+        ],
+        "summary": "In this urgent and “thrillingly written” book, there is a case and solution for humanity’s last shot at survival (Sunday Times). Humanity’s future is at risk. We face existential catastrophes,...",
+        "cover_url": "https://covers.openlibrary.org/b/id/9338949-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {
+          "summary": "overdrive"
+        }
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Existential Risk",
+          "Bayesian Reasoning",
+          "Game Theory",
+          "Moral Philosophy",
+          "Probability",
+          "Climate Modelling"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to grapple with some big, potentially unsettling ideas about the future of humanity – it's a thoughtful and important read!"
+      },
+      "why": "Puts AI risk alongside the other existential risks, with numbers.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 100 ORD",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 100 ORD",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 100 ORD",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 100 ORD",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 100 ORD",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 100 ORD",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 100 ORD",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Tampines Regional Library",
+          "Punggol Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    }
+  ],
+  "generated_at": "2026-10-11T04:54:09.965869+00:00",
+  "engine": "llm",
+  "notes": [
+    "unverified, dropped: The Singularity Is Near: When Humans Transcend Biology",
+    "'Machines Like Me' judged unrelated (0.70), not placed before",
+    "unverified, dropped: Life 3.0: Being Human in the Age of Artificial Intelligence",
+    "unverified, dropped: Weapons of Mass Persuasion: How Propaganda and Misinformation Shape Our World",
+    "dropped 'Thinking, fast and slow' from before-line: not easier than the target"
+  ]
+}

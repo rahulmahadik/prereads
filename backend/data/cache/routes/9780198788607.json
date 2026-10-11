@@ -34,7 +34,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "576.8"
+        "ddc": "576.8",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -142,7 +143,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "576.8"
+        "ddc": "576.8",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -236,7 +238,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "523.1"
+        "ddc": "523.1",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -346,7 +349,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "591.5"
+        "ddc": "591.5",
+        "field_sources": {}
       },
       "readiness": {
         "level": 4,
@@ -453,7 +457,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "576.8"
+        "ddc": "576.8",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -673,7 +678,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "575"
+        "ddc": "575",
+        "field_sources": {}
       },
       "readiness": {
         "level": 5,

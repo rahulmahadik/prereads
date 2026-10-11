@@ -19,10 +19,13 @@
           "Ethics"
         ],
         "summary": "The emperor's private reflections on living well.",
-        "cover_url": null,
+        "cover_url": "https://img3.od-cdn.com/ImageType-400/0111-1/{57BEA11A-BC4D-4528-B0B5-49FAE99D7E5A}IMG400.JPG",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {
+          "cover_url": "overdrive"
+        }
       },
       "readiness": {
         "level": 3,
@@ -94,11 +97,15 @@
           "Philosophy",
           "Ethics"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "'A book for the bedside of every future - and current - leader in the world' ROBERT GREENE 'A self-help sage' NEW YORK TIMES 'Some writers give advice. Ryan Holiday distils wisdom' CAL NEWPORT THE MULTI MILLION...",
+        "cover_url": "https://img3.od-cdn.com/ImageType-400/6852-1/{B89A13F1-1988-4F62-BC57-7A0DA4106BC4}IMG400.JPG",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {
+          "summary": "overdrive",
+          "cover_url": "overdrive"
+        }
       },
       "readiness": {
         "level": 2,
@@ -415,6 +422,6 @@
     "'The Enchiridion' judged same_level (0.80), not placed before",
     "unverified, dropped: Happiness: A Guide to Developing Life's Most Important Skill",
     "unverified, dropped: A Guide to the Good Life: The Ancient Art of Stoic Joy",
-    "dropped 'Letters from a Stoic' from before-line: not easier than the target"
+    "dropped 'Letters from a Stoic' from the reading path: not easier than your book"
   ]
 }

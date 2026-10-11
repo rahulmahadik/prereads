@@ -31,7 +31,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "332.632"
+        "ddc": "332.632",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -157,7 +158,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "332.6"
+        "ddc": "332.6",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -270,11 +272,14 @@
           "Warren Buffett",
           "Seth Klarman"
         ],
-        "summary": "",
+        "summary": "A fully revised edition of one of the most influential books ever written on personal finance with more than a million copies sold “The best book on money. Period.” –Grant Sabatier, founder of...",
         "cover_url": "https://covers.openlibrary.org/b/id/13313358-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {
+          "summary": "overdrive"
+        }
       },
       "readiness": {
         "level": 3,
@@ -376,7 +381,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "332.6"
+        "ddc": "332.6",
+        "field_sources": {}
       },
       "readiness": {
         "level": 4,
@@ -484,7 +490,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "332.6"
+        "ddc": "332.6",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,

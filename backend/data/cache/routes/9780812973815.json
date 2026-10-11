@@ -34,7 +34,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "153.4"
+        "ddc": "153.4",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -47,7 +48,7 @@
           "Heuristics"
         ],
         "style_tags": [],
-        "one_line": "Get ready to explore how your brain *really* works – it's fascinating, and a little surprising!"
+        "one_line": "Get ready to explore how your brain really works – it's fascinating, and a little surprising!"
       },
       "why": "Understanding Kahneman's exploration of cognitive biases and heuristics in 'Thinking, Fast and Slow' will give you a strong foundation for grappling with Taleb's discussion of randomness and predictability in 'The Black Swan,' as both books challenge how we perceive and interpret the world.",
       "confidence": 0.8,
@@ -129,11 +130,14 @@
           "Philosophy",
           "Business enterprises"
         ],
-        "summary": "",
+        "summary": "With two new chapters and a new preface, the award-winning book The Halo Effect continues to unmask the delusions found in the corporate world and provides a sharp understanding of what drives business success and failure. Too...",
         "cover_url": "https://covers.openlibrary.org/b/id/475409-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {
+          "summary": "overdrive"
+        }
       },
       "readiness": {
         "level": 3,
@@ -234,7 +238,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "303.49"
+        "ddc": "303.49",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -360,7 +365,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "003.54"
+        "ddc": "003.54",
+        "field_sources": {}
       },
       "readiness": {
         "level": 4,
@@ -372,9 +378,9 @@
           "basic statistics"
         ],
         "style_tags": [],
-        "one_line": "Taleb assumes you can tell a bell curve from a fat tail; the before-line gets you there gently."
+        "one_line": "Taleb assumes you can tell a bell curve from a fat tail; the reading path gets you there gently."
       },
-      "why": "Taleb assumes you can tell a bell curve from a fat tail; the before-line gets you there gently.",
+      "why": "Taleb assumes you can tell a bell curve from a fat tail; the reading path gets you there gently.",
       "confidence": 1.0,
       "availability": [
         {
@@ -469,7 +475,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "155.24"
+        "ddc": "155.24",
+        "field_sources": {}
       },
       "readiness": {
         "level": 4,
@@ -485,115 +492,6 @@
         "one_line": "Get ready to challenge your assumptions about how the world works – this book rewards a curious mind and a willingness to grapple with complex ideas!"
       },
       "why": "What to do about black swans: build things that gain from disorder.",
-      "confidence": 0.9,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 155.24 TAL",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 155.24 TAL",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 155.24 TAL",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 155.24 TAL",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 155.24 TAL",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 155.24 TAL",
-          "available": 2,
-          "total": 3,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Central Public Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "after",
-      "order": 5,
-      "book": {
-        "id": "9781846141577",
-        "title": "Antifragile",
-        "author": "Nassim Nicholas Taleb, Genís Sánchez Barberán",
-        "isbn": "9781846141577",
-        "brn": null,
-        "year": 2012,
-        "pages": 639,
-        "subjects": [
-          "Resilience (Personality trait)",
-          "PSYCHOLOGY / General",
-          "BUSINESS & ECONOMICS / General",
-          "Long Now Manual for Civilization",
-          "Social aspects",
-          "Uncertainty (Information theory)",
-          "Forecasting",
-          "Complexity (Philosophy)",
-          "Psychological Resilience",
-          "Psychological Adaptation",
-          "Uncertainty",
-          "Adjustment (psychology)",
-          "Adaptability (psychology)",
-          "nyt:combined-print-and-e-book-nonfiction=2012-12-16",
-          "New York Times bestseller"
-        ],
-        "summary": "\"The acclaimed author of the influential bestseller The Black Swan, Nicholas Nassim Taleb takes a next big step with a deceptively simple concept: the \"antifragile.\" Like the Greek hydra that grows two heads for each one it loses, people, systems, and institutions that are antifragile not only withstand shocks, they benefit from them. In a modern world dominated by chaos and uncertainty, Antifragile is a revolutionary vision from one of the most subversive and important thinkers of our time.  Praise for Nicholas Nassim Taleb     \"[This] is the lesson of Taleb. and also the lesson of our volatile times. There is more courage and heroism in defying the human impulse, in taking the purposeful and painful steps to prepare for the unimaginable.\"--Malcolm Gladwell, author of The Tipping Point     \"[Taleb writes] in a style that owes as much to Stephen Colbert as it does to Michel de Montaigne.\"--The Wall Street Journal     \"The most prophetic voice of all. [Taleb is] a genuinely significant philosopher. someone who is able to change the way we view the structure of the world through the strength, originality and veracity of his ideas alone.\"--GQ     \"Changed my view of how the world works.\"--Daniel Kahneman, Nobel laureate\"--\r\n\r\n\"Examples of Antifragility: When you stress your body by lifting a big weight, your body gets stronger. New York has the best restaurants in the world because particular restaurants are always going bust, making the aggregate stronger and stronger, or antifragile. Evolution is antifragile. Certain business and investment strategies are antifragile. Older things tend to be more antifragile than newer ones - because they've been exposed to more Black Swans\"--",
-        "cover_url": "https://covers.openlibrary.org/b/id/9180157-M.jpg",
-        "reservations": 0,
-        "audience": [],
-        "source": "openlibrary",
-        "ddc": "155.24"
-      },
-      "readiness": {
-        "level": 4,
-        "hours": 20.0,
-        "assumed_concepts": [
-          "Chaos Theory",
-          "Black Swan Events",
-          "Statistical Variance",
-          "Systems Thinking",
-          "Heuristics"
-        ],
-        "style_tags": [],
-        "one_line": "Get ready to challenge your assumptions about how the world works – this book explores how to thrive, not just survive, in a world full of surprises."
-      },
-      "why": "It’s Taleb’s follow-up, expanding on Black Swan principles to explore how systems can benefit from disorder and volatility.",
       "confidence": 0.9,
       "availability": [
         {

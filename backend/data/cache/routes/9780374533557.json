@@ -12,6 +12,7 @@
         "brn": null,
         "year": 2008,
         "pages": 312,
+        "ddc": "330.019",
         "subjects": [
           "Business",
           "Choice (Psychology)",
@@ -34,11 +35,11 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "330.019"
+        "field_sources": {}
       },
       "readiness": {
         "level": 2,
-        "hours": 6.0,
+        "hours": 8.0,
         "assumed_concepts": [
           "Behavioral Economics",
           "Cognitive Biases",
@@ -49,7 +50,7 @@
         "style_tags": [],
         "one_line": "Get ready to think differently about how choices are made – this book explores how subtle influences can shape our decisions, and how we can use that knowledge for good."
       },
-      "why": "While both books explore behavioral economics, 'Nudge' introduces concepts like incentives and default settings in a more accessible way, which will give you a foundational understanding to better grasp the more complex statistical and psychological frameworks presented in 'Thinking, Fast and Slow'.",
+      "why": "While both books explore behavioral economics, 'Nudge' offers a gentler introduction to concepts like incentives and default settings, which will make understanding Kahneman's more in-depth exploration of heuristics and biases in 'Thinking, Fast and Slow' less daunting.",
       "confidence": 0.8,
       "availability": [
         {
@@ -131,95 +132,90 @@
       "role": "before",
       "order": 1,
       "book": {
-        "id": "9780676978582",
-        "title": "Stumbling on happiness",
-        "author": "Daniel T. Gilbert",
-        "isbn": "9780676978582",
+        "id": "9780062018205",
+        "title": "Predictably Irrational",
+        "author": "Dan Ariely",
+        "isbn": "9780062018205",
         "brn": null,
-        "year": 2006,
-        "pages": 310,
+        "year": 2008,
+        "pages": 368,
+        "ddc": null,
         "subjects": [
-          "Happiness",
+          "Psychological aspects of Economics",
+          "Economics",
+          "Psychological aspects",
+          "Decision making",
+          "Consumer behavior",
+          "Consumers",
+          "Thought and thinking",
+          "Reasoning",
+          "Business",
           "Nonfiction",
-          "Psychology",
-          "Self realization",
-          "Self-Improvement",
-          "New York Times reviewed",
-          "Imagination",
-          "Interpersonal relations",
-          "Bonheur",
-          "Geluk",
-          "Contentment",
-          "Forecasting",
-          "Psychological aspects"
+          "Sociology",
+          "Long Now Manual for Civilization",
+          "Reasoning (Psychology)",
+          "Judgment",
+          "New York Times bestseller"
         ],
-        "summary": "A smart and funny book by a prominent Harvard psychologist, which uses groundbreaking research and (often hilarious) anecdotes to show us why we're so lousy at predicting what will make us happy -- and what we can do about it.Most of us spend our lives steering ourselves toward the best of all possible futures, only to find that tomorrow rarely turns out as we had expected. Why? As Harvard psychologist Daniel Gilbert explains, when people try to imagine what the future will hold, they make some basic and consistent mistakes. Just as memory plays tricks on us when we try to look backward in time, so does imagination play tricks when we try to look forward. Using cutting-edge research, much of it original, Gilbert shakes, cajoles, persuades, tricks and jokes us into accepting the fact that happiness is not really what or where we thought it was. Among the unexpected questions he poses: Why are conjoined twins no less happy than the general population? When you go out to eat, is it better to order your favourite dish every time, or to try something new? If Ingrid Bergman hadn't gotten on the plane at the end of Casablanca, would she and Bogey have been better off?Smart, witty, accessible and laugh-out-loud funny, Stumbling on Happiness brilliantly describes all that science has to tell us about the uniquely human ability to envision the future, and how likely we are to enjoy it when we get there.From the Hardcover edition.",
-        "cover_url": "https://covers.openlibrary.org/b/id/6803663-M.jpg",
+        "summary": "How do we think about money?What caused bankers to lose sight of the economy?What caused individuals to take on mortgages that were not within their means?What irrational forces guided our decisions?And how can we recover from an economic crisis? In this revised and expanded edition of the New York Times and Wall Street Journal bestseller Predictably Irrational, Duke University's behavioral economist Dan Ariely explores the hidden forces that shape our decisions, including some of the causes responsible for the current economic crisis. Bringing a much-needed dose of sophisticated psychological study to the realm of public policy, Ariely offers his own insights into the irrationalities of everyday life, the decisions that led us to the financial meltdown of 2008, and the general ways we get ourselves into trouble.Blending common experiences and clever experiments with groundbreaking analysis, Ariely demonstrates how expectations, emotions, social norms, and other invisible, seemingly illogical forces skew our reasoning abilities. As he explains, our reliance on standard economic theory to design personal, national, and global policies may, in fact, be dangerous. The mistakes that we make as individuals and institutions are not random, and they can aggregate in the market—with devastating results. In light of our current economic crisis, the consequences of these systematic and predictable mistakes have never been clearer.Packed with new studies and thought-provoking responses to readers' questions and comments, this revised and expanded edition of Predictably Irrational will change the way we interact with the world—from the small decisions we make in our own lives to the individual and collective choices that shape our economy.",
+        "cover_url": "https://covers.openlibrary.org/b/id/2314080-M.jpg",
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "158"
+        "field_sources": {}
       },
       "readiness": {
-        "level": 2,
+        "level": 3,
         "hours": 8.0,
         "assumed_concepts": [
-          "Cognitive biases",
-          "Experimental psychology",
-          "Correlation vs. Causation",
-          "Hedonic adaptation",
-          "Subjective well-being"
+          "Behavioral Economics",
+          "Cognitive Biases",
+          "Experimental Design",
+          "Market Dynamics",
+          "Economic Incentives"
         ],
         "style_tags": [],
-        "one_line": "Get ready to question your assumptions about what makes you happy – this book uses psychology to show you how often we get it wrong!"
+        "one_line": "Get ready to question everything you thought you knew about how you make choices – it's fascinating to see how our brains trick us!"
       },
-      "why": "While both books explore cognitive biases, 'Stumbling on Happiness' introduces the topic in a more accessible way, easing you into the complex experimental psychology and concepts that 'Thinking, Fast and Slow' delves into with greater depth.",
+      "why": "Predictably Irrational introduces behavioral economics and cognitive biases in a more accessible way, which will give you a good foundation for understanding the more in-depth exploration of heuristics and biases presented in Thinking, Fast and Slow.",
       "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 158 GIL",
-          "available": 3,
+          "call_number": "English 153.83 ARI",
+          "available": 2,
           "total": 3,
           "demo": true
         },
         {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 158 GIL",
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 153.83 ARI",
           "available": 1,
-          "total": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 158 GIL",
-          "available": 2,
+          "call_number": "English 153.83 ARI",
+          "available": 1,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 158 GIL",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 158 GIL",
+          "call_number": "English 153.83 ARI",
           "available": 1,
-          "total": 2,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 158 GIL",
+          "call_number": "English 153.83 ARI",
           "available": 1,
           "total": 3,
           "demo": true
@@ -227,16 +223,16 @@
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 158 GIL",
-          "available": 1,
-          "total": 1,
+          "call_number": "English 153.83 ARI",
+          "available": 2,
+          "total": 2,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Bishan Public Library",
-          "Central Public Library"
+          "Jurong West Public Library",
+          "Bukit Batok Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -254,6 +250,7 @@
         "brn": null,
         "year": 2016,
         "pages": 362,
+        "ddc": "612.8233",
         "subjects": [
           "Neurosciences",
           "PSYCHOLOGY / Cognitive Psychology & Cognition",
@@ -276,7 +273,7 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "612.8233"
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -289,9 +286,9 @@
           "Correlation vs. Causation"
         ],
         "style_tags": [],
-        "one_line": "Get ready to question how you *think* you make decisions – this book explores fascinating research that shows we're all more predictable than we realize!"
+        "one_line": "Get ready to question how you *think* you make decisions – this book explores fascinating research that reveals we're all more predictable than we realize."
       },
-      "why": "While both books explore similar territory, 'Thinking, Fast and Slow' delves into the foundational concepts of behavioral economics and cognitive biases in more depth, so reading 'The Undoing Project' first, which touches on these ideas within the context of a specific research project, can provide a helpful framework.",
+      "why": "Reading *The Undoing Project* first will give you a solid introduction to cognitive biases and experimental design, which are foundational concepts explored in much greater depth in *Thinking, Fast and Slow*.",
       "confidence": 0.8,
       "availability": [
         {
@@ -380,6 +377,7 @@
         "brn": null,
         "year": 2011,
         "pages": 548,
+        "ddc": "153.4",
         "subjects": [
           "Intuition",
           "Thought and thinking",
@@ -402,7 +400,7 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "153.4"
+        "field_sources": {}
       },
       "readiness": {
         "level": 4,
@@ -488,6 +486,7 @@
         "brn": null,
         "year": 2021,
         "pages": 480,
+        "ddc": "153.83",
         "subjects": [
           "Noise",
           "Electric circuits",
@@ -508,20 +507,20 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "153.83"
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
         "hours": 12.0,
         "assumed_concepts": [
-          "cognitive bias",
-          "statistical variability",
-          "expert judgment",
-          "systemic error",
-          "decision-making frameworks"
+          "Cognitive biases",
+          "Statistical variability",
+          "Decision-making processes",
+          "Expert judgment",
+          "System 1 vs. System 2 thinking (familiarity with Kahneman's *Thinking, Fast and Slow* is helpful but not essential)"
         ],
         "style_tags": [],
-        "one_line": "Get ready to think critically about how even experts can be inconsistent, and how we can all make better judgments!"
+        "one_line": "Get ready to think critically about how decisions are made – this book will show you how much randomness can creep into even the most professional judgments."
       },
       "why": "Kahneman's follow-up on the other source of bad judgment: inconsistency.",
       "confidence": 0.9,
@@ -597,6 +596,109 @@
       "role": "after",
       "order": 5,
       "book": {
+        "id": "9781101905562",
+        "title": "Superforecasting",
+        "author": "Philip E. Tetlock, Dan Gardner",
+        "isbn": "9781101905562",
+        "brn": null,
+        "year": 2015,
+        "pages": 338,
+        "ddc": null,
+        "subjects": [
+          "Economic forecasting",
+          "Forecasting",
+          "decision making",
+          "predictions",
+          "reasoning",
+          "analysis",
+          "psychology",
+          "SOCIAL SCIENCE / Future Studies",
+          "BUSINESS & ECONOMICS / Forecasting",
+          "PSYCHOLOGY / Cognitive Psychology",
+          "BUSINESS & ECONOMICS",
+          "SOCIAL SCIENCE",
+          "Future Studies",
+          "Cognitive Psychology",
+          "Techniques de prévision"
+        ],
+        "summary": "Everyone would benefit from seeing further into the future, whether buying stocks, crafting policy, launching a new product, or simply planning the week’s meals. Unfortunately, people tend to be terrible forecasters. As Wharton professor Philip Tetlock showed in a landmark 2005 study, even experts’ predictions are only slightly better than chance. However, an important and underreported conclusion of that study was that some experts do have real foresight, and Tetlock has spent the past decade trying to figure out why. What makes some people so good? And can this talent be taught?\r\n \r\nIn Superforecasting, Tetlock and coauthor Dan Gardner offer a masterwork on prediction, drawing on decades of research and the results of a massive, government-funded forecasting tournament. The Good Judgment Project involves tens of thousands of ordinary people—including a Brooklyn filmmaker, a retired pipe installer, and a former ballroom dancer—who set out to forecast global events. Some of the volunteers have turned out to be astonishingly good. They’ve beaten other benchmarks, competitors, and prediction markets. They’ve even beaten the collective judgment of intelligence analysts with access to classified information. They are \"superforecasters.\"\r\n \r\nIn this groundbreaking and accessible book, Tetlock and Gardner show us how we can learn from this elite group. Weaving together stories of forecasting successes (the raid on Osama bin Laden’s compound) and failures (the Bay of Pigs) and interviews with a range of high-level decision makers, from David Petraeus to Robert Rubin, they show that good forecasting doesn’t require powerful computers or arcane methods. It involves gathering evidence from a variety of sources, thinking probabilistically, working in teams, keeping score, and being willing to admit error and change course. Superforecasting offers the first demonstrably effective way to improve our ability to predict the future—whether in business, finance, politics, international affairs, or daily life—and is destined to become a modern classic.",
+        "cover_url": "https://covers.openlibrary.org/b/id/9142114-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 8.0,
+        "assumed_concepts": [
+          "Cognitive biases",
+          "Statistical regression to the mean",
+          "Bayesian thinking",
+          "Probabilistic reasoning",
+          "Groupthink"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to think about how we make decisions and predictions – it's fascinating to see how some people are surprisingly good at it!"
+      },
+      "why": "Puts the ideas to work on prediction and shows how to actually get better at it.",
+      "confidence": 0.9,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 303.49 TET",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 303.49 TET",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 303.49 TET",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 303.49 TET",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 303.49 TET",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library",
+          "Tampines Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 6,
+      "book": {
         "id": "9781912282562",
         "title": "Judgment under Uncertainty",
         "author": "Daniel Kahneman, Paul Slovic",
@@ -604,6 +706,7 @@
         "brn": null,
         "year": 2017,
         "pages": 555,
+        "ddc": null,
         "subjects": [
           "Intuition",
           "Thought and thinking",
@@ -625,24 +728,24 @@
         "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
-        "level": 3,
+        "level": 4,
         "hours": 18.0,
         "assumed_concepts": [
           "Cognitive biases",
           "Heuristics",
-          "Probability",
           "Statistical reasoning",
           "Prospect theory",
           "Framing effects"
         ],
         "style_tags": [],
-        "one_line": "Get ready to question how you *think* you make decisions – this book explores the fascinating, and sometimes flawed, ways our minds work."
+        "one_line": "Get ready to question how you *think* you make decisions – this book will reveal some surprising and fascinating insights!"
       },
       "why": "The original research papers, for readers who want the source.",
-      "confidence": 0.9,
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
@@ -701,115 +804,15 @@
         "reservations": 0,
         "demo": true
       }
-    },
-    {
-      "role": "after",
-      "order": 6,
-      "book": {
-        "id": "9781101905562",
-        "title": "Superforecasting",
-        "author": "Philip E. Tetlock, Dan Gardner",
-        "isbn": "9781101905562",
-        "brn": null,
-        "year": 2015,
-        "pages": 338,
-        "subjects": [
-          "Economic forecasting",
-          "Forecasting",
-          "decision making",
-          "predictions",
-          "reasoning",
-          "analysis",
-          "psychology",
-          "SOCIAL SCIENCE / Future Studies",
-          "BUSINESS & ECONOMICS / Forecasting",
-          "PSYCHOLOGY / Cognitive Psychology",
-          "BUSINESS & ECONOMICS",
-          "SOCIAL SCIENCE",
-          "Future Studies",
-          "Cognitive Psychology",
-          "Techniques de prévision"
-        ],
-        "summary": "Everyone would benefit from seeing further into the future, whether buying stocks, crafting policy, launching a new product, or simply planning the week’s meals. Unfortunately, people tend to be terrible forecasters. As Wharton professor Philip Tetlock showed in a landmark 2005 study, even experts’ predictions are only slightly better than chance. However, an important and underreported conclusion of that study was that some experts do have real foresight, and Tetlock has spent the past decade trying to figure out why. What makes some people so good? And can this talent be taught?\r\n \r\nIn Superforecasting, Tetlock and coauthor Dan Gardner offer a masterwork on prediction, drawing on decades of research and the results of a massive, government-funded forecasting tournament. The Good Judgment Project involves tens of thousands of ordinary people—including a Brooklyn filmmaker, a retired pipe installer, and a former ballroom dancer—who set out to forecast global events. Some of the volunteers have turned out to be astonishingly good. They’ve beaten other benchmarks, competitors, and prediction markets. They’ve even beaten the collective judgment of intelligence analysts with access to classified information. They are \"superforecasters.\"\r\n \r\nIn this groundbreaking and accessible book, Tetlock and Gardner show us how we can learn from this elite group. Weaving together stories of forecasting successes (the raid on Osama bin Laden’s compound) and failures (the Bay of Pigs) and interviews with a range of high-level decision makers, from David Petraeus to Robert Rubin, they show that good forecasting doesn’t require powerful computers or arcane methods. It involves gathering evidence from a variety of sources, thinking probabilistically, working in teams, keeping score, and being willing to admit error and change course. Superforecasting offers the first demonstrably effective way to improve our ability to predict the future—whether in business, finance, politics, international affairs, or daily life—and is destined to become a modern classic.",
-        "cover_url": "https://covers.openlibrary.org/b/id/9142114-M.jpg",
-        "reservations": 0,
-        "audience": [],
-        "source": "openlibrary"
-      },
-      "readiness": {
-        "level": 3,
-        "hours": 8.0,
-        "assumed_concepts": [
-          "cognitive biases",
-          "statistical regression",
-          "Bayesian thinking",
-          "probability",
-          "groupthink"
-        ],
-        "style_tags": [],
-        "one_line": "Get ready to think critically about how we make predictions, and discover practical strategies for improving your own judgment!"
-      },
-      "why": "Puts the ideas to work on prediction and shows how to actually get better at it.",
-      "confidence": 0.8,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 303.49 TET",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 303.49 TET",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 303.49 TET",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 303.49 TET",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 303.49 TET",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Bishan Public Library",
-          "Tampines Regional Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
     }
   ],
-  "generated_at": "2026-10-11T03:53:46.781272+00:00",
+  "generated_at": "2026-10-11T04:58:53.137268+00:00",
   "engine": "llm",
   "notes": [
-    "unverified, dropped: The Scout Mindset: Why Some People See Things Others Don't",
     "unverified, dropped: Predictably Irrational, Revised and Expanded Edition",
+    "unverified, dropped: You Are Not Your Brain: All of Your Best Decisions Are Made Here",
+    "unverified, dropped: A More Beautiful Question: The Story of Why We Ask Why",
     "unverified, dropped: Influence: The Psychology of Persuasion",
-    "unverified, dropped: Sapiens: A Brief History of Humankind"
+    "unverified, dropped: The Scout Mindset: Why Some People See Things Others Don't"
   ]
 }

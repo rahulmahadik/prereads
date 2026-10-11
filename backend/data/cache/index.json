@@ -6,6 +6,12 @@
     "cached": true
   },
   {
+    "id": "9780134610993",
+    "title": "Artificial Intelligence: A Modern Approach",
+    "author": "Stuart Russell",
+    "cached": true
+  },
+  {
     "id": "9780735211292",
     "title": "Atomic Habits",
     "author": "James Clear",
@@ -26,13 +32,25 @@
   {
     "id": "9780262035613",
     "title": "Deep Learning",
-    "author": "Ian Goodfellow",
+    "author": "Ian Goodfellow, Yoshua Bengio",
+    "cached": true
+  },
+  {
+    "id": "9781617296864",
+    "title": "Deep Learning with Python",
+    "author": "Francois Chollet, Matthew Watson",
     "cached": true
   },
   {
     "id": "9781449373320",
     "title": "Designing Data-Intensive Applications",
     "author": "Martin Kleppmann",
+    "cached": true
+  },
+  {
+    "id": "9781492056355",
+    "title": "Fluent Python",
+    "author": "Luciano Ramalho",
     "cached": true
   },
   {
@@ -44,19 +62,31 @@
   {
     "id": "9780262033848",
     "title": "Introduction to Algorithms",
-    "author": "Thomas H. Cormen",
+    "author": "Thomas H. Cormen, Charles E. Leiserson",
     "cached": true
   },
   {
     "id": "9780812968255",
     "title": "Meditations",
-    "author": "Marcus Aurelius",
+    "author": "Marcus Aurelius Aurelius",
+    "cached": true
+  },
+  {
+    "id": "9781593279288",
+    "title": "Python crash course",
+    "author": "Eric Matthes",
     "cached": true
   },
   {
     "id": "9780062316097",
     "title": "Sapiens",
     "author": "Yuval Noah Harari",
+    "cached": true
+  },
+  {
+    "id": "9780199678112",
+    "title": "Superintelligence",
+    "author": "Nick Bostrom",
     "cached": true
   },
   {
@@ -74,7 +104,7 @@
   {
     "id": "9781439170915",
     "title": "The Emperor of All Maladies",
-    "author": "Siddhartha Mukherjee",
+    "author": "Siddhartha Mukherjee, Nessa Carey",
     "cached": true
   },
   {
@@ -86,7 +116,7 @@
   {
     "id": "ol:the-phoenix-project-gene-kim",
     "title": "The Phoenix Project",
-    "author": "Gene Kim",
+    "author": "Gene Kim, Kevin Behr",
     "cached": true
   },
   {
@@ -104,7 +134,7 @@
   {
     "id": "9780226458120",
     "title": "The Structure of Scientific Revolutions",
-    "author": "Thomas S. Kuhn",
+    "author": "Thomas S. Kuhn, Dennis Holland",
     "cached": true
   },
   {
@@ -115,8 +145,8 @@
   },
   {
     "id": "9781603580557",
-    "title": "Thinking in Systems",
-    "author": "Donella H. Meadows",
+    "title": "Thinking in systems",
+    "author": "Donella H. Meadows, Diana Wright",
     "cached": true
   },
   {
@@ -128,7 +158,7 @@
   {
     "id": "9781501144325",
     "title": "Why We Sleep",
-    "author": "Matthew Walker",
+    "author": "Matthew P. Walker, Matthew Walker",
     "cached": true
   }
 ]

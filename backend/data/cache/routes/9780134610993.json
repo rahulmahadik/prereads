@@ -1,0 +1,654 @@
+{
+  "target_id": "9780134610993",
+  "stops": [
+    {
+      "role": "before",
+      "order": 0,
+      "book": {
+        "id": "9781593279288",
+        "title": "Python Crash Course, 2nd Edition",
+        "author": "Eric Matthes",
+        "isbn": "9781593279288",
+        "brn": null,
+        "year": 2019,
+        "pages": 544,
+        "ddc": null,
+        "subjects": [
+          "Python (computer program language)",
+          "Criticism and interpretationmurasaki shikibu , 978?-",
+          "Murasaki shikibu , 978?-",
+          "Pl788.4.z5 m87 2011",
+          "Criticism and interpretation紫式部 , b. 978?",
+          "紫式部 , b. 978?"
+        ],
+        "summary": "",
+        "cover_url": "https://covers.openlibrary.org/b/id/8800209-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 2,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Variables",
+          "Functions",
+          "Loops",
+          "Data Structures (lists, dictionaries)",
+          "Basic Algebra",
+          "Command Line Interface"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive into coding – this book will guide you through the basics of Python, but a little comfort with computers will make the journey smoother!"
+      },
+      "why": "While 'Artificial Intelligence: A Modern Approach' touches on programming, 'Python Crash Course' will give you a solid foundation in Python syntax and data structures, which will make understanding the code examples and implementing AI algorithms much smoother.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.1 MAT",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 005.1 MAT",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 005.1 MAT",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 005.1 MAT",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 005.1 MAT",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 005.1 MAT",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 005.1 MAT",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 005.1 MAT",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 1,
+      "book": {
+        "id": "9781617292231",
+        "title": "Grokking Algorithms",
+        "author": "Aditya Y. Bhargava",
+        "isbn": "9781617292231",
+        "brn": null,
+        "year": 2016,
+        "pages": 256,
+        "ddc": null,
+        "subjects": [
+          "Computer algorithms",
+          "Computer programming",
+          "Handbooks, manuals",
+          "Algorithmus",
+          "Programmierung"
+        ],
+        "summary": "\"Grokking Algorithms is a fully illustrated, friendly guide that teaches you how to apply common algorithms to the practical problems you face every day as a programmer. You'll start with sorting and searching and, as you build up your skills in thinking algorithmically, you'll tackle more complex concerns such as data compression and artificial intelligence. Each carefully presented example includes helpful diagrams and fully annotated code samples in Python.\"--Publisher's desription.",
+        "cover_url": "https://covers.openlibrary.org/b/id/8512926-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 8.0,
+        "assumed_concepts": [
+          "Basic programming concepts",
+          "Variables",
+          "Loops",
+          "Functions",
+          "Data Structures (lists, arrays)"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive into the logic behind how computers solve problems – a little programming experience will make this journey even more rewarding!"
+      },
+      "why": "Grokking Algorithms will give you a solid foundation in basic programming concepts like loops and data structures, which are essential for understanding the code examples and underlying logic in Artificial Intelligence: A Modern Approach.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.1 BHA",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 005.1 BHA",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 005.1 BHA",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 005.1 BHA",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 005.1 BHA",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 005.1 BHA",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 005.1 BHA",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 005.1 BHA",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Woodlands Regional Library",
+          "Punggol Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 2,
+      "book": {
+        "id": "9780141985428",
+        "title": "Weapons of Math Destruction",
+        "author": "Cathy O'Neil",
+        "isbn": "9780141985428",
+        "brn": null,
+        "year": 2016,
+        "pages": 278,
+        "ddc": "303.483",
+        "subjects": [
+          "math",
+          "big data",
+          "inequality",
+          "democracy",
+          "Social indicators",
+          "Moral and ethical aspects",
+          "Social conditions",
+          "Mathematical models",
+          "Data mining",
+          "Algorithms",
+          "Mathematics",
+          "award:euler_book_prize",
+          "nyt:education=2016-10-09",
+          "New York Times bestseller",
+          "Human behavior, mathematical models"
+        ],
+        "summary": "<strong>A former Wall Street quant sounds an alarm on the mathematical models that pervade modern life — and threaten to rip apart our social fabric</strong>\r\n\r\nWe live in the age of the algorithm. Increasingly, the decisions that affect our lives—where we go to school, whether we get a car loan, how much we pay for health insurance—are being made not by humans, but by mathematical models. In theory, this should lead to greater fairness: Everyone is judged according to the same rules, and bias is eliminated.\r\n\r\nBut as Cathy O’Neil reveals in this urgent and necessary book, the opposite is true. The models being used today are opaque, unregulated, and uncontestable, even when they’re wrong. Most troubling, they reinforce discrimination: If a poor student can’t get a loan because a lending model deems him too risky (by virtue of his zip code), he’s then cut off from the kind of education that could pull him out of poverty, and a vicious spiral ensues. Models are propping up the lucky and punishing the downtrodden, creating a “toxic cocktail for democracy.” Welcome to the dark side of Big Data.\r\n\r\nTracing the arc of a person’s life, O’Neil exposes the black box models that shape our future, both as individuals and as a society. These “weapons of math destruction” score teachers and students, sort résumés, grant (or deny) loans, evaluate workers, target voters, set parole, and monitor our health.\r\n\r\nO’Neil calls on modelers to take more responsibility for their algorithms and on policy makers to regulate their use. But in the end, it’s up to us to become more savvy about the models that govern our lives. This important book empowers us to ask the tough questions, uncover the truth, and demand change.\r\n\r\n— Longlist for National Book Award (Non-Fiction)\r\n— Goodreads, semi-finalist for the 2016 Goodreads Choice Awards (Science and Technology)\r\n— Kirkus, Best Books of 2016\r\n— New York Times, 100 Notable Books of 2016 (Non-Fiction)\r\n— The Guardian, Best Books of 2016\r\n— WBUR’s “On Point,” Best Books of 2016: Staff Picks\r\n— Boston Globe, Best Books of 2016, Non-Fiction",
+        "cover_url": "https://covers.openlibrary.org/b/id/8136557-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 6.0,
+        "assumed_concepts": [
+          "algorithms",
+          "data sets",
+          "statistics",
+          "social inequality",
+          "quantitative analysis"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to think critically about how numbers are shaping our world – it's a fascinating look at how seemingly objective systems can perpetuate unfairness."
+      },
+      "why": "Understanding the potential pitfalls of algorithms and data sets, as explored in 'Weapons of Math Destruction,' will give you a crucial foundation for critically evaluating the complex systems discussed in 'Artificial Intelligence: A Modern Approach,' especially when considering ethical implications.",
+      "confidence": 0.7,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 303.483 O'N",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 303.483 O'N",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 303.483 O'N",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 303.483 O'N",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 303.483 O'N",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 303.483 O'N",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 303.483 O'N",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Central Public Library",
+          "Bukit Batok Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "target",
+      "order": 3,
+      "book": {
+        "id": "9780134610993",
+        "title": "Artificial Intelligence: A Modern Approach",
+        "author": "Stuart Russell",
+        "isbn": "9780134610993",
+        "brn": null,
+        "year": 2020,
+        "pages": 1136,
+        "ddc": null,
+        "subjects": [
+          "Artificial intelligence",
+          "Machine learning",
+          "Computer science"
+        ],
+        "summary": "Covers the whole field of AI: intelligent agents, search, logic, planning, probabilistic reasoning, machine learning, perception, robotics and ethics.",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 5,
+        "hours": 70.0,
+        "assumed_concepts": [
+          "search and planning",
+          "probability",
+          "logic",
+          "basic programming"
+        ],
+        "style_tags": [],
+        "one_line": "The standard university AI textbook; broad and rigorous, with maths and pseudocode throughout."
+      },
+      "why": "The standard university AI textbook; broad and rigorous, with maths and pseudocode throughout.",
+      "confidence": 1.0,
+      "availability": [
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 005.1 RUS",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 005.1 RUS",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 005.1 RUS",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 005.1 RUS",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 005.1 RUS",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 4,
+      "book": {
+        "id": "ol:reinforcement-learning-an-introduction-richard-s-sutton",
+        "title": "Reinforcement Learning: An Introduction",
+        "author": "Richard S. Sutton",
+        "isbn": null,
+        "brn": null,
+        "year": null,
+        "pages": 552,
+        "ddc": null,
+        "subjects": [
+          "Artificial intelligence",
+          "Machine learning",
+          "Computer science"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 4,
+        "hours": 25.0,
+        "assumed_concepts": [
+          "Probability",
+          "Linear Algebra",
+          "Calculus",
+          "Dynamic Programming",
+          "Algorithms",
+          "Python (basic)"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive deep into the mathematical foundations of how machines learn through trial and error – a solid grasp of math will really help you appreciate the nuances!"
+      },
+      "why": "Expands AIMA's chapters on learning from reward into a full course.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 006.31 SUT",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 006.31 SUT",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 006.31 SUT",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 006.31 SUT",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 006.31 SUT",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Central Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 5,
+      "book": {
+        "id": "9780262035613",
+        "title": "Deep Learning",
+        "author": "Ian Goodfellow, Yoshua Bengio",
+        "isbn": "9780262035613",
+        "brn": null,
+        "year": 2016,
+        "pages": 800,
+        "ddc": null,
+        "subjects": [
+          "Machine learning",
+          "Apprentissage automatique",
+          "Computers and IT",
+          "Maschinelles Lernen",
+          "Deep learning (Machine learning)",
+          "Electronic books",
+          "COMPUTERS / Artificial Intelligence / General",
+          "Kunstmatige intelligentie",
+          "Computer science"
+        ],
+        "summary": "\"Deep learning is a form of machine learning that enables computers to learn from experience and understand the world in terms of a hierarchy of concepts. Because the computer gathers knowledge from experience, there is no need for a human computer operator to formally specify all the knowledge that the computer needs. The hierarchy of concepts allows the computer to learn complicated concepts by building them out of simpler ones; a graph of these hierarchies would be many layers deep. This book introduces a broad range of topics in deep learning. The text offers mathematical and conceptual background, covering relevant concepts in linear algebra, probability theory and information theory, numerical computation, and machine learning. It describes deep learning techniques used by practitioners in industry, including deep feedforward networks, regularization, optimization algorithms, convolutional networks, sequence modeling, and practical methodology; and it surveys such applications as natural language processing, speech recognition, computer vision, online recommendation systems, bioinformatics, and videogames. Finally, the book offers research perspectives, covering such theoretical topics as linear factor models, autoencoders, representation learning, structured probabilistic models, Monte Carlo methods, the partition function, approximate inference, and deep generative models. Deep Learning can be used by undergraduate or graduate students planning careers in either industry or research, and by software engineers who want to begin using deep learning in their products or platforms. A website offers supplementary material for both readers and instructors\"--",
+        "cover_url": "https://covers.openlibrary.org/b/id/8086288-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 5,
+        "hours": 25.0,
+        "assumed_concepts": [
+          "Linear Algebra",
+          "Probability Theory",
+          "Calculus",
+          "Machine Learning Basics",
+          "Neural Networks (basic understanding)"
+        ],
+        "style_tags": [],
+        "one_line": "This book dives deep into the math and theory behind deep learning – be prepared to refresh your foundational knowledge and embrace some challenging concepts!"
+      },
+      "why": "The deep-learning chapters of AIMA, taken all the way.",
+      "confidence": 0.9,
+      "availability": [
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 006.31 GOO",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 006.31 GOO",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 006.31 GOO",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 006.31 GOO",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 006.31 GOO",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 006.31 GOO",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 006.31 GOO",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Ang Mo Kio Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    }
+  ],
+  "generated_at": "2026-10-11T04:59:41.790336+00:00",
+  "engine": "llm",
+  "notes": [
+    "unverified, dropped: Superintelligence: Paths, Dangers, Strategies",
+    "dropped 'The Elements of Statistical Learning' from the reading path: not easier than your book",
+    "dropped 'Pattern Recognition and Machine Learning (Information Science and Statistics)' from next reads: much easier than your book"
+  ]
+}

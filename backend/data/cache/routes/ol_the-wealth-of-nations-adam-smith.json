@@ -5,124 +5,59 @@
       "role": "before",
       "order": 0,
       "book": {
-        "id": "ol:the-worldly-philosophers-robert-l-heilbroner",
-        "title": "The Worldly Philosophers",
-        "author": "Robert L. Heilbroner",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 368,
-        "subjects": [
-          "Economics",
-          "Political economy",
-          "Classics"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed",
-        "ddc": "330.1"
-      },
-      "readiness": {
-        "level": 2,
-        "hours": 10.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "Smith and the economists after him as people and ideas, in one readable book.",
-      "confidence": 0.8999999999999999,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 330.1 HEI",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 330.1 HEI",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 330.1 HEI",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 330.1 HEI",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 330.1 HEI",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 330.1 HEI",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Ang Mo Kio Public Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "before",
-      "order": 1,
-      "book": {
         "id": "ol:adam-smith-what-he-thought-and-why-it-matters-jesse-norman",
         "title": "Adam Smith: What He Thought, and Why It Matters",
         "author": "Jesse Norman",
         "isbn": null,
         "brn": null,
-        "year": null,
+        "year": 2018,
         "pages": 400,
+        "ddc": "330.153092",
         "subjects": [
+          "Economische filosofie",
+          "Communism",
+          "Finance",
+          "Business",
+          "Open Library Staff Picks",
           "Economics",
-          "Political economy",
-          "Classics"
+          "Wealth",
+          "Colonization",
+          "Économie politique",
+          "Early works to 1800",
+          "Classical school of economics",
+          "Nonfiction",
+          "Colonies",
+          "History",
+          "Economics, philosophy"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "A dazzling account of the life and thought of Adam Smith, the greatest economist of all time Adam Smith (1723-1790) is now widely regarded as the greatest economist of all time. But what he really thought, and the implications of his...",
+        "cover_url": "https://img1.od-cdn.com/ImageType-400/0887-1/557/7FC/43/{5577FC43-B713-4F36-94FE-74872DB908E4}Img400.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "seed",
+        "field_sources": {
+          "summary": "overdrive",
+          "cover_url": "overdrive",
+          "ddc": "openlibrary",
+          "year": "openlibrary"
+        }
       },
       "readiness": {
         "level": 3,
         "hours": 12.0,
-        "assumed_concepts": [],
+        "assumed_concepts": [
+          "Mercantilism",
+          "The Enlightenment",
+          "Moral Philosophy",
+          "Division of Labor",
+          "Free Markets",
+          "Classical Liberalism"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to explore the foundations of modern economics and how one man's ideas shaped the world – a little background in history and philosophy will help you appreciate the full scope of his thinking."
       },
-      "why": "A guide to the arguments you are about to read in the original.",
-      "confidence": 0.8999999999999999,
+      "why": "Norman's book provides a modern, accessible introduction to Adam Smith's core ideas, like the division of labor and his philosophy, which will make navigating the more dense and historically-rooted language and concepts within The Wealth of Nations much smoother.",
+      "confidence": 0.9,
       "availability": [
         {
           "branch": "Bishan Public Library",
@@ -184,27 +119,237 @@
       }
     },
     {
-      "role": "target",
-      "order": 2,
+      "role": "before",
+      "order": 1,
       "book": {
-        "id": "ol:the-wealth-of-nations-adam-smith",
-        "title": "The Wealth of Nations",
-        "author": "Adam Smith",
-        "isbn": null,
+        "id": "9788484608394",
+        "title": "The Undercover Economist",
+        "author": "Tim Harford",
+        "isbn": "9788484608394",
         "brn": null,
-        "year": 1776,
-        "pages": 1264,
+        "year": 2005,
+        "pages": 288,
+        "ddc": null,
         "subjects": [
+          "Economy",
+          "Undercover Economist",
+          "Tim Harford",
           "Economics",
-          "Political economy",
-          "Classics"
+          "Consumer education",
+          "Economic history",
+          "Economic history, 1990-",
+          "Histoire économique",
+          "Éducation",
+          "Consommateurs",
+          "Économie politique",
+          "Education du consommateur",
+          "Economic conditions",
+          "Science économique",
+          "History"
         ],
-        "summary": "The founding text of modern economics.",
-        "cover_url": null,
+        "summary": "Critically acclaimed as one of the most successful economy books of all time, and a 'must-read' for those of us in the general public who want to understand how society works, but do not want this information to be conveyed in an Oxbridge multipolysyllabic tone, Tim Harford's book gives us an insight into the relevance of the economy to our everyday lives. It begins humbly with the author's relatable bemoaning of coffee and its prices, which is cleverly analogized in the simple, but brilliant and still-relevant ideas of nineteenth-century economist David Ricardo. Organized into clear chapters which target different aspects of the economy's impacts on our life, the book later progresses onto more developed concepts such as the reasons (sub-prime mortgages!) behind the banking collapse of Lehman Brothers in 2008. Written in an aware style from an economist's perspective, this book is thoroughly worthwhile reading.",
+        "cover_url": "https://covers.openlibrary.org/b/id/189956-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed",
-        "ddc": "330.1"
+        "source": "openlibrary"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 8.2,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "Harford uses everyday observations – like why coffee costs what it does – to explain economic concepts and their real-world implications in a digestible way.",
+      "confidence": 0.8999999999999999,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 330 HAR",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 330 HAR",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 330 HAR",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 330 HAR",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 330 HAR",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library",
+          "Jurong West Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 2,
+      "book": {
+        "id": "9780786146710",
+        "title": "Basic economics",
+        "author": "Thomas Sowell",
+        "isbn": "9780786146710",
+        "brn": null,
+        "year": 2000,
+        "pages": 627,
+        "ddc": "330",
+        "subjects": [
+          "Economics",
+          "Economic conditions",
+          "Economics, study and teaching",
+          "Economic history"
+        ],
+        "summary": "\"Why are homeless people sleeping on the sidewalks of New York in the winter, when the abandoned apartment buildings in the city have four times as many dwelling units as there are homeless people in the city? Why are people hungry in Moscow when there are vast amounts of some of the richest farmland on the continent of Europe within easy driving distance?\r\n\r\nWhy did unemployment reach 25 percent and American corporations as a whole operate in the red for two years in a row during the Great Depression of the 1930s?\".\r\n\r\n\"All these very different - but equally puzzling and needless - tragedies grew out of a failure to understand and apply basic economic principles. Explaining these principles for the general public in plain English, with neither graphs nor equations nor jargon, is the goal and the achievement of Basic Economics by Thomas Sowell.\r\n\r\nProfessor Sowell has taught economics at leading colleges and universities across the country and now uses his years of experience to bring economics to light in a way that is both easy to absorb and hard to forget.\".\r\n\r\n\"His lively examples are drawn from around the world and from centuries of history, because the basic principles of economics are not limited to modern capitalist societies and apply even to situations where no money changes hands, such as caring for wounded soldiers on a battlefield. The focus of Basic Economics is not on how individuals make money but on how whole societies create prosperity or poverty for their peoples by the way they organize their economies.\r\n\r\nProsperous countries with few natural resources, such as Japan and Switzerland, are as common as poor countries with rich resources, such as Russia or Mexico.\"--BOOK JACKET.",
+        "cover_url": "https://covers.openlibrary.org/b/id/1468594-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 4,
+        "hours": 17.9,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "Sowell presents economic principles clearly and without jargon, focusing on practical consequences and demonstrating how economic ideas impact everyday life.",
+      "confidence": 0.7999999999999999,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 330 SOW",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 330 SOW",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 330 SOW",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 330 SOW",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 330 SOW",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 330 SOW",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 330 SOW",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Jurong West Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "target",
+      "order": 3,
+      "book": {
+        "id": "9781432625467",
+        "title": "The Wealth of Nations",
+        "author": "Adam Smith",
+        "isbn": "9781432625467",
+        "brn": null,
+        "year": 1776,
+        "pages": 581,
+        "ddc": "330.1",
+        "subjects": [
+          "Economische filosofie",
+          "Communism",
+          "Finance",
+          "Business",
+          "Open Library Staff Picks",
+          "Economics",
+          "Wealth",
+          "Colonization",
+          "Économie politique",
+          "Early works to 1800",
+          "Classical school of economics",
+          "Nonfiction",
+          "Colonies",
+          "History",
+          "Economics, philosophy"
+        ],
+        "summary": "Adam Smith's The Wealth of Nations was recognized as a landmark of human thought upon its publication in 1776. As the first scientific argument for the principles of political economy, it is the point of departure for all subsequent economic thought. Smith's theories of capital accumulation, growth, and secular change, among others, continue to be influential in modern economics. This reprint of Edwin Cannan's definitive 1904 edition of The Wealth of Nations includes Cannan's famous introduction, notes, and a full index, as well as a new preface written especially for this edition by the distinguished economist George J. Stigler. Mr. Stigler's preface will be of value for anyone wishing to see the contemporary relevance of Adam Smith's thought.",
+        "cover_url": "https://covers.openlibrary.org/b/id/12816911-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 5,
@@ -225,55 +370,55 @@
           "branch_code": "BIPL",
           "call_number": "English 330.1 SMI",
           "available": 1,
-          "total": 3,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 330.1 SMI",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
           "call_number": "English 330.1 SMI",
           "available": 3,
           "total": 3,
           "demo": true
         },
         {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 330.1 SMI",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
           "call_number": "English 330.1 SMI",
-          "available": 1,
-          "total": 1,
+          "available": 2,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
           "call_number": "English 330.1 SMI",
-          "available": 1,
-          "total": 3,
+          "available": 2,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
           "call_number": "English 330.1 SMI",
-          "available": 0,
-          "total": 1,
+          "available": 3,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
           "call_number": "English 330.1 SMI",
-          "available": 0,
-          "total": 1,
+          "available": 2,
+          "total": 2,
           "demo": true
         },
         {
@@ -287,91 +432,8 @@
       ],
       "demand": {
         "hot_branches": [
-          "Tampines Regional Library",
+          "Jurong West Public Library",
           "Central Public Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "after",
-      "order": 3,
-      "book": {
-        "id": "ol:the-theory-of-moral-sentiments-adam-smith",
-        "title": "The Theory of Moral Sentiments",
-        "author": "Adam Smith",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 400,
-        "subjects": [
-          "Economics",
-          "Political economy",
-          "Classics"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed",
-        "ddc": "170"
-      },
-      "readiness": {
-        "level": 5,
-        "hours": 30.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "Smith's other half; the ethics behind the economics.",
-      "confidence": 0.6,
-      "availability": [
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 170 SMI",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 170 SMI",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 170 SMI",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 170 SMI",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 170 SMI",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Woodlands Regional Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -382,55 +444,60 @@
       "role": "after",
       "order": 4,
       "book": {
-        "id": "ol:the-great-transformation-karl-polanyi",
-        "title": "The Great Transformation",
-        "author": "Karl Polanyi",
-        "isbn": null,
+        "id": "9780192836724",
+        "title": "Principles of Political Economy",
+        "author": "John Stuart Mill",
+        "isbn": "9780192836724",
         "brn": null,
-        "year": null,
-        "pages": 360,
+        "year": 1848,
+        "pages": 628,
+        "ddc": "330",
         "subjects": [
           "Economics",
-          "Political economy",
-          "Classics"
+          "Classical school of economics",
+          "Socialism",
+          "Money",
+          "Social sciences, philosophy",
+          "Philosophy",
+          "Social sciences",
+          "Outlines, syllabi",
+          "Économie politique",
+          "International Bureau of the American Republics"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "The appearance of a treatise like the present, on a subject on which so many works of merit already exist, may be thought to require some explanation. It might perhaps be sufficient to say, that no existing treatise on Political Ecomony contains the latest improvements which have been made in the theory of the subject. Many new ideas, and new applications of ideas, have been elicited by the discussions of the last few years, especially those on Currency, on Foreign Trade, and on the important topics connected more or less intimately with Colonization: and there seems reason that the field of Political Economy should be re-surveyed in its whole extent, if only for the purpose of incorporating the results of these speculations, and bringing them into harmony with the principles previosly laid down by the best thinkers on the subject..\"",
+        "cover_url": "https://covers.openlibrary.org/b/id/862387-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed",
-        "ddc": "330.9"
+        "source": "openlibrary"
       },
       "readiness": {
-        "level": 5,
-        "hours": 20.0,
-        "assumed_concepts": [],
+        "level": 4,
+        "hours": 25.0,
+        "assumed_concepts": [
+          "Mercantilism",
+          "Laissez-faire",
+          "Division of Labor",
+          "Comparative Advantage",
+          "Utilitarianism"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to dive into some foundational economic thinking – it's a classic, but it rewards careful reading and a willingness to grapple with some older ideas."
       },
-      "why": "The most influential reply to the market society Smith described.",
-      "confidence": 0.6,
+      "why": "Mill builds upon Smith’s foundations with a more nuanced and morally conscious exploration of economic principles, representing a significant development in economic thought.",
+      "confidence": 0.8,
       "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 330.9 POL",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 330.9 POL",
-          "available": 2,
-          "total": 3,
+          "call_number": "English 330 MIL",
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 330.9 POL",
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 330 MIL",
           "available": 0,
           "total": 1,
           "demo": true
@@ -438,23 +505,23 @@
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 330.9 POL",
-          "available": 3,
+          "call_number": "English 330 MIL",
+          "available": 2,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 330.9 POL",
-          "available": 1,
+          "call_number": "English 330 MIL",
+          "available": 0,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 330.9 POL",
+          "call_number": "English 330 MIL",
           "available": 2,
           "total": 2,
           "demo": true
@@ -462,16 +529,16 @@
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 330.9 POL",
-          "available": 1,
+          "call_number": "English 330 MIL",
+          "available": 0,
           "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Bishan Public Library",
-          "Jurong West Public Library"
+          "Punggol Regional Library",
+          "Bukit Batok Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -479,7 +546,13 @@
       }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.777281+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T04:40:59.823773+00:00",
+  "engine": "llm",
+  "notes": [
+    "unverified, dropped: Capital in the Twenty-First Century",
+    "unverified, dropped: Freakonomics",
+    "unverified, dropped: Poor Economics",
+    "dropped 'The theory of moral sentiments' from next reads: much easier than the target",
+    "dropped 'The Great Transformation' from next reads: much easier than the target"
+  ]
 }

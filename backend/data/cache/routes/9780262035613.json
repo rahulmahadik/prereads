@@ -5,99 +5,99 @@
       "role": "before",
       "order": 0,
       "book": {
-        "id": "9781638357209",
-        "title": "Grokking Deep Learning",
-        "author": "Andrew W. Trask",
-        "isbn": "9781638357209",
+        "id": "9780387310732",
+        "title": "Pattern Recognition and Machine Learning (Information Science and Statistics)",
+        "author": "Christopher M. Bishop",
+        "isbn": "9780387310732",
         "brn": null,
-        "year": 2019,
-        "pages": 336,
+        "year": 2008,
+        "pages": 738,
+        "ddc": null,
         "subjects": [
+          "Pattern perception",
           "Machine learning",
+          "Образование",
+          "Education",
+          "Pattern recognition systems",
+          "Reconnaissance des formes (Informatique)",
+          "Manuels d'enseignement supérieur",
           "Apprentissage automatique",
-          "Computers and IT",
-          "Maschinelles Lernen",
-          "Deep learning (Machine learning)",
-          "Electronic books",
-          "COMPUTERS / Artificial Intelligence / General",
-          "Kunstmatige intelligentie",
-          "Computer science"
+          "Problèmes et exercices",
+          "Statistique mathématique",
+          "Manuels d'enseignement superieur",
+          "Problemes et exercices",
+          "Statistique mathematique",
+          "Patroonherkenning",
+          "Machine-learning"
         ],
         "summary": "",
-        "cover_url": null,
+        "cover_url": "https://covers.openlibrary.org/b/id/245089-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
-        "level": 4,
-        "hours": 18.0,
+        "level": 3,
+        "hours": 30.0,
         "assumed_concepts": [
           "Linear Algebra",
+          "Probability Theory",
           "Calculus",
-          "Basic Probability",
-          "Python Programming",
-          "Neural Networks (basic concept)",
-          "Gradient Descent"
+          "Basic Statistics",
+          "Programming Fundamentals"
         ],
         "style_tags": [],
-        "one_line": "Get ready to dive deep – this book assumes you have a solid foundation in math and programming, and are eager to build your own neural networks from scratch!"
+        "one_line": "Get ready to dive deep – this book assumes you have a solid foundation in math and some programming experience to truly grasp the concepts."
       },
-      "why": "While both books require a foundation in math, 'Grokking Deep Learning' gently introduces these concepts with Python examples, which will make the more rigorous and theoretical approach of 'Deep Learning' by Goodfellow and Bengio much more approachable.",
+      "why": "Bishop's book provides a strong foundation in the mathematical concepts like linear algebra, probability, and calculus that are essential for understanding the more advanced techniques and nuances presented in Goodfellow and Bengio's Deep Learning text.",
       "confidence": 0.9,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 006.31 TRA",
-          "available": 1,
+          "call_number": "English 153.4 BIS",
+          "available": 0,
           "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 153.4 BIS",
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 006.31 TRA",
-          "available": 3,
+          "call_number": "English 153.4 BIS",
+          "available": 2,
           "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 006.31 TRA",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 006.31 TRA",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 006.31 TRA",
-          "available": 1,
-          "total": 2,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 006.31 TRA",
-          "available": 0,
+          "call_number": "English 153.4 BIS",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 153.4 BIS",
+          "available": 1,
           "total": 2,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Bukit Batok Library"
+          "Tampines Regional Library",
+          "Ang Mo Kio Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -108,6 +108,120 @@
       "role": "before",
       "order": 1,
       "book": {
+        "id": "9781530826605",
+        "title": "Make your own neural network",
+        "author": "Tariq Rashid",
+        "isbn": "9781530826605",
+        "brn": null,
+        "year": 2016,
+        "pages": 222,
+        "ddc": null,
+        "subjects": [
+          "Neural networks (Computer science)",
+          "Mathematics"
+        ],
+        "summary": "",
+        "cover_url": "https://covers.openlibrary.org/b/id/13218934-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 4,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Linear Algebra",
+          "Calculus",
+          "Python Programming",
+          "Basic Statistics",
+          "Algorithms"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to brush up on your math and coding skills – this book dives into the technical details of building neural networks!"
+      },
+      "why": "Book A explicitly covers the foundational mathematical concepts like linear algebra, calculus, and statistics that are essential for understanding the more advanced deep learning techniques presented in Book B.",
+      "confidence": 0.9,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 006.32 RAS",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 006.32 RAS",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 006.32 RAS",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 006.32 RAS",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 006.32 RAS",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 006.32 RAS",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 006.32 RAS",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 006.32 RAS",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Central Public Library",
+          "Ang Mo Kio Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 2,
+      "book": {
         "id": "9781098122461",
         "title": "Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow",
         "author": "Aurélien Géron",
@@ -115,6 +229,7 @@
         "brn": null,
         "year": 2019,
         "pages": 856,
+        "ddc": null,
         "subjects": [
           "machine learning",
           "Mathematics"
@@ -123,7 +238,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/9388208-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 4,
@@ -132,14 +248,13 @@
           "Python programming",
           "Basic linear algebra",
           "Probability & Statistics",
-          "Calculus (derivatives)",
-          "Data structures (lists, dictionaries)",
+          "Data structures",
           "Command line interface"
         ],
         "style_tags": [],
-        "one_line": "Get ready to dive deep – this book will take you from the basics of machine learning to building complex neural networks, so a solid programming foundation is a must!"
+        "one_line": "Get ready to dive deep – this book will take you from basic programming to building powerful machine learning models, so a solid foundation in Python and some math will really help you shine!"
       },
-      "why": "Hands-On Machine Learning will give you a practical foundation in Python and statistical concepts, which are essential building blocks for understanding the more theoretical and advanced material covered in Deep Learning.",
+      "why": "Hands-On Machine Learning provides a practical introduction to Python and statistical concepts, which are foundational for understanding the more advanced mathematical and theoretical underpinnings explored in Deep Learning.",
       "confidence": 0.9,
       "availability": [
         {
@@ -207,108 +322,6 @@
       }
     },
     {
-      "role": "before",
-      "order": 2,
-      "book": {
-        "id": "9780387310732",
-        "title": "Pattern Recognition and Machine Learning (Information Science and Statistics)",
-        "author": "Christopher M. Bishop",
-        "isbn": "9780387310732",
-        "brn": null,
-        "year": 2008,
-        "pages": 738,
-        "subjects": [
-          "Pattern perception",
-          "Machine learning",
-          "Образование",
-          "Education",
-          "Pattern recognition systems",
-          "Reconnaissance des formes (Informatique)",
-          "Manuels d'enseignement supérieur",
-          "Apprentissage automatique",
-          "Problèmes et exercices",
-          "Statistique mathématique",
-          "Manuels d'enseignement superieur",
-          "Problemes et exercices",
-          "Statistique mathematique",
-          "Patroonherkenning",
-          "Machine-learning"
-        ],
-        "summary": "",
-        "cover_url": "https://covers.openlibrary.org/b/id/245089-M.jpg",
-        "reservations": 0,
-        "audience": [],
-        "source": "openlibrary"
-      },
-      "readiness": {
-        "level": 4,
-        "hours": 45.0,
-        "assumed_concepts": [
-          "Linear Algebra",
-          "Calculus (Multivariable)",
-          "Probability Theory",
-          "Statistics (Basic)",
-          "Programming (Python or similar)",
-          "Basic Algorithms"
-        ],
-        "style_tags": [],
-        "one_line": "Get ready to dive deep – this book assumes a solid foundation in math and programming, and will reward you with a thorough understanding of machine learning principles."
-      },
-      "why": "Bishop's book provides a strong foundation in the mathematical concepts like linear algebra, probability, and calculus that are essential for understanding the more advanced techniques and nuances presented in Goodfellow and Bengio's Deep Learning text.",
-      "confidence": 0.9,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 153.4 BIS",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 153.4 BIS",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 153.4 BIS",
-          "available": 2,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 153.4 BIS",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 153.4 BIS",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Tampines Regional Library",
-          "Ang Mo Kio Public Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
       "role": "target",
       "order": 3,
       "book": {
@@ -319,6 +332,7 @@
         "brn": null,
         "year": 2016,
         "pages": 800,
+        "ddc": null,
         "subjects": [
           "Machine learning",
           "Apprentissage automatique",
@@ -334,7 +348,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/8086288-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 5,
@@ -428,6 +443,7 @@
         "brn": null,
         "year": null,
         "pages": 864,
+        "ddc": null,
         "subjects": [
           "Machine learning",
           "Apprentissage automatique",
@@ -443,11 +459,12 @@
         "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "seed",
+        "field_sources": {}
       },
       "readiness": {
         "level": 4,
-        "hours": 35.0,
+        "hours": 30.0,
         "assumed_concepts": [
           "Linear Algebra",
           "Probability Theory",
@@ -457,7 +474,7 @@
           "Data Structures"
         ],
         "style_tags": [],
-        "one_line": "Get ready to dive deep – this book assumes you have a solid foundation in math and programming, and will reward you with a comprehensive understanding of probabilistic machine learning."
+        "one_line": "Get ready to dive deep – this book assumes a solid mathematical foundation and some programming experience, but it'll reward you with a thorough understanding of probabilistic machine learning!"
       },
       "why": "The broader probabilistic view of everything Goodfellow covers.",
       "confidence": 0.9,
@@ -540,6 +557,7 @@
         "brn": null,
         "year": 2022,
         "pages": 420,
+        "ddc": null,
         "subjects": [
           "Machine learning",
           "Apprentissage automatique",
@@ -555,7 +573,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/13272037-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 4,
@@ -565,13 +584,13 @@
           "Python Programming",
           "Linear Algebra",
           "Calculus",
-          "Probability",
-          "TensorFlow/PyTorch"
+          "Probability & Statistics",
+          "Backpropagation"
         ],
         "style_tags": [],
-        "one_line": "Get ready to dive deep – this book assumes you already have a solid foundation in machine learning and programming!"
+        "one_line": "Get ready to dive deep – this book assumes you already have a solid foundation in machine learning fundamentals and are comfortable with some mathematical concepts."
       },
-      "why": "Building on foundational deep learning, this book dives into generative models like GANs and VAEs, a rapidly evolving area mentioned in the target's research perspectives.",
+      "why": "Given the book's breadth, this delves into a specific and important area of deep learning: generative models, showcasing advanced applications.",
       "confidence": 0.9,
       "availability": [
         {
@@ -636,6 +655,7 @@
         "brn": null,
         "year": null,
         "pages": 552,
+        "ddc": null,
         "subjects": [
           "Machine learning",
           "Apprentissage automatique",
@@ -651,7 +671,8 @@
         "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "seed",
+        "field_sources": {}
       },
       "readiness": {
         "level": 5,
@@ -665,7 +686,7 @@
           "Python programming (basic)"
         ],
         "style_tags": [],
-        "one_line": "Get ready to dive deep – this book will challenge you with mathematical concepts and programming, but the journey into understanding how machines learn through trial and error is incredibly rewarding!"
+        "one_line": "Get ready to dive deep – this book will introduce you to the core principles of reinforcement learning, but a solid foundation in math and programming will make the journey much smoother."
       },
       "why": "The next pillar of the field, with the same rigour.",
       "confidence": 0.8,
@@ -721,11 +742,11 @@
       }
     }
   ],
-  "generated_at": "2026-10-11T04:09:00.598005+00:00",
+  "generated_at": "2026-10-11T04:59:32.485243+00:00",
   "engine": "llm",
   "notes": [
-    "unverified, dropped: Machine Learning For Dummies",
-    "unverified, dropped: Python Machine Learning",
-    "dropped 'The Elements of Statistical Learning' from before-line: not easier than the target"
+    "unverified, dropped: Understanding Neural Networks",
+    "dropped 'Grokking Deep Learning' from the reading path: not easier than your book",
+    "dropped 'Python Machine Learning: Machine Learning and Deep Learning with Python, scikit-learn, and TensorFlow, 2nd Edition' from the reading path: not easier than your book"
   ]
 }

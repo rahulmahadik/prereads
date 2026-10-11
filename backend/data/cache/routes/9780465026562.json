@@ -34,7 +34,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "153"
+        "ddc": "153",
+        "field_sources": {}
       },
       "readiness": {
         "level": 4,
@@ -47,9 +48,9 @@
           "Abstraction"
         ],
         "style_tags": [],
-        "one_line": "Get ready to really *think* – this book dives deep into what it means to be you, and it's a journey that requires some mental flexibility!"
+        "one_line": "Get ready to really think – this book dives deep into what it means to be you, and it's a journey that requires some mental flexibility!"
       },
-      "why": "While *Gödel, Escher, Bach* is a foundational work, *I Am a Strange Loop* explores similar concepts like recursion and self-reference in a more accessible, contemporary context, which will help you better grasp the complexities of *GEB*.",
+      "why": "While Gödel, Escher, Bach is a foundational work, I Am a Strange Loop explores similar concepts like recursion and self-reference in a more accessible, contemporary context, which will help you better grasp the complexities of GEB.",
       "confidence": 0.9,
       "availability": [
         {
@@ -175,7 +176,7 @@
         "style_tags": [],
         "one_line": "Get ready to stretch your brain – this book dives deep into the intersection of physics, consciousness, and computation, so a little mathematical and philosophical background will really help you appreciate its arguments."
       },
-      "why": "While both books explore complex ideas, *The Emperor's New Mind* provides a more accessible introduction to concepts like Turing Machines and computational complexity, which are foundational for understanding the computer science aspects of *Gödel, Escher, Bach*.",
+      "why": "While both books explore complex ideas, The Emperor's New Mind provides a more accessible introduction to concepts like Turing Machines and computational complexity, which are foundational for understanding the computer science aspects of Gödel, Escher, Bach.",
       "confidence": 0.8,
       "availability": [
         {
@@ -602,7 +603,7 @@
           "Philosophical Essays"
         ],
         "style_tags": [],
-        "one_line": "Get ready to wrestle with some big, beautiful questions about what it means to *be* – this book is a fascinating journey, but it's a thinker, not a light read!"
+        "one_line": "Get ready to wrestle with some big, beautiful questions about what it means to be – this book is a fascinating journey, but it's a thinker, not a light read!"
       },
       "why": "Essays and stories on self and consciousness, curated with Dennett.",
       "confidence": 0.8,

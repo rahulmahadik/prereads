@@ -34,7 +34,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/11320203-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -133,7 +134,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/12982914-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -259,7 +261,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/11320163-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 4,
@@ -354,7 +357,7 @@
     "unverified, dropped: The Ghost Map: The Story of London's Most Terrifying Epidemic--and How It Changed Science",
     "unverified, dropped: Bedlam: London, Asylum, and the Brink of Madness",
     "unverified, dropped: Spillover: Animal Infections and the Next Human Pandemic",
-    "dropped 'The Immortal Life of Henrietta Lacks' from before-line: not easier than the target",
-    "dropped 'The Immortal Life of Henrietta Lacks' from before-line: not easier than the target"
+    "dropped 'The Immortal Life of Henrietta Lacks' from the reading path: not easier than your book",
+    "dropped 'The Immortal Life of Henrietta Lacks' from the reading path: not easier than your book"
   ]
 }

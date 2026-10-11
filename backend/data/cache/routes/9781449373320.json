@@ -25,7 +25,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "006.78"
+        "ddc": "006.78",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -361,7 +362,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/8434671-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 4,
@@ -453,11 +455,14 @@
           "Tk5105.888 .q44 2017",
           "005.276"
         ],
-        "summary": "",
+        "summary": "When it comes to choosing, using, and maintaining a database, understanding its internals is essential. But with so many distributed databases and tools available today, it's often difficult to understand what each one offers and how they...",
         "cover_url": "https://covers.openlibrary.org/b/id/14572292-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {
+          "summary": "overdrive"
+        }
       },
       "readiness": {
         "level": 3,
@@ -471,7 +476,7 @@
           "Relational Algebra"
         ],
         "style_tags": [],
-        "one_line": "Get ready to peek under the hood – this book will show you how databases *really* work, so a little programming and computer science background will be helpful!"
+        "one_line": "Get ready to peek under the hood – this book will show you how databases really work, so a little programming and computer science background will be helpful!"
       },
       "why": "Opens up the storage and consensus machinery Kleppmann describes.",
       "confidence": 0.8,
@@ -563,11 +568,14 @@
           "Page design",
           "Com060160"
         ],
-        "summary": "",
+        "summary": "As organizations shift from monolithic applications to smaller, self-contained microservices, distributed systems have become more fine-grained. But developing these new systems brings its own host of problems. This expanded second edition...",
         "cover_url": "https://covers.openlibrary.org/b/id/8513315-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {
+          "summary": "overdrive"
+        }
       },
       "readiness": {
         "level": 3,
@@ -691,7 +699,7 @@
           "Data modeling principles"
         ],
         "style_tags": [],
-        "one_line": "Get ready to dive deep – this book lays the groundwork for understanding how databases *really* work, so a little computer science background will be a big help!"
+        "one_line": "Get ready to dive deep – this book lays the groundwork for understanding how databases really work, so a little computer science background will be a big help!"
       },
       "why": "For those wanting a more rigorous academic treatment of database principles, this textbook provides a comprehensive and detailed exploration.",
       "confidence": 0.8,

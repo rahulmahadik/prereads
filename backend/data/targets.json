@@ -1276,5 +1276,307 @@
       }
     ],
     "unfinished": true
+  },
+  {
+    "isbn": "9781492056355",
+    "title": "Fluent Python",
+    "author": "Luciano Ramalho",
+    "year": 2022,
+    "pages": 1012,
+    "level": 4,
+    "hours": 45,
+    "subjects": [
+      "Python (Computer program language)",
+      "Computer programming",
+      "Software engineering"
+    ],
+    "concepts": [
+      "Python basics",
+      "functions and classes",
+      "iterators and generators",
+      "the standard library"
+    ],
+    "one_line": "Written for people who already code in Python and want to write it the way the language intends.",
+    "summary": "A deep tour of idiomatic Python: data model, sequences, functions as objects, classes, protocols, generators, concurrency and metaprogramming.",
+    "before": [
+      {
+        "title": "Python Crash Course",
+        "author": "Eric Matthes",
+        "level": 1,
+        "hours": 15,
+        "pages": 552,
+        "why": "Starts from print() and ends with three small projects, so the basics are solid before Fluent Python assumes them."
+      },
+      {
+        "title": "Automate the Boring Stuff with Python",
+        "author": "Al Sweigart",
+        "level": 2,
+        "hours": 14,
+        "pages": 592,
+        "why": "Practical scripts for files, spreadsheets and the web; you get fluent with the standard library by using it."
+      },
+      {
+        "title": "Effective Python",
+        "author": "Brett Slatkin",
+        "level": 3,
+        "hours": 12,
+        "pages": 480,
+        "why": "Ninety short, specific items that bridge everyday Python and the idioms Fluent Python explains in depth."
+      }
+    ],
+    "after": [
+      {
+        "title": "Architecture Patterns with Python",
+        "author": "Harry Percival",
+        "level": 4,
+        "hours": 14,
+        "pages": 304,
+        "why": "Takes good Python up to the level of whole applications: domain models, tests and events."
+      },
+      {
+        "title": "High Performance Python",
+        "author": "Micha Gorelick",
+        "level": 4,
+        "hours": 16,
+        "pages": 468,
+        "why": "When idiomatic code needs to be fast: profiling, NumPy, compiling and concurrency."
+      }
+    ],
+    "unfinished": true
+  },
+  {
+    "isbn": "9780134610993",
+    "title": "Artificial Intelligence: A Modern Approach",
+    "author": "Stuart Russell",
+    "year": 2020,
+    "pages": 1136,
+    "level": 5,
+    "hours": 70,
+    "subjects": [
+      "Artificial intelligence",
+      "Machine learning",
+      "Computer science"
+    ],
+    "concepts": [
+      "search and planning",
+      "probability",
+      "logic",
+      "basic programming"
+    ],
+    "one_line": "The standard university AI textbook; broad and rigorous, with maths and pseudocode throughout.",
+    "summary": "Covers the whole field of AI: intelligent agents, search, logic, planning, probabilistic reasoning, machine learning, perception, robotics and ethics.",
+    "before": [
+      {
+        "title": "The Master Algorithm",
+        "author": "Pedro Domingos",
+        "level": 2,
+        "hours": 10,
+        "pages": 352,
+        "why": "A friendly map of the five big schools of machine learning, so the textbook's chapters have somewhere to land."
+      },
+      {
+        "title": "Grokking Algorithms",
+        "author": "Aditya Y. Bhargava",
+        "level": 1,
+        "hours": 6,
+        "pages": 256,
+        "why": "Illustrated search, graphs and dynamic programming: the algorithms AIMA builds its first chapters on."
+      },
+      {
+        "title": "Human Compatible",
+        "author": "Stuart Russell",
+        "level": 2,
+        "hours": 9,
+        "pages": 352,
+        "why": "The same author, in plain language, on what AI is for and why it must stay under human control."
+      }
+    ],
+    "after": [
+      {
+        "title": "Deep Learning",
+        "author": "Ian Goodfellow",
+        "level": 5,
+        "hours": 60,
+        "pages": 800,
+        "why": "The deep-learning chapters of AIMA, taken all the way."
+      },
+      {
+        "title": "Reinforcement Learning: An Introduction",
+        "author": "Richard S. Sutton",
+        "level": 4,
+        "hours": 35,
+        "pages": 552,
+        "why": "Expands AIMA's chapters on learning from reward into a full course."
+      }
+    ],
+    "unfinished": true
+  },
+  {
+    "isbn": "9781617296864",
+    "title": "Deep Learning with Python",
+    "author": "François Chollet",
+    "year": 2021,
+    "pages": 504,
+    "level": 3,
+    "hours": 24,
+    "subjects": [
+      "Machine learning",
+      "Neural networks",
+      "Python (Computer program language)"
+    ],
+    "concepts": [
+      "Python basics",
+      "NumPy arrays",
+      "what a model and training are"
+    ],
+    "one_line": "Hands-on deep learning in Keras by its creator; you need to be comfortable writing Python.",
+    "summary": "A practical introduction to deep learning with Keras and TensorFlow: image, text and time-series models, and generative deep learning.",
+    "before": [
+      {
+        "title": "Python Crash Course",
+        "author": "Eric Matthes",
+        "level": 1,
+        "hours": 15,
+        "pages": 552,
+        "why": "Chollet assumes you can write Python; this gets you there quickly with small projects."
+      },
+      {
+        "title": "Make Your Own Neural Network",
+        "author": "Tariq Rashid",
+        "level": 1,
+        "hours": 6,
+        "pages": 222,
+        "why": "Builds one network by hand with school maths, so Keras's layers are not magic."
+      },
+      {
+        "title": "Grokking Deep Learning",
+        "author": "Andrew W. Trask",
+        "level": 2,
+        "hours": 12,
+        "pages": 336,
+        "why": "Gradients and backpropagation in plain NumPy before a framework hides them."
+      }
+    ],
+    "after": [
+      {
+        "title": "Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow",
+        "author": "Aurélien Géron",
+        "level": 3,
+        "hours": 30,
+        "pages": 856,
+        "why": "Widens the toolkit beyond deep learning to classic machine learning, with production habits."
+      },
+      {
+        "title": "Deep Learning",
+        "author": "Ian Goodfellow",
+        "level": 5,
+        "hours": 60,
+        "pages": 800,
+        "why": "The theory behind everything you just built."
+      }
+    ],
+    "unfinished": false
+  },
+  {
+    "isbn": "9780199678112",
+    "title": "Superintelligence",
+    "author": "Nick Bostrom",
+    "year": 2014,
+    "pages": 352,
+    "level": 4,
+    "hours": 14,
+    "subjects": [
+      "Artificial intelligence",
+      "Philosophy",
+      "Technology and civilization"
+    ],
+    "concepts": [
+      "what machine learning can and can't do",
+      "basic probability",
+      "philosophical argument"
+    ],
+    "one_line": "Dense, careful philosophy about very capable AI; easier once you know what today's AI actually does.",
+    "summary": "Bostrom examines how machine superintelligence might arise, the strategic risks it poses, and how humanity might keep control.",
+    "before": [
+      {
+        "title": "Life 3.0",
+        "author": "Max Tegmark",
+        "level": 2,
+        "hours": 10,
+        "pages": 384,
+        "why": "The same big questions as stories and scenarios, which makes Bostrom's arguments easier to follow."
+      },
+      {
+        "title": "Human Compatible",
+        "author": "Stuart Russell",
+        "level": 2,
+        "hours": 9,
+        "pages": 352,
+        "why": "Explains the control problem from the AI researcher's side, in plain language."
+      },
+      {
+        "title": "The Alignment Problem",
+        "author": "Brian Christian",
+        "level": 2,
+        "hours": 12,
+        "pages": 496,
+        "why": "Real cases of machine learning going wrong today, so the long-term worries feel concrete."
+      }
+    ],
+    "after": [
+      {
+        "title": "The Precipice",
+        "author": "Toby Ord",
+        "level": 3,
+        "hours": 12,
+        "pages": 480,
+        "why": "Puts AI risk alongside the other existential risks, with numbers."
+      }
+    ],
+    "unfinished": true
+  },
+  {
+    "isbn": "9781593279288",
+    "title": "Python Crash Course",
+    "author": "Eric Matthes",
+    "year": 2019,
+    "pages": 544,
+    "level": 1,
+    "hours": 15,
+    "subjects": [
+      "Python (Computer program language)",
+      "Computer programming"
+    ],
+    "concepts": [],
+    "one_line": "A true beginner's book: no programming experience needed, and you build small projects as you go.",
+    "summary": "A fast-paced introduction to programming in Python, followed by three projects: a game, data visualizations and a web app.",
+    "before": [],
+    "after": [
+      {
+        "title": "Automate the Boring Stuff with Python",
+        "author": "Al Sweigart",
+        "level": 2,
+        "hours": 14,
+        "pages": 592,
+        "why": "Put the basics to work on everyday tasks: files, spreadsheets, PDFs and the web."
+      },
+      {
+        "title": "Fluent Python",
+        "author": "Luciano Ramalho",
+        "level": 4,
+        "hours": 45,
+        "pages": 1012,
+        "why": "When you're ready, learn to write Python the way the language intends."
+      },
+      {
+        "title": "Deep Learning with Python",
+        "author": "François Chollet",
+        "level": 3,
+        "hours": 24,
+        "pages": 504,
+        "why": "The natural next step if AI is why you started learning Python."
+      }
+    ],
+    "unfinished": false
   }
 ]

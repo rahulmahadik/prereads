@@ -27,7 +27,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "909"
+        "ddc": "909",
+        "field_sources": {}
       },
       "readiness": {
         "level": 1,
@@ -42,7 +43,7 @@
         "style_tags": [],
         "one_line": "This is a wonderfully accessible introduction to world history, written for young readers but enjoyable for adults – just be prepared for a broad overview rather than deep dives!"
       },
-      "why": "While *Sapiens* covers a broad scope and some complex economic ideas, *A Little History of the World* provides a foundational timeline and introduces key historical events, which will make understanding the larger narrative and scope of *Sapiens* much more accessible.",
+      "why": "While Sapiens covers a broad scope and some complex economic ideas, A Little History of the World provides a foundational timeline and introduces key historical events, which will make understanding the larger narrative and scope of Sapiens much more accessible.",
       "confidence": 0.8,
       "availability": [
         {
@@ -145,7 +146,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "909"
+        "ddc": "909",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -270,7 +272,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "303.4"
+        "ddc": "303.4",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -392,7 +395,8 @@
         "reservations": 0,
         "audience": [],
         "source": "openlibrary",
-        "ddc": "901"
+        "ddc": "901",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -522,7 +526,7 @@
           "The Scientific Method"
         ],
         "style_tags": [],
-        "one_line": "Get ready to think *big* – these books explore the entire history of humankind and speculate about our future, so a willingness to grapple with complex ideas is key!"
+        "one_line": "Get ready to think big – these books explore the entire history of humankind and speculate about our future, so a willingness to grapple with complex ideas is key!"
       },
       "why": "The sequel, turning the same lens on the future.",
       "confidence": 0.9,
@@ -592,9 +596,9 @@
     "unverified, dropped: The Silk Roads: A New History of the World",
     "unverified, dropped: SPQR: A History of Ancient Rome",
     "unverified, dropped: The World: A Brief Introduction",
-    "dropped 'A short history of nearly everything' from before-line: not easier than the target",
-    "dropped 'Origin Story' from before-line: not easier than the target",
-    "dropped 'A short history of nearly everything' from before-line: not easier than the target",
-    "dropped 'Guns, Germs, and Steel' from before-line: not easier than the target"
+    "dropped 'A short history of nearly everything' from the reading path: not easier than your book",
+    "dropped 'Origin Story' from the reading path: not easier than your book",
+    "dropped 'A short history of nearly everything' from the reading path: not easier than your book",
+    "dropped 'Guns, Germs, and Steel' from the reading path: not easier than your book"
   ]
 }

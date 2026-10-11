@@ -17,11 +17,14 @@
           "Python (Computer program language)",
           "Python (computer program language)"
         ],
-        "summary": "",
+        "summary": "The best-selling Python book in the world, with over 1 million copies sold! A fast-paced, no-nonsense, updated guide to programming in Python. If you've been thinking about learning how to code or picking up Python, this...",
         "cover_url": "https://covers.openlibrary.org/b/id/8245395-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {
+          "summary": "overdrive"
+        }
       },
       "readiness": {
         "level": 2,

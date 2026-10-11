@@ -22,7 +22,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/7432823-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,

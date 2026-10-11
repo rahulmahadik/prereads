@@ -24,7 +24,8 @@
         "cover_url": "https://covers.openlibrary.org/b/id/8605114-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {}
       },
       "readiness": {
         "level": 3,
@@ -135,11 +136,14 @@
           "Page design",
           "Com060160"
         ],
-        "summary": "",
+        "summary": "As organizations shift from monolithic applications to smaller, self-contained microservices, distributed systems have become more fine-grained. But developing these new systems brings its own host of problems. This expanded second edition...",
         "cover_url": "https://covers.openlibrary.org/b/id/8513315-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "openlibrary",
+        "field_sources": {
+          "summary": "overdrive"
+        }
       },
       "readiness": {
         "level": 3,
@@ -154,7 +158,7 @@
         "style_tags": [],
         "one_line": "Get ready to dive into a practical guide – you'll want a solid grasp of software development fundamentals and some experience with web technologies to really get the most out of this book."
       },
-      "why": "While not a direct follow-on, it explores a specific architectural style that often benefits from the principles of separation and testability outlined in *Clean Architecture*.",
+      "why": "While not a direct follow-on, it explores a specific architectural style that often benefits from the principles of separation and testability outlined in Clean Architecture.",
       "confidence": 0.8,
       "availability": [
         {
@@ -436,10 +440,10 @@
     "unverified, dropped: Refactoring: Improving the Design of Existing Code",
     "unverified, dropped: Don't Repeat Yourself (DRY)",
     "'Introduction to Algorithms' judged unrelated (0.80), not placed before",
-    "dropped 'Clean Code' from before-line: not easier than the target",
-    "dropped 'The Pragmatic Programmer' from before-line: not easier than the target",
-    "dropped 'Head First design patterns' from before-line: not easier than the target",
-    "dropped 'Clean Code' from before-line: not easier than the target",
-    "dropped 'The Pragmatic Programmer' from before-line: not easier than the target"
+    "dropped 'Clean Code' from the reading path: not easier than your book",
+    "dropped 'The Pragmatic Programmer' from the reading path: not easier than your book",
+    "dropped 'Head First design patterns' from the reading path: not easier than your book",
+    "dropped 'Clean Code' from the reading path: not easier than your book",
+    "dropped 'The Pragmatic Programmer' from the reading path: not easier than your book"
   ]
 }
