@@ -4,7 +4,7 @@ Everything is env-driven (repo-root .env, then backend/.env) so the same code ru
 three modes:
 
   DEMO=1          -> no network, routes served from the precomputed cache only
-  AI + NLB keys   -> the AI provider (local Ollama by default, or OpenAI) for readiness,
+  AI + NLB keys   -> the AI provider (Ollama by default, or OpenAI) for readiness,
                      prerequisites, scan and ask; live NLB (availability, demand); cache in front
   partial         -> whatever is missing falls back (NLB -> Open Library -> demo
                      availability; AI -> heuristics)
@@ -37,7 +37,7 @@ def _flag(name: str, default: str = "0") -> bool:
 
 DEMO: bool = _flag("DEMO", "0")
 
-# AI provider: ollama (local models, default) | openai | none (heuristics only)
+# AI provider: ollama (default) | openai | none (heuristics only)
 AI_PROVIDER: str = os.getenv("AI_PROVIDER", "ollama").strip().lower()
 OLLAMA_BASE_URL: str = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434").rstrip("/")
 LOCAL_LLM_MODEL: str = os.getenv("LOCAL_LLM_MODEL", "gpt-oss:20b").strip()              # interactive
@@ -53,8 +53,8 @@ LOCAL_VISION_FALLBACKS: list[str] = [m.strip() for m in os.getenv("LOCAL_VISION_
 LOCAL_TIMEOUT: float = float(os.getenv("LOCAL_TIMEOUT", "60"))
 
 OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "").strip()
-# Verify the exact model string in your OpenAI dashboard on the day; any
-# current GPT-5.x/6.x model that supports structured outputs and vision works.
+# Any current OpenAI model with structured outputs and vision works; check the
+# exact name in the OpenAI dashboard.
 OPENAI_MODEL: str = os.getenv("OPENAI_MODEL", "gpt-5.5").strip()
 OPENAI_VISION_MODEL: str = os.getenv("OPENAI_VISION_MODEL", OPENAI_MODEL).strip()
 # Natural voice. Any current OpenAI TTS model works; check the dashboard for the name.
@@ -77,8 +77,8 @@ DATAGOV_API_KEY: str = os.getenv("DATAGOV_API_KEY", "").strip()
 
 # Where shelf data (hours, popularity, demand) comes from:
 #   auto     api if both NLB keys are set, else dataset if data/nlb/ has derived data, else demo
-#   demo     the labelled deterministic demo table only
-#   dataset  NLB open data where it exists (hours, aggregates), demo for the rest (labelled)
+#   demo     the deterministic demo table only (rows flagged demo=True)
+#   dataset  NLB open data where it exists (hours, aggregates), the demo table for the rest
 #   api      the NLB Catalogue v2 API (falls back to dataset, then demo, when a key is missing)
 DATA_SOURCES = ("auto", "demo", "dataset", "api")
 DATA_SOURCE: str = os.getenv("DATA_SOURCE", "auto").strip().lower()
@@ -176,6 +176,7 @@ def mode() -> str:
 
 
 def mode_info() -> dict:
+    """Everything the Settings sheet shows: provider, keys present, switches and data source."""
     return {
         "demo": effective_demo(),
         "provider": AI_PROVIDER,

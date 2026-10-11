@@ -11,7 +11,7 @@ FastAPI backend for PreReads. Entry point: `app.main:app` (run from `backend/`).
 | `integrations/` | External data: `catalog` (NLB Catalogue v2, Open Library, `resolve()`, `enrich()`), `sources` (enrichment fetchers), `nlb_datasets` (NLB open data: hours, yearly totals), `digital` (OverDrive), `online` (free editions, Gutenberg chapters), `availability` (shelf copies + demand; source chosen by `DATA_SOURCE`, demo fallback). | core |
 | `ai/` | Model providers: `llm` (Ollama or OpenAI, structured outputs), `embeddings`, `stt`, `tts`. | core |
 | `core/` | `config` (env, data paths, runtime modes), `models` (shared Pydantic models, also the prompt schemas). | nothing at import time (`config` asks `ai.llm` for Ollama status inside two functions) |
-| `main.py` | Creates the app, mounts `api.ROUTERS`, warms embeddings, serves `frontend/dist`. | anything |
+| `main.py` | Creates the app, mounts `api.ROUTERS`, refreshes NLB open data daily, warms embeddings, serves `frontend/dist`. | anything |
 
 Data lives in `backend/data` (`config.DATA_DIR`); caches in `backend/data/cache` (`config.CACHE_DIR`).
 Always build paths from `config`, never from a module's own `__file__`.
@@ -40,9 +40,12 @@ api/routes_discover.discover_  (422 if the text is under 2 characters)
   -> services.discover.discover(req)
        mode="fast"  heuristic_need (no model)  +  embedding shortlist with a 0.35 s budget
                     (keywords only if it is slow)  +  fit score over the cached catalogue
-       mode="deep"  ai.llm proposes need + books  ->  each verified by catalog.resolve
-                    ->  merged with the catalogue results (+ live catalogue pages)
-       then: sort by fit, build filter chips, apply the ones that are on, page
+       mode="deep"  rerank: one ai.llm call reads the request and orders the top 16 of
+                    the fast shortlist (already catalogue-verified); only when fewer than
+                    3 fit does it also propose new titles, each verified by catalog.resolve
+                    (+ live catalogue pages); DISCOVER_DEEP=propose keeps proposals first
+       then: order (the model's picks first, the rest by fit), build filter chips,
+             apply the ones that are on, page
 ```
 
 The UI calls `fast` first, renders, then calls `deep` in the background when the fast

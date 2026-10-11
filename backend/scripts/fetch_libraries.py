@@ -12,6 +12,7 @@ with hours_source="default". DATAGOV_API_KEY is sent as x-api-key when set (neve
 """
 from __future__ import annotations
 
+import argparse
 import json
 import re
 import sys
@@ -102,7 +103,9 @@ def write(doc: dict) -> None:
 
 
 def main() -> int:
-    if "--hours-only" in sys.argv:
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--hours-only", action="store_true", help="re-apply NLB hours to libraries.json, no download")
+    if ap.parse_args().hours_only:
         write(json.loads(OUT.read_text()))
         return 0
     poll = _get(POLL).json()

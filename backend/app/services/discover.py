@@ -7,17 +7,17 @@
     -> filter chips generated from the need and the result set
 
 Two phases, so a reader never stares at a spinner:
-  fast  no model call, no network: heuristic need + the local embedding shortlist (with a
+  fast  no model call, no network: heuristic need + the embedding shortlist (with a
         time budget) + keyword score over the cached catalogue. Well under a second.
-  deep  a retrieval-augmented rerank: the local model reads the request AND orders the fast
+  deep  a retrieval-augmented rerank: the model reads the request AND orders the fast
         shortlist (top 16, already catalogue-verified, so nothing can be invented) in ONE
         structured call, returning the best <=8 with a one-line reason each. Only when the reader
         asks for something new, or fewer than 3 shortlisted books fit, does it also ask the model
         for new titles (propose(), each verified in the catalogue, slow). DISCOVER_DEEP=propose
         (or a request's strategy="propose") keeps the old path: new titles first, no rerank.
         The UI runs deep in the background and swaps in the ranked list or adds "AI picks".
-With the AI off, a heuristic parser handles the common phrasings so the demo still feels
-intelligent, and the recommendations are drawn from the precomputed catalogue.
+With the AI off, a heuristic parser handles the common phrasings and the recommendations
+come from the precomputed catalogue.
 
 Layer: services. Served by api/routes_discover.py (/api/discover, /api/similar); services.chat
 reuses its catalogue and scoring. Uses ai.llm + ai.embeddings, integrations.catalog to verify.
@@ -43,9 +43,8 @@ from ..core import config
 from ..ai import embeddings, llm
 from ..integrations.availability import BRANCHES, get_availability, get_demand
 from ..integrations.catalog import nlb, openlibrary_search_many, resolve
-from .engine import heuristic_readiness
+from .engine import heuristic_readiness, load_route, score_readiness, seeds
 from .reading_age import estimate as estimate_age, heuristic as age_heuristic
-from .engine import load_route, score_readiness, seeds
 
 log = logging.getLogger("prereads.discover")
 
@@ -383,7 +382,7 @@ def rerank_key(query: str, ids: list[str], lang: Optional[str]) -> str:
 
 
 def rerank(need: Need, query: str, candidates: list[dict], lang: Optional[str] = None) -> Optional[Reranked]:
-    """Deep phase, retrieval-augmented: the local model orders the fast shortlist (catalogue entries, already
+    """Deep phase, retrieval-augmented: the model orders the fast shortlist (catalogue entries, already
     verified, so it cannot invent a book) and reads the request in the same structured call. Returns the best
     <= RERANK_TOP with a reason each, or None when the model is off, fails, or there is nothing to rank (the
     caller keeps the fast order). Cached by (query, candidate ids, lang) in memory and on disk."""
@@ -456,7 +455,7 @@ def blurb(summary: Optional[str], limit: int = 220) -> Optional[str]:
 
 # ------------------------------------------------------------------ catalogue
 def _catalogue() -> list[dict]:
-    """Every book on every cached line is a candidate; each remembers its line."""
+    """Every book on every cached reading path is a candidate; each remembers its path (line_id)."""
     out: dict[str, dict] = {}
     for s in seeds():
         sid = s.get("isbn") or s.get("id")
@@ -575,7 +574,7 @@ def score(entry: dict, need: Need, proposed_titles: dict[str, str], branch: Opti
     if key in proposed_titles:
         topic = max(topic, 1.0)
         why = proposed_titles[key]
-    # a cached line whose before/after books were proposed also counts
+    # a cached path whose before/after books were proposed also counts
     elif any(b in proposed_titles for b in entry["before_titles"] + entry["after_titles"]):
         topic = max(topic, 0.7)
     if topic == 0:
@@ -707,7 +706,7 @@ def apply_filters(results: list[Recommendation], chips: list[FilterChip]) -> lis
         elif ch.kind == "age":
             cap = {"child": 11, "teen": 17}.get(str(ch.value), 99)   # a teen can read a "12+" book; a child cannot
             out = [r for r in out if r.min_age is None or r.min_age <= cap]
-        # language: the demo catalogue is adult English; keep results and let the UI say so
+        # language: the cached catalogue is adult English; keep results and let the UI say so
     return out
 
 
@@ -765,7 +764,7 @@ def _rank_fast(query: str, items: list[tuple[str, str]], top_k: int = 40) -> Opt
         return None
     q = _cache_get(_QVEC, query)
     if q is None:
-        got = llm.embed(["search_query: " + query])       # local Ollama, ~20-50 ms warm
+        got = llm.embed(["search_query: " + query])       # ~20-50 ms once the model is warm
         if not got:
             return None
         q = got[0]
@@ -779,7 +778,7 @@ def _rank_fast(query: str, items: list[tuple[str, str]], top_k: int = 40) -> Opt
 
 
 def _shortlist(need: Need, cat: list[dict], budget: Optional[float]) -> tuple[dict[str, float], str]:
-    """Embedding similarity per catalogue id (local nomic-embed-text). With a budget the call runs
+    """Embedding similarity per catalogue id (nomic-embed-text). With a budget the call runs
     in a worker and is abandoned when slow (a cold model load); it still finishes and warms the cache."""
     query = " ".join([need.summary] + need.topics)
     items = [(e["id"], entry_text(e)) for e in cat]
@@ -827,8 +826,8 @@ def _verify(pr: Proposed):
 
 
 def _from_proposals(proposed: list[Proposed], results: list[Recommendation], branch: Optional[str]) -> list[Recommendation]:
-    """Books the model proposed that are not on any cached line, verified in the catalogue
-    (their line is built when opened). Checked in parallel; added in the model's order."""
+    """Books the model proposed that are not on any cached path, verified in the catalogue
+    (their reading path is built when opened). Checked in parallel; added in the model's order."""
     have = {r.title.lower() for r in results}
     todo = [(i, pr) for i, pr in enumerate(proposed[:8]) if pr.title.lower() not in have]
     if not todo:
@@ -935,7 +934,7 @@ def _deep_rerank(req: DiscoverRequest, on: set[str], lap, t0: float):
     cands = [by_id[r.id] for r in pool[:RERANK_K] if r.id in by_id]
     t = lap("score", t)
     search = None
-    if not config.effective_demo():   # network, so it overlaps the local model call
+    if not config.effective_demo():   # network, so it overlaps the model call
         search = _deep_pool.submit(_catalogue_search, need, req.branch, max(0, req.offset // max(1, req.limit)), 20)
     rr = None
     if cands:
@@ -1039,10 +1038,6 @@ def discover(req: DiscoverRequest) -> DiscoverResponse:
                             has_more=offset + limit < total, deep=deep_offer() if fast else None, timings_ms=timings, ai=ai_status)
 
 
-def to_json(resp: DiscoverResponse) -> str:
-    return json.dumps(resp.model_dump())
-
-
 # ------------------------------------------------------------------ neighbours
 def _shared(a: dict, b: dict) -> list[str]:
     """Readable concepts/subjects two catalogue entries have in common."""
@@ -1072,9 +1067,7 @@ SIMILAR_DIR = config.CACHE_DIR / "similar"
 
 def _llm_neighbours(me: dict, cands: list[dict], k: int) -> Optional[list[tuple[dict, str]]]:
     """Model picks + reasons among verified candidates; cached on disk. None when unavailable."""
-    import hashlib
-
-    key = hashlib.sha1((me["id"] + "|" + ",".join(c["id"] for c in cands)).encode()).hexdigest()[:16]
+    key =hashlib.sha1((me["id"] + "|" + ",".join(c["id"] for c in cands)).encode()).hexdigest()[:16]
     path = SIMILAR_DIR / f"{key}.json"
     by_id = {c["id"]: c for c in cands}
     if path.exists():
@@ -1103,7 +1096,8 @@ def topic_text(e: dict) -> str:
 
 def similar(book_id: str, branch: Optional[str] = None, k: int = 3) -> list[dict]:
     """'Because you liked...' - k catalogue-verified neighbours of a book, each with a one-line reason.
-    Embedding similarity when the local model is up, shared subjects/concepts otherwise. Never the book's own line."""
+    Embedding similarity when the embedding model is up, shared subjects/concepts otherwise.
+    Never a book from the same reading path."""
     cat = _catalogue()
     me = next((e for e in cat if e["id"] == book_id), None) or next((e for e in cat if e["line_id"] == book_id and e["is_target"]), None)
     if me is None:
@@ -1114,7 +1108,6 @@ def similar(book_id: str, branch: Optional[str] = None, k: int = 3) -> list[dict
     if ranked is not None:
         boosted = [(by_id[i], sim + 0.08 * len(_shared(me, by_id[i])) + (0.1 if by_id[i]["category"] == me["category"] else 0)) for i, sim in ranked]
         boosted.sort(key=lambda x: -x[1])
-        # Prefer neighbours that share a category or subject, or are clearly similar; fill from the rest.
         # Neighbours must share the subject (same category or a shared topic); only when there
         # are too few do clearly similar books (centred cosine >= 0.3) fill in. Never pad with
         # unrelated books just to show three.

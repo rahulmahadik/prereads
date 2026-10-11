@@ -1,10 +1,10 @@
-"""Build a reading line for a target book.
+"""Build the reading path for a target book.
 
     propose (LLM or seed)  ->  verify (catalogue)  ->  score readiness
     ->  judge pairs (LLM or heuristic)  ->  enforce rules in code  ->  route
 
 The rules are code, not prompt text, so a confident-sounding model cannot put a
-harder book before an easier one or pad the line with the same author.
+harder book before an easier one or pad the path with the same author.
 
 Layer: services. Called by api/routes_paths.py (/api/route) and scripts/precompute.py;
 uses ai.llm for proposals, readiness and judgments, integrations.catalog to verify
@@ -173,7 +173,7 @@ def apply_rules(target: Stop, before: list[Stop], after: list[Stop], notes: list
         if s.book.id == target.book.id:
             continue
         kept_before.append(s)
-    # Rule: one book per author on the before-line. Sorting easiest-first, then most confident,
+    # Rule: one book per author among the PreReads. Sorting easiest-first, then most confident,
     # means the author's gentlest, best-judged book is the one that stays.
     kept_before = _dedupe_author(sorted(kept_before, key=lambda s: (s.readiness.level, -s.confidence)))
     # Easiest-first ramp. kept_before is already sorted by level, so today this keeps every stop;

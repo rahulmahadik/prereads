@@ -73,7 +73,7 @@ class Stop(BaseModel):
     order: int
     book: Book
     readiness: Readiness
-    why: str                                 # why this stop is on the line
+    why: str                                 # why this stop is on the path
     confidence: float = 1.0
     availability: list[Availability] = Field(default_factory=list)
     demand: Demand = Field(default_factory=Demand)

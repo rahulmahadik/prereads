@@ -1,7 +1,8 @@
 """System endpoints: health check and the runtime mode switch.
 
 `/api/mode` lets the Settings sheet turn demo data, the AI provider and live NLB
-calls on and off, and pick the shelf data source (auto | demo | dataset | api), without a restart. The overrides live in `core.config.RUNTIME`.
+calls on and off, and pick the shelf data source (auto | demo | dataset | api),
+without a restart. The overrides live in `core.config.RUNTIME`.
 """
 from __future__ import annotations
 

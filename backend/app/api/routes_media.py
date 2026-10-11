@@ -1,6 +1,6 @@
 """Media endpoints: cover scan (vision model), speech-to-text and text-to-speech.
 
-Each one answers 503 when its local model is not available, which tells the browser
+Each one answers 503 when its model is not available, which tells the browser
 to fall back (typed title, built-in SpeechRecognition, built-in speech synthesis).
 """
 from __future__ import annotations
@@ -29,7 +29,7 @@ class TtsRequest(BaseModel):
 async def scan(image: UploadFile = File(...)):
     """Read title/author off a cover photo. The client still resolves the result in the catalogue."""
     if not config.llm_enabled():
-        raise HTTPException(503, "Scanning needs a vision model (Ollama not reachable, or demo mode is on). Type the title instead.")
+        raise HTTPException(503, "Scanning needs a vision model, and none is available right now. Type the title instead.")
     data = await image.read()
     if len(data) > 8_000_000:
         raise HTTPException(413, "Image too large; keep it under 8 MB.")
@@ -51,9 +51,9 @@ def tts(req: TtsRequest):
 
 @router.post("/stt")
 async def stt_(audio: UploadFile = File(...), lang: str = "en"):
-    """Local speech-to-text (faster-whisper). 503 -> the browser's SpeechRecognition takes over."""
+    """Speech-to-text with faster-whisper. 503 -> the browser's SpeechRecognition takes over."""
     if not stt.available():
-        raise HTTPException(503, "Local speech recognition is not installed; using the browser's.")
+        raise HTTPException(503, "Speech recognition is not available; using the browser's.")
     data = await audio.read()
     if len(data) > 12_000_000:
         raise HTTPException(413, "Recording too long.")

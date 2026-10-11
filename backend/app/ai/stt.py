@@ -1,4 +1,4 @@
-"""Local speech-to-text with faster-whisper (large-v3-turbo). Nothing leaves the device.
+"""Speech-to-text with faster-whisper (large-v3-turbo by default, STT_MODEL to change it).
 
 The model loads on first use (and downloads once, ~1.6 GB). Returns None when
 faster-whisper is not installed or fails, and the browser's SpeechRecognition takes over.
@@ -24,6 +24,7 @@ _lock = threading.Lock()
 
 
 def available() -> bool:
+    """Is faster-whisper installed? (The import is the check.)"""
     try:
         import faster_whisper  # noqa: F401
 

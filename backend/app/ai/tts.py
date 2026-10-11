@@ -1,9 +1,9 @@
 """Natural voice: text -> speech, cached on disk.
 
-AI_PROVIDER=ollama (default): a local voice. Kokoro (kokoro-onnx, model files fetched
-once into data/models) if available, else the macOS `say` voice, so it still works with no
-download. AI_PROVIDER=openai: OpenAI TTS (mp3). Returns None when nothing is available and
-the frontend falls back to the browser's built-in voices, so "Listen" always works.
+AI_PROVIDER=ollama (default): Kokoro (kokoro-onnx, model files fetched once into
+data/models) if available, else the macOS `say` voice, so it still works with no download.
+AI_PROVIDER=openai: OpenAI TTS (mp3). Returns None when nothing is available and the
+frontend falls back to the browser's built-in voices, so "Listen" always works.
 
 Layer: ai. Served by api/routes_media.py (/api/tts). Cache: data/cache/tts, keyed by text + voice.
 """
@@ -100,10 +100,6 @@ def _speak_say(text: str) -> Optional[bytes]:
         subprocess.run(["say", "-v", MAC_VOICE, "-o", str(aiff), text], check=True, timeout=60)
         subprocess.run(["afconvert", "-f", "WAVE", "-d", "LEI16@22050", str(aiff), str(wav)], check=True, timeout=60)
         return wav.read_bytes()
-
-
-def local_status() -> dict:
-    return {"kokoro": _kokoro is not None, "kokoro_files": all((MODEL_DIR / n).exists() for n in KOKORO_FILES), "macos_say": bool(shutil.which("say"))}
 
 
 def synthesize(text: str, voice: Optional[str] = None, lang: Optional[str] = None) -> Optional[tuple[bytes, str]]:

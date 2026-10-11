@@ -1,7 +1,7 @@
 """AI provider layer. Every call returns a validated Pydantic object or None.
 
-AI_PROVIDER=ollama (default) talks to local models through Ollama's OpenAI-compatible
-API; AI_PROVIDER=openai uses the hosted API; none disables AI so the engine uses its
+AI_PROVIDER=ollama (default) talks to open-source models through Ollama's OpenAI-compatible
+API; AI_PROVIDER=openai uses OpenAI's API; none disables AI so the engine uses its
 heuristics. Both paths share one interface (`structured`), validate every reply with
 Pydantic, and retry once on invalid JSON. Nothing here may raise into the request path.
 
@@ -79,7 +79,7 @@ def resolve_model(kind: str = "llm") -> str:
         "embed": (config.LOCAL_EMBED_MODEL, []),
     }[kind]
     have = installed_models() or []
-    # Fallbacks keep the app working on a laptop that has not pulled the big models yet
+    # Fallbacks keep the app working on a machine that has not pulled the big models yet
     # (a missing 120b heavy model degrades to gemma3:12b instead of failing every call).
     for m in [wanted, *fallbacks]:
         if _has(m, have):
@@ -157,6 +157,7 @@ def structured(
 
 
 def text(system: str, user: str, *, kind: str = "llm", temperature: float = 0.4) -> Optional[str]:
+    """A plain-text reply, or None."""
     c = client()
     if c is None:
         return None
@@ -173,7 +174,7 @@ def text(system: str, user: str, *, kind: str = "llm", temperature: float = 0.4)
 
 
 def embed(texts: list[str]) -> Optional[list[list[float]]]:
-    """Local embeddings (Ollama /api/embeddings). None when unavailable."""
+    """Embeddings from Ollama (/api/embeddings). None when unavailable."""
     if config.AI_PROVIDER != "ollama" or not ollama_up():
         return None
     model = resolve_model("embed")

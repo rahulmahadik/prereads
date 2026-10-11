@@ -86,7 +86,7 @@ def suggestions(lang: Optional[str] = None, n: int = 4, seed: Optional[int] = No
         if "{title}" in tpl:
             if not titles:
                 continue
-            title, hours = rng.choice(titles)
+            title, _ = rng.choice(titles)
             if title in used:
                 continue
             used.add(title)

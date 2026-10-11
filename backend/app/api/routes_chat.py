@@ -3,7 +3,6 @@ state machine in `services.chat` decides the next step, so the server keeps no s
 from __future__ import annotations
 
 from fastapi import APIRouter
-
 from fastapi.responses import StreamingResponse
 
 from ..services.chat import ChatReply, ChatTurn, step, stream

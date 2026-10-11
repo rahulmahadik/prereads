@@ -2,7 +2,7 @@
 
 Live path: NLB GetAvailabilityInfo (per-branch items) and the checkout-trends
 endpoint. Fallback: a deterministic demo table derived from the book id so the
-UI is stable between runs. Demo rows carry demo=True and the UI labels them.
+UI is stable between runs. Demo rows carry demo=True; Settings shows which source is in use.
 
 Layer: integrations. Called by services.engine for every stop and by services.discover
 for proposals. Also holds BRANCHES (code -> name), the branch list the whole app uses.
@@ -182,8 +182,8 @@ def live_demand(book: Book, availability: list[Availability]) -> Demand | None:
 
 
 def get_availability(book: Book) -> list[Availability]:
-    """Live NLB rows when the data source is the API and NLB returns items, else the labelled
-    demo table (no open dataset has per-branch copies, so "dataset" also uses the demo table)."""
+    """Live NLB rows when the data source is the API and NLB returns items, else the demo table
+    (no open dataset has per-branch copies, so "dataset" also uses the demo table)."""
     if config.effective_data_source() == "api" and nlb().enabled():
         rows = live_availability(book)
         if rows:

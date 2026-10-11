@@ -1,20 +1,21 @@
 """Guided chat: free text in, a few questions, then a reading path + directions.
 
 The flow is a small state machine (start -> pick -> level -> branch -> done) so it
-behaves the same with or without the local model. The free-text step is
+behaves the same with or without the model. The free-text step is
 retrieval-augmented over our own data:
 
-  understand  rules first (too vague? an exact title or author?), then the local model
+  understand  rules first (too vague? an exact title or author?), then the model
   retrieve    nomic-embed-text over every catalogue-verified book on a cached path
               (discover._catalogue), keyword scoring as the fallback
-  choose      the local model picks the best 3 FROM the retrieved list; any id outside
+  choose      the model picks the best 3 FROM the retrieved list; any id outside
               it is dropped (never an unverified book); top 3 by score without a model
   shelves     reader-facing status for each option (the source is shown in Settings)
 
 Every reply carries `trace`: the steps that actually ran, with real counts and timings.
 
-Layer: services. Served by api/routes_chat.py (/api/chat); browse()/books_for() also back
-/api/browse. Reuses services.discover's catalogue and scoring, so both features agree.
+Layer: services. Served by api/routes_chat.py (/api/chat and /api/chat/stream);
+browse()/books_for() also back /api/browse. Reuses services.discover's catalogue and
+scoring, so both features agree.
 """
 from __future__ import annotations
 
@@ -124,7 +125,6 @@ def _emit(event: dict) -> None:
 
 def stream(turn: "ChatTurn") -> Iterator[str]:
     """NDJSON stream: one line per real step event, then the final reply."""
-    import json
     import queue
     import threading
 
@@ -183,23 +183,6 @@ def _tokens(s: str) -> set[str]:
 
 def _norm(s: str) -> str:
     return " ".join(re.sub(r"[^a-z0-9 ]", " ", s.lower()).split())
-
-
-def match(text: str) -> list[dict]:
-    """Keyword match over cached targets (kept for callers; the chat uses retrieval below)."""
-    q = _tokens(text)
-    if not q:
-        return []
-    scored = []
-    for b in _catalogue():
-        title_t, author_t = _tokens(b["title"]), _tokens(b["author"])
-        subj_t = _tokens(" ".join(b["subjects"]))
-        score = 3 * len(q & title_t) + 2 * len(q & author_t) + len(q & subj_t)
-        if score:
-            scored.append((score, b))
-    scored.sort(key=lambda x: -x[0])
-    best = scored[0][0] if scored else 0
-    return [b for sc, b in scored if sc >= max(1, best - 1)][:5]
 
 
 # ------------------------------------------------------------------ understanding
@@ -265,16 +248,8 @@ def rules(text: str, cat: list[dict]) -> Optional[tuple[Intent, str]]:
 
 
 def heuristic_intent(text: str) -> Intent:
+    """Keyword topics when no model reads the request."""
     return Intent(kind="topic", value=" ".join(discover.heuristic_need(text).topics[:4]) or text.strip())
-
-
-def understand(text: str, cat: list[dict]) -> tuple[Intent, str]:
-    """Rules, else keyword parsing. (The model reads the request together with the retrieved books in ask_model.)"""
-    return rules(text, cat) or (heuristic_intent(text), f"topic: {heuristic_intent(text).value[:60]} · keyword rules (no model)")
-
-
-def parse_intent(text: str) -> Intent:
-    return understand(text, _books())[0]
 
 
 # ------------------------------------------------------------------ retrieval
@@ -303,7 +278,7 @@ def retrieve(query: str, cat: list[dict], k: int = 8, cats: frozenset = frozense
     return scored[:k], method
 
 
-# ------------------------------------------------------------------ the local model (one call)
+# ------------------------------------------------------------------ the model (one call)
 class Understood(BaseModel):
     kind: Literal["title", "author", "topic", "unclear"]
     value: str
@@ -325,7 +300,7 @@ _pool = cf.ThreadPoolExecutor(max_workers=2, thread_name_prefix="chat-llm")
 
 
 def ask_model(request: str, hits: list[tuple[dict, float, str]]) -> tuple[Optional[Understood], str]:
-    """One local-model call: what the reader means, and the best 3 of the retrieved books. (None, why) on failure."""
+    """One model call: what the reader means, and the best 3 of the retrieved books. (None, why) on failure."""
     user = json.dumps({
         "REQUEST": request,
         "CANDIDATES": [{
@@ -414,13 +389,12 @@ def starter_options(cat: list[dict], n_groups: int = 3) -> tuple[list[ChatOption
     return opts, detail
 
 
-def _status(e: dict) -> tuple[str, bool]:
-    status, _ = discover.status_for(e, None)
-    return status, any(a.demo for a in e["availability"])
+def _status(e: dict) -> str:
+    return discover.status_for(e, None)[0]
 
 
 def _book_option(i: int, e: dict, reason: str = "") -> ChatOption:
-    status, _ = _status(e)
+    status = _status(e)
     hint = " · ".join(x for x in (reason, status) if x)
     return ChatOption(label=f"{e['title'].split(':')[0].strip()} — {e['author']}", value=str(i), hint=hint)
 
@@ -431,7 +405,7 @@ def _cand(e: dict) -> dict:
 
 def _shelf_step(tr: Trace, entries: list[dict]) -> None:
     with tr.step("Checking shelves") as s:
-        on = sum(_status(e)[0].startswith("Available") for e in entries)
+        on = sum(_status(e).startswith("Available") for e in entries)
         s.detail = f"{on} of {len(entries)} on a shelf now, across {len(BRANCHES)} libraries"
 
 
@@ -572,7 +546,7 @@ def _start(state: ChatState, text: str) -> ChatReply:
         with tr.step("Understanding your request") as s:
             s.detail = f"topic: {label} · you picked it"
         hits = _search(tr, query, cat, frozenset(group[2]) if group else frozenset())
-        res, why_not = _ask(tr, f"Books on {query}", hits, "Asking the local model") if hits else (None, "")
+        res, why_not = _ask(tr, f"Books on {query}", hits, "Asking the model") if hits else (None, "")
         return _recommend(tr, fresh, cat, hits, _picked(tr, hits, res, why_not), label.lower() if group else label, label)
     decided = rules(text, cat)
     if decided:
@@ -721,7 +695,3 @@ def browse(by: str) -> list[dict]:
 def books_for(ids: list[str]) -> list[dict]:
     cat = {b["id"]: b for b in _catalogue()}
     return [cat[i] for i in ids if i in cat]
-
-
-def to_json(reply: ChatReply) -> str:
-    return json.dumps(reply.model_dump())

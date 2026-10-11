@@ -64,8 +64,6 @@ class NLBClient:
         """GET with a small backoff on 429 (NLB rate-limits bursts)."""
         if not self.enabled():
             return None
-        import time
-
         for attempt in range(3):
             try:
                 r = httpx.get(f"{self.base}/{path}", params=params, headers=self.headers, timeout=config.HTTP_TIMEOUT)

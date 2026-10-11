@@ -1,4 +1,4 @@
-"""Local embeddings (nomic-embed-text via Ollama) with an on-disk cache keyed by text hash.
+"""Embeddings (nomic-embed-text via Ollama) with an on-disk cache keyed by text hash.
 
 Used to shortlist discovery candidates and to find a book's neighbours. Every function
 returns None / [] when the embedding model is unreachable so callers fall back to keywords.
@@ -56,7 +56,7 @@ def _flush(model: str) -> None:
 
 
 def available() -> bool:
-    # Embeddings are local-only: the OpenAI provider and demo mode use the keyword fallbacks.
+    # Embeddings come from Ollama only: with the OpenAI provider or in demo mode, callers use keywords.
     return not config.effective_demo() and config.AI_PROVIDER == "ollama" and llm.ollama_up()
 
 

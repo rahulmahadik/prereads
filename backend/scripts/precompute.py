@@ -4,7 +4,7 @@
     DEMO=1 python scripts/precompute.py          # offline: seed picks + heuristics + demo availability
     python scripts/precompute.py --only "fast and slow" --refresh
 
-Run this on Saturday with real keys so Sunday's demo is instant.
+Run it with real keys ahead of time so every cached reading path opens instantly.
 """
 from __future__ import annotations
 

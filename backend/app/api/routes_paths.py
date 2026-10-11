@@ -55,7 +55,7 @@ def route(id: str, title: Optional[str] = None, author: Optional[str] = None, re
         if cached:
             return cached
     if config.effective_demo():
-        raise HTTPException(404, "Not in the demo cache. Run scripts/precompute.py or pick a cached title.")
+        raise HTTPException(404, "No reading path for this title yet. Pick one from the list.")
     seed = find_seed(id)
     if seed is None:
         # Unknown title: it must verify in a catalogue; no seed fallback.
@@ -108,7 +108,7 @@ def targets():
 
 @router.get("/popular")
 def popular(limit: int = 12):
-    """Books in demand right now, from the demand signals on cached lines
+    """Books in demand right now, from the demand signals on cached reading paths
     (checkout-trend hot branches, reservation queues, how few copies are in)."""
     rows = []
     for s in seeds():

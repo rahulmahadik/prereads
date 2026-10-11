@@ -1,4 +1,4 @@
-"""First-minutes check once the NLB Labs email arrives.
+"""Check the NLB Catalogue v2 API with real keys.
 
     cd backend && . .venv/bin/activate && python scripts/nlb_check.py "Thinking, Fast and Slow"
 
@@ -19,6 +19,9 @@ from app.integrations.catalog import NLBClient, _pick  # noqa: E402
 
 
 def main() -> int:
+    if {"-h", "--help"} & set(sys.argv[1:]):
+        print(__doc__)
+        return 0
     if not config.nlb_enabled():
         print("NLB keys missing or DEMO=1. Put NLB_API_KEY and NLB_APP_CODE in .env and set DEMO=0.")
         return 1

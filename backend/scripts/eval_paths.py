@@ -1,4 +1,4 @@
-"""Re-score every cached reading line with the heavy local model and report problems.
+"""Re-score every cached reading path with the heavy model and report problems.
 
     python scripts/eval_paths.py                      # rules + model
     python scripts/eval_paths.py --no-model           # rule checks only, no Ollama needed
