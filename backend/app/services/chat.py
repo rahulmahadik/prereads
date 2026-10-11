@@ -408,7 +408,7 @@ def starter_options(cat: list[dict], n_groups: int = 3) -> tuple[list[ChatOption
     opts = [ChatOption(label=label, value=f"topic:{label}", hint=f"{n} books") for label, _, n in counts]
     pop = _popular(cat)[:1]
     for p in pop:
-        opts.append(ChatOption(label=p["title"], value=f"book:{p['id']}", hint="Popular right now" + (" · demo data" if p["demo"] else "")))
+        opts.append(ChatOption(label=p["title"], value=f"book:{p['id']}", hint="Popular right now" + (" · sample data" if p["demo"] else "")))
     detail = f"{len(counts)} subjects{' and the most wanted title' if pop else ''} from {len(cat)} books"
     if pop and pop[0]["demo"]:
         detail += " · demand is demo data"
@@ -442,6 +442,7 @@ def _shelf_step(tr: Trace, entries: list[dict]) -> None:
 
 
 # ----------------------------------------------------------------------- flow
+SAMPLE_MARK = " (sample shelf data)"   # once per reply wherever shelf status is stated as fact
 LEVELS = [("New to this", "1"), ("Read a bit", "3"), ("Know it well", "4")]
 
 
@@ -477,10 +478,18 @@ def _clarify(tr: Trace, cat: list[dict], lead: str) -> ChatReply:
     )
 
 
+def _demo_mark(text: str) -> str:
+    """Add the sample-data mark once: before a closing full stop, else at the end."""
+    return text[:-1] + SAMPLE_MARK + "." if text.endswith(".") else text + SAMPLE_MARK
+
+
 def _offer(tr: Trace, state: ChatState, picks: list[tuple[dict, str]], messages: list[str]) -> ChatReply:
     _shelf_step(tr, [e for e, _ in picks])
     state.step = "pick"
     state.candidates = [_cand(e) for e, _ in picks]
+    # The option hints state shelf status; say once per reply that it is sample data.
+    if messages and any(_status(e)[1] for e, _ in picks):
+        messages = messages[:-1] + [_demo_mark(messages[-1])]
     return ChatReply(messages=messages, options=[_book_option(i, e, r) for i, (e, r) in enumerate(picks)], state=state, trace=tr.steps)
 
 
@@ -517,11 +526,14 @@ def _search(tr: Trace, query: str, cat: list[dict], cats: frozenset = frozenset(
 
 def _recommend(tr: Trace, state: ChatState, cat: list[dict], hits: list[tuple[dict, float, str]], picks: list[tuple[dict, str]], label: str, request: str) -> ChatReply:
     if not hits or not picks:
-        return _clarify(tr, cat, f"I couldn't find '{request.strip()}' in the catalogue yet. Here's what I can help with.")
+        return _clarify(tr, cat, f"PreReads doesn't cover '{request.strip()}' yet. Here's what I can help with.")
     about = " ".join(w for w in label.split() if w.lower() not in _FILLER) or label
     about = about if len(about) <= 40 else "that"
     weak = hits[0][1] < 0.62
-    lead = f"I don't have much on {about}, but these come closest." if weak else f"Here are {len(picks)} good places to start on {about}."
+    if about == "that":
+        lead = "I don't have much on that, but these come closest." if weak else f"Here are {len(picks)} good places to start."
+    else:
+        lead = f"I don't have much on {about}, but these come closest." if weak else f"Here are {len(picks)} good places to start on {about}."
     return _offer(tr, state, picks, [lead, "Tap one to see what to read first and where it is."])
 
 
@@ -549,8 +561,8 @@ def _find_named(tr: Trace, state: ChatState, cat: list[dict], intent: Intent, te
             s.detail = f"{len(near)} nearest from {len(cat)} books ({method})"
         nearest = top_by_score(near)
     if not nearest:
-        return _clarify(tr, cat, f"I couldn't find '{intent.value}' in the catalogue yet. Here's what I can help with.")
-    return _offer(tr, state, nearest, [f"I couldn't find '{intent.value}' in the catalogue yet.", "These are the closest books I have:"])
+        return _clarify(tr, cat, f"PreReads doesn't cover '{intent.value}' yet. Here's what I can help with.")
+    return _offer(tr, state, nearest, [f"PreReads doesn't cover '{intent.value}' yet.", "These are the closest books PreReads has:"])
 
 
 def _start(state: ChatState, text: str) -> ChatReply:
@@ -637,6 +649,8 @@ def _finish(state: ChatState) -> ChatReply:
         lead = f"{len(before)} {'book' if len(before) == 1 else 'books'} before {target.book.title}, about {round(hours)} hours. Start with {start.book.title} — {status}."
     else:
         lead = f"You can start {target.book.title} today — {status}."
+    if any(a.demo for a in av):
+        lead = _demo_mark(lead)
     result = {
         "book_id": route.target_id,
         "title": target.book.title,
@@ -658,7 +672,7 @@ def _finish(state: ChatState) -> ChatReply:
         msgs.append(start.readiness.one_line)
     if start.readiness.assumed_concepts:
         msgs.append("It helps to know: " + ", ".join(start.readiness.assumed_concepts[:4]) + ".")
-    msgs.append("Open it for the description, a free sample or first chapter where available, and the walk to the shelf.")
+    msgs.append("Open it to read the description, try a free sample where there is one, and get directions to the shelf.")
     result["start_about"] = about or ""
     return ChatReply(messages=msgs, state=state, result=result, trace=tr.steps)
 

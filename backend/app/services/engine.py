@@ -107,10 +107,10 @@ def propose(target: Book, seed: Optional[dict] = None) -> tuple[CandidateList, s
 # -------------------------------------------------------------------- judging
 def heuristic_judgment(a: Readiness, b: Readiness, why: str) -> Judgment:
     if a.level < b.level:
-        return Judgment(relation="prepares_for", confidence=0.7 + 0.1 * min(2, b.level - a.level), reason=why or "Easier treatment of the same ideas.")
+        return Judgment(relation="prepares_for", confidence=0.7 + 0.1 * min(2, b.level - a.level), reason=why or "A gentler take on the same ideas.")
     if a.level == b.level:
-        return Judgment(relation="same_level", confidence=0.6, reason=why or "Similar difficulty; either order works.")
-    return Judgment(relation="follows", confidence=0.7, reason=why or "Goes deeper than the target.")
+        return Judgment(relation="same_level", confidence=0.6, reason=why or "About the same difficulty; read it in either order.")
+    return Judgment(relation="follows", confidence=0.7, reason=why or "Goes deeper than your book.")
 
 
 def judge_pair(a: Book, b: Book, ra: Readiness, rb: Readiness, why: str) -> tuple[Judgment, str]:
@@ -157,16 +157,18 @@ def _spread(ramp: list[Stop], k: int) -> list[Stop]:
 def apply_rules(target: Stop, before: list[Stop], after: list[Stop], notes: list[str]) -> tuple[list[Stop], list[Stop]]:
     """Enforce the path rules in code (never in prompts) and return (before, after).
 
-    Every drop is explained in `notes`, which is saved on the route for eval and debugging."""
+    Every drop is explained in `notes` as a reader sentence (shown under "Why some books were
+    left off", and saved on the route for eval); the numbers behind it go to the log."""
     t = target.readiness.level
     kept_before = []
     for s in before:
         # Rule: a PreRead must be strictly easier than the target, whatever the model said.
         if s.readiness.level >= t:
-            notes.append(f"dropped '{s.book.title}' from the reading path: not easier than your book")
+            notes.append(f"Left off: {s.book.title} is not easier than your book.")
             continue
         if s.confidence < MIN_CONFIDENCE:
-            notes.append(f"dropped '{s.book.title}': confidence {s.confidence:.2f} < {MIN_CONFIDENCE}")
+            notes.append(f"Left off: {s.book.title} was not a clear enough fit to read first.")
+            log.info("dropped %r: confidence %.2f < %s", s.book.title, s.confidence, MIN_CONFIDENCE)
             continue
         if s.book.id == target.book.id:
             continue
@@ -190,11 +192,11 @@ def apply_rules(target: Stop, before: list[Stop], after: list[Stop], notes: list
     seen_after: set[str] = set()
     for s in after:
         if s.book.id in before_ids or _title_key(s.book.title) in before_ids:
-            notes.append(f"dropped '{s.book.title}' from next reads: already a PreRead")
+            notes.append(f"Left off the next reads: {s.book.title} is already one of your PreReads.")
             continue
         # One level easier is fine for a follow-on (a lighter companion); two or more is a step back.
         if s.readiness.level < t - 1:
-            notes.append(f"dropped '{s.book.title}' from next reads: much easier than your book")
+            notes.append(f"Left off the next reads: {s.book.title} is much easier than your book.")
             continue
         if s.confidence < MIN_CONFIDENCE or s.book.id == target.book.id or _title_key(s.book.title) in seen_after:
             continue
@@ -206,6 +208,15 @@ def apply_rules(target: Stop, before: list[Stop], after: list[Stop], notes: list
 
 
 # ---------------------------------------------------------------------- route
+def _not_before_note(title: str, relation: str) -> str:
+    """Reader sentence for a candidate the judge did not place before the target."""
+    if relation == "same_level":
+        return f"Left off: {title} is at a similar level to your book, so it need not come first."
+    if relation == "follows":
+        return f"Left off: {title} goes further than your book, so it fits better after it."
+    return f"Left off: {title} is not closely enough related to your book."
+
+
 def _stop(role: str, book: Book, seed: Optional[dict], why: str, confidence: float) -> Stop:
     if role == "target" and seed and seed.get("level"):
         r = heuristic_readiness(book, seed)    # a librarian's curated level for a seed target outranks a model estimate
@@ -237,7 +248,7 @@ def build_route(target_seed: dict, target_book: Optional[Book] = None) -> Route:
     for c in cands.before[:8]:
         b = resolve(c["title"], c.get("author", ""), seed=c if c.get("_seed") else None)
         if b is None:
-            notes.append(f"unverified, dropped: {c['title']}")
+            notes.append(f"Left off: {c['title']} could not be found in the catalogue.")
             continue
         if b.id == target.id:
             continue
@@ -248,10 +259,12 @@ def build_route(target_seed: dict, target_book: Optional[Book] = None) -> Route:
         engines.add(je)
         if c.get("_seed") and (j.relation != "prepares_for" or j.confidence < MIN_CONFIDENCE) and r.level < t_stop.readiness.level:
             # Librarian on-ramp: the model is advisory here; the readiness rules in apply_rules still decide.
-            notes.append(f"model judged '{b.title}' {j.relation} ({j.confidence:.2f}); librarian pick kept")
+            # Not a drop, so not a reader note; the model's view goes to the log only.
+            log.info("model judged %r %s (%.2f); librarian pick kept", b.title, j.relation, j.confidence)
             j, je = heuristic_judgment(r, t_stop.readiness, c.get("why", "")), "seed"
         if j.relation != "prepares_for":
-            notes.append(f"'{b.title}' judged {j.relation} ({j.confidence:.2f}), not placed before")
+            notes.append(_not_before_note(b.title, j.relation))
+            log.info("%r judged %s (%.2f), not placed before", b.title, j.relation, j.confidence)
             continue
         before.append(_stop("before", b, c, j.reason, j.confidence))
 

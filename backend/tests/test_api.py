@@ -43,7 +43,7 @@ def test_browse_and_chat_demo(monkeypatch):
     r = c.post("/api/chat", json={"text": "BIPL", "state": r["state"]}).json()
     assert r["result"] and r["result"]["start_id"]
     r = c.post("/api/chat", json={"text": "zzqx nothing", "state": {"step": "start"}}).json()
-    assert "couldn't find" in r["messages"][0]
+    assert "doesn't cover" in r["messages"][0]
 
 
 def test_discover_demo(monkeypatch):

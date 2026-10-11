@@ -88,7 +88,7 @@ def test_live_route_builds_and_drops_unverified(live):
     titles = [s.book.title for s in route.stops]
     assert "Predictably Irrational" in titles[0], (titles, route.notes)
     assert "Ghost Book" not in " ".join(titles)
-    assert any("unverified" in n for n in route.notes)
+    assert "Left off: Ghost Book could not be found in the catalogue." in route.notes
     assert route.engine == "llm"
     target = next(s for s in route.stops if s.role == "target")
     assert target.book.source == "nlb" and target.book.isbn in ("9780000000001", "9780000000006")
@@ -133,7 +133,8 @@ def test_demo_mode_never_calls_network(monkeypatch):
     assert all(a.demo for s in route.stops for a in s.availability)
 
 
-def test_librarian_onramp_survives_strict_model_but_rules_still_apply(live, monkeypatch):
+def test_librarian_onramp_survives_strict_model_but_rules_still_apply(live, monkeypatch, caplog):
+    caplog.set_level("INFO", logger="prereads.engine")
     monkeypatch.setattr(llm, "judge", lambda a, b, ra, rb: Judgment(relation="unrelated", confidence=0.9, reason="no"))
     seed = {"title": "Thinking, Fast and Slow", "author": "Daniel Kahneman", "level": 4, "hours": 16,
             "before": [{"title": "Predictably Irrational", "author": "Dan Ariely", "why": "gentler"}]}
@@ -141,6 +142,8 @@ def test_librarian_onramp_survives_strict_model_but_rules_still_apply(live, monk
     before = [s for s in route.stops if s.role == "before"]
     assert [s.book.title for s in before] == ["Predictably Irrational"]          # librarian pick kept
     assert all(s.readiness.level < 4 for s in before)                            # rules unchanged
-    assert any("librarian pick kept" in n for n in route.notes)
+    # not a drop, so it is logged for debugging but never shown to readers
+    assert "librarian pick kept" in caplog.text
+    assert not any("librarian" in n for n in route.notes)
     # a model-proposed (non-seed) candidate the model calls unrelated is still dropped
     assert "Ghost Book" not in " ".join(s.book.title for s in route.stops)

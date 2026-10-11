@@ -16,6 +16,8 @@ def test_before_must_be_easier_and_confident():
     assert [s.book.title for s in b] == ["ok"]
     assert [s.book.title for s in a] == ["deeper"]
     assert any("not easier" in n for n in notes)
+    # reader sentences, not debug text: no "dropped", no confidence numbers
+    assert all(n.startswith("Left off") and "dropped" not in n and "<" not in n for n in notes), notes
 
 
 def test_dedupe_same_author_and_cap():
@@ -38,7 +40,7 @@ def test_book_cannot_be_both_before_and_after():
     before, after = apply_rules(target, [st("before", "X", 3)], [st("after", "X", 3), st("after", "Y", 4)], notes)
     assert [s.book.id for s in before] == ["X"]
     assert [s.book.id for s in after] == ["Y"]
-    assert any("already a PreRead" in n for n in notes)
+    assert any("already one of your PreReads" in n for n in notes)
 
 
 def test_same_title_other_edition_not_repeated():

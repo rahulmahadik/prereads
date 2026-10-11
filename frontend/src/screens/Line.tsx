@@ -27,6 +27,39 @@ function statusText(st: ReturnType<typeof shelfStatus>): { text: string; cls: st
   }
 }
 
+/* Route notes, as reader sentences in the reader's language. The engine writes
+   "Left off: X ..." sentences; cached routes still carry the older debug wording, so both
+   map to the same line.left.* key. Notes that are not real drops (e.g. "librarian pick
+   kept") and anything unrecognised return null, so they are neither shown nor counted. */
+type LeftKind = "easier" | "unsure" | "missing" | "same" | "harder" | "unrelated" | "dupe" | "tooEasy";
+const LEFT_OFF: [RegExp, LeftKind][] = [
+  [/^Left off: (.+) is not easier than your book\.$/, "easier"],
+  [/^dropped '(.+)' from (?:the reading path|before-line): not easier than (?:your book|the target)$/, "easier"],
+  [/^Left off: (.+) was not a clear enough fit to read first\.$/, "unsure"],
+  [/^dropped '(.+)': confidence [\d.]+ < [\d.]+$/, "unsure"],
+  [/^Left off: (.+) could not be found in the catalogue\.$/, "missing"],
+  [/^unverified, dropped: (.+)$/, "missing"],
+  [/^Left off: (.+) is at a similar level to your book, so it need not come first\.$/, "same"],
+  [/^'(.+)' judged same_level \([\d.]+\), not placed before$/, "same"],
+  [/^Left off: (.+) goes further than your book, so it fits better after it\.$/, "harder"],
+  [/^'(.+)' judged follows \([\d.]+\), not placed before$/, "harder"],
+  [/^Left off: (.+) is not closely enough related to your book\.$/, "unrelated"],
+  [/^'(.+)' judged \w+ \([\d.]+\), not placed before$/, "unrelated"],
+  [/^Left off the next reads: (.+) is already one of your PreReads\.$/, "dupe"],
+  [/^dropped '(.+)' from next reads: already a PreRead$/, "dupe"],
+  [/^Left off the next reads: (.+) is much easier than your book\.$/, "tooEasy"],
+  [/^dropped '(.+)' from next reads: much easier than (?:your book|the target)$/, "tooEasy"],
+];
+
+function leftOffNote(note: string): string | null {
+  if (/^dropped a duplicate after-stop/.test(note)) return t("line.left.dupeAny");
+  for (const [re, kind] of LEFT_OFF) {
+    const m = note.match(re);
+    if (m) return t(`line.left.${kind}`, { title: m[1] });
+  }
+  return null;
+}
+
 export default function Line({ id, title, author }: { id: string; title: string; author: string }) {
   const lang = useLang();
   const goBack = useBack("home");
@@ -84,6 +117,8 @@ export default function Line({ id, title, author }: { id: string; title: string;
   const doneBefore = visibleBefore.filter((s) => readSet.has(s.book.id)).length;
   const firstTodo = visibleBefore.find((s) => !readSet.has(s.book.id));
   const hoursLeft = visibleBefore.filter((s) => !readSet.has(s.book.id)).reduce((a, s) => a + s.readiness.hours, 0);
+  // Only real drops, as reader sentences (re-rendered on a language change via useLang).
+  const leftOff = (route?.notes ?? []).map(leftOffNote).filter((n): n is string => n !== null);
 
   const here = useMemo(() => {
     if (!branch) return [];
@@ -245,11 +280,11 @@ export default function Line({ id, title, author }: { id: string; title: string;
             ))}
           </ol>
 
-          {route.notes.length > 0 && (
+          {leftOff.length > 0 && (
             <details className="section">
-              <summary className="hint">{t("line.leftOff", { n: route.notes.length })}</summary>
+              <summary className="hint">{t("line.leftOff", { n: leftOff.length })}</summary>
               <ul className="hint">
-                {route.notes.map((n, i) => (
+                {leftOff.map((n, i) => (
                   <li key={i}>{n}</li>
                 ))}
               </ul>

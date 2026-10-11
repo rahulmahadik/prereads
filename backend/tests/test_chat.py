@@ -21,7 +21,7 @@ def test_vague_input_gets_a_clarifying_turn(monkeypatch):
     for text in ("books", "something good", "hi", "help me"):
         r = c.post("/api/chat", json={"text": text, "state": {"step": "start"}}).json()
         joined = " ".join(r["messages"]).lower()
-        assert "couldn't find" not in joined, text
+        assert "doesn't cover" not in joined, text
         assert 3 <= len(r["options"]) <= 4, text
         assert r["state"]["step"] == "start"
         assert r["trace"] and all({"step", "detail", "ms"} <= set(s) for s in r["trace"])
