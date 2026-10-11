@@ -106,16 +106,79 @@ type RecognitionCtor = new () => {
   stop: () => void;
 };
 
+let serverStt: boolean | null = null; // learned on first call: is /api/stt (local faster-whisper) available?
+
 export function canListen(): boolean {
   const w = window as unknown as { SpeechRecognition?: RecognitionCtor; webkitSpeechRecognition?: RecognitionCtor };
-  return Boolean(w.SpeechRecognition || w.webkitSpeechRecognition);
+  return Boolean(w.SpeechRecognition || w.webkitSpeechRecognition || (serverStt !== false && navigator.mediaDevices && typeof MediaRecorder !== "undefined"));
 }
 
-export function listen(lang = "en-SG"): Promise<string> {
+/* Record until about 1.2 s of quiet after speech (max 12 s). */
+async function recordClip(): Promise<Blob> {
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  const rec = new MediaRecorder(stream);
+  const chunks: Blob[] = [];
+  rec.ondataavailable = (e) => e.data.size && chunks.push(e.data);
+  const ctx = new AudioContext();
+  const analyser = ctx.createAnalyser();
+  analyser.fftSize = 1024;
+  ctx.createMediaStreamSource(stream).connect(analyser);
+  const buf = new Uint8Array(analyser.fftSize);
+  return new Promise((resolve) => {
+    const started = Date.now();
+    let heard = false;
+    let quietSince = Date.now();
+    const tick = setInterval(() => {
+      analyser.getByteTimeDomainData(buf);
+      const peak = buf.reduce((m, v) => Math.max(m, Math.abs(v - 128)), 0);
+      if (peak > 12) {
+        heard = true;
+        quietSince = Date.now();
+      }
+      const quietFor = Date.now() - quietSince;
+      if ((heard && quietFor > 1200) || Date.now() - started > 12000 || (!heard && Date.now() - started > 6000)) rec.stop();
+    }, 100);
+    rec.onstop = () => {
+      clearInterval(tick);
+      stream.getTracks().forEach((t) => t.stop());
+      void ctx.close();
+      resolve(new Blob(chunks, { type: rec.mimeType || "audio/webm" }));
+    };
+    rec.start();
+  });
+}
+
+async function listenLocal(lang: string): Promise<string | null> {
+  if (serverStt === false || !navigator.mediaDevices || typeof MediaRecorder === "undefined") return null;
+  let clip: Blob;
+  try {
+    clip = await recordClip();
+  } catch {
+    return null; // mic blocked: let the browser path ask again / explain
+  }
+  const form = new FormData();
+  form.append("audio", clip, "clip.webm");
+  const res = await fetch(`/api/stt?lang=${encodeURIComponent(lang.slice(0, 2))}`, { method: "POST", body: form }).catch(() => null);
+  if (!res || res.status === 503) {
+    serverStt = false;
+    return null;
+  }
+  if (!res.ok) throw new Error("Didn't catch that. Try again, closer to the mic.");
+  serverStt = true;
+  return ((await res.json()) as { text: string }).text;
+}
+
+export async function listen(lang = "en-SG"): Promise<string> {
+  stop();
+  const local = await listenLocal(lang);
+  if (local) return local;
+  return listenBrowser(lang);
+}
+
+function listenBrowser(lang: string): Promise<string> {
   const w = window as unknown as { SpeechRecognition?: RecognitionCtor; webkitSpeechRecognition?: RecognitionCtor };
   const Ctor = w.SpeechRecognition || w.webkitSpeechRecognition;
   if (!Ctor) return Promise.reject(new Error("Voice input isn't supported in this browser."));
-  stop();
   return new Promise((resolve, reject) => {
     const r = new Ctor();
     r.lang = lang;

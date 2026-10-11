@@ -71,3 +71,18 @@ def test_discover_and_resolve_paging(monkeypatch):
     assert {r["id"] for r in p1["results"]}.isdisjoint({r["id"] for r in p2["results"]})
     r = c.get("/api/resolve?q=the&offset=0&limit=3").json()
     assert len(r["results"]) == 3 and r["total"] >= 3 and "has_more" in r
+
+
+def test_stt_endpoint_transcribes_and_falls_back(monkeypatch):
+    from fastapi.testclient import TestClient
+
+    from app import stt
+    from app.main import app
+
+    c = TestClient(app)
+    monkeypatch.setattr(stt, "available", lambda: True)
+    monkeypatch.setattr(stt, "transcribe", lambda data, lang="en": "hello there")
+    r = c.post("/api/stt", files={"audio": ("a.webm", b"123", "audio/webm")})
+    assert r.status_code == 200 and r.json()["text"] == "hello there"
+    monkeypatch.setattr(stt, "available", lambda: False)
+    assert c.post("/api/stt", files={"audio": ("a.webm", b"123", "audio/webm")}).status_code == 503

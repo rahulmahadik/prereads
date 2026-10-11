@@ -5,41 +5,58 @@
       "role": "before",
       "order": 0,
       "book": {
-        "id": "ol:predictably-irrational-dan-ariely",
+        "id": "9780062018205",
         "title": "Predictably Irrational",
         "author": "Dan Ariely",
-        "isbn": null,
+        "isbn": "9780062018205",
         "brn": null,
-        "year": null,
-        "pages": 304,
+        "year": 2008,
+        "pages": 368,
         "subjects": [
-          "Psychology",
+          "Psychological aspects of Economics",
+          "Economics",
+          "Psychological aspects",
           "Decision making",
-          "Cognition",
-          "Behavioral economics"
+          "Consumer behavior",
+          "Consumers",
+          "Thought and thinking",
+          "Reasoning",
+          "Business",
+          "Nonfiction",
+          "Sociology",
+          "Long Now Manual for Civilization",
+          "Reasoning (Psychology)",
+          "Judgment",
+          "New York Times bestseller"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "How do we think about money?What caused bankers to lose sight of the economy?What caused individuals to take on mortgages that were not within their means?What irrational forces guided our decisions?And how can we recover from an economic crisis? In this revised and expanded edition of the New York Times and Wall Street Journal bestseller Predictably Irrational, Duke University's behavioral economist Dan Ariely explores the hidden forces that shape our decisions, including some of the causes responsible for the current economic crisis. Bringing a much-needed dose of sophisticated psychological study to the realm of public policy, Ariely offers his own insights into the irrationalities of everyday life, the decisions that led us to the financial meltdown of 2008, and the general ways we get ourselves into trouble.Blending common experiences and clever experiments with groundbreaking analysis, Ariely demonstrates how expectations, emotions, social norms, and other invisible, seemingly illogical forces skew our reasoning abilities. As he explains, our reliance on standard economic theory to design personal, national, and global policies may, in fact, be dangerous. The mistakes that we make as individuals and institutions are not random, and they can aggregate in the market—with devastating results. In light of our current economic crisis, the consequences of these systematic and predictable mistakes have never been clearer.Packed with new studies and thought-provoking responses to readers' questions and comments, this revised and expanded edition of Predictably Irrational will change the way we interact with the world—from the small decisions we make in our own lives to the individual and collective choices that shape our economy.",
+        "cover_url": "https://covers.openlibrary.org/b/id/2314080-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 2,
         "hours": 8.0,
-        "assumed_concepts": [],
+        "assumed_concepts": [
+          "Behavioral Economics",
+          "Cognitive Biases",
+          "Experimental Design",
+          "Market Dynamics",
+          "Economic Incentives"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to question everything you thought you knew about how you make choices – this book will show you how surprisingly predictable our irrationality can be!"
       },
-      "why": "Introduces the same biases through quick, funny experiments, so Kahneman's formal treatment feels familiar.",
-      "confidence": 0.8999999999999999,
+      "why": "Predictably Irrational introduces many core behavioral economics concepts in a more accessible way, which will give you a good foundation for understanding the more in-depth exploration of cognitive biases and dual-process theory presented in Thinking, Fast and Slow.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
           "call_number": "English 153.83 ARI",
           "available": 2,
-          "total": 2,
+          "total": 3,
           "demo": true
         },
         {
@@ -51,18 +68,26 @@
           "demo": true
         },
         {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
           "call_number": "English 153.83 ARI",
           "available": 1,
-          "total": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
           "call_number": "English 153.83 ARI",
-          "available": 0,
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 153.83 ARI",
+          "available": 1,
           "total": 3,
           "demo": true
         },
@@ -70,13 +95,16 @@
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
           "call_number": "English 153.83 ARI",
-          "available": 1,
-          "total": 3,
+          "available": 2,
+          "total": 2,
           "demo": true
         }
       ],
       "demand": {
-        "hot_branches": [],
+        "hot_branches": [
+          "Jurong West Public Library",
+          "Bukit Batok Library"
+        ],
         "hidden_gem": false,
         "reservations": 0,
         "demo": true
@@ -86,143 +114,103 @@
       "role": "before",
       "order": 1,
       "book": {
-        "id": "ol:the-undoing-project-michael-lewis",
-        "title": "The Undoing Project",
-        "author": "Michael Lewis",
-        "isbn": null,
+        "id": "9780143115267",
+        "title": "Nudge",
+        "author": "Richard H. Thaler, Cass R. Sunstein",
+        "isbn": "9780143115267",
         "brn": null,
-        "year": null,
-        "pages": 368,
+        "year": 2008,
+        "pages": 312,
         "subjects": [
-          "Psychology",
+          "Business",
+          "Choice (Psychology)",
+          "Consumer behavior",
           "Decision making",
-          "Cognition",
-          "Behavioral economics"
+          "Economic aspects",
+          "Economic aspects of Choice (Psychology)",
+          "Economics",
+          "Nonfiction",
+          "Psychological aspects",
+          "Psychological aspects of Decision making",
+          "Psychological aspects of Economics",
+          "autonomy",
+          "decisions",
+          "interactions",
+          "psychology"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "Thaler and Sunstein develop libertarian paternalism as a middle path between command-and-control and strict-neutrality choice architectures.  Libertarian paternalism protects humans against their damaging psychological traits (inertia, bounded rationality, undue influence) by exploiting those habits to nudge people into making better choices.",
+        "cover_url": "https://covers.openlibrary.org/b/id/6402116-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 2,
-        "hours": 9.0,
-        "assumed_concepts": [],
+        "hours": 6.0,
+        "assumed_concepts": [
+          "Behavioral Economics",
+          "Cognitive Biases",
+          "Incentives",
+          "Market Failure",
+          "Default Settings"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to think differently about how choices are made – this book explores how subtle influences can shape our decisions, and how we can use that knowledge for good."
       },
-      "why": "Tells the story of Kahneman and Tversky, which gives the ideas in the big book a human thread to hang on.",
-      "confidence": 0.8999999999999999,
+      "why": "While 'Thinking, Fast and Slow' delves deeper into the psychological underpinnings, 'Nudge' provides a gentler introduction to behavioral economics and how cognitive biases affect decision-making, which will make some of Kahneman's more complex concepts more accessible.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 153.4 LEW",
-          "available": 0,
+          "call_number": "English 330.019 THA",
+          "available": 2,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 153.4 LEW",
-          "available": 0,
+          "call_number": "English 330.019 THA",
+          "available": 1,
           "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 330.019 THA",
+          "available": 0,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 153.4 LEW",
-          "available": 0,
-          "total": 1,
+          "call_number": "English 330.019 THA",
+          "available": 3,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 153.4 LEW",
-          "available": 3,
-          "total": 3,
+          "call_number": "English 330.019 THA",
+          "available": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 153.4 LEW",
+          "call_number": "English 330.019 THA",
           "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 153.4 LEW",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "before",
-      "order": 2,
-      "book": {
-        "id": "ol:nudge-richard-h-thaler",
-        "title": "Nudge",
-        "author": "Richard H. Thaler",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 312,
-        "subjects": [
-          "Psychology",
-          "Decision making",
-          "Cognition",
-          "Behavioral economics"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 3,
-        "hours": 10.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "Applies the biases to everyday choices before you meet the underlying theory.",
-      "confidence": 0.7999999999999999,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 330.019 THA",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 330.019 THA",
-          "available": 1,
           "total": 2,
           "demo": true
         },
         {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
           "call_number": "English 330.019 THA",
           "available": 3,
           "total": 3,
@@ -233,14 +221,14 @@
           "branch_code": "AMKPL",
           "call_number": "English 330.019 THA",
           "available": 0,
-          "total": 1,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Jurong West Public Library",
-          "Punggol Regional Library"
+          "Bishan Public Library",
+          "Tampines Regional Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -249,69 +237,81 @@
     },
     {
       "role": "target",
-      "order": 3,
+      "order": 2,
       "book": {
-        "id": "9780374533557",
-        "title": "Thinking, Fast and Slow",
+        "id": "9781804220375",
+        "title": "Thinking, fast and slow",
         "author": "Daniel Kahneman",
-        "isbn": "9780374533557",
+        "isbn": "9781804220375",
         "brn": null,
         "year": 2011,
-        "pages": 499,
+        "pages": 548,
         "subjects": [
-          "Psychology",
+          "Intuition",
+          "Thought and thinking",
+          "Reasoning",
           "Decision making",
+          "New York Times bestseller",
+          "Long Now Manual for Civilization",
+          "Thinking",
+          "Kognition",
+          "77.32 intelligence, creativity",
+          "New York Times reviewed",
+          "Reason",
           "Cognition",
-          "Behavioral economics"
+          "Self-actualization (Psychology)",
+          "Cognitive psychology",
+          "Psychology"
         ],
-        "summary": "Kahneman's account of the two systems that drive how we think: the fast, intuitive System 1 and the slow, deliberate System 2.",
-        "cover_url": null,
+        "summary": "In his mega bestseller, Thinking, Fast and Slow, Daniel Kahneman, world-famous psychologist and winner of the Nobel Prize in Economics, takes us on a groundbreaking tour of the mind and explains the two systems that drive the way we think.\r\n\r\nSystem 1 is fast, intuitive, and emotional; System 2 is slower, more deliberative, and more logical. The impact of overconfidence on corporate strategies, the difficulties of predicting what will make us happy in the future, the profound effect of cognitive biases on everything from playing the stock market to planning our next vacation―each of these can be understood only by knowing how the two systems shape our judgments and decisions.\r\n\r\nEngaging the reader in a lively conversation about how we think, Kahneman reveals where we can and cannot trust our intuitions and how we can tap into the benefits of slow thinking. He offers practical and enlightening insights into how choices are made in both our business and our personal lives―and how we can use different techniques to guard against the mental glitches that often get us into trouble. Topping bestseller lists for almost ten years, Thinking, Fast and Slow is a contemporary classic, an essential book that has changed the lives of millions of readers.",
+        "cover_url": "https://covers.openlibrary.org/b/id/13290711-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
-        "level": 4,
-        "hours": 16.0,
+        "level": 3,
+        "hours": 15.0,
         "assumed_concepts": [
-          "heuristics and biases",
-          "probability basics",
-          "expected value",
-          "experimental psychology"
+          "Cognitive biases",
+          "Behavioral economics",
+          "Psychology",
+          "Heuristics",
+          "Dual-process theory"
         ],
         "style_tags": [],
-        "one_line": "Dense but rewarding; it helps to already know what a cognitive bias is and to be comfortable with simple probability."
+        "one_line": "Get ready to explore how your brain *really* works – it's fascinating, and a little surprising!"
       },
       "why": "Dense but rewarding; it helps to already know what a cognitive bias is and to be comfortable with simple probability.",
       "confidence": 1.0,
       "availability": [
         {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 153.4 KAH",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
           "call_number": "English 153.4 KAH",
-          "available": 2,
-          "total": 2,
+          "available": 3,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
           "call_number": "English 153.4 KAH",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 153.4 KAH",
           "available": 1,
           "total": 3,
           "demo": true
         },
         {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
           "call_number": "English 153.4 KAH",
           "available": 0,
           "total": 2,
@@ -321,7 +321,7 @@
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
           "call_number": "English 153.4 KAH",
-          "available": 0,
+          "available": 1,
           "total": 3,
           "demo": true
         },
@@ -329,23 +329,129 @@
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
           "call_number": "English 153.4 KAH",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 153.4 KAH",
-          "available": 1,
-          "total": 2,
+          "available": 0,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Woodlands Regional Library",
-          "Central Public Library"
+          "Bukit Batok Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 3,
+      "book": {
+        "id": "9780008472566",
+        "title": "Noise",
+        "author": "Daniel Kahneman, Olivier Sibony",
+        "isbn": "9780008472566",
+        "brn": null,
+        "year": 2021,
+        "pages": 480,
+        "subjects": [
+          "Noise",
+          "Electric circuits",
+          "Vacuum-tubes",
+          "Decision making",
+          "Reasoning (psychology)",
+          "Judgment",
+          "Cognitive styles",
+          "nyt:combined-print-and-e-book-nonfiction=2021-06-06",
+          "New York Times bestseller",
+          "New York Times reviewed",
+          "PSYCHOLOGY / Applied Psychology",
+          "PSYCHOLOGY / Cognitive Psychology & Cognition",
+          "PSYCHOLOGY / Social Psychology"
+        ],
+        "summary": "From the best-selling author of Thinking, Fast and Slow, the co-author of Nudge, and the author of You Are About to Make a Terrible Mistake! comes Noise, a revolutionary exploration of why people make bad judgments, and how to control both noise and cognitive bias.\r\n\r\nImagine that two doctors in the same city give different diagnoses to identical patients - or that two judges in the same courthouse give markedly different sentences to people who have committed the same crime. Suppose that different interviewers at the same firm make different decisions about indistinguishable job applicants - or that when a company is handling customer complaints, the resolution depends on who happens to answer the phone. Now imagine that the same doctor, the same judge, the same interviewer, or the same customer service agent makes different decisions depending on whether it is morning or afternoon, or Monday rather than Wednesday. These are examples of noise: variability in judgments that should be identical.\r\n\r\nIn Noise, Daniel Kahneman, Olivier Sibony, and Cass R. Sunstein show the detrimental effects of noise in many fields, including medicine, law, economic forecasting, forensic science, bail, child protection, strategy, performance reviews, and personnel selection. Wherever there is judgment, there is noise. Yet, most of the time, individuals and organizations alike are unaware of it. They neglect noise. With a few simple remedies, people can reduce both noise and bias, and so make far better decisions.\r\n\r\nPacked with original ideas, and offering the same kinds of research-based insights that made Thinking, Fast and Slow and Nudge groundbreaking New York Times best sellers, Noise explains how and why humans are so susceptible to noise in judgment - and what we can do about it.",
+        "cover_url": "https://covers.openlibrary.org/b/id/10981966-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "cognitive bias",
+          "statistical variability",
+          "expert judgment",
+          "systematic error",
+          "decision-making frameworks"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to think critically about how even experts can be inconsistent, and how we can all make better judgments by understanding the problem of 'noise'."
+      },
+      "why": "Kahneman's follow-up on the other source of bad judgment: inconsistency.",
+      "confidence": 0.9,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 153.83 KAH",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 153.83 KAH",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 153.83 KAH",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 153.83 KAH",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 153.83 KAH",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 153.83 KAH",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 153.83 KAH",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library",
+          "Jurong West Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -356,48 +462,81 @@
       "role": "after",
       "order": 4,
       "book": {
-        "id": "ol:superforecasting-philip-e-tetlock",
+        "id": "9781101905562",
         "title": "Superforecasting",
-        "author": "Philip E. Tetlock",
-        "isbn": null,
+        "author": "Philip E. Tetlock, Dan Gardner",
+        "isbn": "9781101905562",
         "brn": null,
-        "year": null,
-        "pages": 352,
+        "year": 2015,
+        "pages": 338,
         "subjects": [
-          "Psychology",
-          "Decision making",
-          "Cognition",
-          "Behavioral economics"
+          "Economic forecasting",
+          "Forecasting",
+          "decision making",
+          "predictions",
+          "reasoning",
+          "analysis",
+          "psychology",
+          "SOCIAL SCIENCE / Future Studies",
+          "BUSINESS & ECONOMICS / Forecasting",
+          "PSYCHOLOGY / Cognitive Psychology",
+          "BUSINESS & ECONOMICS",
+          "SOCIAL SCIENCE",
+          "Future Studies",
+          "Cognitive Psychology",
+          "Techniques de prévision"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "Everyone would benefit from seeing further into the future, whether buying stocks, crafting policy, launching a new product, or simply planning the week’s meals. Unfortunately, people tend to be terrible forecasters. As Wharton professor Philip Tetlock showed in a landmark 2005 study, even experts’ predictions are only slightly better than chance. However, an important and underreported conclusion of that study was that some experts do have real foresight, and Tetlock has spent the past decade trying to figure out why. What makes some people so good? And can this talent be taught?\r\n \r\nIn Superforecasting, Tetlock and coauthor Dan Gardner offer a masterwork on prediction, drawing on decades of research and the results of a massive, government-funded forecasting tournament. The Good Judgment Project involves tens of thousands of ordinary people—including a Brooklyn filmmaker, a retired pipe installer, and a former ballroom dancer—who set out to forecast global events. Some of the volunteers have turned out to be astonishingly good. They’ve beaten other benchmarks, competitors, and prediction markets. They’ve even beaten the collective judgment of intelligence analysts with access to classified information. They are \"superforecasters.\"\r\n \r\nIn this groundbreaking and accessible book, Tetlock and Gardner show us how we can learn from this elite group. Weaving together stories of forecasting successes (the raid on Osama bin Laden’s compound) and failures (the Bay of Pigs) and interviews with a range of high-level decision makers, from David Petraeus to Robert Rubin, they show that good forecasting doesn’t require powerful computers or arcane methods. It involves gathering evidence from a variety of sources, thinking probabilistically, working in teams, keeping score, and being willing to admit error and change course. Superforecasting offers the first demonstrably effective way to improve our ability to predict the future—whether in business, finance, politics, international affairs, or daily life—and is destined to become a modern classic.",
+        "cover_url": "https://covers.openlibrary.org/b/id/9142114-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 3,
-        "hours": 10.0,
-        "assumed_concepts": [],
+        "hours": 8.0,
+        "assumed_concepts": [
+          "cognitive biases",
+          "statistical thinking",
+          "Bayesian reasoning",
+          "probability",
+          "groupthink"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to think critically about how we make predictions, and discover how a few simple habits can sharpen your ability to see what's coming."
       },
       "why": "Puts the ideas to work on prediction and shows how to actually get better at it.",
-      "confidence": 0.7,
+      "confidence": 0.9,
       "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 303.49 TET",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
           "call_number": "English 303.49 TET",
-          "available": 1,
+          "available": 0,
           "total": 1,
           "demo": true
         },
         {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
           "call_number": "English 303.49 TET",
-          "available": 1,
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 303.49 TET",
+          "available": 3,
           "total": 3,
           "demo": true
         },
@@ -408,13 +547,115 @@
           "available": 1,
           "total": 1,
           "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library",
+          "Tampines Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 5,
+      "book": {
+        "id": "9781912282562",
+        "title": "Judgment under Uncertainty",
+        "author": "Daniel Kahneman, Paul Slovic",
+        "isbn": "9781912282562",
+        "brn": null,
+        "year": 2017,
+        "pages": 555,
+        "subjects": [
+          "Intuition",
+          "Thought and thinking",
+          "Reasoning",
+          "Decision making",
+          "New York Times bestseller",
+          "Long Now Manual for Civilization",
+          "Thinking",
+          "Kognition",
+          "77.32 intelligence, creativity",
+          "New York Times reviewed",
+          "Reason",
+          "Cognition",
+          "Self-actualization (Psychology)",
+          "Cognitive psychology",
+          "Psychology"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 18.0,
+        "assumed_concepts": [
+          "Cognitive biases",
+          "Heuristics",
+          "Probability",
+          "Statistical reasoning",
+          "Prospect theory",
+          "Framing effects"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to challenge how you *think* you make decisions – this book explores the fascinating, and sometimes flawed, ways our minds work."
+      },
+      "why": "The original research papers, for readers who want the source.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 153.4 KAH",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 153.4 KAH",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 153.4 KAH",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 153.4 KAH",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 153.4 KAH",
+          "available": 2,
+          "total": 3,
+          "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 303.49 TET",
+          "call_number": "English 153.4 KAH",
           "available": 1,
-          "total": 3,
+          "total": 2,
           "demo": true
         }
       ],
@@ -426,201 +667,16 @@
         "reservations": 0,
         "demo": true
       }
-    },
-    {
-      "role": "after",
-      "order": 5,
-      "book": {
-        "id": "ol:noise-daniel-kahneman",
-        "title": "Noise",
-        "author": "Daniel Kahneman",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 464,
-        "subjects": [
-          "Psychology",
-          "Decision making",
-          "Cognition",
-          "Behavioral economics"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 4,
-        "hours": 14.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "Kahneman's follow-up on the other source of bad judgment: inconsistency.",
-      "confidence": 0.6,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 153.83 KAH",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 153.83 KAH",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 153.83 KAH",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 153.83 KAH",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 153.83 KAH",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 153.83 KAH",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 153.83 KAH",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Woodlands Regional Library",
-          "Central Public Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "after",
-      "order": 6,
-      "book": {
-        "id": "ol:judgment-under-uncertainty-daniel-kahneman",
-        "title": "Judgment under Uncertainty",
-        "author": "Daniel Kahneman",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 555,
-        "subjects": [
-          "Psychology",
-          "Decision making",
-          "Cognition",
-          "Behavioral economics"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 5,
-        "hours": 30.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "The original research papers, for readers who want the source.",
-      "confidence": 0.7999999999999999,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 153.4 KAH",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 153.4 KAH",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 153.4 KAH",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 153.4 KAH",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 153.4 KAH",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 153.4 KAH",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Tampines Regional Library",
-          "Ang Mo Kio Public Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.755732+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T03:42:27.609460+00:00",
+  "engine": "llm",
+  "notes": [
+    "'The undoing project' judged same_level (0.80), not placed before",
+    "unverified, dropped: The Scout Mindset: Why Some People See Things Others Don't",
+    "unverified, dropped: Predictably Irrational: The Hidden Forces That Shape Our Decisions",
+    "unverified, dropped: Sapiens: A Brief History of Humankind",
+    "unverified, dropped: Influence: The Psychology of Persuasion",
+    "unverified, dropped: Algorithms to Live By: The Computer Science of Human Decisions"
+  ]
 }

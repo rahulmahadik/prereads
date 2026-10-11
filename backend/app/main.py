@@ -17,6 +17,7 @@ from .catalog import nlb, NLBClient, openlibrary_search_many, resolve
 from .engine import build_route, find_seed, load_index, load_route, save_index, save_route, seeds
 from .chat import ChatReply, ChatTurn, books_for, browse, step
 from .discover import DiscoverRequest, DiscoverResponse, discover
+from . import stt
 from .tts import synthesize
 from .models import AskRequest, AskResponse, Route, ScanResult
 
@@ -159,6 +160,20 @@ def tts(req: TtsRequest):
     if audio is None:
         raise HTTPException(502, "Voice synthesis failed; using the browser voice instead.")
     return Response(content=audio, media_type="audio/mpeg", headers={"Cache-Control": "public, max-age=86400"})
+
+
+@app.post("/api/stt")
+async def stt_(audio: UploadFile = File(...), lang: str = "en"):
+    """Local speech-to-text (faster-whisper). 503 -> the browser's SpeechRecognition takes over."""
+    if not stt.available():
+        raise HTTPException(503, "Local speech recognition is not installed; using the browser's.")
+    data = await audio.read()
+    if len(data) > 12_000_000:
+        raise HTTPException(413, "Recording too long.")
+    text = stt.transcribe(data, lang[:2] or "en")
+    if text is None:
+        raise HTTPException(422, "Didn't catch that.")
+    return {"text": text, "engine": f"faster-whisper {stt.STT_MODEL}"}
 
 
 @app.post("/api/chat", response_model=ChatReply)
