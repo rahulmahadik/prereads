@@ -3,10 +3,11 @@
 ## Screens (hash-routed, back button works in browsers and WebViews)
 | # | Screen | Job | Primary action |
 |---|---|---|---|
-| 1 | Home `#/` | Pick the book | Scan the cover / Type the title; quick-pick shelf |
-| 2 | Ready `#/ready` | One question: how familiar are you | Three big choices, or skip |
-| 3 | Line `#/line` | See the road, track progress | Tap a book; tap a circle to mark read; sheets for walk-in and share |
-| 4 | Book `#/book` | Decide on one book | Find on NLB; Ask about this line (sheet); swipe/‹ › to turn |
+| 1 | Home `#/` | Say what you want or pick a book; My shelf | Type / speak / scan; tap a recommendation |
+| 2 | Line `#/line` | See the reading path, track progress | Tap a book; tap a circle to mark read; sheets for walk-in, ask, share |
+| 3 | Book `#/book` | Decide on one book | Reserve / Join waitlist; Find on shelf; Ask; swipe/‹ › to turn |
+| 4 | Meet `#/meet` | Two readers, two levels, one book | Pick both levels, see the two paths converge |
+| - | Ready `#/ready` | One question: how familiar are you | Still routed, but nothing links to it; familiarity is a chip on Line |
 
 ## Wayfinding (the unique feature)
 Every NLB branch shelves non-fiction in Dewey order, fiction A–Z, children's in its own
@@ -21,10 +22,25 @@ Home → tap a book → line (2 taps). Familiarity and branch are chips on the l
 sheets; they are remembered. Book screen shows status + directions with no extra tap; the
 bottom bar holds Reserve/Mark read · Find on shelf · Ask.
 
-## v2 tokens (overrides at the end of styles.css)
-paper #F3F6F9 · surface #FFF · surface-2 #E9EEF5 · ink #0E1A24 · accent #1F5EFF ·
-available #0E9F6E · elsewhere #C47A0A · waiting #E2493B · radius 14/20 · pill controls ·
-one soft shadow. Status blocks are tonal (green/amber/red backgrounds), never raw counts.
+## v2 tokens (the `:root` block near the end of styles.css wins over the original one)
+paper #F3F6F9 · surface #FFF · surface-2 #E9EEF5 · ink #0E1A24 · muted #5B6B7A · accent (`--line`) #1F5EFF with
+`--line-soft` #E6EDFF · available (`--stamp`) #0E9F6E / soft #E3F6EE · elsewhere (`--alt`) #C47A0A / soft #FFF1DC ·
+waiting (`--hot`) #E2493B / soft #FDE7E4 · radius 14 / 20 · pill controls · one soft shadow (`--shadow-1`).
+Status blocks are tonal (green/amber/red backgrounds), never raw counts. The wordmark is the accent colour by default.
+
+## UI inventory added on 11 Oct (all use v2 tokens, 44px targets, 52px in senior mode)
+| Element | Where | Look |
+|---|---|---|
+| Wordmark | Home header (`.wordmark-btn`) | accent `--line`; tap starts over; focus ring in accent |
+| Heart (`HeartButton`) | row (top-right, 36px) and Book page (44px) | circle outline in `--rule`; on = `--hot` icon on `--hot-soft` |
+| Note chip | path row under a hearted book | pill, `--surface-2`, 14px ink text; tap opens the note |
+| Trip note (`.trip-note`) | Line, above the stops | `--stamp-soft` panel, green text, muted second line; "N of your PreReads are on shelf 332" |
+| Similar row (`.similar-list`) | Book page, "Because you liked" | stacked cards: surface, 1px `--rule`, accent border on hover/focus, one-line reason |
+| Nearest libraries (`NearestLibraries`) | library sheet | accent-tinted "Use my location" button; list items with name, distance, open/closed (`--stamp` open, muted closed); hours are labelled as default |
+| Share QR (`.share-qr`) | share sheet and card | SVG, 200px max, 1.5px `--rule` border; also on print-only A6 shelf talkers |
+| Reserve link (`.reserve-link`) | Book page | "Reserve on NLB" or "Join waitlist (N in queue)", opens the catalogue |
+| Offline badge | top of app | appears only when the browser is offline |
+| My shelf section | Home | hearts plus paths in progress with hours left |
 
 ## Idea in one line
 A reading line (MRT stops) whose stops are physical books. The memorable thing is

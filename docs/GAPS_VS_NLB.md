@@ -18,16 +18,26 @@ pages, 2.9k Play reviews at 3.1★), Bukit Batok's Scan-n-Discover pilot.
 What NLB does well and we deliberately don't rebuild: borrowing/renewing, eBooks via Libby,
 reservations, account management. PreReads links out to the catalogue for those.
 
-## Natural voice — how it works
+## Natural voice — how it works (all local by default)
 
-- `POST /api/tts` → OpenAI text-to-speech (model/voice configurable: `OPENAI_TTS_MODEL`,
-  `OPENAI_TTS_VOICE`), styled as a warm librarian, cached as MP3 on disk by text hash.
-- Without the key (demo/prototype) the frontend uses the browser's best built-in voice,
-  so **Listen** always works; the UI prefers en-SG/en-GB natural voices when present.
+- `POST /api/tts` → local Kokoro voice (`kokoro-onnx`, model files in `backend/data/models`, voice
+  `LOCAL_TTS_VOICE`, default `bf_emma`). If Kokoro is missing it uses the macOS `say` voice. With
+  `AI_PROVIDER=openai` it uses OpenAI TTS (`OPENAI_TTS_MODEL`, `OPENAI_TTS_VOICE`). Audio is cached on disk
+  by text hash. Nothing leaves the device in the default setup.
+- When nothing is available the API returns 503 and the frontend uses the browser's best built-in voice
+  (it prefers en-SG/en-GB natural voices), so **Listen** always works.
 - Narration is scripted, not read verbatim: book page = title, why, readiness in words,
   hours, assumed concepts, where it is, call number, then the walking steps; line =
   numbered PreReads with reasons and where each is; picks = the need summary + top three.
-- Voice input uses the browser's SpeechRecognition (Chrome, Edge, Safari) in the
-  discovery box and the chat; Whisper on the server is the next step for dialects.
-- Languages: the TTS is multilingual; pass `lang` for Chinese/Malay/Tamil narration once
-  the catalogue text is in that language.
+- Voice input: `POST /api/stt` runs faster-whisper (`large-v3-turbo`, CPU int8) locally and is tried first,
+  which copes better with accents and dialects than the browser. If it is not installed or fails (503/422), the
+  browser's SpeechRecognition (Chrome, Edge, Safari) takes over. Used in the discovery box and the chat.
+- Languages: Kokoro and Whisper handle more than English, but the UI text and narration are English only
+  for now; Chinese/Malay/Tamil narration waits on translated catalogue text.
+
+## Since this was written
+
+Built after the first check: nearest library with distance and open/closed (data.gov.sg list; hours are the
+typical default until the Library API is available), same-shelf trip, My shelf and notes, reserve/waitlist link,
+"Because you liked", share by QR, shelf talkers, Meet at the book, offline PWA. Still true that live
+availability, real queue lengths and live hours need the NLB key.
