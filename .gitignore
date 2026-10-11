@@ -225,3 +225,4 @@ node_modules/
 .claude/settings.local.json
 backend/data/cache/tts/
 backend/data/cache/embeddings/
+backend/data/models/

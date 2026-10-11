@@ -153,13 +153,12 @@ class TtsRequest(BaseModel):
 
 @app.post("/api/tts")
 def tts(req: TtsRequest):
-    """Natural voice for any text on screen. 503 when no key -> browser voice fallback."""
-    if not config.llm_enabled():
+    """Natural voice for any text on screen. 503 -> browser voice fallback."""
+    out = synthesize(req.text, req.voice, req.lang)
+    if out is None:
         raise HTTPException(503, "Natural voice is not available; using the browser voice instead.")
-    audio = synthesize(req.text, req.voice, req.lang)
-    if audio is None:
-        raise HTTPException(502, "Voice synthesis failed; using the browser voice instead.")
-    return Response(content=audio, media_type="audio/mpeg", headers={"Cache-Control": "public, max-age=86400"})
+    audio, media = out
+    return Response(content=audio, media_type=media, headers={"Cache-Control": "public, max-age=86400"})
 
 
 @app.post("/api/stt")

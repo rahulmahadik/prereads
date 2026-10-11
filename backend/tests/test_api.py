@@ -86,3 +86,25 @@ def test_stt_endpoint_transcribes_and_falls_back(monkeypatch):
     assert r.status_code == 200 and r.json()["text"] == "hello there"
     monkeypatch.setattr(stt, "available", lambda: False)
     assert c.post("/api/stt", files={"audio": ("a.webm", b"123", "audio/webm")}).status_code == 503
+
+
+def test_tts_local_caches_and_falls_back(monkeypatch, tmp_path):
+    from fastapi.testclient import TestClient
+
+    from app import config, tts
+    from app.main import app
+
+    monkeypatch.setattr(config, "AI_PROVIDER", "ollama")
+    monkeypatch.setattr(tts, "TTS_DIR", tmp_path)
+    calls = []
+    monkeypatch.setattr(tts, "_speak_kokoro", lambda text, voice: calls.append(text) or b"RIFFwav")
+    c = TestClient(app)
+    for _ in range(2):
+        r = c.post("/api/tts", json={"text": "Hello reader"})
+        assert r.status_code == 200 and r.headers["content-type"] == "audio/wav" and r.content == b"RIFFwav"
+    assert calls == ["Hello reader"]  # second request served from the disk cache
+    monkeypatch.setattr(tts, "TTS_DIR", tmp_path / "empty")
+    (tmp_path / "empty").mkdir()
+    monkeypatch.setattr(tts, "_speak_kokoro", lambda text, voice: None)
+    monkeypatch.setattr(tts, "_speak_say", lambda text: None)
+    assert c.post("/api/tts", json={"text": "Nothing available"}).status_code == 503
