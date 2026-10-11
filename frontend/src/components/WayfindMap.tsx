@@ -1,117 +1,43 @@
 /**
  * Floor-plan directions inside a library.
  *
- * Drawn as a real top-down plan: walls and windows, entrance gates, information
- * counter, self-checkout, double-sided shelf ranges with book spines (non-fiction
- * in Dewey order, fiction A–Z), reading lounge, study tables, children's corner,
- * lift, stairs, toilets. The route is animated from the doors to the exact range.
+ * Drawn as a top-down plan: walls and windows, entrance gates, information counter,
+ * self-checkout, double-sided shelf ranges with book spines (non-fiction in Dewey order,
+ * three shelf units per bay; fiction A–Z), reading lounge, study tables, children's
+ * corner, lift, stairs, toilets. The plan is seeded by the branch (wayfind.ts), so each
+ * library looks different but always the same. Schematic, not to scale.
  *
- * It is a schematic of the layout every NLB branch shares (not to scale).
+ * Motion (CSS only, reduced-motion safe): "You are here" pulses 3 times, the route draws
+ * (900 ms), a walker follows it (1200 ms), then the shelf unit, row and label light up
+ * (300 ms). Steps light in sync; tapping a step or Replay runs it again.
  */
-import { useMemo } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
+import {
+  FIC_ROWS, FIC_SECTIONS, FIC_W, FIC_X, H, KIDS, MAIN_X, NF_AISLE_Y, NF_H, NF_LABELS, NF_W, NF_Y, ROW_NAMES, UNIT_H, W, DOOR_Y,
+  hash, locate, parseCallNumber, planFor, planSignature, routeFor, stepsFor,
+} from "../wayfind";
+
+export { parseCallNumber, stepsFor };
 
 export interface Target {
   callNumber: string;
   branch: string;
+  /** optional branch code; the plan is seeded by it when given, else by the branch name */
+  code?: string;
 }
-
-const W = 800;
-const H = 560;
-
-// --- layout constants -------------------------------------------------------
-const MAIN_X = 390;                 // centre aisle
-const NF_Y = 58;                    // non-fiction ranges top
-const NF_H = 92;
-const NF_W = 34;
-const NF_X0 = 56;
-const NF_STEP = 54;
-const NF_AISLE_Y = 164;             // aisle under the non-fiction ranges
-const FIC_ROWS = [214, 258, 302, 346, 390];
-const FIC_X = 44;
-const FIC_W = 260;
-const KIDS = { x: 450, y: 406, w: 300, h: 112 };
-const ENTRANCE: [number, number] = [MAIN_X, 538];
-
-const NF_LABELS = [
-  "General & computing", "Philosophy & psychology", "Religion", "Social sciences", "Language",
-  "Science & maths", "Technology & health", "Arts & recreation", "Literature", "History & geography",
-];
 
 const SPINES = ["#6E2A2A", "#1F4D3A", "#223A5E", "#8A6D1F", "#4A4E69", "#5C3D6E", "#2E6B6B", "#A1512A", "#9A3B3B", "#2F5D8A"];
 
-function hash(s: string): number {
-  let h = 2166136261;
-  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
-  return Math.abs(h);
-}
+// timeline (ms)
+const PATH_AT = 150;
+const PATH_MS = 900;
+const WALK_AT = PATH_AT + PATH_MS;
+const WALK_MS = 1200;
+const ARRIVE_AT = WALK_AT + WALK_MS;
+const HL_MS = 300;
 
-const nfX = (i: number) => NF_X0 + i * NF_STEP;
-
-interface Parsed {
-  kind: "nonfiction" | "fiction" | "children" | "unknown";
-  dewey?: string;
-  author?: string;
-  bayIndex?: number;
-  row?: number;
-  end: [number, number];
-  zoneLabel: string;
-}
-
-export function parseCallNumber(callNumber: string): Parsed {
-  const cn = callNumber.trim();
-  const upper = cn.toUpperCase();
-  const dewey = cn.match(/(\d{3})(\.\d+)?/);
-  const author = (cn.match(/\s([A-Z]{2,4})\s*$/i) || [])[1];
-  if (/^(J|JS|JP|JE)\b/.test(upper) || /CHILD/i.test(upper)) {
-    return { kind: "children", author, dewey: dewey?.[0], end: [KIDS.x - 12, KIDS.y + 56], zoneLabel: "Children's corner" };
-  }
-  if (/\bFIC\b|FICTION/i.test(upper) || !dewey) {
-    // A–Z across the five rows: pick a row by the author's first letter
-    const letter = (author || "M").toUpperCase().charCodeAt(0) - 65;
-    const row = Math.min(4, Math.max(0, Math.floor((letter / 26) * 5)));
-    return { kind: "fiction", author, row, end: [FIC_X + FIC_W + 14, FIC_ROWS[row] + 9], zoneLabel: "Fiction A–Z" };
-  }
-  const idx = Math.min(9, Math.max(0, Math.floor(parseInt(dewey[1], 10) / 100)));
-  return { kind: "nonfiction", dewey: dewey[0], author, bayIndex: idx, end: [nfX(idx) + NF_W / 2, NF_Y + NF_H + 8], zoneLabel: `${idx}00s · ${NF_LABELS[idx]}` };
-}
-
-function pathFor(p: Parsed): string {
-  const [ex, ey] = ENTRANCE;
-  const [tx, ty] = p.end;
-  if (p.kind === "nonfiction") return `M ${ex} ${ey} L ${MAIN_X} ${NF_AISLE_Y} L ${tx} ${NF_AISLE_Y} L ${tx} ${ty}`;
-  if (p.kind === "fiction") return `M ${ex} ${ey} L ${MAIN_X} ${ty} L ${tx} ${ty}`;
-  if (p.kind === "children") return `M ${ex} ${ey} L ${MAIN_X} ${ty} L ${tx} ${ty}`;
-  return `M ${ex} ${ey} L ${MAIN_X} 470`;
-}
-
-export function stepsFor(p: Parsed, callNumber: string): { icon: string; text: string }[] {
-  const look = { icon: "🔎", text: `Look for ${callNumber} on the spines — they run in order, usually at eye level.` };
-  if (p.kind === "nonfiction") {
-    const dir = (p.bayIndex ?? 5) < 6 ? "left" : "right";
-    return [
-      { icon: "🚪", text: "Go through the gates and walk straight up the main aisle, past the counter." },
-      { icon: dir === "left" ? "↰" : "↱", text: `At the top of the aisle, turn ${dir} along the non-fiction ranges.` },
-      { icon: "📚", text: `Stop at the ${p.bayIndex}00s range — ${NF_LABELS[p.bayIndex ?? 0]}.` },
-      look,
-    ];
-  }
-  if (p.kind === "children") {
-    return [
-      { icon: "🚪", text: "Go through the gates and walk up the main aisle." },
-      { icon: "↱", text: "Turn right into the children's corner — the one with the round rug." },
-      p.author ? { icon: "🔎", text: `The low shelves run by author — look for ${p.author}.` } : look,
-    ];
-  }
-  if (p.kind === "fiction") {
-    const rows = ["A–E", "F–J", "K–O", "P–T", "U–Z"];
-    return [
-      { icon: "🚪", text: "Go through the gates and walk up the main aisle." },
-      { icon: "↰", text: `Turn left into the fiction stacks and go to the ${rows[p.row ?? 2]} range.` },
-      p.author ? { icon: "🔎", text: `Fiction is shelved A–Z by author surname — find ${p.author}.` } : look,
-    ];
-  }
-  return [{ icon: "🛎️", text: "Ask at the counter — this call number doesn't match a zone on the map." }];
-}
+const SVC_ICON: Record<string, string> = { toilets: "🚻", lift: "🛗", stairs: "" };
+const SVC_NAME: Record<string, string> = { toilets: "Toilets", lift: "Lift", stairs: "Stairs" };
 
 // --- drawing helpers -----------------------------------------------------------
 /** A double-sided shelf range with book spines on both faces. */
@@ -186,15 +112,63 @@ function Plant({ x, y }: { x: number; y: number }) {
   );
 }
 
+
+/** Front view of the target shelf unit: three rows of spines, the target row glowing. */
+function ShelfFace({ x, y, row, slot, label, seed }: { x: number; y: number; row: number; slot: number; label: string; seed: string }) {
+  const fw = 172;
+  const fh = 104;
+  const rowH = 20;
+  const inner = fw - 24;
+  return (
+    <g className="wf-face" transform={`translate(${x} ${y})`} style={{ "--wf-d": `${ARRIVE_AT + 120}ms` } as CSSProperties}>
+      <rect width={fw} height={fh} rx="10" className="wf-face-card" />
+      <text x="12" y="18" className="wf-face-label">{label}</text>
+      {ROW_NAMES.map((_, r) => {
+        const ry = 26 + r * (rowH + 4);
+        const spines: JSX.Element[] = [];
+        let pos = 0;
+        let i = 0;
+        while (pos < inner - 2) {
+          const size = 3 + (hash(seed + r + "s" + i) % 3);
+          spines.push(<rect key={i} x={12 + pos} y={ry + 3 + (hash(seed + r + "h" + i) % 4)} width={size} height={rowH - 4 - (hash(seed + r + "h" + i) % 4)} fill={SPINES[hash(seed + r + "c" + i) % SPINES.length]} opacity={0.8} />);
+          pos += size + 1;
+          i++;
+        }
+        return (
+          <g key={r} className={`wf-face-row ${r === row ? "on" : ""}`}>
+            <rect x="8" y={ry} width={fw - 16} height={rowH} rx="3" className="wf-face-shelf" />
+            {spines}
+          </g>
+        );
+      })}
+      <g transform={`translate(${12 + slot * inner} ${26 + row * (rowH + 4)})`} className="wf-face-marker">
+        <rect x="-4" y="-2" width="8" height={rowH + 4} rx="2" />
+        <path d={`M -6 ${rowH + 7} L 0 ${rowH + 1} L 6 ${rowH + 7} Z`} />
+      </g>
+    </g>
+  );
+}
+
 export default function WayfindMap({ target }: { target: Target }) {
   const parsed = useMemo(() => parseCallNumber(target.callNumber), [target.callNumber]);
-  const d = useMemo(() => pathFor(parsed), [parsed]);
-  const steps = useMemo(() => stepsFor(parsed, target.callNumber), [parsed, target.callNumber]);
-  const [tx, ty] = parsed.end;
+  const seedKey = target.code || target.branch;
+  const plan = useMemo(() => planFor(seedKey), [seedKey]);
+  const spot = useMemo(() => locate(parsed, plan), [parsed, plan]);
+  const route = useMemo(() => routeFor(parsed, plan, spot), [parsed, plan, spot]);
+  const steps = useMemo(() => stepsFor(parsed, target.callNumber, seedKey), [parsed, target.callNumber, seedKey]);
+  const [run, setRun] = useState(0);
+  const replay = () => setRun((r) => r + 1);
+  const runKey = `${run}-${target.callNumber}-${planSignature(plan)}`;
+  const [tx, ty] = spot.stand.map((v) => Math.round(v));
+  const nf = parsed.kind === "nonfiction";
+  const marks = route.marks;
+  const svcLabel = plan.services.map((s) => SVC_NAME[s]).join(" · ");
+  const faceX = Math.min(W - 24 - 172, Math.max(24, (spot.bayLabelX ?? tx) - 86));
 
   return (
-    <div className="wayfind">
-      <svg className="map floorplan" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Floor-plan directions to ${target.callNumber} at ${target.branch}`}>
+    <div className="wayfind wf2">
+      <div className="wf-map-wrap">
+      <svg className="map floorplan" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Floor-plan directions to ${target.callNumber} at ${target.branch}: ${spot.label}`}>
         <defs>
           <pattern id="carpet" width="8" height="8" patternUnits="userSpaceOnUse">
             <rect width="8" height="8" fill="#eef1f5" />
@@ -212,46 +186,57 @@ export default function WayfindMap({ target }: { target: Target }) {
 
         {/* floor */}
         <rect x="12" y="12" width={W - 24} height={H - 24} rx="10" fill="url(#carpet)" />
-        {/* zone carpets */}
         <rect x={FIC_X - 12} y={FIC_ROWS[0] - 20} width={FIC_W + 60} height={FIC_ROWS[4] - FIC_ROWS[0] + 64} rx="12" className="carpet-fiction" />
-        <rect x={440} y={196} width={316} height={200} rx="12" className="carpet-reading" />
+        <rect x={440} y={204} width={316} height={192} rx="12" className="carpet-reading" />
         <rect x={KIDS.x} y={KIDS.y} width={KIDS.w} height={KIDS.h} rx="14" className="carpet-kids" />
         {/* aisles (wood) */}
         <rect x={MAIN_X - 22} y={NF_AISLE_Y - 14} width="44" height={H - NF_AISLE_Y - 20} rx="8" fill="url(#wood)" className="aisle" />
         <rect x={28} y={NF_AISLE_Y - 14} width={W - 56} height="28" rx="8" fill="url(#wood)" className="aisle" />
+        {plan.doorX !== MAIN_X && <rect x={Math.min(plan.doorX, MAIN_X) - 22} y={506} width={Math.abs(plan.doorX - MAIN_X) + 44} height="28" rx="8" fill="url(#wood)" className="aisle" />}
 
         {/* walls + windows */}
         <rect x="12" y="12" width={W - 24} height={H - 24} rx="10" className="wall" />
-        {[[60, 280], [320, 560], [600, 740]].map(([a, b]) => (
+        {plan.windows.map(([a, b]) => (
           <line key={a} x1={a} x2={b} y1="12" y2="12" className="window" />
         ))}
-        <line x1="12" x2="12" y1="80" y2="400" className="window" />
+        <line x1={plan.flip ? W - 12 : 12} x2={plan.flip ? W - 12 : 12} y1="200" y2="400" className="window" />
 
-        {/* non-fiction ranges */}
+        {/* non-fiction bays: three shelf units each */}
         {NF_LABELS.map((label, i) => {
-          const active = parsed.kind === "nonfiction" && parsed.bayIndex === i;
+          const active = nf && parsed.bayIndex === i;
+          const bx = plan.bayX[i];
           return (
             <g key={label}>
-              <Range x={nfX(i)} y={NF_Y} w={NF_W} h={NF_H} vertical seed={`nf${i}`} active={active} />
-              <text x={nfX(i) + NF_W / 2} y={NF_Y - 8} textAnchor="middle" className={`bay-label ${active ? "on" : ""}`}>
+              <Range x={bx} y={NF_Y} w={NF_W} h={NF_H} vertical seed={`nf${i}`} active={active} />
+              {[1, 2].map((u) => (
+                <line key={u} x1={bx - 1} x2={bx + NF_W + 1} y1={NF_Y + u * UNIT_H} y2={NF_Y + u * UNIT_H} className="wf-unit-split" />
+              ))}
+              <text x={bx + NF_W / 2} y={NF_Y - 8} textAnchor="middle" className={`bay-label ${active ? "on" : ""}`}>
                 {i}00s
               </text>
             </g>
           );
         })}
-        <text x={NF_X0} y={NF_AISLE_Y + 34} className="zone-title">📚 Non-fiction · Dewey order 000 → 999</text>
+        <text x={plan.servicesX + 80} y={NF_Y + 78} textAnchor="middle" className="wf-dewey-dir">
+          {plan.flip ? "999 ← 000 · Dewey order" : "Dewey order · 000 → 999"}
+        </text>
 
-        {/* toilets, lift, stairs (top right) */}
+        {/* toilets, lift, stairs */}
         <g className="service">
-          <rect x="606" y={NF_Y} width="64" height="40" rx="6" />
-          <text x="638" y={NF_Y + 25} textAnchor="middle" className="svc-label">🚻</text>
-          <rect x="680" y={NF_Y} width="40" height="40" rx="6" />
-          <text x="700" y={NF_Y + 25} textAnchor="middle" className="svc-label">🛗</text>
-          <rect x="730" y={NF_Y} width="42" height="40" rx="6" />
-          {[0, 1, 2, 3, 4].map((i) => (
-            <line key={i} x1="734" x2="768" y1={NF_Y + 8 + i * 7} y2={NF_Y + 8 + i * 7} className="stair" />
-          ))}
-          <text x="688" y={NF_Y + 60} textAnchor="middle" className="svc-caption">Toilets · Lift · Stairs</text>
+          {plan.services.map((s, k) => {
+            const sx = plan.servicesX + k * 56;
+            return (
+              <g key={s}>
+                <rect x={sx} y={NF_Y} width="48" height="40" rx="6" />
+                {s === "stairs" ? (
+                  [0, 1, 2, 3, 4].map((j) => <line key={j} x1={sx + 6} x2={sx + 42} y1={NF_Y + 8 + j * 6} y2={NF_Y + 8 + j * 6} className="stair" />)
+                ) : (
+                  <text x={sx + 24} y={NF_Y + 26} textAnchor="middle" className="svc-label">{SVC_ICON[s]}</text>
+                )}
+              </g>
+            );
+          })}
+          <text x={plan.servicesX + 80} y={NF_Y + 58} textAnchor="middle" className="svc-caption">{svcLabel}</text>
         </g>
 
         {/* fiction stacks */}
@@ -259,35 +244,35 @@ export default function WayfindMap({ target }: { target: Target }) {
           {FIC_ROWS.map((y, r) => (
             <g key={y}>
               <Range x={FIC_X} y={y} w={FIC_W} h={18} vertical={false} seed={`fic${r}`} active={parsed.kind === "fiction" && parsed.row === r} />
-              <text x={FIC_X + FIC_W + 8} y={y + 13} className="row-label">{["A–E", "F–J", "K–O", "P–T", "U–Z"][r]}</text>
+              <text x={FIC_X + FIC_W + 8} y={y + 13} className="row-label">{FIC_SECTIONS[r]}</text>
             </g>
           ))}
-          <text x={FIC_X} y={FIC_ROWS[4] + 40} className="zone-title">📖 Fiction · A–Z by author</text>
-          <Armchair x={FIC_X + 200} y={FIC_ROWS[4] + 24} />
-          <Armchair x={FIC_X + 228} y={FIC_ROWS[4] + 24} />
+          <text x={FIC_X} y={FIC_ROWS[0] - 26} className="zone-title">📖 Fiction · A–Z by author</text>
+          <Armchair x={FIC_X + 200} y={FIC_ROWS[4] + 26} />
+          <Armchair x={FIC_X + 228} y={FIC_ROWS[4] + 26} />
         </g>
 
         {/* reading lounge + study (right) */}
         <g className="zone">
-          <RoundTable x={490} y={238} />
-          <RoundTable x={560} y={238} />
-          <RoundTable x={630} y={238} />
-          <Armchair x={690} y={216} />
-          <Armchair x={716} y={216} />
-          <Armchair x={690} y={246} />
-          <Armchair x={716} y={246} />
-          <text x={456} y={212} className="zone-title">☕ Reading lounge</text>
-          <LongTable x={470} y={312} w={270} />
-          <LongTable x={470} y={356} w={270} />
-          <text x={456} y={297} className="zone-title">💻 Study & computers</text>
+          <RoundTable x={490} y={246} />
+          <RoundTable x={560} y={246} />
+          <RoundTable x={630} y={246} />
+          <Armchair x={690} y={224} />
+          <Armchair x={716} y={224} />
+          <Armchair x={690} y={254} />
+          <Armchair x={716} y={254} />
+          <text x={456} y={220} className="zone-title">☕ Reading lounge</text>
+          <LongTable x={470} y={318} w={270} />
+          <LongTable x={470} y={360} w={270} />
+          <text x={456} y={303} className="zone-title">💻 Study & computers</text>
         </g>
 
         {/* children's corner */}
         <g className={`zone ${parsed.kind === "children" ? "active" : ""}`}>
           <circle cx={KIDS.x + 110} cy={KIDS.y + 60} r="42" fill="url(#rug)" className="rug" />
-          <Range x={KIDS.x + 180} y={KIDS.y + 16} w={100} h={14} vertical={false} seed="k1" active={parsed.kind === "children"} />
-          <Range x={KIDS.x + 180} y={KIDS.y + 44} w={100} h={14} vertical={false} seed="k2" active={parsed.kind === "children"} />
-          <Range x={KIDS.x + 180} y={KIDS.y + 72} w={100} h={14} vertical={false} seed="k3" active={parsed.kind === "children"} />
+          {[0, 1, 2].map((k) => (
+            <Range key={k} x={KIDS.x + 180} y={KIDS.y + 16 + k * 28} w={100} h={14} vertical={false} seed={`k${k + 1}`} active={parsed.kind === "children"} />
+          ))}
           <circle cx={KIDS.x + 36} cy={KIDS.y + 90} r="10" className="beanbag" />
           <circle cx={KIDS.x + 62} cy={KIDS.y + 98} r="10" className="beanbag" />
           <text x={KIDS.x + 14} y={KIDS.y + 24} className="zone-title">🧸 Children's corner</text>
@@ -295,61 +280,99 @@ export default function WayfindMap({ target }: { target: Target }) {
 
         {/* counter, self-checkout, new arrivals (near entrance) */}
         <g className="service">
-          <path d="M 150 468 Q 150 442 176 442 L 330 442 Q 356 442 356 468 L 356 486 L 150 486 Z" className="counter" />
-          <text x="253" y="470" textAnchor="middle" className="counter-label">🛎️ Information & returns</text>
+          <path d="M 150 460 Q 150 434 176 434 L 330 434 Q 356 434 356 460 L 356 478 L 150 478 Z" className="counter" />
+          <text x="253" y="462" textAnchor="middle" className="counter-label">🛎️ Information & returns</text>
           {[0, 1, 2].map((i) => (
             <g key={i}>
-              <rect x={440 + i * 36} y="456" width="24" height="24" rx="5" className="kiosk" />
-              <rect x={446 + i * 36} y="461" width="12" height="9" rx="1" className="screen" />
+              <rect x={440 + i * 36} y="448" width="24" height="24" rx="5" className="kiosk" />
+              <rect x={446 + i * 36} y="453" width="12" height="9" rx="1" className="screen" />
             </g>
           ))}
-          <text x="490" y="498" textAnchor="middle" className="svc-caption">Self-checkout</text>
-          <rect x="44" y="446" width="84" height="40" rx="6" className="display" />
-          <text x="86" y="470" textAnchor="middle" className="svc-caption">✨ New arrivals</text>
+          <text x="490" y="490" textAnchor="middle" className="svc-caption">Self-checkout</text>
+          <rect x="44" y="438" width="84" height="40" rx="6" className="display" />
+          <text x="86" y="462" textAnchor="middle" className="svc-caption">✨ New arrivals</text>
         </g>
 
         {/* entrance: security gates + sliding doors */}
         <g className="service">
-          <rect x={MAIN_X - 34} y="506" width="8" height="22" rx="2" className="gate" />
-          <rect x={MAIN_X + 26} y="506" width="8" height="22" rx="2" className="gate" />
-          <rect x={MAIN_X - 40} y={H - 16} width="36" height="8" rx="2" className="door" />
-          <rect x={MAIN_X + 4} y={H - 16} width="36" height="8" rx="2" className="door" />
-          <text x={MAIN_X + 54} y={H - 26} className="zone-title">🚪 Entrance</text>
+          <rect x={plan.doorX - 34} y="508" width="8" height="20" rx="2" className="gate" />
+          <rect x={plan.doorX + 26} y="508" width="8" height="20" rx="2" className="gate" />
+          <rect x={plan.doorX - 40} y={H - 16} width="36" height="8" rx="2" className="door" />
+          <rect x={plan.doorX + 4} y={H - 16} width="36" height="8" rx="2" className="door" />
+          <text x={plan.doorX + (plan.doorX > MAIN_X ? -54 : 54)} y={H - 24} textAnchor={plan.doorX > MAIN_X ? "end" : "start"} className="zone-title">🚪 Entrance</text>
         </g>
 
-        <Plant x={30} y={30} />
-        <Plant x={770} y={530} />
-        <Plant x={420} y={180} />
+        {plan.plants.map(([px, py]) => (
+          <Plant key={`${px}-${py}`} x={px} y={py} />
+        ))}
 
-        {/* route */}
-        <path key={`s-${d}`} d={d} className="map-path-shadow" />
-        <path key={d} d={d} className="map-path" />
-        <g className="map-walker" style={{ offsetPath: `path("${d}")` } as React.CSSProperties}>
-          <circle r="12" className="walker-bg" />
-          <text y="5" textAnchor="middle" className="walker-emoji">🚶</text>
+        {/* the run: remounted on Replay / new target so every animation restarts */}
+        <g key={runKey} className="wf-run">
+          {spot.unitRect && (
+            <g className="wf-target" style={{ "--wf-d": `${ARRIVE_AT}ms`, "--wf-hl": `${HL_MS}ms` } as CSSProperties}>
+              <rect x={spot.unitRect.x - 3} y={spot.unitRect.y - 3} width={spot.unitRect.w + 6} height={spot.unitRect.h + 6} rx="5" className="wf-unit" />
+            </g>
+          )}
+          <path d={route.d} className="map-path-shadow wf-shadow" style={{ "--wf-d": `${PATH_AT}ms` } as CSSProperties} />
+          <path d={route.d} pathLength={1} className="wf-path" style={{ "--wf-d": `${PATH_AT}ms`, "--wf-ms": `${PATH_MS}ms` } as CSSProperties} />
+          <g className="wf-here" transform={`translate(${plan.doorX} ${DOOR_Y})`}>
+            <circle r="16" className="wf-here-pulse" />
+            <circle r="7" className="wf-here-dot" />
+            <g transform={`translate(${plan.doorX > MAIN_X ? 22 : -22} -16)`}>
+              <rect x={plan.doorX > MAIN_X ? 0 : -86} y="-12" width="86" height="22" rx="11" className="wf-here-tag" />
+              <text x={plan.doorX > MAIN_X ? 43 : -43} y="4" textAnchor="middle" className="wf-here-text">You are here</text>
+            </g>
+          </g>
+          <g className="wf-walker" style={{ offsetPath: `path("${route.d}")`, "--wf-d": `${WALK_AT}ms`, "--wf-ms": `${WALK_MS}ms` } as CSSProperties}>
+            <circle r="9" className="wf-walker-halo" />
+            <circle r="5.5" className="wf-walker-dot" />
+          </g>
+          <g className="map-pin wf-pin" transform={`translate(${tx} ${ty})`} style={{ "--wf-d": `${ARRIVE_AT}ms` } as CSSProperties}>
+            <circle r="13" className="pin-ring wf-pin-ring" />
+            <circle r="5.5" className="pin-dot" />
+          </g>
+          {nf && spot.unitRect && (
+            <>
+              <line x1={spot.bayLabelX} y1={spot.unitRect.y + spot.unitRect.h} x2={faceX + 86} y2={NF_AISLE_Y + 24} className="wf-face-link" style={{ "--wf-d": `${ARRIVE_AT + 80}ms` } as CSSProperties} />
+              <ShelfFace x={faceX} y={NF_AISLE_Y + 24} row={parsed.shelfRow ?? 1} slot={parsed.slot ?? 0.5} label={spot.label} seed={`face${parsed.dewey}`} />
+            </>
+          )}
+          {!nf && spot.unitRect && (
+            <g className="wf-face wf-chip" transform={`translate(${Math.min(W - 180, Math.max(20, tx - 80))} ${Math.max(20, ty - 52)})`} style={{ "--wf-d": `${ARRIVE_AT + 120}ms` } as CSSProperties}>
+              <rect width="160" height="26" rx="13" className="wf-face-card" />
+              <text x="80" y="17" textAnchor="middle" className="wf-face-label">{spot.label}</text>
+            </g>
+          )}
         </g>
-        <g className="map-pin" transform={`translate(${tx} ${ty})`}>
-          <circle r="14" className="pin-ring" />
-          <circle r="6" className="pin-dot" />
-        </g>
-        {parsed.kind === "nonfiction" && (
-          <g className="flag" transform={`translate(${Math.min(W - 160, Math.max(20, tx - 70))} 18)`}>
+        {nf && (
+          <g className="flag" transform={`translate(${Math.min(W - 160, Math.max(20, (spot.bayLabelX ?? tx) - 70))} 16)`}>
             <rect width="140" height="24" rx="12" />
-            <text x="70" y="16" textAnchor="middle">📍 {target.callNumber}</text>
+            <text x="70" y="16" textAnchor="middle">📍 {target.callNumber.replace(/^English\s+/i, "")}</text>
           </g>
         )}
       </svg>
+      <button type="button" className="wf-replay" onClick={replay} aria-label="Replay the route">
+        <span aria-hidden="true">↻</span> Replay
+      </button>
+      </div>
 
-      <ol className="steps">
-        {steps.map((s, i) => (
-          <li key={i} style={{ animationDelay: `${400 + i * 260}ms` }}>
-            <span className="step-icon" aria-hidden="true">{s.icon}</span>
-            <span>{s.text}</span>
-          </li>
-        ))}
+      <ol className="steps wf-steps" key={`steps-${runKey}`}>
+        {steps.map((s, i) => {
+          const from = WALK_AT + (marks[i] ?? 1) * WALK_MS;
+          const to = i + 1 < steps.length ? WALK_AT + (marks[i + 1] ?? 1) * WALK_MS : from + 400;
+          const last = i === steps.length - 1;
+          return (
+            <li key={i} className={last ? "wf-last" : ""} style={{ "--wf-d": `${i === 0 ? WALK_AT - 200 : Math.round(from)}ms`, "--wf-ms": `${Math.max(300, Math.round(to - from))}ms`, animationDelay: `${120 + i * 80}ms` } as CSSProperties}>
+              <button type="button" className="wf-step" onClick={replay} title="Replay the route">
+                <span className="step-icon" aria-hidden="true">{s.icon}</span>
+                <span>{s.text}</span>
+              </button>
+            </li>
+          );
+        })}
       </ol>
       <p className="hint map-note">
-        Schematic of the layout every NLB branch shares (not to scale): non-fiction in Dewey order, fiction A–Z, children's in its own corner. Follow the call-number signs for the exact range.
+        Schematic, not to scale: a sketch of how {target.branch ? target.branch.replace(/\s+(public|regional)?\s*library$/i, "") : "this library"} lays out its shelves (non-fiction in Dewey order, fiction A–Z, children's in its own corner). Follow the call-number signs for the exact range. Tap a step to replay.
       </p>
     </div>
   );
