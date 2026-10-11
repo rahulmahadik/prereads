@@ -1,7 +1,9 @@
 import { useMemo, useState } from "react";
 import { qrMatrix, qrSvgPath } from "../qr";
 import { href } from "../router";
+import { t, useLang } from "../i18n";
 import type { Route } from "../types";
+import { ShelfTalkers } from "./ShelfTalker";
 
 /** The reading path's own page URL, so a scan opens this path. */
 function pathUrl(route: Route): string {
@@ -18,8 +20,13 @@ function safeQr(url: string): boolean[][] | null {
 }
 
 /* --------------------------------------------------------------- Share */
+// Canvas text: Latin in Atkinson, Chinese and Tamil glyphs fall through to Noto (loaded in index.html) or the system font.
+const FONTS = `"Atkinson Hyperlegible", Arial, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Noto Sans Tamil", "Tamil Sangam MN", "Nirmala UI", sans-serif`;
 export function ShareCard({ route }: { route: Route }) {
+  useLang();
   const [preview, setPreview] = useState<string>("");
+  const [printing, setPrinting] = useState(false);
+  const hasPicks = route.stops.some((s) => s.role === "before");
   const qr = useMemo(() => safeQr(pathUrl(route)), [route]);
 
   const download = () => {
@@ -33,11 +40,12 @@ export function ShareCard({ route }: { route: Route }) {
     ctx.fillStyle = "#F5F7F6";
     ctx.fillRect(0, 0, W, H);
     ctx.fillStyle = "#16211F";
-    ctx.font = "700 64px Atkinson Hyperlegible, Arial";
+    const maxW = W - 160;
+    ctx.font = `700 64px ${FONTS}`;
     ctx.fillText("PreReads", 80, 140);
-    ctx.font = "400 34px Atkinson Hyperlegible, Arial";
+    ctx.font = `400 34px ${FONTS}`;
     ctx.fillStyle = "#5E6A66";
-    ctx.fillText("The books to read before the book you want to read", 80, 195);
+    ctx.fillText(t("share.cardSub"), 80, 195, maxW);
 
     const stops = route.stops;
     const x0 = 120;
@@ -63,13 +71,13 @@ export function ShareCard({ route }: { route: Route }) {
     ctx.fillStyle = "#16211F";
     let ty = 560;
     stops.forEach((s, i) => {
-      ctx.font = `${s.role === "target" ? "700" : "400"} 36px Atkinson Hyperlegible, Arial`;
-      ctx.fillText(`${i + 1}. ${s.book.title}`, 80, ty);
-      ctx.font = "400 28px Atkinson Hyperlegible, Arial";
+      ctx.font = `${s.role === "target" ? "700" : "400"} 36px ${FONTS}`;
+      ctx.fillText(`${i + 1}. ${s.book.title}`, 80, ty, maxW);
+      ctx.font = `400 28px ${FONTS}`;
       ctx.fillStyle = "#5E6A66";
       const best = [...s.availability].sort((a, b) => b.available - a.available)[0];
-      const where = best && best.available > 0 ? `${best.branch} · ${best.call_number}` : "reserve and read the path meanwhile";
-      ctx.fillText(`level ${s.readiness.level} · ${Math.round(s.readiness.hours)} h · ${where}`.slice(0, 70), 80, ty + 38);
+      const where = best && best.available > 0 ? `${best.branch} · ${best.call_number}` : t("share.reserveMeanwhile");
+      ctx.fillText(t("share.cardMeta", { level: s.readiness.level, hours: Math.round(s.readiness.hours), where }).slice(0, 70), 80, ty + 38, maxW);
       ctx.fillStyle = "#16211F";
       ty += 100;
     });
@@ -83,13 +91,15 @@ export function ShareCard({ route }: { route: Route }) {
       ctx.fillRect(qx, qy, box, box);
       ctx.fillStyle = "#16211F";
       qr.forEach((row, ry) => row.forEach((dark, rx) => dark && ctx.fillRect(qx + (rx + quiet) * mod, qy + (ry + quiet) * mod, mod, mod)));
-      ctx.font = "400 26px Atkinson Hyperlegible, Arial";
+      ctx.font = `400 26px ${FONTS}`;
       ctx.fillStyle = "#5E6A66";
-      ctx.fillText("Scan to open this reading path", qx + box - 380, qy - 16);
+      ctx.textAlign = "right";
+      ctx.fillText(t("share.scan"), qx + box, qy - 16, maxW);
+      ctx.textAlign = "left";
     }
-    ctx.font = "400 26px Atkinson Hyperlegible, Arial";
+    ctx.font = `400 26px ${FONTS}`;
     ctx.fillStyle = "#5E6A66";
-    ctx.fillText("Built on NLB Labs open APIs · not an NLB product", 80, H - 70);
+    ctx.fillText(t("share.cardFoot"), 80, H - 70, maxW);
 
     const dataUrl = c.toDataURL("image/png");
     setPreview(dataUrl);
@@ -104,21 +114,27 @@ export function ShareCard({ route }: { route: Route }) {
   return (
     <section className="section">
       <button type="button" className="primary" onClick={download}>
-        Save this path as a card
+        {t("share.save")}
       </button>
+      {hasPicks && (
+        <button type="button" className="secondary talker-btn" onClick={() => setPrinting(true)}>
+          {t("share.print")}
+        </button>
+      )}
+      {printing && <ShelfTalkers route={route} qr={qr} onDone={() => setPrinting(false)} />}
       {qr && (
         <figure className="share-qr">
-          <svg viewBox={`0 0 ${qr.length + 8} ${qr.length + 8}`} role="img" aria-label="QR code that opens this reading path" shapeRendering="crispEdges">
+          <svg viewBox={`0 0 ${qr.length + 8} ${qr.length + 8}`} role="img" aria-label={t("share.qrAria")} shapeRendering="crispEdges">
             <rect width="100%" height="100%" fill="#fff" />
             <path transform="translate(4 4)" d={qrSvgPath(qr)} fill="var(--ink)" />
           </svg>
-          <figcaption className="hint">Scan to open this reading path</figcaption>
+          <figcaption className="hint">{t("share.scan")}</figcaption>
         </figure>
       )}
       {preview && (
         <figure className="card-preview">
-          <img src={preview} alt="Your reading line as a shareable card" />
-          <figcaption className="hint">If the download did not start, press and hold the image to save or share it.</figcaption>
+          <img src={preview} alt={t("share.previewAlt")} />
+          <figcaption className="hint">{t("share.holdHint")}</figcaption>
         </figure>
       )}
     </section>
