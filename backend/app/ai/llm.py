@@ -289,4 +289,5 @@ ASK_SYSTEM = (
 
 
 def ask(route_json: str, question: str, lang: Optional[str] = None) -> Optional[str]:
-    return text(with_lang(ASK_SYSTEM, lang), f"ROUTE:\n{route_json}\n\nQUESTION: {question}")
+    # grounded answers in the Ask sheet: the fast chat tier keeps them to a few seconds
+    return text(with_lang(ASK_SYSTEM, lang), f"ROUTE:\n{route_json}\n\nQUESTION: {question}", kind="chat")

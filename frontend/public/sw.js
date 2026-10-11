@@ -1,5 +1,5 @@
 /* PreReads service worker: offline shell + saved reading paths. Hand-written, no dependencies. */
-const VERSION = "v1";
+const VERSION = "v2";
 const SHELL = `prereads-shell-${VERSION}`;
 const API = `prereads-api-${VERSION}`;
 const API_PATHS = ["/api/route", "/api/targets", "/api/popular", "/api/branches", "/api/similar", "/api/mode", "/api/health"];
@@ -37,7 +37,7 @@ async function networkFirst(req, cacheName) {
     if (res.ok) cache.put(req, res.clone());
     return res;
   } catch (e) {
-    const hit = await cache.match(req);
+    const hit = await cache.match(req, { ignoreVary: true });
     if (hit) return hit;
     throw e;
   }
@@ -45,7 +45,7 @@ async function networkFirst(req, cacheName) {
 
 async function cacheFirst(req) {
   const cache = await caches.open(SHELL);
-  const hit = await cache.match(req);
+  const hit = await cache.match(req, { ignoreVary: true });
   if (hit) return hit;
   const res = await fetch(req);
   if (res.ok) cache.put(req, res.clone());
@@ -72,7 +72,7 @@ self.addEventListener("fetch", (event) => {
       fetch(req).then((res) => {
         if (res.ok) caches.open(SHELL).then((c) => c.put("/", res.clone()));
         return res;
-      }).catch(async () => (await caches.match("/")) || Response.error()),
+      }).catch(async () => (await caches.match("/", { ignoreVary: true, ignoreSearch: true })) || Response.error()),
     );
     return;
   }
