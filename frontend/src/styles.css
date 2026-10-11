@@ -2497,3 +2497,7 @@ body { background: var(--paper); }
 /* same-shelf trip */
 .trip-note { display: grid; gap: 2px; margin: 10px 0 0; padding: 10px 14px; border-radius: var(--radius); background: var(--stamp-soft); color: #0b6b4b; font-size: var(--fs); }
 .trip-note span { font-size: 14px; color: var(--muted); }
+
+/* share by QR */
+.share-qr { margin: 12px 0 0; display: grid; justify-items: start; gap: 6px; }
+.share-qr svg { width: min(100%, 200px); height: auto; border: 1.5px solid var(--rule); border-radius: var(--radius); display: block; }

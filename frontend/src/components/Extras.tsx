@@ -1,9 +1,26 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { qrMatrix, qrSvgPath } from "../qr";
+import { href } from "../router";
 import type { Route } from "../types";
+
+/** The reading path's own page URL, so a scan opens this path. */
+function pathUrl(route: Route): string {
+  const book = route.stops.find((s) => s.role === "target")!.book;
+  return location.origin + location.pathname + href("line", { id: route.target_id, title: book.title, author: book.author });
+}
+
+function safeQr(url: string): boolean[][] | null {
+  try {
+    return qrMatrix(url);
+  } catch {
+    return null; // too long to encode: the card simply has no QR
+  }
+}
 
 /* --------------------------------------------------------------- Share */
 export function ShareCard({ route }: { route: Route }) {
   const [preview, setPreview] = useState<string>("");
+  const qr = useMemo(() => safeQr(pathUrl(route)), [route]);
 
   const download = () => {
     const target = route.stops.find((s) => s.role === "target")!;
@@ -56,6 +73,20 @@ export function ShareCard({ route }: { route: Route }) {
       ctx.fillStyle = "#16211F";
       ty += 100;
     });
+    if (qr) {
+      const quiet = 4;
+      const mod = Math.max(2, Math.floor(200 / (qr.length + quiet * 2)));
+      const box = (qr.length + quiet * 2) * mod;
+      const qx = W - 80 - box;
+      const qy = H - 120 - box;
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fillRect(qx, qy, box, box);
+      ctx.fillStyle = "#16211F";
+      qr.forEach((row, ry) => row.forEach((dark, rx) => dark && ctx.fillRect(qx + (rx + quiet) * mod, qy + (ry + quiet) * mod, mod, mod)));
+      ctx.font = "400 26px Atkinson Hyperlegible, Arial";
+      ctx.fillStyle = "#5E6A66";
+      ctx.fillText("Scan to open this reading path", qx + box - 380, qy - 16);
+    }
     ctx.font = "400 26px Atkinson Hyperlegible, Arial";
     ctx.fillStyle = "#5E6A66";
     ctx.fillText("Built on NLB Labs open APIs · not an NLB product", 80, H - 70);
@@ -75,6 +106,15 @@ export function ShareCard({ route }: { route: Route }) {
       <button type="button" className="primary" onClick={download}>
         Save this path as a card
       </button>
+      {qr && (
+        <figure className="share-qr">
+          <svg viewBox={`0 0 ${qr.length + 8} ${qr.length + 8}`} role="img" aria-label="QR code that opens this reading path" shapeRendering="crispEdges">
+            <rect width="100%" height="100%" fill="#fff" />
+            <path transform="translate(4 4)" d={qrSvgPath(qr)} fill="var(--ink)" />
+          </svg>
+          <figcaption className="hint">Scan to open this reading path</figcaption>
+        </figure>
+      )}
       {preview && (
         <figure className="card-preview">
           <img src={preview} alt="Your reading line as a shareable card" />
