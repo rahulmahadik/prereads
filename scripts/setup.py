@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""PreReads run script — stdlib only.
+"""PreReads run script (Python stdlib only).
 
 Usage:
     python3 scripts/setup.py install    venv + pip install (backend) + npm install/build (frontend)
@@ -15,9 +15,9 @@ Usage:
 Environment variables:
     PREREADS_HOST=127.0.0.1   bind address (0.0.0.0 to expose on the LAN / phone on same Wi-Fi)
     PREREADS_PORT=8000        app port (the Vite dev proxy expects 8000)
-    OLLAMA_BASE_URL, LOCAL_LLM_MODEL, LOCAL_LLM_MODEL_HEAVY, LOCAL_VISION_MODEL,
-    LOCAL_EMBED_MODEL, AI_PROVIDER are read from the environment or the repo-root .env,
-    the same way backend/app/core/config.py reads them.
+    OLLAMA_BASE_URL, LOCAL_LLM_MODEL, LOCAL_CHAT_MODEL, LOCAL_LLM_MODEL_HEAVY,
+    LOCAL_VISION_MODEL, LOCAL_EMBED_MODEL, AI_PROVIDER are read from the environment or
+    the repo-root .env, the same way backend/app/core/config.py reads them.
 
 Files:
     .run/app.pid        pid of the background app (process-group leader)
@@ -60,7 +60,6 @@ OLLAMA_LOG = RUN_DIR / "ollama.log"
 VENV_PY = BACKEND / ".venv" / ("Scripts" if platform.system() == "Windows" else "bin") / \
     ("python.exe" if platform.system() == "Windows" else "python")
 
-IS_MAC = platform.system() == "Darwin"
 IS_WIN = platform.system() == "Windows"
 USE_COLOR = sys.stdout.isatty() and not os.environ.get("NO_COLOR") and not IS_WIN
 
@@ -103,10 +102,12 @@ def _list(name: str, default: str) -> list[str]:
     return [m.strip() for m in cfg(name, default).split(",") if m.strip()]
 
 
-# (label, configured model, fallbacks tried in order, required for core features?)
+# (label, configured model, fallbacks tried in order); mirrors ai/llm.py resolve_model.
+_LLM = cfg("LOCAL_LLM_MODEL", "gpt-oss:20b")
+_LLM_FALLBACKS = _list("LOCAL_LLM_FALLBACKS", "gemma3:12b,qwen3.6:35b-a3b")
 MODEL_ROLES = (
-    ("interactive LLM", cfg("LOCAL_LLM_MODEL", "gpt-oss:20b"),
-     _list("LOCAL_LLM_FALLBACKS", "gemma3:12b,qwen3.6:35b-a3b")),
+    ("interactive LLM", _LLM, _LLM_FALLBACKS),
+    ("chat LLM", cfg("LOCAL_CHAT_MODEL", "gemma3:12b"), [_LLM, *_LLM_FALLBACKS]),
     ("heavy LLM (precompute)", cfg("LOCAL_LLM_MODEL_HEAVY", "gpt-oss:120b"),
      _list("LOCAL_HEAVY_FALLBACKS", "gemma3:12b,qwen3.6:35b-a3b")),
     ("vision (cover scan)", cfg("LOCAL_VISION_MODEL", "qwen2.5vl:7b"),
@@ -115,8 +116,8 @@ MODEL_ROLES = (
 )
 
 OPTIONAL_PY_PACKAGES = (
-    ("faster_whisper", "faster-whisper", "local speech-to-text (voice input)"),
-    ("kokoro_onnx", "kokoro-onnx", "local text-to-speech (Listen button)"),
+    ("faster_whisper", "faster-whisper", "speech-to-text (voice input)"),
+    ("kokoro_onnx", "kokoro-onnx", "text-to-speech (Listen button)"),
 )
 
 
@@ -362,15 +363,20 @@ def wait_ollama(seconds: int = 30) -> str | None:
     return None
 
 
-def report_models(models: list[str], emit_missing_as=warn) -> None:
+def report_models(models: list[str]) -> int:
+    """Print the model each role would use; returns the number of warnings."""
+    warnings = 0
     for label, configured, fallbacks in MODEL_ROLES:
         used, is_fb = resolve_model(models, configured, fallbacks)
         if used and not is_fb:
             ok(f"{label}: {used}")
-        elif used:
+            continue
+        warnings += 1
+        if used:
             warn(f"{label}: {configured} not pulled, falling back to {used}  (ollama pull {configured})")
         else:
-            emit_missing_as(f"{label}: {configured} not pulled and no fallback installed  (ollama pull {configured})")
+            warn(f"{label}: {configured} not pulled and no fallback installed  (ollama pull {configured})")
+    return warnings
 
 
 def ensure_ollama() -> bool:
@@ -660,7 +666,7 @@ def _print_banner(url: str) -> None:
         ip = lan_ip()
         print(f"   On your LAN:  {_c('1;32', f'http://{ip}:{PORT}') if ip else '(LAN address not found)'}")
     else:
-        print(f"   On your LAN:  not exposed (bind with PREREADS_HOST=0.0.0.0)")
+        print("   On your LAN:  not exposed (bind with PREREADS_HOST=0.0.0.0)")
     print("   Logs:         python3 scripts/setup.py logs")
     print("   Stop:         python3 scripts/setup.py stop")
     print("   Share:        bash scripts/tunnel.sh quick")
@@ -907,9 +913,9 @@ def cmd_doctor() -> int:
         fail("Node < 18 — frontend needs Node 18+")
         issues += 1
 
-    step("ollama", f"Ollama (local models) — AI_PROVIDER={AI_PROVIDER}")
+    step("ollama", f"Ollama models — AI_PROVIDER={AI_PROVIDER}")
     if AI_PROVIDER != "ollama":
-        info("AI_PROVIDER is not ollama — local models are not used")
+        info("AI_PROVIDER is not ollama — Ollama models are not used")
     elif not which("ollama") and not ollama_version():
         warn(f"ollama not found — {INSTALL_HINTS['ollama']}  (the app still runs; AI falls back to heuristics)")
         warnings += 1
@@ -925,21 +931,12 @@ def cmd_doctor() -> int:
             warn("Cannot list models (Ollama not running)")
             warnings += 1
         else:
-            before = warnings
-            for label, configured, fallbacks in MODEL_ROLES:
-                used, is_fb = resolve_model(models, configured, fallbacks)
-                if used and not is_fb:
-                    ok(f"{label}: {used}")
-                elif used:
-                    warn(f"{label}: {configured} not pulled, would use fallback {used}  (ollama pull {configured})")
-                    warnings += 1
-                else:
-                    warn(f"{label}: {configured} not pulled and no fallback installed  (ollama pull {configured})")
-                    warnings += 1
-            if warnings == before:
+            missing = report_models(models)
+            warnings += missing
+            if not missing:
                 ok("All configured models installed")
 
-    step("speech", "Optional local speech (Python packages in backend/.venv)")
+    step("speech", "Optional speech (Python packages in backend/.venv)")
     for module, pkg, what in OPTIONAL_PY_PACKAGES:
         if _py_package_present(module):
             ok(f"{pkg}: {what}")

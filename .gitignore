@@ -221,16 +221,16 @@ __marimo__/
 
 # macOS
 .DS_Store
-node_modules/
-backend/data/cache/tts/
-backend/data/cache/embeddings/
-backend/data/models/
-backend/data/cache/similar/
-.run/
 
-backend/data/cache/digital/
-backend/data/cache/enrich/
-backend/data/cache/reading_age/
+# PreReads: node deps, run state (scripts/setup.py), downloaded models, runtime caches
+node_modules/
 .run/
+backend/data/models/
+backend/data/cache/digital/
+backend/data/cache/embeddings/
+backend/data/cache/enrich/
 backend/data/cache/online/
+backend/data/cache/reading_age/
 backend/data/cache/rerank/
+backend/data/cache/similar/
+backend/data/cache/tts/

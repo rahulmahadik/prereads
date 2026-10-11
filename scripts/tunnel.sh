@@ -8,7 +8,7 @@
 #           bash scripts/tunnel.sh quick      no-account quick tunnel, random trycloudflare.com URL
 #
 # Uses its own tunnel ("prereads"), so it can run alongside other tunnels.
-# Only the app is exposed; the app talks to Ollama on localhost.
+# Only the app port is exposed; Ollama is not.
 
 set -e
 

@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Warm PreReads before a live demo: load local models and fill every disk cache.
+"""Warm a running PreReads app: load the Ollama models and fill the disk caches.
 
-    python3 scripts/warmup.py [--base http://localhost:8000] [--quick]
+    python3 scripts/warmup.py [--base http://localhost:8000] [--quick] [--examples FILE]
 
---quick skips similar/digital/online for paths that are not one of the 5 demo paths.
-Plain stdlib; safe to run repeatedly (second run should be fast: everything is cached).
+--quick skips similar/digital/online for paths outside the five showcase titles.
+--examples sends extra prompts from a Markdown file: first-column table cells under
+"## 1." go to discovery, those under "## 6." go to chat.
+Stdlib only; safe to re-run (a second run is fast because everything is cached).
 """
 import argparse
 import json
@@ -19,7 +21,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 TIMEOUT = 90
-DEMO_TITLES = [
+SHOWCASE_TITLES = [
     "The Intelligent Investor",
     "Thinking, Fast and Slow",
     "Fluent Python",
@@ -61,13 +63,13 @@ def say(msg):
         print(msg, flush=True)
 
 
-def parse_guide(guide_path):
-    """'Type this' rows of section 1 and chat rows of section 6 of TEST_GUIDE.md."""
+def parse_examples(path):
+    """Discovery prompts (section 1) and chat prompts (section 6) from a Markdown file."""
     discover, chat = [], list(CHAT_EXTRA)
-    if not guide_path.exists():
+    if not path or not path.exists():
         return discover, chat
     section = ""
-    for line in guide_path.read_text(encoding="utf-8").splitlines():
+    for line in path.read_text(encoding="utf-8").splitlines():
         if line.startswith("## "):
             section = line
             continue
@@ -124,7 +126,7 @@ def warm_book(base, b):
 
 
 def stage_examples(base, discover, chat):
-    print(f"\n== 4. Examples from TEST_GUIDE ({len(discover)} discovery, {len(chat)} chat) ==")
+    print(f"\n== 4. Example prompts ({len(discover)} discovery, {len(chat)} chat) ==")
     jobs = []
     for t in discover:
         jobs.append((f"discover fast: {t[:40]}", "/api/discover", {"text": t, "mode": "fast"}))
@@ -142,8 +144,8 @@ def stage_examples(base, discover, chat):
 
 
 def stage_tts(base, routes_by_title):
-    print("\n== 5. Listen narration (TTS) for the demo paths ==")
-    for title in DEMO_TITLES:
+    print("\n== 5. Listen narration (TTS) for the showcase paths ==")
+    for title in SHOWCASE_TITLES:
         route = routes_by_title.get(title)
         if not route:
             print(f"  skip {title} (no route)")
@@ -159,7 +161,9 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--base", default="http://localhost:8000")
     ap.add_argument("--quick", action="store_true",
-                    help="skip similar/digital/online for non-demo paths")
+                    help="skip similar/digital/online for non-showcase paths")
+    ap.add_argument("--examples", type=Path, default=None,
+                    help="Markdown file with extra discovery and chat prompts")
     a = ap.parse_args()
     base = a.base.rstrip("/")
     T0 = time.time()
@@ -188,7 +192,7 @@ def main():
 
     books = {}
     for t, r in zip(targets, results):
-        if not r or (a.quick and t["title"] not in DEMO_TITLES):
+        if not r or (a.quick and t["title"] not in SHOWCASE_TITLES):
             continue
         for s_ in r.get("stops") or []:
             b = s_.get("book") or {}
@@ -198,8 +202,7 @@ def main():
     with ThreadPoolExecutor(max_workers=4) as ex:
         list(ex.map(lambda b: warm_book(base, b), books.values()))
 
-    guide = Path(__file__).resolve().parent.parent / "internal" / "TEST_GUIDE.md"
-    discover, chat = parse_guide(guide)
+    discover, chat = parse_examples(a.examples)
     stage_examples(base, discover, chat)
     stage_tts(base, routes)
 

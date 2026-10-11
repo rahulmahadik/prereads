@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Build the static, offline PreReads prototype for GitHub Pages: docs/index.html (one file).
 
-    python3 scripts/build_prototype.py [--api http://localhost:8000]
+    python3 scripts/build_prototype.py [--api http://localhost:8000] [--out docs/index.html]
 
 Needs the backend running (for /api/similar, /api/popular, /api/branches, ...) and node
 (for the Vite build). The page gets window.__PREREADS_DATA__; frontend/src/api.ts serves
-the GET endpoints from it when present. Plain Python 3, no dependencies.
+the GET endpoints from it when present. Stdlib only.
 """
-import argparse, base64, json, re, subprocess, sys, tempfile, urllib.request, urllib.parse
+import argparse, base64, json, re, shutil, subprocess, sys, tempfile, urllib.request, urllib.parse
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -43,9 +43,9 @@ def short(name):
 
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--api", default="http://localhost:8000")
-    ap.add_argument("--out", default=str(DOCS / "index.html"))
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--api", default="http://localhost:8000", help="running backend to read data from")
+    ap.add_argument("--out", default=str(DOCS / "index.html"), help="output file (default: docs/index.html)")
     args = ap.parse_args()
     api = args.api.rstrip("/")
 
@@ -71,7 +71,7 @@ def main():
             print(f"warning: {path} failed, reusing previous copy")
             return old
     mode = {"provider": "none", "openai_key": False, "nlb_key": False, "env_demo": True, "ollama": None}
-    mode.update(demo=True, use_llm=False, use_nlb=False, prototype=True, mode="prototype+embedded-demo-data", cached_routes=len(routes))
+    mode.update(demo=True, use_llm=False, use_nlb=False, prototype=True, mode="prototype+embedded-data", cached_routes=len(routes))
     targets = [t for t in fetch("/api/targets", "targets", lambda d: d["targets"]) if t["id"] in routes]
     popular = [x for x in fetch("/api/popular?limit=12", "popular", lambda d: d["popular"]) if x["id"] in routes]
     branches = fetch("/api/branches", "branches", lambda d: d["branches"])
@@ -169,6 +169,7 @@ def main():
     js = re.sub(r'navigator\.serviceWorker\.register\((["\'`])/sw\.js\1\)', "Promise.resolve()", js).replace("</script", "<\\/script")
     html = html.replace("</head>", head_data + "</head>", 1)
     html = html.replace("</body>", f'<script type="module">{js}</script></body>', 1)
+    shutil.rmtree(dist, ignore_errors=True)
 
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
