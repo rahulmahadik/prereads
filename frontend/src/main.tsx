@@ -21,6 +21,6 @@ ReactDOM.createRoot(badgeRoot).render(<OfflineBadge />);
 
 if (import.meta.env.PROD && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js").catch(() => {});
+    navigator.serviceWorker.register("/sw.js?v=2").catch(() => {});
   });
 }
