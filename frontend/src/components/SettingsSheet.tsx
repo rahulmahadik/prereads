@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { api } from "../api";
 import { Sheet } from "./ui";
+import { LanguageSegments } from "./LanguagePicker";
+import { rich, t, useLang } from "../i18n";
 
 export interface ModeInfo {
   demo: boolean;
@@ -21,6 +23,7 @@ function Pill({ ok, text }: { ok: boolean; text: string }) {
 }
 
 export default function SettingsSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
+  useLang();
   const [info, setInfo] = useState<ModeInfo | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -39,19 +42,25 @@ export default function SettingsSheet({ open, onClose }: { open: boolean; onClos
   };
 
   return (
-    <Sheet open={open} title="Data mode" onClose={onClose}>
+    <Sheet open={open} title={t("settings.title")} onClose={onClose}>
+      <section className="settings-lang">
+        <h3 className="small-h">{t("lang.title")}</h3>
+        <LanguageSegments />
+        <p className="hint">{t("lang.hint")}</p>
+      </section>
+      <h3 className="small-h">{t("settings.dataMode")}</h3>
       {!info ? (
-        <p className="hint">Loading…</p>
+        <p className="hint">{t("common.loading")}</p>
       ) : (
         <div className="settings">
-          <div className="mode-switch" role="radiogroup" aria-label="Data mode">
+          <div className="mode-switch" role="radiogroup" aria-label={t("settings.dataMode")}>
             <button type="button" role="radio" aria-checked={info.demo} className={`mode-opt ${info.demo ? "on" : ""}`} disabled={busy || info.prototype} onClick={() => set({ demo: true })}>
-              <strong>Demo data</strong>
-              <span>Cached reading paths, synthetic shelf data, built-in rules. Works offline.</span>
+              <strong>{t("settings.demo")}</strong>
+              <span>{t("settings.demoSub")}</span>
             </button>
             <button type="button" role="radio" aria-checked={!info.demo} className={`mode-opt ${!info.demo ? "on" : ""}`} disabled={busy || info.prototype} onClick={() => set({ demo: false })}>
-              <strong>Real calls</strong>
-              <span>Local AI models on this device for intelligence, scan and voice; NLB for shelf data when the key is in.</span>
+              <strong>{t("settings.real")}</strong>
+              <span>{t("settings.realSub")}</span>
             </button>
           </div>
 
@@ -59,33 +68,33 @@ export default function SettingsSheet({ open, onClose }: { open: boolean; onClos
             {info.provider === "ollama" ? (
               <>
                 <li>
-                  <span>Local AI (Ollama)</span>
-                  <Pill ok={!!info.ollama?.reachable} text={info.ollama?.reachable ? "Running on this device" : "Not running — start Ollama"} />
+                  <span>{t("settings.ollama")}</span>
+                  <Pill ok={!!info.ollama?.reachable} text={info.ollama?.reachable ? t("settings.running") : t("settings.notRunning")} />
                 </li>
                 {info.ollama?.reachable &&
                   Object.entries(info.ollama.models).map(([kind, m]) => (
                     <li key={kind}>
-                      <span>{{ llm: "Chat model", heavy: "Precompute model", vision: "Cover scan model", embed: "Embedding model" }[kind] ?? kind}</span>
-                      <Pill ok={m.installed} text={m.installed ? m.name : `${m.name} — not pulled`} />
+                      <span>{["llm", "heavy", "vision", "embed"].includes(kind) ? t(`settings.model.${kind}` as "settings.model.llm") : kind}</span>
+                      <Pill ok={m.installed} text={m.installed ? m.name : t("settings.notPulled", { name: m.name })} />
                     </li>
                   ))}
               </>
             ) : (
               <li>
-                <span>OpenAI key</span>
-                <Pill ok={info.openai_key} text={info.openai_key ? "Connected" : "Missing — add OPENAI_API_KEY to .env"} />
+                <span>{t("settings.openaiKey")}</span>
+                <Pill ok={info.openai_key} text={info.openai_key ? t("settings.connected") : t("settings.openaiMissing")} />
               </li>
             )}
             <li>
-              <span>NLB Labs key</span>
-              <Pill ok={info.nlb_key} text={info.nlb_key ? "Connected" : "Waiting for the NLB email — shelf data stays demo"} />
+              <span>{t("settings.nlbKey")}</span>
+              <Pill ok={info.nlb_key} text={info.nlb_key ? t("settings.connected") : t("settings.nlbWaiting")} />
             </li>
             <li>
-              <span>Engine now</span>
+              <span>{t("settings.engine")}</span>
               <code>{info.mode}</code>
             </li>
             <li>
-              <span>Cached paths</span>
+              <span>{t("settings.cached")}</span>
               <code>{info.cached_routes}</code>
             </li>
           </ul>
@@ -94,17 +103,17 @@ export default function SettingsSheet({ open, onClose }: { open: boolean; onClos
             <div className="fine-toggles">
               <label className={`fine ${info.provider === "ollama" ? (!info.ollama?.reachable ? "off" : "") : !info.openai_key ? "off" : ""}`}>
                 <input type="checkbox" checked={info.use_llm} disabled={busy || (info.provider === "ollama" ? !info.ollama?.reachable : !info.openai_key)} onChange={(e) => set({ use_llm: e.target.checked })} />
-                {info.provider === "ollama" ? "Use local AI models (readiness, proposals, scan, chat)" : "Use OpenAI (readiness, proposals, scan, chat, voice)"}
+                {info.provider === "ollama" ? t("settings.useLocal") : t("settings.useOpenai")}
               </label>
               <label className={`fine ${!info.nlb_key ? "off" : ""}`}>
                 <input type="checkbox" checked={info.use_nlb} disabled={busy || !info.nlb_key} onChange={(e) => set({ use_nlb: e.target.checked })} />
-                Use NLB catalogue (availability, call numbers, trends)
+                {t("settings.useNlb")}
               </label>
             </div>
           )}
 
-          {info.prototype && <p className="hint">This hosted prototype runs on embedded demo data only. Run the repo locally to switch to real calls.</p>}
-          <p className="hint">Switching here is instant and doesn't restart anything. Settings come from <code>.env</code>; run <code>make precompute</code> to rebuild the cached paths with the models.</p>
+          {info.prototype && <p className="hint">{t("settings.prototype")}</p>}
+          <p className="hint">{rich("settings.instant", { env: <code>.env</code>, cmd: <code>make precompute</code> })}</p>
         </div>
       )}
     </Sheet>

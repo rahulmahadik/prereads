@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { back, navigate } from "../router";
+import { t, useLang } from "../i18n";
 
 /* ------------------------------------------------------------ top bar */
 export function TopBar({ title, onBack, right, home = true }: { title?: string; onBack?: () => void; right?: ReactNode; home?: boolean }) {
+  useLang();
   return (
     <header className="topbar">
       <span className="topbar-left">
         {onBack ? (
-          <button type="button" className="icon-btn" onClick={onBack} aria-label="Back">
+          <button type="button" className="icon-btn" onClick={onBack} aria-label={t("common.back")}>
             ←
           </button>
         ) : (
           <span className="icon-btn placeholder" aria-hidden="true" />
         )}
         {home && (
-          <button type="button" className="icon-btn" onClick={() => navigate("home")} aria-label="Start from the beginning" title="Start from the beginning">
+          <button type="button" className="icon-btn" onClick={() => navigate("home")} aria-label={t("common.startOver")} title={t("common.startOver")}>
             🏠
           </button>
         )}
@@ -49,7 +51,7 @@ export function Sheet({ open, title, onClose, children }: { open: boolean; title
         <div className="sheet-grab" aria-hidden="true" />
         <div className="sheet-head">
           <h2>{title}</h2>
-          <button type="button" className="icon-btn" onClick={onClose} aria-label="Close">
+          <button type="button" className="icon-btn" onClick={onClose} aria-label={t("common.close")}>
             ✕
           </button>
         </div>
@@ -124,7 +126,7 @@ export function shelfStatus(stop: Stop, preferredCode?: string): ShelfStatus {
   if (!inStock.length) return { kind: "waiting", callNumber: avail[0].call_number };
   const best: Availability = [...inStock].sort((a, b) => b.available - a.available)[0];
   if (preferredCode) {
-    return { kind: "elsewhere", branch: best.branch, code: best.branch_code, callNumber: best.call_number, here: preferred?.branch ?? "this library" };
+    return { kind: "elsewhere", branch: best.branch, code: best.branch_code, callNumber: best.call_number, here: preferred?.branch ?? t("lib.thisLibrary") };
   }
   return { kind: "available", branch: best.branch, code: best.branch_code, callNumber: best.call_number, others: inStock.length - 1 };
 }
@@ -143,6 +145,9 @@ export const FAMILIARITY = [
   { level: 3, title: "Read a bit", sub: "I've read a popular book or two on it." },
   { level: 4, title: "Know it well", sub: "Studied or worked in it. Skip the basics." },
 ];
+/** FAMILIARITY title / sub in the current UI language (the array itself stays English for older callers). */
+export const famTitle = (level: number) => t(`fam.${level}.title` as "fam.1.title");
+export const famSub = (level: number) => t(`fam.${level}.sub` as "fam.1.sub");
 
 /* ------------------------------------------------- only-available preference */
 const AKEY = "prereads.onlyAvailable";
@@ -153,7 +158,7 @@ export function setOnlyAvailable(v: boolean) {
   localStorage.setItem(AKEY, v ? "1" : "0");
 }
 
-export function AvailToggle({ on, onChange, label = "Only available now" }: { on: boolean; onChange: (v: boolean) => void; label?: string }) {
+export function AvailToggle({ on, onChange, label = t("avail.only") }: { on: boolean; onChange: (v: boolean) => void; label?: string }) {
   return (
     <button type="button" className={`avail-toggle ${on ? "on" : ""}`} role="switch" aria-checked={on} onClick={() => onChange(!on)}>
       <span className="sw" aria-hidden="true" />

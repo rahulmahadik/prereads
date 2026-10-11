@@ -7,26 +7,28 @@ import NearestLibraries from "../components/NearestLibraries";
 import { lineScript } from "../speech";
 import { sameShelfGroups, sameShelfText } from "../shelf";
 import { ShareCard } from "../components/Extras";
-import { AvailToggle, FAMILIARITY, Sheet, TopBar, getBranch, getOnlyAvailable, getReaderLevel, setBranch, setOnlyAvailable, setReaderLevel, shelfStatus, shortBranch, useBack, useReadSet } from "../components/ui";
+import { AvailToggle, FAMILIARITY, Sheet, famSub, famTitle, TopBar, getBranch, getOnlyAvailable, getReaderLevel, setBranch, setOnlyAvailable, setReaderLevel, shelfStatus, shortBranch, useBack, useReadSet } from "../components/ui";
 import { navigate } from "../router";
 import HeartButton from "../components/HeartButton";
 import { getNote, recordPath, useStoreVersion } from "../myshelf";
 import type { Branch, Route, Stop } from "../types";
+import { rich, richN, t, tn, useLang, voiceLang } from "../i18n";
 
 function statusText(st: ReturnType<typeof shelfStatus>): { text: string; cls: string } {
   switch (st.kind) {
     case "available":
-      return { text: `Available at ${shortBranch(st.branch)}`, cls: "ok" };
+      return { text: t("line.status.available", { branch: shortBranch(st.branch) }), cls: "ok" };
     case "elsewhere":
-      return { text: `Not at ${shortBranch(st.here)} — nearest at ${shortBranch(st.branch)}`, cls: "alt" };
+      return { text: t("line.status.elsewhere", { here: shortBranch(st.here), branch: shortBranch(st.branch) }), cls: "alt" };
     case "waiting":
-      return { text: "All out — join the waiting list", cls: "no" };
+      return { text: t("line.status.waiting"), cls: "no" };
     default:
-      return { text: "No copies listed — try the eBook", cls: "no" };
+      return { text: t("line.status.none"), cls: "no" };
   }
 }
 
 export default function Line({ id, title, author }: { id: string; title: string; author: string }) {
+  const lang = useLang();
   const goBack = useBack("home");
   const [route, setRoute] = useState<Route | null>(null);
   const [error, setError] = useState("");
@@ -96,7 +98,7 @@ export default function Line({ id, title, author }: { id: string; title: string;
     const name = branches.find((b) => b.code === branch)?.name;
     const visible = new Set(visibleBefore.map((s) => s.book.id));
     return sameShelfGroups(stops.filter((s) => visible.has(s.book.id)), branch, name, readSet)[0];
-  }, [branch, branches, stops, level, readSet]);
+  }, [branch, branches, stops, level, readSet, lang]);
 
   const open = (s: Stop) => navigate("book", { id, title, author, stop: s.book.id });
 
@@ -114,22 +116,22 @@ export default function Line({ id, title, author }: { id: string; title: string;
             className="node-btn"
             onClick={() => toggleRead(s.book.id)}
             aria-pressed={read}
-            aria-label={read ? `Mark ${s.book.title} as not read` : `Mark ${s.book.title} as read`}
+            aria-label={read ? t("line.markUnread", { title: s.book.title }) : t("line.markRead", { title: s.book.title })}
           >
             <span className={`node ${kind}`} aria-hidden="true">
               {read ? "✓" : ""}
             </span>
           </button>
         )}
-        <button type="button" className="stop-card" onClick={() => open(s)} aria-label={`${s.book.title}, level ${s.readiness.level}, ${where.text}`}>
+        <button type="button" className="stop-card" onClick={() => open(s)} aria-label={t("line.cardLabel", { title: s.book.title, level: s.readiness.level, where: where.text })}>
           <Cover book={s.book} size="s" />
           <span className="stop-main">
-            <span className="stop-kicker">{kind === "target" ? "Your book" : kind === "before" ? (isStart ? "Start here · PreRead" : "PreRead") : "NextRead"}</span>
+            <span className="stop-kicker">{kind === "target" ? t("line.kicker.target") : kind === "before" ? (isStart ? t("line.kicker.start") : t("line.kicker.before")) : t("line.kicker.after")}</span>
             <strong className="stop-title">{s.book.title}</strong>
             <span className="stop-why">{kind === "target" ? s.readiness.one_line || s.why : s.why}</span>
             <ReadinessMeter level={s.readiness.level} hours={s.readiness.hours} compact />
             <span className={`where ${where.cls}`}>{where.text}</span>
-            {getNote(s.book.id) && <span className="note-chip">📝 Note</span>}
+            {getNote(s.book.id) && <span className="note-chip">{t("line.note")}</span>}
           </span>
           <span className="chev" aria-hidden="true">
             ›
@@ -144,10 +146,10 @@ export default function Line({ id, title, author }: { id: string; title: string;
     <main className="screen line-screen">
       <TopBar
         onBack={goBack}
-        title="Your reading path"
+        title={t("line.title")}
         right={
           route && (
-            <button type="button" className="icon-btn" onClick={() => setShare(true)} aria-label="Share this path">
+            <button type="button" className="icon-btn" onClick={() => setShare(true)} aria-label={t("line.share")}>
               ↗
             </button>
           )
@@ -155,7 +157,7 @@ export default function Line({ id, title, author }: { id: string; title: string;
       />
 
       {!route && !error && (
-        <div className="skeleton" role="status" aria-label="Drawing the reading path">
+        <div className="skeleton" role="status" aria-label={t("line.drawing")}>
           <div className="sk-book">
             <div className="sk-cover" />
             <div className="sk-lines">
@@ -180,16 +182,19 @@ export default function Line({ id, title, author }: { id: string; title: string;
           <section className="line-summary">
             {visibleBefore.length === 0 ? (
               <p className="summary-main">
-                You can start <strong>{target.book.title}</strong> today. Nothing needs to come first.
+                {rich("line.readyNow", { title: <strong>{target.book.title}</strong> })}
               </p>
             ) : (
               <p className="summary-main">
-                <strong>{visibleBefore.length - doneBefore}</strong> {visibleBefore.length - doneBefore === 1 ? "book" : "books"} before{" "}
-                <strong>{target.book.title}</strong> · about {Math.round(hoursLeft)} h of reading
+                {richN("line.summary", visibleBefore.length - doneBefore, {
+                  n: <strong>{visibleBefore.length - doneBefore}</strong>,
+                  title: <strong>{target.book.title}</strong>,
+                  hours: Math.round(hoursLeft),
+                })}
               </p>
             )}
-            {skipped > 0 && <p className="hint">Skipped {skipped} easier {skipped === 1 ? "book" : "books"} because you know the topic a bit.</p>}
-            {visibleBefore.length > 0 && <p className="hint">Tap a circle when you've finished that book.</p>}
+            {skipped > 0 && <p className="hint">{tn("line.skipped", skipped)}</p>}
+            {visibleBefore.length > 0 && <p className="hint">{t("line.tapHint")}</p>}
             {trip && (
               <p className="trip-note" role="note">
                 <strong>{sameShelfText(trip)}</strong>
@@ -199,7 +204,8 @@ export default function Line({ id, title, author }: { id: string; title: string;
             <div className="line-actions">
               <ListenButton
                 id={`line:${route.target_id}`}
-                label="Listen to the path"
+                label={t("line.listen")}
+                lang={voiceLang(lang)}
                 text={() =>
                   lineScript({
                     target: target.book.title,
@@ -210,17 +216,20 @@ export default function Line({ id, title, author }: { id: string; title: string;
                 }
               />
               <button type="button" className="chip-btn" onClick={() => setFam(true)} aria-haspopup="dialog">
-                <span className="chip-k">You</span> {FAMILIARITY.find((f) => f.level === level)?.title ?? "New to this"} ▾
+                <span className="chip-k">{t("line.you")}</span> {FAMILIARITY.some((f) => f.level === level) ? famTitle(level) : famTitle(1)} ▾
               </button>
               <button type="button" className="chip-btn" onClick={() => setWalk(true)} aria-haspopup="dialog">
-                <span className="chip-k">At</span> {branch ? shortBranch(branches.find((b) => b.code === branch)?.name ?? branch) : "any library"} ▾
+                <span className="chip-k">{t("line.at")}</span> {branch ? shortBranch(branches.find((b) => b.code === branch)?.name ?? branch) : t("line.anyLibraryLower")} ▾
               </button>
-              <AvailToggle on={onlyAvail} onChange={flipAvail} label={branch ? "Only on the shelf here" : "Only available now"} />
+              <button type="button" className="chip-btn" onClick={() => navigate("meet", { id, title, author })}>
+                {t("line.withSomeone")}
+              </button>
+              <AvailToggle on={onlyAvail} onChange={flipAvail} label={branch ? t("line.onlyHere") : t("avail.only")} />
             </div>
             {hiddenCount > 0 && (
               <p className="hint hidden-note">
-                Hiding {hiddenCount} {hiddenCount === 1 ? "book that isn't" : "books that aren't"} available right now.{" "}
-                <button type="button" className="link-btn inline" onClick={() => flipAvail(false)}>Show them too</button>
+                {tn("line.hiding", hiddenCount)}{" "}
+                <button type="button" className="link-btn inline" onClick={() => flipAvail(false)}>{t("line.showThem")}</button>
               </p>
             )}
           </section>
@@ -238,7 +247,7 @@ export default function Line({ id, title, author }: { id: string; title: string;
 
           {route.notes.length > 0 && (
             <details className="section">
-              <summary className="hint">Why some books were left off ({route.notes.length})</summary>
+              <summary className="hint">{t("line.leftOff", { n: route.notes.length })}</summary>
               <ul className="hint">
                 {route.notes.map((n, i) => (
                   <li key={i}>{n}</li>
@@ -246,13 +255,13 @@ export default function Line({ id, title, author }: { id: string; title: string;
               </ul>
             </details>
           )}
-          <p className="hint demo-foot">{stops.some((s) => s.availability.some((a) => a.demo)) ? "Shelf data is demo data until the NLB key is connected. " : ""}Not an NLB product.</p>
+          <p className="hint demo-foot">{stops.some((s) => s.availability.some((a) => a.demo)) ? t("line.demoShelf") : ""}{t("common.notNlb")}</p>
           </div>
 
-          <Sheet open={walk} title="Which library are you in?" onClose={() => setWalk(false)}>
-            <NearestLibraries branches={branches} onPick={chooseBranch} />
-            <select className="select" aria-label="Library" value={branch} onChange={(e) => chooseBranch(e.target.value)}>
-              <option value="">Any library</option>
+          <Sheet open={walk} title={t("line.whichLibrary")} onClose={() => setWalk(false)}>
+            <NearestLibraries branches={branches} onPick={(code) => { chooseBranch(code); setWalk(false); }} />
+            <select className="select" aria-label={t("line.library")} value={branch} onChange={(e) => chooseBranch(e.target.value)}>
+              <option value="">{t("line.anyLibrary")}</option>
               {branches.map((b) => (
                 <option key={b.code} value={b.code}>
                   {b.name}
@@ -261,30 +270,30 @@ export default function Line({ id, title, author }: { id: string; title: string;
             </select>
             {branch && (
               <ol className="walk-list">
-                {here.length === 0 && <li className="hint">None of this path is on the shelf here right now.</li>}
+                {here.length === 0 && <li className="hint">{t("line.noneHere")}</li>}
                 {here.map(({ s, a }) => (
                   <li key={s.book.id}>
                     <button type="button" className="walk-item" onClick={() => open(s)}>
                       <strong>{s.book.title}</strong>
-                      <span className="call">{a!.call_number || "ask staff for the shelf"} · directions ›</span>
+                      <span className="call">{a!.call_number || t("line.askStaff")} · {t("line.directions")}</span>
                     </button>
                   </li>
                 ))}
               </ol>
             )}
-            {branch && here.length > 0 && <p className="hint">Sorted by call number, so you can walk the shelves in order.</p>}
+            {branch && here.length > 0 && <p className="hint">{t("line.sorted")}</p>}
           </Sheet>
 
-          <Sheet open={share} title="Share this path" onClose={() => setShare(false)}>
+          <Sheet open={share} title={t("line.share")} onClose={() => setShare(false)}>
             <ShareCard route={route} />
           </Sheet>
 
-          <Sheet open={fam} title="How familiar are you with this topic?" onClose={() => setFam(false)}>
+          <Sheet open={fam} title={t("line.familiarQ")} onClose={() => setFam(false)}>
             <div className="choices">
               {FAMILIARITY.map((c) => (
                 <button key={c.level} type="button" className={`choice ${c.level === level ? "on" : ""}`} onClick={() => chooseLevel(c.level)}>
-                  <strong>{c.title}</strong>
-                  <span>{c.sub}</span>
+                  <strong>{famTitle(c.level)}</strong>
+                  <span>{famSub(c.level)}</span>
                 </button>
               ))}
             </div>

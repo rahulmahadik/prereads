@@ -3,6 +3,8 @@ import { api } from "../api";
 import Cover from "../components/Cover";
 import Discover from "../components/Discover";
 import SettingsSheet from "../components/SettingsSheet";
+import LanguagePicker from "../components/LanguagePicker";
+import { t, tn, useLang, type Key } from "../i18n";
 import { navigate } from "../router";
 import { listHearts, noteCount, pathsInProgress, readSetFrom, useStoreVersion } from "../myshelf";
 import type { ResolveHit } from "../types";
@@ -23,19 +25,20 @@ interface Popular extends Target {
 
 type Mode = "ask" | "title" | "scan";
 
-const MODES: { id: Mode; label: string; icon: string }[] = [
-  { id: "ask", label: "Tell me what you want", icon: "✨" },
-  { id: "title", label: "I know the title", icon: "✎" },
-  { id: "scan", label: "Scan or upload a cover", icon: "📷" },
+const MODES: { id: Mode; label: Key; icon: string }[] = [
+  { id: "ask", label: "home.tab.ask", icon: "✨" },
+  { id: "title", label: "home.tab.title", icon: "✎" },
+  { id: "scan", label: "home.tab.scan", icon: "📷" },
 ];
 
 export default function Home({ senior, onSenior }: { senior: boolean; onSenior: () => void }) {
+  useLang();
   const [mode, setMode] = useState<Mode>("ask");
   const [resetKey, setResetKey] = useState(0);
   const [settings, setSettings] = useState(false);
-  const [modeLabel, setModeLabel] = useState("");
+  const [modeLabel, setModeLabel] = useState<Key | "">("");
   useEffect(() => {
-    api.mode().then((m) => setModeLabel(m.prototype ? "Prototype" : m.demo ? "Demo data" : "Real calls")).catch(() => setModeLabel(""));
+    api.mode().then((m) => setModeLabel(m.prototype ? "home.mode.prototype" : m.demo ? "home.mode.demo" : "home.mode.real")).catch(() => setModeLabel(""));
   }, [settings]);
   const startOver = () => {
     setMode("ask");
@@ -91,7 +94,7 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
       const res = await api.scan(file);
       const r = await api.resolve(res.title);
       if (r.results.length) go(r.results[0].id, r.results[0].title, r.results[0].author);
-      else setError(`Read "${res.title}" from the cover, but it isn't in the catalogue yet. Try typing it.`);
+      else setError(t("home.scanMiss", { title: res.title }));
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -108,7 +111,7 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
   const asBook = (t: Target) => ({ id: t.id, title: t.title, author: t.author, subjects: [], summary: "", source: "seed" });
 
   const BookList = ({ books }: { books: Target[] }) => (
-    <ul className="results" role="listbox" aria-label="Books">
+    <ul className="results" role="listbox" aria-label={t("home.books")}>
       {books.map((b) => (
         <li key={b.id} role="option" aria-selected={false}>
           <button type="button" onClick={() => go(b.id, b.title, b.author)}>
@@ -128,16 +131,17 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
     <main className="screen home">
       <header className="home-head">
         <h1 className="wordmark">
-          <button type="button" className="wordmark-btn" onClick={startOver} title="Start from the beginning">
+          <button type="button" className="wordmark-btn" onClick={startOver} title={t("common.startOver")}>
             PreReads
           </button>
-          <small>Book recommendations, and what to read before the book you want.</small>
+          <small>{t("app.tagline")}</small>
         </h1>
         <span className="head-actions">
-          <button type="button" className="mode-chip" onClick={() => setSettings(true)} aria-haspopup="dialog" title="Data mode">
-            ⚙️ {modeLabel || "Settings"}
+          <button type="button" className="mode-chip" onClick={() => setSettings(true)} aria-haspopup="dialog" title={t("home.dataMode")}>
+            ⚙️ {t(modeLabel || "home.settings")}
           </button>
-          <button type="button" className="senior-toggle" aria-pressed={senior} onClick={onSenior} title="Larger text and controls">
+          <LanguagePicker />
+          <button type="button" className="senior-toggle" aria-pressed={senior} onClick={onSenior} title={t("home.senior")} aria-label={t("home.senior")}>
             Aa
           </button>
         </span>
@@ -145,13 +149,13 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
       <SettingsSheet open={settings} onClose={() => setSettings(false)} />
 
       <section className="hero">
-        <h2 className="home-question">Which book do you want to read?</h2>
-        <p className="home-sub">Say what you want in your own words. PreReads reads it, picks the books, builds the filters, and shows what to read first and where it is on a shelf today.</p>
+        <h2 className="home-question">{t("home.question")}</h2>
+        <p className="home-sub">{t("home.sub")}</p>
 
-        <div className="modes" role="tablist" aria-label="Ways to find a book">
+        <div className="modes" role="tablist" aria-label={t("home.modes")}>
           {MODES.map((m) => (
             <button key={m.id} type="button" role="tab" aria-selected={mode === m.id} className={`mode ${mode === m.id ? "on" : ""}`} onClick={() => setMode(m.id)}>
-              <span aria-hidden="true">{m.icon}</span> {m.label}
+              <span aria-hidden="true">{m.icon}</span> {t(m.label)}
             </button>
           ))}
         </div>
@@ -166,7 +170,7 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
           <div className="mode-panel">
             <label className="big-action input-action">
               <span className="big-icon" aria-hidden="true">✎</span>
-              <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Type a title…" autoComplete="off" inputMode="search" aria-label="Type the title" />
+              <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("home.typeTitle")} autoComplete="off" inputMode="search" aria-label={t("home.typeTitleLabel")} />
             </label>
             {hits.length > 0 && <BookList books={hits} />}
           </div>
@@ -176,15 +180,15 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
           <div className="mode-panel scan-panel">
             <button type="button" className="big-action primary" onClick={() => fileRef.current?.click()} disabled={scanning}>
               <span className="big-icon" aria-hidden="true">📷</span>
-              {scanning ? "Reading the cover…" : "Scan the cover with your camera"}
+              {scanning ? t("home.scanning") : t("home.scanCamera")}
             </button>
             <button type="button" className="big-action" onClick={() => uploadRef.current?.click()} disabled={scanning}>
               <span className="big-icon" aria-hidden="true">🖼️</span>
-              Upload a photo of the cover
+              {t("home.upload")}
             </button>
             <input ref={fileRef} type="file" accept="image/*" capture="environment" hidden onChange={(e) => onScan(e.target.files?.[0])} />
             <input ref={uploadRef} type="file" accept="image/*" hidden onChange={(e) => onScan(e.target.files?.[0])} />
-            <p className="hint">Works best on the front cover in good light. Spines work too.</p>
+            <p className="hint">{t("home.scanHint")}</p>
           </div>
         )}
 
@@ -196,10 +200,10 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
       </section>
 
       {(hearts.length > 0 || paths.length > 0) && (
-        <section className="row-section my-shelf" aria-label="My shelf">
+        <section className="row-section my-shelf" aria-label={t("home.myShelf")}>
           <div className="row-head">
-            <h3>♥ My shelf</h3>
-            <span className="hint">Saved on this device</span>
+            <h3>♥ {t("home.myShelf")}</h3>
+            <span className="hint">{t("home.savedHere")}</span>
           </div>
           {paths.length > 0 && (
             <ul className="my-paths">
@@ -210,8 +214,8 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
                     <button type="button" className="my-path" onClick={() => go(p.id, p.title, p.author)}>
                       <strong>{p.title}</strong>
                       <span className="hint">
-                        {p.done === p.total ? "PreReads done — ready for the book" : `${p.done} of ${p.total} PreReads read · about ${p.hoursLeft} h left`}
-                        {notes > 0 ? ` · ${notes} ${notes === 1 ? "note" : "notes"}` : ""}
+                        {p.done === p.total ? t("home.pathDone") : t("home.pathProgress", { done: p.done, total: p.total, hours: p.hoursLeft })}
+                        {notes > 0 ? tn("home.notes", notes) : ""}
                       </span>
                       <span className="my-bar" aria-hidden="true"><i style={{ width: `${(p.done / p.total) * 100}%` }} /></span>
                     </button>
@@ -226,7 +230,7 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
                 <button key={h.id} type="button" className="row-item" role="listitem" onClick={() => navigate("book", { id: h.lineId, title: h.lineTitle, author: h.lineAuthor, stop: h.id })}>
                   <Cover book={asBook(h)} size="m" />
                   <span className="row-title">{h.title}</span>
-                  <span className="row-badge heart-badge">♥ Saved</span>
+                  <span className="row-badge heart-badge">{t("home.saved")}</span>
                 </button>
               ))}
             </div>
@@ -237,20 +241,20 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
       {popular.length > 0 && (
         <section className="row-section">
           <div className="row-head">
-            <h3>🔥 Popular right now</h3>
-            <span className="hint">From checkout trends and waiting lists{popular[0]?.demo ? " (demo data)" : ""}</span>
+            <h3>🔥 {t("home.popular")}</h3>
+            <span className="hint">{t("home.popularHint")}{popular[0]?.demo ? t("home.demoData") : ""}</span>
             {popular.length > 6 && (
               <button type="button" className="link-btn inline" onClick={() => setShowAllPopular((v) => !v)}>
-                {showAllPopular ? "Show fewer" : `See all ${popular.length}`}
+                {showAllPopular ? t("home.showFewer") : t("home.seeAll", { n: popular.length })}
               </button>
             )}
           </div>
           <div className={`book-row ${showAllPopular ? "grid" : ""}`} role="list">
-            {(showAllPopular ? popular : popular.slice(0, 6)).map((t) => (
-              <button key={t.id} type="button" className="row-item" role="listitem" onClick={() => go(t.id, t.title, t.author)}>
-                <Cover book={asBook(t)} size="m" />
-                <span className="row-title">{t.title}</span>
-                {t.hot_at[0] && <span className="row-badge">Hot at {t.hot_at[0]}</span>}
+            {(showAllPopular ? popular : popular.slice(0, 6)).map((b) => (
+              <button key={b.id} type="button" className="row-item" role="listitem" onClick={() => go(b.id, b.title, b.author)}>
+                <Cover book={asBook(b)} size="m" />
+                <span className="row-title">{b.title}</span>
+                {b.hot_at[0] && <span className="row-badge">{t("home.hotAt", { branch: b.hot_at[0] })}</span>}
               </button>
             ))}
           </div>
@@ -260,11 +264,11 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
       {targets.some((t) => t.unfinished) && (
         <section className="row-section">
           <div className="row-head">
-            <h3>📚 Books people start and never finish</h3>
-            <span className="hint">The ones a reading path helps most</span>
+            <h3>📚 {t("home.unfinished")}</h3>
+            <span className="hint">{t("home.unfinishedHint")}</span>
             {targets.filter((t) => t.unfinished).length > 6 && (
               <button type="button" className="link-btn inline" onClick={() => setShowAllUnfinished((v) => !v)}>
-                {showAllUnfinished ? "Show fewer" : `See all ${targets.filter((t) => t.unfinished).length}`}
+                {showAllUnfinished ? t("home.showFewer") : t("home.seeAll", { n: targets.filter((x) => x.unfinished).length })}
               </button>
             )}
           </div>
@@ -279,7 +283,7 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
         </section>
       )}
 
-      <footer className="footer">Built on NLB Labs open APIs and Open Library. Not an NLB product.</footer>
+      <footer className="footer">{t("home.footer")}</footer>
     </main>
   );
 }
