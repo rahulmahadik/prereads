@@ -41,6 +41,8 @@ DEMO: bool = _flag("DEMO", "0")
 AI_PROVIDER: str = os.getenv("AI_PROVIDER", "ollama").strip().lower()
 OLLAMA_BASE_URL: str = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434").rstrip("/")
 LOCAL_LLM_MODEL: str = os.getenv("LOCAL_LLM_MODEL", "gpt-oss:20b").strip()              # interactive
+# Chat turns need a quick answer: a smaller non-reasoning model by default (gpt-oss:20b reasons first, ~10-25 s).
+LOCAL_CHAT_MODEL: str = os.getenv("LOCAL_CHAT_MODEL", "gemma3:12b").strip()
 LOCAL_LLM_MODEL_HEAVY: str = os.getenv("LOCAL_LLM_MODEL_HEAVY", "gpt-oss:120b").strip()  # precompute, pairwise judgments
 LOCAL_VISION_MODEL: str = os.getenv("LOCAL_VISION_MODEL", "qwen2.5vl:7b").strip()
 LOCAL_EMBED_MODEL: str = os.getenv("LOCAL_EMBED_MODEL", "nomic-embed-text").strip()

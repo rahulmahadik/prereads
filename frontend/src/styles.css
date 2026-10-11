@@ -2940,3 +2940,14 @@ html.senior .reader-page { font-size: 22px; }
 /* Home row badges read as tags when a long branch name wraps. */
 .row-badge { display: inline-block; border-radius: 10px; line-height: 1.25; padding: 3px 8px; text-align: center; }
 .reader-foot .link-btn { display: inline-flex; align-items: center; min-height: var(--tap); margin-top: 4px; }
+
+/* chat: earlier choices stay in the thread, read-only */
+.chat-options.past { opacity: 0.85; }
+.chat-past-option { display: grid; gap: 2px; padding: 8px 12px; border: 1px dashed var(--rule); border-radius: var(--radius); background: var(--surface-2); color: var(--muted); font-size: 15px; }
+.chat-past-option.chosen { border-style: solid; border-color: var(--line); color: var(--ink); background: var(--line-soft); }
+.chat-result.past { opacity: 0.9; }
+
+/* book page: action bar with real actions; mark as read beside the level */
+.mark-read { margin-top: 8px; min-height: var(--tap); padding: 0 14px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface); color: var(--ink); font: inherit; cursor: pointer; }
+.mark-read.on { background: var(--stamp-soft); border-color: var(--stamp); color: var(--stamp); }
+.action-bar .bar-btn.on { color: var(--hot); }

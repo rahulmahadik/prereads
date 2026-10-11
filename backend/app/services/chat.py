@@ -149,7 +149,7 @@ def stream(turn: "ChatTurn") -> Iterator[str]:
 
 
 def _model_name() -> str:
-    return llm.resolve_model("llm") if config.AI_PROVIDER == "ollama" else config.OPENAI_MODEL
+    return llm.resolve_model("chat") if config.AI_PROVIDER == "ollama" else config.OPENAI_MODEL
 
 
 def _short_branch(name: str) -> str:
@@ -333,7 +333,7 @@ def ask_model(request: str, hits: list[tuple[dict, float, str]]) -> tuple[Option
             "about": [x for x in e["subjects"] + e["concepts"] if len(x.split()) <= 4][:6],
         } for e, _, _ in hits],
     }, ensure_ascii=False)
-    fut = _pool.submit(llm.structured, Understood, llm.with_lang(ASK_SYSTEM, _LANG.get()), user, temperature=0.2)
+    fut = _pool.submit(llm.structured, Understood, llm.with_lang(ASK_SYSTEM, _LANG.get()), user, kind="chat", temperature=0.2)
     try:
         r = fut.result(timeout=MODEL_BUDGET)
     except cf.TimeoutError:

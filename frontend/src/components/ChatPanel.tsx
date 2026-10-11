@@ -20,7 +20,9 @@ interface TraceStep {
 type Item =
   | { kind: "msg"; from: "bot" | "me"; text: string }
   | { kind: "hello" }
-  | { kind: "trace"; steps: TraceStep[]; open: boolean };
+  | { kind: "trace"; steps: TraceStep[]; open: boolean }
+  | { kind: "choices"; options: Option[]; chosen: string } // earlier options, kept read-only in the thread
+  | { kind: "result"; result: Result };
 
 type ChatState = { step: string; book_id?: string | null; focus_id?: string | null; candidates?: unknown[]; level?: number | null; branch?: string | null };
 
@@ -202,7 +204,10 @@ export default function ChatPanel() {
     if (busy) return;
     if (!value.trim() && state.step === "start") return;
     const id = ++reqId.current;
-    setItems((m) => [...m, { kind: "msg", from: "me", text: label ?? value }]);
+    const keep: Item[] = [];
+    if (options.length) keep.push({ kind: "choices", options, chosen: value });
+    if (result) keep.push({ kind: "result", result });
+    setItems((m) => [...m, ...keep, { kind: "msg", from: "me", text: label ?? value }]);
     setOptions([]);
     setResult(null);
     setProgress(state.step === "branch" ? PROGRESS_FINISH : PROGRESS_START);
@@ -321,6 +326,21 @@ export default function ChatPanel() {
                 </div>
               ) : m.kind === "trace" ? (
                 <TraceRow key={i} steps={m.steps} open={m.open} onToggle={() => toggleTrace(i)} />
+              ) : m.kind === "choices" ? (
+                <div key={i} className="chat-options past" aria-label={t("chat.earlier")}>
+                  {m.options.map((o) => (
+                    <span key={o.value + o.label} className={`chat-past-option ${o.value === m.chosen ? "chosen" : ""}`}>
+                      <span className="chat-option-label">{o.value === m.chosen ? "✓ " : ""}{o.label}</span>
+                      {o.hint && <span className="chat-option-hint">{o.hint}</span>}
+                    </span>
+                  ))}
+                </div>
+              ) : m.kind === "result" ? (
+                <div key={i} className="chat-result past">
+                  <button type="button" className="secondary" onClick={() => navigate("book", { id: m.result.book_id, title: m.result.title, author: m.result.author, stop: m.result.start_id })}>
+                    {t("chat.directions", { title: m.result.start_title })}
+                  </button>
+                </div>
               ) : (
                 <div key={i} className={`bubble ${m.from}`}>
                   {m.text}

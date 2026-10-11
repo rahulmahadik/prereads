@@ -12,6 +12,8 @@ import { navigate } from "../router";
 import HeartButton from "../components/HeartButton";
 import { getNote, setNote } from "../myshelf";
 import DigitalCopies from "../components/DigitalCopies";
+import SampleReader from "../components/SampleReader";
+import { isHearted, toggleHeart, useStoreVersion } from "../myshelf";
 import { cleanSummary } from "../summary";
 import type { Neighbour, Route, Stop } from "../types";
 import { rich, t, tn, useLang, voiceLang, type Key } from "../i18n";
@@ -29,6 +31,9 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
   const [route, setRoute] = useState<Route | null>(null);
   const [error, setError] = useState("");
   const [ask, setAsk] = useState(false);
+  const [access, setAccess] = useState<{ gid: number; sample?: string; readFree?: string; libby?: { url: string; available: number } } | null>(null);
+  const [reading, setReading] = useState(false);
+  useStoreVersion();
   const [answer, setAnswer] = useState("");
   const [busy, setBusy] = useState(false);
   const [weeks, setWeeks] = useState(2);
@@ -57,6 +62,31 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
   useEffect(() => {
     setNoteText(stopBookId ? getNote(stopBookId) : "");
   }, [stopBookId]);
+
+  useEffect(() => {
+    setAccess(null);
+    if (!stop) return;
+    let live = true;
+    const q = new URLSearchParams({ title: stop.book.title, author: stop.book.author || "" });
+    Promise.all([
+      fetch(`/api/digital?${q}`).then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+      fetch(`/api/online?${q}`).then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ]).then(([d, o]: any[]) => {
+      if (!live) return;
+      const gid = Number(o?.gutenberg?.url?.match(/\/ebooks\/(\d+)/)?.[1]) || 0;
+      setAccess({
+        gid,
+        sample: d?.ebook?.sample_url || undefined,
+        readFree: o?.openlibrary?.access === "public" ? o.openlibrary.read_url : undefined,
+        libby: d?.ebook ? { url: d.ebook.url, available: d.ebook.available } : undefined,
+      });
+    });
+    return () => {
+      live = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stop?.book.id]);
 
   useEffect(() => {
     setSimilar([]);
@@ -187,6 +217,11 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
               {book.pages ? t("book.pages", { n: book.pages }) : ""}
             </p>
             <ReadinessMeter level={readiness.level} hours={readiness.hours} />
+            {stop.role !== "target" && (
+              <button type="button" className={`mark-read ${read ? "on" : ""}`} onClick={() => toggleRead(book.id)} aria-pressed={read}>
+                {read ? t("book.readIt") : t("book.markRead")}
+              </button>
+            )}
             <span className="age-chip">{ageText(readingAge(book.audience, book.subjects, readiness.level, book.pages))}</span>
           </div>
         </div>
@@ -334,28 +369,33 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
       )}
 
       <div className="action-bar">
-        {stop.role !== "target" ? (
-          <button type="button" className={`bar-btn ${read ? "on" : ""}`} onClick={() => toggleRead(book.id)} aria-pressed={read}>
-            {read ? t("book.readIt") : t("book.markRead")}
+        {access?.gid ? (
+          <button type="button" className="bar-btn primary" onClick={() => setReading(true)}>
+            📖 {t("book.firstChapter")}
           </button>
+        ) : access?.sample ? (
+          <a className="bar-btn primary link-as-btn" href={access.sample} target="_blank" rel="noopener">
+            📖 {t("book.sample")}
+          </a>
+        ) : access?.readFree ? (
+          <a className="bar-btn primary link-as-btn" href={access.readFree} target="_blank" rel="noopener">
+            📖 {t("book.readFree")}
+          </a>
+        ) : null}
+        {access?.libby && access.libby.available > 0 ? (
+          <a className="bar-btn link-as-btn" href={access.libby.url} target="_blank" rel="noopener">
+            {t("book.borrowLibby")}
+          </a>
         ) : (
           <a className="bar-btn link-as-btn" href={nlbSearchUrl(book.title, book.isbn)} target="_blank" rel="noopener">
             {inSomewhere ? t("book.reserve") : queue ? t("book.waitlistN", { n: queue }) : t("book.waitlist")}
           </a>
         )}
-        {wayfind && wayfind.callNumber ? (
-          <a className="bar-btn primary" href="#find" onClick={(e) => { e.preventDefault(); document.getElementById("find")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>
-            {t("book.findShelf")}
-          </a>
-        ) : (
-          <a className="bar-btn primary link-as-btn" href={nlbSearchUrl(book.title, book.isbn)} target="_blank" rel="noopener">
-            {t("book.findNlb")}
-          </a>
-        )}
-        <button type="button" className="bar-btn" onClick={() => setAsk(true)}>
-          {t("book.ask")}
+        <button type="button" className={`bar-btn ${isHearted(book.id) ? "on" : ""}`} aria-pressed={isHearted(book.id)} onClick={() => toggleHeart({ id: book.id, title: book.title, author: book.author, lineId: id, lineTitle: title, lineAuthor: author })}>
+          {isHearted(book.id) ? `♥ ${t("book.saved")}` : `♡ ${t("book.save")}`}
         </button>
       </div>
+      {reading && access?.gid ? <SampleReader gutenbergId={access.gid} onClose={() => setReading(false)} /> : null}
       <p className="swipe-hint hint">{t("book.swipe")}</p>
       <footer className="footer">{t("home.footer")}</footer>
 

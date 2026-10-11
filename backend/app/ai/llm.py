@@ -73,6 +73,7 @@ def resolve_model(kind: str = "llm") -> str:
     """The configured model if pulled, else the first installed fallback."""
     wanted, fallbacks = {
         "llm": (config.LOCAL_LLM_MODEL, config.LOCAL_LLM_FALLBACKS),
+        "chat": (config.LOCAL_CHAT_MODEL, [config.LOCAL_LLM_MODEL, *config.LOCAL_LLM_FALLBACKS]),
         "heavy": (config.LOCAL_LLM_MODEL_HEAVY, config.LOCAL_HEAVY_FALLBACKS),
         "vision": (config.LOCAL_VISION_MODEL, config.LOCAL_VISION_FALLBACKS),
         "embed": (config.LOCAL_EMBED_MODEL, []),
