@@ -27,7 +27,7 @@ import re
 import time
 from contextlib import contextmanager
 from difflib import SequenceMatcher
-from typing import Iterator, Literal, Optional
+from typing import Callable, Iterator, Literal, Optional
 
 from pydantic import BaseModel, Field
 
@@ -99,11 +99,53 @@ class Trace:
     def step(self, name: str) -> Iterator[TraceStep]:
         rec = TraceStep(step=name)
         t0 = time.perf_counter()
+        _emit({"type": "start", "step": name})            # streamed live to the chat panel
         try:
             yield rec
         finally:
             rec.ms = round((time.perf_counter() - t0) * 1000)
             self.steps.append(rec)
+            _emit({"type": "done", "step": rec.step, "detail": rec.detail, "ms": rec.ms})
+
+
+# Set by the streaming endpoint: receives each step as it starts and finishes, so the
+# progress the reader sees is the real work, not a timer.
+_ON_STEP: "contextvars.ContextVar[Optional[Callable[[dict], None]]]" = contextvars.ContextVar("chat_on_step", default=None)
+
+
+def _emit(event: dict) -> None:
+    cb = _ON_STEP.get()
+    if cb is not None:
+        try:
+            cb(event)
+        except Exception:  # noqa: BLE001 - a closed stream must never break the reply
+            pass
+
+
+def stream(turn: "ChatTurn") -> Iterator[str]:
+    """NDJSON stream: one line per real step event, then the final reply."""
+    import json
+    import queue
+    import threading
+
+    q: "queue.Queue[Optional[str]]" = queue.Queue()
+
+    def run() -> None:
+        _ON_STEP.set(lambda e: q.put(json.dumps(e, ensure_ascii=False)))
+        try:
+            reply = step(turn)
+            q.put(json.dumps({"type": "reply", "reply": reply.model_dump()}, ensure_ascii=False))
+        except Exception as exc:  # noqa: BLE001
+            q.put(json.dumps({"type": "error", "message": str(exc)[:200]}))
+        finally:
+            q.put(None)
+
+    threading.Thread(target=run, daemon=True).start()
+    while True:
+        line = q.get()
+        if line is None:
+            return
+        yield line + "\n"
 
 
 def _model_name() -> str:
@@ -605,7 +647,20 @@ def _finish(state: ChatState) -> ChatReply:
         "start_title": start.book.title,
         "start_status": status,
     }
-    return ChatReply(messages=[lead, "I've drawn the reading path and the directions to the first book."], state=state, result=result, trace=tr.steps)
+    # Tell the reader what the book is actually about (catalogue description), not only where it is.
+    from .discover import blurb  # local import: discover imports heavier modules
+
+    msgs = [lead]
+    about = blurb(start.book.summary, limit=320)
+    if about:
+        msgs.append(f"About {start.book.title}: {about}")
+    elif start.readiness.one_line:
+        msgs.append(start.readiness.one_line)
+    if start.readiness.assumed_concepts:
+        msgs.append("It helps to know: " + ", ".join(start.readiness.assumed_concepts[:4]) + ".")
+    msgs.append("Open it for the description, a free sample or first chapter where available, and the walk to the shelf.")
+    result["start_about"] = about or ""
+    return ChatReply(messages=msgs, state=state, result=result, trace=tr.steps)
 
 
 def step(turn: ChatTurn) -> ChatReply:

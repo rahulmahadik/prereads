@@ -110,3 +110,21 @@ def test_slow_model_falls_back_within_budget(monkeypatch):
     r = TestClient(app).post("/api/chat", json={"text": "I want to understand investing", "state": {"step": "start"}}).json()
     assert r["options"] and {x["id"] for x in r["state"]["candidates"]} <= _verified_ids()
     assert any("gave no answer" in s["detail"] for s in r["trace"])
+
+
+def test_chat_stream_sends_real_steps_then_reply():
+    import json
+
+    from fastapi.testclient import TestClient
+
+    from app.main import app
+
+    c = TestClient(app)
+    with c.stream("POST", "/api/chat/stream", json={"text": "investing", "state": {}}) as r:
+        events = [json.loads(line) for line in r.iter_lines() if line]
+    kinds = [e["type"] for e in events]
+    assert kinds[-1] == "reply" and "start" in kinds and "done" in kinds
+    starts = [e["step"] for e in events if e["type"] == "start"]
+    dones = [e["step"] for e in events if e["type"] == "done"]
+    assert starts == dones                      # every step that started also finished
+    assert [s["step"] for s in events[-1]["reply"]["trace"]] == dones   # the stream matches the final trace

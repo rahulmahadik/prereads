@@ -43,7 +43,28 @@ interface Reply {
   trace?: TraceStep[];
 }
 
-// Progress only: these advance on a timer while a request is in flight. The real steps come back in `trace`.
+type LiveStep = { step: string; detail?: string; ms?: number; done: boolean };
+
+/** The steps the server is actually running, as they start and finish (streamed). */
+function LiveSteps({ steps }: { steps: LiveStep[] }) {
+  useLang();
+  if (steps.length === 0) return <div className="bubble bot typing" aria-hidden="true">…</div>;
+  return (
+    <ol className="chat-steps live" role="status" aria-label={t("chat.workingAria")}>
+      {steps.map((s, i) => (
+        <li key={`${s.step}-${i}`} className={s.done ? "done" : "now"}>
+          <span className="chat-step-mark" aria-hidden="true">{s.done ? "✓" : ""}</span>
+          <span className="chat-step-name">{s.step}</span>
+          {s.done && (s.detail || s.ms !== undefined) && (
+            <span className="chat-step-detail">{[s.detail, s.ms !== undefined ? fmtMs(s.ms) : ""].filter(Boolean).join(" · ")}</span>
+          )}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+// Fallback only (no streaming): generic steps on a timer. The real steps still come back in `trace`.
 const PROGRESS_START: Key[] = ["chat.p.understand", "chat.p.search", "chat.p.shelves", "chat.p.write"];
 const PROGRESS_FINISH: Key[] = ["chat.p.build", "chat.p.shelves", "chat.p.write"];
 
@@ -107,6 +128,23 @@ function TraceRow({ steps, open, onToggle }: { steps: TraceStep[]; open: boolean
 export default function ChatPanel() {
   useLang();
   const [open, setOpen] = useState(false);
+  const [maxed, setMaxed] = useState(() => {
+    try {
+      return localStorage.getItem("prereads.chatMax") === "1";
+    } catch {
+      return false;
+    }
+  });
+  const toggleMax = () =>
+    setMaxed((v) => {
+      try {
+        localStorage.setItem("prereads.chatMax", v ? "0" : "1");
+      } catch {
+        /* on-device preference only */
+      }
+      return !v;
+    });
+  const [live, setLive] = useState<LiveStep[] | null>(null);
   const [items, setItems] = useState<Item[]>(fresh);
   const [options, setOptions] = useState<Option[]>([]);
   const [state, setState] = useState<ChatState>({ step: "start" });
@@ -171,7 +209,27 @@ export default function ChatPanel() {
     setBusy(true);
     setText("");
     try {
-      const r = (await api.chat(value, state, getLang())) as Reply;
+      setLive([]);
+      let r: Reply;
+      try {
+        r = (await api.chatStream(value, state, getLang(), (e) => {
+          if (id !== reqId.current) return;
+          setLive((cur) => {
+            const list = [...(cur ?? [])];
+            if (e.type === "start") list.push({ step: e.step ?? "", done: false });
+            else if (e.type === "done") {
+              const i = list.map((x) => x.step).lastIndexOf(e.step ?? "");
+              const rec = { step: e.step ?? "", detail: e.detail, ms: e.ms, done: true };
+              if (i >= 0) list[i] = rec;
+              else list.push(rec);
+            }
+            return list;
+          });
+        })) as Reply;
+      } catch {
+        setLive(null); // streaming unavailable: plain request, timer-based progress
+        r = (await api.chat(value, state, getLang())) as Reply;
+      }
       if (id !== reqId.current) return; // started over meanwhile
       const trace = r.trace ?? [];
       const add: Item[] = [];
@@ -189,6 +247,7 @@ export default function ChatPanel() {
       if (id === reqId.current) setItems((m) => [...m, { kind: "msg", from: "bot", text: (e as Error).message || t("chat.error") }]);
     } finally {
       if (id === reqId.current) {
+        setLive(null);
         setBusy(false);
         window.setTimeout(() => inputRef.current?.focus(), 0);
       }
@@ -230,11 +289,11 @@ export default function ChatPanel() {
   return (
     <>
       <button type="button" className={`chat-fab ${open ? "hide" : ""}`} onClick={() => setOpen(true)} aria-label={t("chat.ask")}>
-        <span aria-hidden="true">💬</span> {t("chat.ask")}
+        <span aria-hidden="true">💬</span> <span className="fab-label">{t("chat.ask")}</span>
       </button>
 
       {open && (
-        <div className="chat-panel" role="dialog" aria-label={t("chat.ask")}>
+        <div className={`chat-panel ${maxed ? "max" : ""}`} role="dialog" aria-label={t("chat.ask")}>
           <div className="chat-head">
             <span className="chat-title">
               <span aria-hidden="true">📚</span> {t("chat.ask")}
@@ -242,6 +301,9 @@ export default function ChatPanel() {
             <span className="chat-head-actions">
               <button type="button" className={`icon-btn small ${voice ? "on" : ""}`} onClick={() => setVoice((v) => !v)} aria-pressed={voice} aria-label={t("chat.voice")} title={t("chat.voice")}>
                 🔊
+              </button>
+              <button type="button" className="icon-btn small chat-max" onClick={toggleMax} aria-pressed={maxed} aria-label={maxed ? t("chat.restore") : t("chat.maximise")} title={maxed ? t("chat.restore") : t("chat.maximise")}>
+                <span aria-hidden="true">{maxed ? "🗗" : "⛶"}</span>
               </button>
               <button type="button" className="chat-restart" onClick={reset} disabled={items.length <= 1 && !busy}>
                 <span aria-hidden="true">↺</span> {t("chat.startOver")}
@@ -265,7 +327,7 @@ export default function ChatPanel() {
                 </div>
               ),
             )}
-            {busy && <Progress steps={progress} />}
+            {busy && (live ? <LiveSteps steps={live} /> : <Progress steps={progress} />)}
             {!busy && options.length > 0 && (
               <div className={`chat-options ${bookChoices ? "stacked" : ""}`}>
                 {options.map((o) => (
