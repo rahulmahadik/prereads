@@ -8,7 +8,7 @@ A hard book is easier when you've read the right books first. PreReads builds *y
 - **No-server prototype:** [`docs/index.html`](docs/index.html) (embedded data, works offline)
 - **Design:** [Figma screens and clickable prototype](https://www.figma.com/design/c5wM6zZUx2NT91NIEYwbFZ) · [architecture diagrams](https://www.figma.com/board/5TEfAaBhbQFeLO91qIPSuP)
 
-All AI runs locally on the device (open models via Ollama). No cloud AI calls. Not an NLB product.
+All AI runs locally on the device (open models via Ollama); no cloud AI calls by default. Not an NLB product.
 
 | | | |
 |:---:|:---:|:---:|
@@ -28,7 +28,7 @@ All AI runs locally on the device (open models via Ollama). No cloud AI calls. N
 |---|---|
 | Frontend | React 18 + TypeScript, Vite, hand-written CSS tokens, service worker (PWA), vitest |
 | Backend | Python 3.11+, FastAPI, Pydantic v2, httpx, pytest |
-| Local AI (Ollama) | gpt-oss:20b (chat, discovery), gemma3:12b (path building and judging), qwen2.5vl:7b (cover scan), nomic-embed-text (semantic search) |
+| Local AI (Ollama) | gpt-oss:20b (chat, discovery, reading levels), gpt-oss:120b (optional heavy model for judging paths), qwen2.5vl:7b (cover scan), nomic-embed-text (semantic search), gemma3:12b as fallback; optional OpenAI via `AI_PROVIDER=openai` |
 | Speech | faster-whisper large-v3-turbo (speech to text), Kokoro (voice); browser speech as fallback |
 | Data | Open Library, NLB open data and library locations (data.gov.sg), NLB's OverDrive catalogue, Project Gutenberg (Gutendex), NLB Catalogue v2 when keyed |
 | Ops | Make, `scripts/setup.py`, Cloudflare Tunnel (`scripts/tunnel.sh`) |

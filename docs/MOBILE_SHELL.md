@@ -33,7 +33,7 @@ Options:
 
 ## Permissions to declare
 
-- iOS `Info.plist`: `NSCameraUsageDescription` ("Scan a book cover to find its reading line"),
+- iOS `Info.plist`: `NSCameraUsageDescription` ("Scan a book cover to find its reading path"),
   `NSPhotoLibraryAddUsageDescription` if you add native save-to-photos.
 - Android: `CAMERA` permission; Capacitor handles the file-chooser bridge.
 

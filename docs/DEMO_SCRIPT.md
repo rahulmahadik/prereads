@@ -10,7 +10,7 @@ tell me when a route is wrong. Who's in?"
 
 ## 60-second video (captions burned in; judges may watch on mute)
 
-Record on a phone-width screen with Ollama running so the AI is live. Shelf status is demo data: say so in the last caption or the voiceover.
+Record on a phone-width screen with Ollama running so the AI is live. Per-branch shelf copies, queues and popularity are demo data: say so in the last caption or the voiceover.
 
 | Time | Shot | Caption (burned in) |
 |---|---|---|
@@ -18,7 +18,7 @@ Record on a phone-width screen with Ollama running so the AI is live. Shelf stat
 | 0:06-0:16 | The reading path draws: before-books, your book, next reads | "PreReads draws your reading path: read these first." |
 | 0:16-0:25 | Tap a first book: level, hours, why it is first | "Easier than your book, and it says why." |
 | 0:25-0:33 | Same-shelf banner | "3 of your PreReads are on the same shelf (332). One trip." |
-| 0:33-0:42 | Book page: status per library, floor-plan route animates | "Which library has it today, and the walk to the shelf. Demo data, labelled." |
+| 0:33-0:42 | Book page: status per library, floor-plan route animates | "Which library has it today, and the walk to the shelf. Shelf copies are demo data." |
 | 0:42-0:47 | Scroll to Because you liked... | "Picks tied to books you already like." |
 | 0:47-0:52 | Heart a book; open My shelf | "My shelf: hours left on each path. Stays on this phone." |
 | 0:52-0:56 | Senior mode on; share QR | "Large text. Share the path by QR." |
@@ -33,8 +33,8 @@ Record on a phone-width screen with Ollama running so the AI is live. Shelf stat
    there is no product."
 4. Who it's for: the reader at the shelf, the senior who needs plain text, the librarian
    who can reorder a path.
-5. Honest label: shelf status is demo data until the NLB key arrives; everything else, including all AI, is live on this laptop.
-6. What's next: real NLB shelf data, reading-age chips, offline use, printable shelf-talkers, digital copies, Meet at the book (all in progress).
+5. Honest label: per-branch shelf copies, queues and popularity are demo data until the NLB key arrives; opening hours, book data and digital copies are real, and all AI runs on this laptop.
+6. What's next: real per-branch copies and queues once the NLB key arrives, a kids narrator, availability alerts.
 
 ## Open-mic ask (15:30)
 

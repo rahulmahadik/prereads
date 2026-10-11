@@ -8,7 +8,7 @@ FastAPI backend for PreReads. Entry point: `app.main:app` (run from `backend/`).
 |---|---|---|
 | `api/` | One router per area (`routes_*.py`). Validate input, call a service, shape the response. No rules here. | services, integrations, ai, core |
 | `services/` | Product logic: `engine` (reading paths), `discover`, `chat`, `ask`, `reading_age`. | integrations, ai, core |
-| `integrations/` | External data: `catalog` (NLB Catalogue v2, Open Library, `resolve()`, `enrich()`), `sources` (enrichment fetchers), `digital` (OverDrive), `availability` (shelf copies + demand, demo fallback). | core |
+| `integrations/` | External data: `catalog` (NLB Catalogue v2, Open Library, `resolve()`, `enrich()`), `sources` (enrichment fetchers), `nlb_datasets` (NLB open data: hours, yearly totals), `digital` (OverDrive), `online` (free editions, Gutenberg chapters), `availability` (shelf copies + demand; source chosen by `DATA_SOURCE`, demo fallback). | core |
 | `ai/` | Model providers: `llm` (Ollama or OpenAI, structured outputs), `embeddings`, `stt`, `tts`. | core |
 | `core/` | `config` (env, data paths, runtime modes), `models` (shared Pydantic models, also the prompt schemas). | nothing at import time (`config` asks `ai.llm` for Ollama status inside two functions) |
 | `main.py` | Creates the app, mounts `api.ROUTERS`, warms embeddings, serves `frontend/dist`. | anything |

@@ -32,12 +32,12 @@ reservations, account management. PreReads links out to the catalogue for those.
 - Voice input: `POST /api/stt` runs faster-whisper (`large-v3-turbo`, CPU int8) locally and is tried first,
   which copes better with accents and dialects than the browser. If it is not installed or fails (503/422), the
   browser's SpeechRecognition (Chrome, Edge, Safari) takes over. Used in the discovery box and the chat.
-- Languages: Kokoro and Whisper handle more than English, but the UI text and narration are English only
-  for now; Chinese/Malay/Tamil narration waits on translated catalogue text.
+- Languages: the UI, discovery, chat and shelf map are available in English, 中文, Bahasa Melayu and தமிழ். Narration of catalogue
+  text stays in the book's own language.
 
 ## Since this was written
 
 Built after the first check: nearest library with distance and open/closed (data.gov.sg list; hours are the
-typical default until the Library API is available), same-shelf trip, My shelf and notes, reserve/waitlist link,
-"Because you liked", share by QR, shelf talkers, Meet at the book, offline PWA. Still true that live
-availability, real queue lengths and live hours need the NLB key.
+NLB open data), same-shelf trip, My shelf and notes, reserve/waitlist link,
+"Because you liked", share by QR, shelf talkers, Meet at the book, offline PWA. Also built: digital copies from NLB's OverDrive catalogue, free online editions, a sample reader, and four UI languages.
+Still true that per-branch copies, real queue lengths and live availability need the NLB key.

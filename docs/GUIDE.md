@@ -5,15 +5,16 @@ The short version is in the [README](../README.md). This guide has the details: 
 **Say what you want to read. PreReads finds catalogue-verified books and the ones to read before them.**
 Your reading path shows each book's reading level, hours, the shelf status per library, and floor-plan directions to the shelf.
 
-Live demo: <DEMO_URL>
-Source: <REPO_URL>
+Live demo: https://prereads.vitbhatti.com
+Design: [Figma screens with desktop and phone clickable prototypes](https://www.figma.com/design/c5wM6zZUx2NT91NIEYwbFZ) and [FigJam architecture diagrams](https://www.figma.com/board/5TEfAaBhbQFeLO91qIPSuP)
 
-All AI runs locally on-device (open models via Ollama) — no cloud AI calls.
+All AI runs locally on-device (open models via Ollama), with no cloud AI calls by default.
 
 Built for the Common Ground makeathon (Design × Tech), Singapore, 11 Oct 2026, by team
-"404 Not Found". Not an NLB product; book data comes from Open Library and library
-locations from data.gov.sg. Per-branch shelf status is labelled demo data until the NLB
-Catalogue API key arrives.
+"404 Not Found". Not an NLB product. Book data comes from Open Library, library
+locations and opening hours from NLB open data (data.gov.sg), and digital copies from NLB's
+OverDrive catalogue. Per-branch shelf copies, queue lengths and "popular" trends are demo
+data until an NLB Catalogue API key is added.
 
 ---
 
@@ -24,7 +25,7 @@ without it the app still runs, using built-in heuristics and the cached reading 
 (scan, voice and fresh AI picks are then unavailable).
 
 ```bash
-git clone <REPO_URL> prereads && cd prereads
+cd prereads            # the cloned repository
 make setup            # python venv + pip deps, npm deps (copies .env.example to .env if that file exists)
 make precompute-demo  # optional: rebuild the cached reading paths offline (DEMO=1, no AI needed)
 make serve            # builds the UI, then serves API + UI on http://localhost:8000
@@ -36,10 +37,11 @@ use `http://<your-mac-ip>:8000` (`make serve` binds 0.0.0.0).
 For the full local AI stack, install Ollama and pull the models once:
 
 ```bash
-ollama pull gemma3:12b          # reading levels, judgments, discovery, answers
+ollama pull gpt-oss:20b         # chat, discovery, answers (the default model)
+ollama pull gemma3:12b          # reading levels, judgments, and the fallback for any missing model
 ollama pull qwen2.5vl:7b        # cover scan
 ollama pull nomic-embed-text    # semantic search, "Because you liked..."
-# optional: gpt-oss:20b / gpt-oss:120b are the preferred models and are picked up automatically
+# optional: gpt-oss:120b is the heavy model for precompute and judging; it is picked up automatically
 ```
 
 Voice input uses `faster-whisper` (large-v3-turbo) and the natural voice uses `kokoro-onnx`;
@@ -92,15 +94,16 @@ app, so stop the tunnel (Ctrl+C) when you are done.
 ## 2. Modes
 
 The AI provider is local by default (`AI_PROVIDER=ollama`). Switch the data mode at runtime
-from the settings chip on the home screen (Data mode sheet): **Demo data** or **Real calls**.
+from the settings chip on the home screen (Settings sheet): **Demo data** or **Real calls**, plus the shelf-data source.
 `/api/mode` backs it; `.env` sets the default at startup. `AI_PROVIDER=openai` with
 `OPENAI_API_KEY` is an optional alternative, not the default.
 
 | Mode | `.env` | What works |
 |---|---|---|
 | Offline demo | `DEMO=1` | Everything from the cache: search, path, cards, ask (templates), walk-in, share card. Scan is disabled with a typed fallback. |
-| Local AI (default) | `AI_PROVIDER=ollama`, Ollama running | Live readiness scoring, prerequisite judgments, discovery, cover scan, embeddings, grounded answers, all on local models. Metadata from Open Library. Shelf status from the labelled demo table. |
+| Local AI (default) | `AI_PROVIDER=ollama`, Ollama running | Live readiness scoring, prerequisite judgments, discovery, cover scan, embeddings, grounded answers, all on local models. Metadata from Open Library. Shelf copies from the labelled demo table. |
 | No Ollama | nothing | Heuristics plus cached paths. Typed search of cached and catalogue titles still works. |
+| NLB open data | `DATA_SOURCE=dataset` (or `auto` with `backend/data/nlb/` present) | Real opening hours and NLB's yearly loan totals; per-branch copies, queues and popularity stay labelled demo. |
 | Fully live shelves | + `NLB_API_KEY`, `NLB_APP_CODE` | Real per-branch availability and call numbers; demand from the checkout-trends endpoint. |
 
 Switch modes by editing `.env` and restarting. After adding keys, rebuild the cache:
@@ -141,19 +144,28 @@ Catalogue v2 OpenAPI contract: `GetTitles` (Title + Author, ANDed) with `SearchT
 `GetMostCheckoutsTrendsTitles` (`LocationCode`, `Duration=past30days`). Title records
 also carry `activeReservationsCount`, which the UI shows as the queue length.
 
-If the key has not arrived, the UI labels shelf status as demo data; say so in the video.
+Without the key, per-branch shelf copies, queues and popularity are demo data (labelled in Settings and next to the numbers), and the README says so.
 
 ## 4. API
+
+All routes live under `/api`.
 
 | Endpoint | Purpose |
 |---|---|
 | `GET /api/health` | mode + cached route count |
-| `GET /api/resolve?q=` | title search (cache first, then catalogue) |
-| `GET /api/route?id=` | the reading path for a target id (ISBN-13 or `ol:` slug); builds and caches if missing (not in DEMO) |
-| `POST /api/scan` (multipart `image`) | cover/spine → title/author via vision model |
+| `GET /api/mode`, `POST /api/mode` | read or change demo, AI and NLB switches and `data_source` (`auto|demo|dataset|api`) at runtime |
+| `GET /api/resolve?q=&offset=&limit=` | title search (cache first, then catalogue), paged |
+| `GET /api/route?id=` | the reading path for a target id (ISBN-13 or `ol:` slug); builds and caches if missing (not in DEMO); `refresh=true` rebuilds |
+| `POST /api/discover` | "tell me what you want": need, ranked verified books, filter chips, paging; `mode` fast or deep |
+| `GET /api/similar?id=&branch=` | "Because you liked...": embedding neighbours with a reason |
+| `GET /api/browse`, `GET /api/targets`, `GET /api/popular` | browse by category, seed targets, popular picks |
 | `POST /api/ask` `{target_id, intent, weeks}` | `why_before` / `time_budget` / `large_print` |
-| `GET /api/branches` | branch list for walk-in mode |
-| `GET /api/targets` | seed targets |
+| `POST /api/chat`, `POST /api/chat/stream` | guided chat; the stream sends its real steps as they happen |
+| `POST /api/scan` (multipart `image`) | cover/spine to title/author via the vision model |
+| `POST /api/stt`, `POST /api/tts` | local speech to text and text to speech |
+| `GET /api/digital?title=&author=` | NLB eBook and audiobook copies (OverDrive) |
+| `GET /api/online?title=&author=`, `GET /api/online/chapter?gutenberg_id=` | free online editions and the first chapter of public-domain books |
+| `GET /api/branches` | libraries with location, hours and distance data |
 
 ## 5. Adding titles
 
@@ -171,9 +183,10 @@ in the route JSON if a pick disappears.
 ## 6. Tests
 
 ```bash
-make test   # backend pytest (77 tests) + frontend vitest (56 tests)
+make test   # backend pytest (101 tests) + frontend vitest (56 tests)
 ```
 
+`make warmup` loads the local models and fills the caches before a demo (`QUICK=1` for the demo paths only).
 `make eval` re-scores the cached paths with the heavy local model and reports rule
 violations and low-confidence hops (read-only).
 
@@ -209,7 +222,7 @@ Home (pick a book) → Your reading path (vertical route, mark books read; "You"
 familiarity and library sheets; share sheet) → Book (page-turn, reader-facing status —
 Available / Nearest copy / Waiting — then schematic directions from the entrance to the
 bay with the call number to look for; bottom bar: Reserve or Mark read · Find on shelf · Ask).
-The Ready screen still exists for deep links but is no longer in the default path. Hash routes (`#/line?id=…`) so the back button works in
+The Ready screen still exists for deep links but is no longer in the default path. Meet at the book (`#/meet`) puts two readers on one target. Hash routes (`#/line?id=…`) so the back button works in
 browsers and WebViews, and any line is linkable.
 
 ## 9. Voice
@@ -232,7 +245,7 @@ preview when downloads are blocked). To wrap it as a mobile app later, see
 
 - `backend/app/README.md` — backend package map and request flow. The backend is layered:
   `api/` (FastAPI routers) → `services/` (reading-path engine, discovery, chat, ask) →
-  `integrations/` (NLB, Open Library, OverDrive, availability) and `ai/` (LLM, embeddings,
+  `integrations/` (NLB, NLB open data, Open Library, OverDrive, Gutenberg, availability) and `ai/` (LLM, embeddings,
   speech) → `core/` (config, models). Entry point stays `app.main:app`.
 - `docs/DEMO_SCRIPT.md` — 60-second video shot list, finalist pitch
 - `docs/PROMPTS.md` — prompt contracts and sanity rules

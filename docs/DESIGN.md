@@ -82,5 +82,5 @@ the page turn; everything else stays quiet.
 ## Rules
 - One memorable element per screen: the book. No decorative shadows elsewhere.
 - Borders encode meaning: solid ink = a card; dashed = page fold; stamp-green = available.
-- Demo data is always labelled. The footer "Not an NLB product" never moves.
+- Demo data is labelled where the numbers appear (Settings shows the shelf-data source). The Home and Book footer reads "All AI runs locally on this device. Built on Open Library, NLB open data and data.gov.sg."
 - If you add motion, it must answer a user action; no idle animation.
