@@ -6,8 +6,13 @@
     -> scored for fit (topic, level, time, availability at the reader's branch)
     -> filter chips generated from the need and the result set
 
-With OPENAI_API_KEY the need and the candidate list come from the model. Without
-it, a heuristic parser handles the common phrasings so the demo still feels
+Two phases, so a reader never stares at a spinner:
+  fast  no model call, no network: heuristic need + the local embedding shortlist (with a
+        time budget) + keyword score over the cached catalogue. Well under a second.
+  deep  the local model reads the need and proposes books, each verified in the catalogue,
+        merged with the catalogue results (and, live, catalogue search pages). Seconds to tens
+        of seconds; the UI runs it in the background and adds its picks as "AI pick".
+With the AI off, a heuristic parser handles the common phrasings so the demo still feels
 intelligent, and the recommendations are drawn from the precomputed catalogue.
 """
 from __future__ import annotations
@@ -15,6 +20,10 @@ from __future__ import annotations
 import json
 import logging
 import re
+import threading
+import time
+from collections import OrderedDict
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
 from typing import Literal, Optional
 
 from pydantic import BaseModel, Field
@@ -23,6 +32,7 @@ from . import config, embeddings, llm
 from .availability import BRANCHES, get_availability, get_demand
 from .catalog import nlb, openlibrary_search_many, resolve
 from .engine import heuristic_readiness
+from .reading_age import estimate as estimate_age, heuristic as age_heuristic
 from .engine import load_route, score_readiness, seeds
 
 log = logging.getLogger("prereads.discover")
@@ -73,6 +83,9 @@ class Recommendation(BaseModel):
     available_at: list[str]
     hot_at: list[str]
     before_count: int
+    reading_age: Optional[str] = None
+    min_age: Optional[int] = None
+    ai_pick: bool = False                          # proposed by the model (deep phase), then catalogue-verified
 
 
 class DiscoverRequest(BaseModel):
@@ -81,17 +94,20 @@ class DiscoverRequest(BaseModel):
     filters: list[str] = Field(default_factory=list)   # chip ids that are on
     offset: int = 0
     limit: int = 10
+    mode: Literal["fast", "deep"] = "fast"             # fast: no model, no network; deep: model proposals too
 
 
 class DiscoverResponse(BaseModel):
     need: Need
     chips: list[FilterChip]
     results: list[Recommendation]
-    engine: str
+    engine: str                                    # "fast" | "llm" | "heuristic"
     total: int = 0
     offset: int = 0
     limit: int = 10
     has_more: bool = False
+    deep: Optional[Literal["ai", "catalogue"]] = None   # fast only: what a deep pass would add (None = nothing)
+    timings_ms: dict[str, float] = Field(default_factory=dict)
 
 
 # ------------------------------------------------------------------ parsing
@@ -150,14 +166,60 @@ PROPOSE_SYSTEM = (
 )
 
 
+# Small in-process caches so a deep re-run for the same request (a filter toggle) skips the
+# model call and the per-book catalogue checks. Successes only; bounded; keyed by mode.
+_CACHE_MAX = 64
+_cache_lock = threading.Lock()
+_PROPOSALS: "OrderedDict[str, tuple[Need, list[Proposed]]]" = OrderedDict()
+_VERIFIED: "OrderedDict[str, tuple[object, object]]" = OrderedDict()
+
+
+def _cache_get(store: OrderedDict, key: str):
+    with _cache_lock:
+        hit = store.get(key)
+        if hit is not None:
+            store.move_to_end(key)
+        return hit
+
+
+def _cache_put(store: OrderedDict, key: str, value, cap: int = _CACHE_MAX) -> None:
+    with _cache_lock:
+        store[key] = value
+        store.move_to_end(key)
+        while len(store) > cap:
+            store.popitem(last=False)
+
+
 def propose(text: str) -> tuple[Need, list[Proposed], str]:
     if config.llm_enabled():
+        key = f"{config.mode()}|{' '.join(text.lower().split())}"
+        hit = _cache_get(_PROPOSALS, key)
+        if hit is not None:
+            return hit[0].model_copy(deep=True), list(hit[1]), "llm"
         p = llm.structured(Proposal, PROPOSE_SYSTEM, text, temperature=llm.TEMP_PROPOSE)
         if p:
             if not p.need.summary:
                 p.need.summary = text.strip()
+            _cache_put(_PROPOSALS, key, (p.need.model_copy(deep=True), list(p.books)))
             return p.need, p.books, "llm"
     return heuristic_need(text), [], "heuristic"
+
+
+# Open Library mixes format and shelving tags into subjects, and lists merchandising SKUs as books.
+_JUNK_SUBJECT = re.compile(r"(daisy|accessible book|in library|lending library|overdrive|large type|braille|nyt:|protected|internet archive|open library|staff picks|reading level|fiction, general)", re.I)
+_JUNK_TITLE = re.compile(r"(counter display|\d+-copy|prepack|pre-pack|box set|boxed set|pack of \d+|summary of|study guide|workbook for|sparknotes|cliffsnotes|\bcopy\b)", re.I)
+
+
+def clean_category(subjects: list[str], default: str) -> str:
+    """First subject that reads like a topic (not a format or shelving tag)."""
+    for x in subjects or []:
+        if x and not _JUNK_SUBJECT.search(x) and len(x.split()) <= 5:
+            return x
+    return default
+
+
+def junk_title(title: str) -> bool:
+    return bool(_JUNK_TITLE.search(title or ""))
 
 
 # ------------------------------------------------------------------ catalogue
@@ -285,7 +347,8 @@ def score(entry: dict, need: Need, proposed_titles: dict[str, str], branch: Opti
         if need.level and entry["level"] <= need.level:
             bits.append("pitched at your level")
         elif need.level and entry["level"] > need.level:
-            bits.append(f"a step up — we'll show {entry['before_count']} books to read first")
+            n = entry["before_count"]
+            bits.append(f"a step up — {n} {'book' if n == 1 else 'books'} to read first" if n else "a step up")
         if need.max_hours and entry["hours"] <= need.max_hours:
             bits.append(f"fits your {round(need.max_hours)} h")
         if branch and branch_fit == 1.0:
@@ -335,7 +398,46 @@ def build_chips(need: Need, results: list[Recommendation], branch: Optional[str]
     for ch in chips:
         if ch.id in on:
             ch.on = True
+    # A chip that is on but this phase did not generate (the reader turned on a chip the deep
+    # phase found, then the fast phase re-ran) still filters and still shows.
+    have = {ch.id for ch in chips}
+    for cid in sorted(on):
+        if cid not in have:
+            ch = chip_from_id(cid)
+            if ch is not None:
+                ch.on = True
+                chips.append(ch)
     return chips
+
+
+def chip_from_id(cid: str) -> Optional[FilterChip]:
+    """Rebuild a chip from its id ("kind:value"); None for anything malformed."""
+    kind, _, value = cid.partition(":")
+    if not value:
+        return None
+    if kind == "level" and value.isdigit() and 1 <= int(value) <= 5:
+        return FilterChip(id=cid, label=f"Level {value} or easier", kind="level", value=value)
+    if kind == "hours":
+        try:
+            float(value)
+        except ValueError:
+            return None
+        return FilterChip(id=cid, label=f"Under {value} hours", kind="hours", value=value)
+    if kind == "branch":
+        label = "On a shelf now" if value == "any" else f"On shelf at {BRANCHES.get(value, value).replace(' Public Library', '').replace(' Regional Library', '').replace(' Library', '')}"
+        return FilterChip(id=cid, label=label, kind="branch", value=value)
+    if kind == "category":
+        return FilterChip(id=cid, label=value, kind="category", value=value)
+    if kind == "age" and value in ("child", "teen", "adult"):
+        return FilterChip(id=cid, label={"child": "For children", "teen": "For teens", "adult": "For adults"}[value], kind="age", value=value)
+    if kind == "language":
+        return FilterChip(id=cid, label=f"In {value}", kind="language", value=value)
+    return None
+
+
+def _age_fields(a: dict) -> dict:
+    tag = a["label"] + (" · estimated" if a["source"] == "estimated" else "")
+    return {"reading_age": tag, "min_age": a["min_age"]}
 
 
 def apply_filters(results: list[Recommendation], chips: list[FilterChip]) -> list[Recommendation]:
@@ -351,7 +453,10 @@ def apply_filters(results: list[Recommendation], chips: list[FilterChip]) -> lis
             out = [r for r in out if r.available_at] if ch.value == "any" else [r for r in out if r.status.startswith("Available")]
         elif ch.kind == "category":
             out = [r for r in out if r.category == ch.value]
-        # age/language: the demo catalogue is adult English; keep results and let the UI say so
+        elif ch.kind == "age":
+            cap = {"child": 11, "teen": 17}.get(str(ch.value), 99)   # a teen can read a "12+" book; a child cannot
+            out = [r for r in out if r.min_age is None or r.min_age <= cap]
+        # language: the demo catalogue is adult English; keep results and let the UI say so
     return out
 
 
@@ -372,6 +477,7 @@ def _catalogue_search(need: Need, branch: Optional[str], page: int, size: int) -
     else:
         books = openlibrary_search_many(keywords, page=page + 1, size=size)
     out: list[Recommendation] = []
+    books = [b for b in books if not junk_title(b.title)]
     for i, b in enumerate(books):
         rd = heuristic_readiness(b)
         av = get_availability(b)
@@ -381,67 +487,176 @@ def _catalogue_search(need: Need, branch: Optional[str], page: int, size: int) -
         time_fit = 1.0 if not need.max_hours else (1.0 if rd.hours <= need.max_hours else max(0.2, need.max_hours / rd.hours))
         fit = round(0.55 * (1 - i / max(1, len(books) * 2)) + 0.25 * level_fit + 0.2 * time_fit, 3)
         out.append(Recommendation(
-            id=b.id, line_id=b.id, is_target=True, title=b.title, author=b.author, category=(b.subjects or ["Catalogue"])[0],
+            id=b.id, line_id=b.id, is_target=True, title=b.title, author=b.author, category=clean_category(b.subjects, "Catalogue"),
             level=rd.level, hours=rd.hours, why=(b.summary[:160] + "…") if b.summary else "From the catalogue search for your topic.",
             fit=min(0.89, fit), status=status, available_at=names,
             hot_at=[h.replace(" Public Library", "").replace(" Regional Library", "").replace(" Library", "") for h in dm.hot_branches], before_count=0,
+            **_age_fields(estimate_age(b, rd)),
         ))
     return out
 
 
 # ------------------------------------------------------------------ entry
-def discover(req: DiscoverRequest) -> DiscoverResponse:
-    need, proposed, engine = propose(req.text)
-    proposed_titles = {p.title.lower(): p.why for p in proposed}
-    on = set(req.filters)
-    results: list[Recommendation] = []
-    cat = _catalogue()
-    # Shortlist by embedding similarity (local nomic-embed-text); the keyword matcher stays as fallback.
-    sims: dict[str, float] = {}
-    ranked = embeddings.rank(" ".join([need.summary] + need.topics), [(e["id"], entry_text(e)) for e in cat], top_k=40)
-    if ranked is not None:
-        sims = dict(ranked)
+FAST_EMBED_BUDGET_S = 0.35     # fast phase: the query embedding must answer within this, else keywords only
+_embed_pool = ThreadPoolExecutor(max_workers=2, thread_name_prefix="discover-embed")
+
+
+_QVEC: "OrderedDict[str, list[float]]" = OrderedDict()
+
+
+def _rank_fast(query: str, items: list[tuple[str, str]], top_k: int = 40) -> Optional[list[tuple[str, float]]]:
+    """embeddings.rank without its disk write: the catalogue vectors come from the on-disk cache, and a
+    new query's vector is kept in memory only (rank() re-writes the whole multi-MB cache file per new query)."""
+    if not items:
+        return []
+    d = embeddings.vectors([t for _, t in items])        # cached; no model call once warm
+    if d is None:
+        return None
+    q = _cache_get(_QVEC, query)
+    if q is None:
+        got = llm.embed(["search_query: " + query])       # local Ollama, ~20-50 ms warm
+        if not got:
+            return None
+        q = got[0]
+        _cache_put(_QVEC, query, q, cap=_CACHE_MAX * 4)
+    n = len(d)
+    mean = [sum(col) / n for col in zip(*d)]              # same mean-centring as embeddings.rank
+    qc = [a - m for a, m in zip(q, mean)]
+    scored = [(i, embeddings.cosine(qc, [a - m for a, m in zip(v, mean)])) for (i, _), v in zip(items, d)]
+    scored.sort(key=lambda x: -x[1])
+    return scored[:top_k]
+
+
+def _shortlist(need: Need, cat: list[dict], budget: Optional[float]) -> tuple[dict[str, float], str]:
+    """Embedding similarity per catalogue id (local nomic-embed-text). With a budget the call runs
+    in a worker and is abandoned when slow (a cold model load); it still finishes and warms the cache."""
+    query = " ".join([need.summary] + need.topics)
+    items = [(e["id"], entry_text(e)) for e in cat]
+    if budget is None:
+        ranked = embeddings.rank(query, items, top_k=40)
+    else:
+        fut = _embed_pool.submit(_rank_fast, query, items, 40)
+        try:
+            ranked = fut.result(timeout=budget)
+        except FutureTimeout:
+            return {}, "slow"
+        except Exception:  # noqa: BLE001
+            return {}, "error"
+    return (dict(ranked), "on") if ranked is not None else ({}, "off")
+
+
+def _from_catalogue(cat: list[dict], need: Need, proposed_titles: dict[str, str], branch: Optional[str], sims: dict[str, float]) -> list[Recommendation]:
+    out: list[Recommendation] = []
     for e in cat:
-        fit, why = score(e, need, proposed_titles, req.branch, semantic_topic(sims.get(e["id"], 0.0)))
+        fit, why = score(e, need, proposed_titles, branch, semantic_topic(sims.get(e["id"], 0.0)))
         if fit <= 0:
             continue
-        status, names = status_for(e, req.branch)
-        results.append(Recommendation(
+        status, names = status_for(e, branch)
+        proposed_here = e["title"].lower() in proposed_titles
+        out.append(Recommendation(
             id=e["id"], line_id=e["line_id"], is_target=e["is_target"], title=e["title"], author=e["author"], category=e["category"], level=e["level"], hours=e["hours"],
             why=why, fit=fit, status=status, available_at=names, hot_at=[h.replace(" Public Library", "").replace(" Regional Library", "").replace(" Library", "") for h in e["hot"]],
-            before_count=e["before_count"],
+            before_count=e["before_count"], ai_pick=proposed_here, **_age_fields(age_heuristic([], [], e["level"], None)),
         ))
-    # Live mode: books the model proposed that are not on any cached line are
-    # verified in the catalogue and added (their line is built when opened).
-    if engine == "llm":
-        have = {r.title.lower() for r in results}
-        for i, pr in enumerate(proposed[:8]):
-            if pr.title.lower() in have:
-                continue
-            b = resolve(pr.title, pr.author)
-            if b is None:
-                continue
-            rd, _ = score_readiness(b)
-            av = get_availability(b)
-            dm = get_demand(b, av)
-            entry = {"availability": av}
-            status, names = status_for(entry, req.branch)
-            results.append(Recommendation(
-                id=b.id, line_id=b.id, is_target=True, title=b.title, author=b.author,
-                category=(b.subjects or ["Suggested"])[0], level=rd.level, hours=rd.hours, why=pr.why,
-                fit=round(max(0.5, 0.95 - 0.04 * i), 3), status=status, available_at=names,
-                hot_at=[h.replace(" Public Library", "").replace(" Regional Library", "").replace(" Library", "") for h in dm.hot_branches],
-                before_count=0,
-            ))
-            have.add(b.title.lower())
-    # Live mode: widen with catalogue pages so the list grows like a library, not a shortlist.
+    return out
+
+
+def _verify(pr: Proposed):
+    """Catalogue check + readiness for one model proposal (network and model; deep phase only). Cached."""
+    key = f"{config.mode()}|{pr.title.lower()}|{pr.author.lower()}"
+    hit = _cache_get(_VERIFIED, key)
+    if hit is not None:
+        return hit
+    b = resolve(pr.title, pr.author)
+    if b is None or junk_title(b.title):
+        return None
+    rd, _ = score_readiness(b)
+    _cache_put(_VERIFIED, key, (b, rd), cap=_CACHE_MAX * 4)
+    return b, rd
+
+
+def _from_proposals(proposed: list[Proposed], results: list[Recommendation], branch: Optional[str]) -> list[Recommendation]:
+    """Books the model proposed that are not on any cached line, verified in the catalogue
+    (their line is built when opened). Checked in parallel; added in the model's order."""
+    have = {r.title.lower() for r in results}
+    todo = [(i, pr) for i, pr in enumerate(proposed[:8]) if pr.title.lower() not in have]
+    if not todo:
+        return []
+    with ThreadPoolExecutor(max_workers=4, thread_name_prefix="discover-verify") as pool:
+        verified = list(pool.map(lambda x: _safe_verify(x[1]), todo))
+    out: list[Recommendation] = []
+    for (i, pr), got in zip(todo, verified):
+        if got is None:
+            continue
+        b, rd = got
+        if b.title.lower() in have:
+            continue
+        av = get_availability(b)
+        dm = get_demand(b, av)
+        status, names = status_for({"availability": av}, branch)
+        out.append(Recommendation(
+            id=b.id, line_id=b.id, is_target=True, title=b.title, author=b.author,
+            category=clean_category(b.subjects, "Suggested"), level=rd.level, hours=rd.hours, why=pr.why,
+            fit=round(max(0.5, 0.95 - 0.04 * i), 3), status=status, available_at=names,
+            hot_at=[h.replace(" Public Library", "").replace(" Regional Library", "").replace(" Library", "") for h in dm.hot_branches],
+            before_count=0, ai_pick=True, **_age_fields(estimate_age(b, rd)),
+        ))
+        have.add(b.title.lower())
+    return out
+
+
+def _safe_verify(pr: Proposed):
+    try:
+        return _verify(pr)
+    except Exception as exc:  # noqa: BLE001 - one bad proposal never sinks the list
+        log.warning("proposal check failed for %r: %s", pr.title, exc)
+        return None
+
+
+def deep_offer() -> Optional[str]:
+    """What a deep pass would add over the fast one: model picks, catalogue pages, or nothing."""
+    if config.llm_enabled():
+        return "ai"
     if not config.effective_demo():
+        return "catalogue"
+    return None
+
+
+def discover(req: DiscoverRequest) -> DiscoverResponse:
+    t0 = time.perf_counter()
+    timings: dict[str, float] = {}
+
+    def lap(name: str, since: float) -> float:
+        now = time.perf_counter()
+        timings[name] = round((now - since) * 1000, 1)
+        return now
+
+    fast = req.mode == "fast"
+    if fast:
+        need, proposed, engine = heuristic_need(req.text), [], "fast"
+    else:
+        need, proposed, engine = propose(req.text)
+    t = lap("need", t0)
+    proposed_titles = {p.title.lower(): p.why for p in proposed}
+    on = set(req.filters)
+    cat = _catalogue()
+    # Shortlist by embedding similarity; the keyword matcher stays as fallback.
+    sims, emb = _shortlist(need, cat, FAST_EMBED_BUDGET_S if fast else None)
+    t = lap("embed", t)
+    results = _from_catalogue(cat, need, proposed_titles, req.branch, sims)
+    t = lap("score", t)
+    if not fast and engine == "llm":
+        results += _from_proposals(proposed, results, req.branch)
+        t = lap("proposals", t)
+    # Live mode, deep only: widen with catalogue pages so the list grows like a library, not a shortlist.
+    if not fast and not config.effective_demo():
         have = {r.title.lower() for r in results}
         page = max(0, req.offset // max(1, req.limit))
         for r in _catalogue_search(need, req.branch, page, 20):
             if r.title.lower() not in have:
                 results.append(r)
                 have.add(r.title.lower())
+        t = lap("search", t)
     results.sort(key=lambda r: (-r.fit, r.level, r.hours))
     chips = build_chips(need, results[:12], req.branch, on)
     filtered = apply_filters(results, chips)
@@ -449,7 +664,11 @@ def discover(req: DiscoverRequest) -> DiscoverResponse:
     offset = max(0, req.offset)
     limit = max(1, min(50, req.limit))
     page_items = filtered[offset : offset + limit]
-    return DiscoverResponse(need=need, chips=chips, results=page_items, engine=engine, total=total, offset=offset, limit=limit, has_more=offset + limit < total)
+    lap("total", t0)
+    log.info("discover %s engine=%s embed=%s results=%d %s", req.mode, engine, emb, total,
+             " ".join(f"{k}={v:.0f}ms" for k, v in timings.items()))
+    return DiscoverResponse(need=need, chips=chips, results=page_items, engine=engine, total=total, offset=offset, limit=limit,
+                            has_more=offset + limit < total, deep=deep_offer() if fast else None, timings_ms=timings)
 
 
 def to_json(resp: DiscoverResponse) -> str:
@@ -541,7 +760,7 @@ def similar(book_id: str, branch: Optional[str] = None, k: int = 3) -> list[dict
     for e, sim in picks:
         shared = _shared(me, e)
         if e["id"] in reasons:
-            reason = reasons[e["id"]]
+            reason = re.sub(r"[*_`#]+", "", reasons[e["id"]]).strip()
         elif shared:
             reason = f"Also about {', '.join(shared[:2]).lower()}."
         elif e["category"] == me["category"]:

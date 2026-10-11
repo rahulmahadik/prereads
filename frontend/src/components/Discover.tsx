@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { api } from "../api";
 import Cover from "./Cover";
 import ReadinessMeter from "./ReadinessMeter";
@@ -6,7 +6,7 @@ import ListenButton from "./ListenButton";
 import { canListen, listen, picksScript } from "../speech";
 import { AvailToggle, getBranch, getOnlyAvailable, setOnlyAvailable } from "./ui";
 import { navigate } from "../router";
-import type { DiscoverResponse, Recommendation } from "../types";
+import type { DiscoverResponse, FilterChip, Recommendation } from "../types";
 
 const EXAMPLES = [
   "I want to understand investing but I only have 2 weeks",
@@ -15,7 +15,18 @@ const EXAMPLES = [
   "AI for a beginner who knows some Python",
 ];
 
-function needSummary(d: DiscoverResponse): string {
+// Fields the backend adds for two-phase discovery (optional, so older servers and the prototype still fit).
+type Rec = Recommendation & { ai_pick?: boolean };
+type Phased = Omit<DiscoverResponse, "results"> & { results: Rec[]; deep?: "ai" | "catalogue" | null };
+type DeepKind = "ai" | "catalogue";
+type DeepState = { phase: "idle" | "busy" | "done" | "gone"; kind: DeepKind };
+
+const PAGE = 10;
+const DEEP_LIMIT = 30; // ask the slow pass for a wide page; only the books the fast list lacks are shown
+const DEEP_TIMEOUT_MS = 60_000;
+const OTHER_CAP = 6; // deep-only catalogue books (not model picks) shown under the AI picks
+
+function needSummary(d: Phased): string {
   const n = d.need;
   const bits: string[] = [];
   if (n.topics.length) bits.push(`about ${n.topics.slice(0, 3).join(", ")}`);
@@ -27,20 +38,77 @@ function needSummary(d: DiscoverResponse): string {
   return bits.length ? `Books ${bits.join(", ")}` : "Here's what fits";
 }
 
+/** Keep the chip row stable on a re-run of the same request: old order and labels, new on/off, new chips last. */
+function mergeChips(prev: FilterChip[], next: FilterChip[]): FilterChip[] {
+  const byId = new Map(next.map((c) => [c.id, c]));
+  const kept = prev.map((c) => ({ ...c, on: byId.get(c.id)?.on ?? false }));
+  const have = new Set(prev.map((c) => c.id));
+  return [...kept, ...next.filter((c) => !have.has(c.id))];
+}
+
+/** Honest copy for how a list was made. The main list is always the fast one; the AI's own picks
+ * carry the "llm" copy in their section. A fast list with no AI pass to follow says the AI is off. */
+function engineNote(engine: string, deep?: DeepKind | null): string {
+  if (engine === "fast") return deep === "ai" ? "Instant matches from the catalogue" : "Matched with built-in rules (local AI is off)";
+  if (engine === "llm") return "Picked with the local AI on this device";
+  if (engine.startsWith("prototype")) return "Prototype: matches from embedded data";
+  return "Matched with built-in rules (local AI is off)";
+}
+
+const sameIds =(a: FilterChip[], b: FilterChip[]) => a.length === b.length && a.every((c, i) => c.id === b[i].id && c.on === b[i].on);
+
+const key = (r: Rec) => r.title.trim().toLowerCase();
+
 export default function Discover({ initialText = "" }: { initialText?: string }) {
   const [text, setText] = useState(initialText);
-  const [res, setRes] = useState<DiscoverResponse | null>(null);
+  const [res, setRes] = useState<Phased | null>(null);
+  const [chips, setChips] = useState<FilterChip[]>([]);
+  const [ai, setAi] = useState<{ picks: Rec[]; others: Rec[]; at: number }>({ picks: [], others: [], at: 0 });
+  const [deep, setDeep] = useState<DeepState>({ phase: "idle", kind: "ai" });
   const [filters, setFilters] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [hearing, setHearing] = useState(false);
   const [onlyAvail, setOnlyAvail] = useState(getOnlyAvailable());
+  const [more, setMore] = useState(false);
   const lastQuery = useRef("");
   const availRef = useRef(getOnlyAvailable());
+  const resRef = useRef<Phased | null>(null);
+  const seq = useRef(0); // bumps on every new request; stale replies are dropped
+  const deepCtl = useRef<AbortController | null>(null);
+  const listRef = useRef<HTMLDivElement | null>(null);
+  const anchor = useRef<number | null>(null); // list top before a background update, to undo any shift
+
+  const commit = (r: Phased | null) => {
+    resRef.current = r;
+    setRes(r);
+  };
 
   const withAvail = (f: string[], on: boolean) => {
     const base = f.filter((id) => !id.startsWith("branch:"));
     return on ? [...base, getBranch() ? `branch:${getBranch()}` : "branch:any"] : base;
+  };
+
+  const cancelDeep = () => {
+    deepCtl.current?.abort();
+    deepCtl.current = null;
+  };
+
+  useEffect(() => () => {
+    seq.current++;
+    cancelDeep();
+  }, []);
+
+  // A background update (chips from the AI, the status row) must not move the list under the reader's finger.
+  useLayoutEffect(() => {
+    if (anchor.current == null || !listRef.current) return;
+    const delta = listRef.current.getBoundingClientRect().top - anchor.current;
+    anchor.current = null;
+    if (delta !== 0 && window.scrollY > 0) window.scrollBy(0, delta);
+  }, [chips, deep, ai]);
+
+  const holdList = () => {
+    anchor.current = listRef.current ? listRef.current.getBoundingClientRect().top : null;
   };
 
   const voiceIn = async () => {
@@ -58,30 +126,73 @@ export default function Discover({ initialText = "" }: { initialText?: string })
     }
   };
 
-  const PAGE = 10;
-  const [more, setMore] = useState(false);
+  const runDeep = async (q: string, sent: string[], my: number, kind: DeepKind) => {
+    const ctl = new AbortController();
+    deepCtl.current = ctl;
+    const timer = window.setTimeout(() => ctl.abort(), DEEP_TIMEOUT_MS);
+    setDeep({ phase: "busy", kind });
+    try {
+      const d = (await api.discover(q, getBranch(), sent, 0, DEEP_LIMIT, { mode: "deep", signal: ctl.signal })) as Phased;
+      const cur = resRef.current;
+      if (my !== seq.current || !cur) return;
+      const shownIds = new Set(cur.results.map((r) => r.id));
+      const shownTitles = new Set(cur.results.map(key));
+      const extra = d.results.filter((r) => !shownIds.has(r.id) && !shownTitles.has(key(r)));
+      const picks = kind === "ai" ? extra.filter((r) => r.ai_pick) : [];
+      const others = extra.filter((r) => !picks.includes(r)).slice(0, kind === "ai" ? OTHER_CAP : PAGE);
+      holdList();
+      setAi({ picks, others, at: cur.results.length });
+      // The model read the request better (level, time, age): its chips win; on/off already reflects what was sent.
+      if (d.engine === "llm") setChips((prev) => (sameIds(prev, d.chips) ? prev : d.chips));
+      setDeep({ phase: picks.length + others.length ? "done" : "gone", kind });
+    } catch {
+      if (my === seq.current) {
+        holdList();
+        setDeep({ phase: "gone", kind }); // failed, timed out or replaced: just hide the row
+      }
+    } finally {
+      window.clearTimeout(timer);
+      if (deepCtl.current === ctl) deepCtl.current = null;
+    }
+  };
 
-  const run = async (q: string, f: string[]) => {
+  const run = async (q: string, f: string[], sameQuery = false) => {
     if (q.trim().length < 2) return;
+    const my = ++seq.current;
+    cancelDeep();
     setBusy(true);
     setError("");
+    const sent = withAvail(f, availRef.current);
     try {
-      const r = await api.discover(q, getBranch(), withAvail(f, availRef.current), 0, PAGE);
-      setRes(r);
+      const r = (await api.discover(q, getBranch(), sent, 0, PAGE, { mode: "fast" })) as Phased;
+      if (my !== seq.current) return;
+      commit(r);
+      setChips((prev) => (sameQuery && prev.length ? mergeChips(prev, r.chips) : r.chips));
+      setAi({ picks: [], others: [], at: 0 });
       lastQuery.current = q;
+      if (r.deep) runDeep(q, sent, my, r.deep);
+      else setDeep({ phase: "idle", kind: "ai" });
     } catch (e) {
-      setError((e as Error).message);
+      if (my === seq.current) {
+        setError((e as Error).message);
+        setDeep((cur) => (cur.phase === "busy" ? { ...cur, phase: "gone" } : cur));
+      }
     } finally {
-      setBusy(false);
+      if (my === seq.current) setBusy(false);
     }
   };
 
   const loadMore = async () => {
     if (!res || !res.has_more) return;
+    const my = seq.current;
     setMore(true);
     try {
-      const r = await api.discover(lastQuery.current, getBranch(), withAvail(filters, availRef.current), res.offset + res.limit, PAGE);
-      setRes({ ...r, results: [...res.results, ...r.results] });
+      // Paging stays on the fast path.
+      const r = (await api.discover(lastQuery.current, getBranch(), withAvail(filters, availRef.current), res.offset + res.limit, PAGE, { mode: "fast" })) as Phased;
+      if (my !== seq.current) return;
+      const cur = resRef.current ?? res;
+      const seen = new Set([...cur.results, ...ai.picks, ...ai.others].map((x) => x.id));
+      commit({ ...r, results: [...cur.results, ...r.results.filter((x) => !seen.has(x.id))] });
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -95,10 +206,16 @@ export default function Discover({ initialText = "" }: { initialText?: string })
   }, [initialText]);
 
   const reset = () => {
+    seq.current++;
+    cancelDeep();
     setText("");
-    setRes(null);
+    commit(null);
+    setChips([]);
+    setAi({ picks: [], others: [], at: 0 });
+    setDeep({ phase: "idle", kind: "ai" });
     setFilters([]);
     setError("");
+    setBusy(false);
     lastQuery.current = "";
   };
 
@@ -109,20 +226,53 @@ export default function Discover({ initialText = "" }: { initialText?: string })
     }
     const next = filters.includes(id) ? filters.filter((x) => x !== id) : [...filters, id];
     setFilters(next);
-    run(lastQuery.current || text, next);
+    run(lastQuery.current || text, next, true);
   };
 
   const flipAvail = (on: boolean) => {
     availRef.current = on;
     setOnlyAvail(on);
     setOnlyAvailable(on);
-    if (lastQuery.current) run(lastQuery.current, filters);
+    if (lastQuery.current) run(lastQuery.current, filters, true);
   };
 
   const open = (r: Recommendation) => {
     if (r.is_target) navigate("line", { id: r.line_id, title: r.title, author: r.author });
     else navigate("book", { id: r.line_id, title: r.title, author: r.author, stop: r.id });
   };
+
+  const card = (r: Rec, i: number, aiPick = false) => (
+    <li key={r.id} className={`rec ${aiPick ? "rec-ai" : ""}`} style={{ animationDelay: `${i * 50}ms` }}>
+      <button type="button" className="rec-card" onClick={() => open(r)}>
+        <Cover book={{ id: r.id, title: r.title, author: r.author, subjects: [], summary: "", source: "seed" }} size="m" level={r.level} />
+        <span className="rec-main">
+          <span className="rec-kicker">
+            {aiPick && <span className="badge ai-pick small" title="Suggested by the local AI, then checked in the catalogue">AI pick</span>}
+            <span className="fit" title="How well it fits your request">{Math.round(r.fit * 100)}% fit</span>
+            {" · "}{r.category}
+          </span>
+          <strong className="rec-title">{r.title}</strong>
+          <span className="by">{r.author}</span>
+          <span className="rec-why">{r.why}</span>
+          <ReadinessMeter level={r.level} hours={r.hours} compact />
+          <span className="rec-foot">
+            <span className={`where ${r.status.startsWith("Available") ? "ok" : r.status.startsWith("Not there") ? "alt" : "no"}`}>{r.status}</span>
+            {r.hot_at.length > 0 && <span className="badge hot small">Hot at {r.hot_at[0]}</span>}
+            {r.is_target && r.before_count > 0 && <span className="hint">{r.before_count} PreReads first</span>}
+          </span>
+        </span>
+        <span className="chev" aria-hidden="true">›</span>
+      </button>
+    </li>
+  );
+
+  const extraCount = ai.picks.length + ai.others.length;
+  const at = res ? Math.min(ai.at, res.results.length) : 0;
+  const deepLabel = deep.kind === "ai" ? "Asking the local AI for more picks…" : "Searching the catalogue for more…";
+  const doneLabel =
+    deep.kind === "ai" && ai.picks.length
+      ? `${ai.picks.length} more ${ai.picks.length === 1 ? "pick" : "picks"} from the AI below`
+      : `${extraCount} more from the catalogue below`;
 
   return (
     <section className="discover">
@@ -189,13 +339,13 @@ export default function Discover({ initialText = "" }: { initialText?: string })
             <p className="need-line">
               <span aria-hidden="true">🧠 </span>
               {needSummary(res)}
-              {res.engine !== "llm" && <span className="hint"> · reading your request with built-in rules until the OpenAI key is connected</span>}
+              <span className="hint engine-note"> · {engineNote(res.engine, res.deep)}</span>
             </p>
             <span className="need-actions">
               <ListenButton
                 id="picks"
                 label="Listen to the picks"
-                text={() => picksScript({ summary: needSummary(res), picks: res.results.map((r) => ({ title: r.title, author: r.author, why: r.why, status: r.status })) })}
+                text={() => picksScript({ summary: needSummary(res), picks: [...res.results, ...ai.picks].map((r) => ({ title: r.title, author: r.author, why: r.why, status: r.status })) })}
               />
               <button type="button" className="secondary start-over" onClick={reset}>
                 ↺ Start over
@@ -205,49 +355,64 @@ export default function Discover({ initialText = "" }: { initialText?: string })
 
           <div className="chips-row" role="group" aria-label="Filters generated from your request">
             <AvailToggle on={onlyAvail} onChange={flipAvail} label={getBranch() ? "Only on the shelf at my library" : "Only available now"} />
-            {res.chips.filter((c) => c.kind !== "branch").map((c) => (
+            {chips.filter((c) => c.kind !== "branch").map((c) => (
               <button key={c.id} type="button" className={`fchip ${c.on ? "on" : ""}`} aria-pressed={c.on} onClick={() => toggle(c.id)}>
                 {c.on ? "✓ " : ""}{c.label}
               </button>
             ))}
           </div>
 
-          {res.results.length === 0 && <p className="hint">Nothing matches all those filters. Turn one off, or tell me more.</p>}
-          {res.total > 0 && (
-            <p className="hint count-line">
-              Showing {res.results.length} of {res.total} {res.total === 1 ? "book" : "books"}
+          {deep.phase !== "idle" && (
+            <p className={`deep-row ${deep.phase}`} role="status" aria-hidden={deep.phase === "gone"}>
+              {deep.phase === "busy" && (
+                <>
+                  <span className="deep-spin" aria-hidden="true" />
+                  {deepLabel}
+                </>
+              )}
+              {deep.phase === "done" && (
+                <button type="button" className="deep-jump" onClick={() => document.getElementById("ai-picks")?.scrollIntoView({ behavior: "smooth", block: "start" })}>
+                  ✓ {doneLabel} ↓
+                </button>
+              )}
             </p>
           )}
 
-          <ol className="rec-list">
-            {res.results.map((r, i) => (
-              <li key={r.id} className="rec" style={{ animationDelay: `${i * 50}ms` }}>
-                <button type="button" className="rec-card" onClick={() => open(r)}>
-                  <Cover book={{ id: r.id, title: r.title, author: r.author, subjects: [], summary: "", source: "seed" }} size="m" level={r.level} />
-                  <span className="rec-main">
-                    <span className="rec-kicker">
-                      <span className="fit" title="How well it fits your request">{Math.round(r.fit * 100)}% fit</span>
-                      {" · "}{r.category}
-                    </span>
-                    <strong className="rec-title">{r.title}</strong>
-                    <span className="by">{r.author}</span>
-                    <span className="rec-why">{r.why}</span>
-                    <ReadinessMeter level={r.level} hours={r.hours} compact />
-                    <span className="rec-foot">
-                      <span className={`where ${r.status.startsWith("Available") ? "ok" : r.status.startsWith("Not there") ? "alt" : "no"}`}>{r.status}</span>
-                      {r.hot_at.length > 0 && <span className="badge hot small">Hot at {r.hot_at[0]}</span>}
-                      {r.is_target && r.before_count > 0 && <span className="hint">{r.before_count} PreReads first</span>}
-                    </span>
-                  </span>
-                  <span className="chev" aria-hidden="true">›</span>
-                </button>
-              </li>
-            ))}
-          </ol>
+          <div ref={listRef}>
+            {res.results.length === 0 && extraCount === 0 && <p className="hint">Nothing matches all those filters. Turn one off, or tell me more.</p>}
+            {res.total > 0 && (
+              <p className="hint count-line">
+                Showing {res.results.length} of {res.total} {res.total === 1 ? "book" : "books"}
+              </p>
+            )}
+
+            <ol className="rec-list">{res.results.slice(0, extraCount ? at : undefined).map((r, i) => card(r, i))}</ol>
+
+            {extraCount > 0 && (
+              <section className="ai-picks" id="ai-picks" aria-label={ai.picks.length ? "More picks from the AI" : "More from the catalogue"}>
+                <h3 className="ai-head">{ai.picks.length ? "More picks from the AI" : "More from the catalogue"}</h3>
+                {ai.picks.length > 0 && (
+                  <>
+                    <p className="hint ai-note">{engineNote("llm")}, each one checked in the catalogue.</p>
+                    <ol className="rec-list">{ai.picks.map((r, i) => card(r, i, true))}</ol>
+                  </>
+                )}
+                {ai.others.length > 0 && (
+                  <>
+                    {ai.picks.length > 0 && <h4 className="ai-sub">Also in the catalogue</h4>}
+                    <ol className="rec-list">{ai.others.map((r, i) => card(r, i))}</ol>
+                  </>
+                )}
+              </section>
+            )}
+
+            {extraCount > 0 && res.results.length > at && <ol className="rec-list rec-list-after">{res.results.slice(at).map((r, i) => card(r, i))}</ol>}
+          </div>
+
           <div className="more-row">
             {res.has_more && (
               <button type="button" className="secondary load-more" onClick={loadMore} disabled={more}>
-                {more ? "Loading…" : `Load more (${res.total - res.results.length} left)`}
+                {more ? "Loading…" : `Load more (${Math.max(0, res.total - (res.offset + res.limit))} left)`}
               </button>
             )}
             {res.results.length > PAGE && (
@@ -255,7 +420,8 @@ export default function Discover({ initialText = "" }: { initialText?: string })
                 type="button"
                 className="secondary load-more"
                 onClick={() => {
-                  setRes({ ...res, results: res.results.slice(0, PAGE), offset: 0, has_more: res.total > PAGE });
+                  commit({ ...res, results: res.results.slice(0, PAGE), offset: 0, limit: PAGE, has_more: res.total > PAGE });
+                  setAi((cur) => ({ ...cur, at: Math.min(cur.at, PAGE) }));
                   document.querySelector(".discover-results")?.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
               >
