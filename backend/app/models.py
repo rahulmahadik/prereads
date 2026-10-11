@@ -20,6 +20,7 @@ class Book(BaseModel):
     brn: Optional[str] = None                # NLB bib record number when known
     year: Optional[int] = None
     pages: Optional[int] = None
+    ddc: Optional[str] = None                # Dewey class (e.g. "153.4") from Open Library when known
     subjects: list[str] = Field(default_factory=list)
     summary: str = ""
     cover_url: Optional[str] = None

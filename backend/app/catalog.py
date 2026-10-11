@@ -192,10 +192,42 @@ class NLBClient:
 
 
 # ------------------------------------------------------------------ Open Library
+def pick_ddc(values) -> Optional[str]:
+    """Representative Dewey class: most common 3-digit prefix, then the shortest value with it."""
+    vals = [str(v).strip() for v in (values or []) if re.match(r"^\d{3}(\.\d+)?$", str(v).strip())]
+    if not vals:
+        return None
+    counts: dict[str, int] = {}
+    for v in vals:
+        counts[v[:3]] = counts.get(v[:3], 0) + 1
+    best = max(counts.values())
+    prefix = next(v[:3] for v in vals if counts[v[:3]] == best)  # ties: first seen
+    return min((v for v in vals if v.startswith(prefix)), key=len)
+
+
+def openlibrary_ddc(title: str, author: str = "") -> Optional[str]:
+    """Real Dewey class for a title via Open Library (no key). None when unknown or on error."""
+    params = {"title": title, "limit": 5, "fields": "title,author_name,ddc"}
+    if author:
+        params["author"] = author
+    try:
+        r = httpx.get(f"{config.OPENLIBRARY_BASE}/search.json", params=params, timeout=config.HTTP_TIMEOUT,
+                      headers={"User-Agent": "PreReads makeathon prototype"})
+        r.raise_for_status()
+        docs = r.json().get("docs", [])
+    except Exception as exc:  # noqa: BLE001
+        log.warning("Open Library ddc lookup failed: %s", exc)
+        return None
+    for d in docs:
+        if title_matches(title, str(d.get("title", ""))) and d.get("ddc"):
+            return pick_ddc(d["ddc"])
+    return None
+
+
 def openlibrary_search(title: str, author: str = "") -> Optional[Book]:
     if config.effective_demo():
         return None
-    params = {"title": title, "limit": 5, "fields": "key,title,author_name,isbn,first_publish_year,number_of_pages_median,subject,cover_i"}
+    params = {"title": title, "limit": 5, "fields": "key,title,author_name,isbn,first_publish_year,number_of_pages_median,subject,cover_i,ddc"}
     if author:
         params["author"] = author
     try:
@@ -231,6 +263,7 @@ def openlibrary_search(title: str, author: str = "") -> Optional[Book]:
         isbn=isbn,
         year=d.get("first_publish_year"),
         pages=d.get("number_of_pages_median"),
+        ddc=pick_ddc(d.get("ddc")),
         subjects=[str(s) for s in d.get("subject", [])[:15]],
         summary=summary[:3000],
         cover_url=cover,
@@ -242,7 +275,7 @@ def openlibrary_search_many(q: str, page: int = 1, size: int = 20) -> list[Book]
     """Broad keyword search, paged, for discovery lists (no summary fetch: fast)."""
     if config.effective_demo() or not q.strip():
         return []
-    params = {"q": q, "page": page, "limit": size, "fields": "key,title,author_name,isbn,first_publish_year,number_of_pages_median,subject,cover_i"}
+    params = {"q": q, "page": page, "limit": size, "fields": "key,title,author_name,isbn,first_publish_year,number_of_pages_median,subject,cover_i,ddc"}
     try:
         r = httpx.get(f"{config.OPENLIBRARY_BASE}/search.json", params=params, timeout=config.HTTP_TIMEOUT,
                       headers={"User-Agent": "PreReads-makeathon/0.1 (contact: team)"})
@@ -261,7 +294,7 @@ def openlibrary_search_many(q: str, page: int = 1, size: int = 20) -> list[Book]
             continue
         out.append(Book(
             id=isbn or f"ol:{slugify(t, a)}", title=t, author=a, isbn=isbn, year=d.get("first_publish_year"),
-            pages=d.get("number_of_pages_median"), subjects=[str(x) for x in d.get("subject", [])[:10]],
+            pages=d.get("number_of_pages_median"), ddc=pick_ddc(d.get("ddc")), subjects=[str(x) for x in d.get("subject", [])[:10]],
             cover_url=f"https://covers.openlibrary.org/b/id/{d['cover_i']}-M.jpg" if d.get("cover_i") else None, source="openlibrary",
         ))
     return out

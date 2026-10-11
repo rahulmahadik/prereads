@@ -74,6 +74,8 @@ _DEWEY_BY_TITLE: dict[str, str] = {
 
 
 def _dewey(book: Book) -> str:
+    if book.ddc:
+        return book.ddc
     key = book.title.lower().strip()
     if key in _DEWEY_BY_TITLE:
         return _DEWEY_BY_TITLE[key]
