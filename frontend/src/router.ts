@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export type Screen = "home" | "ready" | "line" | "book";
+export type Screen = "home" | "ready" | "line" | "book" | "meet";
 
 export interface Location {
   screen: Screen;
@@ -12,7 +12,7 @@ function parse(hash: string): Location {
   const [path, query = ""] = raw.split("?");
   const params: Record<string, string> = {};
   new URLSearchParams(query).forEach((v, k) => (params[k] = v));
-  const screen = (["home", "ready", "line", "book"].includes(path) ? path : "home") as Screen;
+  const screen = (["home", "ready", "line", "book", "meet"].includes(path) ? path : "home") as Screen;
   return { screen, params };
 }
 
