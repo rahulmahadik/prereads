@@ -8,6 +8,9 @@ import { t, tn, useLang, type Key } from "../i18n";
 import { navigate } from "../router";
 import { listHearts, noteCount, pathsInProgress, readSetFrom, useStoreVersion } from "../myshelf";
 import type { ResolveHit } from "../types";
+import { THEME_ICON, nextTheme, setTheme, useAppearance, type Resolved } from "../theme";
+
+const THEME_NAME: Record<Resolved, Key> = { light: "look.light", dark: "look.dark", sepia: "look.sepia" };
 
 interface Target {
   id: string;
@@ -53,6 +56,7 @@ const MODES: { id: Mode; label: Key; icon: string }[] = [
 
 export default function Home({ senior, onSenior }: { senior: boolean; onSenior: () => void }) {
   useLang();
+  const look = useAppearance();
   const [mode, setMode] = useState<Mode>("ask");
   const [resetKey, setResetKey] = useState(0);
   const [settings, setSettings] = useState(false);
@@ -171,6 +175,15 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
             ⚙️ {t(modeLabel || "home.settings")}
           </button>
           <LanguagePicker />
+          <button
+            type="button"
+            className="theme-btn"
+            onClick={() => setTheme(nextTheme(look.resolved))}
+            aria-label={t("look.switch", { name: t(THEME_NAME[look.resolved]), next: t(THEME_NAME[nextTheme(look.resolved)]) })}
+            title={t("look.switch", { name: t(THEME_NAME[look.resolved]), next: t(THEME_NAME[nextTheme(look.resolved)]) })}
+          >
+            <span aria-hidden="true">{THEME_ICON[look.resolved]}</span>
+          </button>
           <button type="button" className="senior-toggle" aria-pressed={senior} onClick={onSenior} title={t("home.senior")} aria-label={t("home.senior")}>
             Aa
           </button>

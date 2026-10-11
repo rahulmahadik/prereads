@@ -3,7 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#F5F7F6" />
+    <meta name="theme-color" content="#F3F6F9" />
+    <meta name="color-scheme" content="light dark" />
+    <script>
+      /* Apply the reader's theme, font and text size before first paint (no light flash in dark mode). Mirrors src/theme.ts. */
+      (function () {
+        var d = document.documentElement, g = function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } };
+        var t = g("prereads.theme"), f = g("prereads.font"), s = g("prereads.size");
+        if (["light", "dark", "sepia", "system"].indexOf(t) < 0) t = "system";
+        var r = t;
+        if (t === "system") { try { r = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } catch (e) { r = "light"; } }
+        if (s !== "sm" && s !== "lg") s = "md";
+        d.setAttribute("data-theme", r);
+        d.setAttribute("data-theme-pref", t);
+        d.setAttribute("data-font", f === "serif" ? "serif" : "sans");
+        d.setAttribute("data-size", s);
+        d.style.setProperty("--fs-scale", s === "sm" ? "0.9" : s === "lg" ? "1.15" : "1");
+        d.style.colorScheme = r === "dark" ? "dark" : "light";
+        if (g("prereads.senior") === "1") d.classList.add("senior");
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", r === "dark" ? "#0F1720" : r === "sepia" ? "#F4ECD8" : "#F3F6F9");
+      })();
+    </script>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="PreReads" />

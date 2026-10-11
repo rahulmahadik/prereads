@@ -3,6 +3,10 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import OfflineBadge from "./components/OfflineBadge";
 import "./styles.css";
+import { initAppearance } from "./theme";
+
+// Theme, font and text size go on <html> before React paints (index.html already did a pre-paint pass).
+initAppearance();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

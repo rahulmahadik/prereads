@@ -2,7 +2,67 @@ import { useEffect, useState } from "react";
 import { api } from "../api";
 import { Sheet } from "./ui";
 import { LanguageSegments } from "./LanguagePicker";
-import { rich, t, useLang } from "../i18n";
+import { rich, t, useLang, type Key } from "../i18n";
+import { setFont, setSize, setTheme, useAppearance, type Font, type Size, type Theme } from "../theme";
+
+const THEME_OPTS: { id: Theme; label: Key; icon: string }[] = [
+  { id: "system", label: "look.system", icon: "◐" },
+  { id: "light", label: "look.light", icon: "☀️" },
+  { id: "dark", label: "look.dark", icon: "🌙" },
+  { id: "sepia", label: "look.sepia", icon: "📖" },
+];
+const FONT_OPTS: { id: Font; label: Key }[] = [
+  { id: "sans", label: "look.sans" },
+  { id: "serif", label: "look.serif" },
+];
+const SIZE_OPTS: { id: Size; text: string; label: Key }[] = [
+  { id: "sm", text: "A−", label: "look.smaller" },
+  { id: "md", text: "A", label: "look.normal" },
+  { id: "lg", text: "A+", label: "look.larger" },
+];
+
+/** Theme · Font · Text size as 44px segmented controls; each applies at once and is remembered on this device. */
+export function AppearanceSection() {
+  useLang();
+  const look = useAppearance();
+  return (
+    <section className="settings-look" aria-labelledby="look-h">
+      <h3 className="small-h" id="look-h">{t("look.title")}</h3>
+      <div className="look-row">
+        <span className="look-label" id="look-theme">{t("look.theme")}</span>
+        <div className="seg" role="radiogroup" aria-labelledby="look-theme">
+          {THEME_OPTS.map((o) => (
+            <button key={o.id} type="button" role="radio" aria-checked={look.theme === o.id} className={`seg-opt ${look.theme === o.id ? "on" : ""}`} onClick={() => setTheme(o.id)}>
+              <span className="seg-ico" aria-hidden="true">{o.icon}</span>
+              {t(o.label)}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="look-row">
+        <span className="look-label" id="look-font">{t("look.font")}</span>
+        <div className="seg" role="radiogroup" aria-labelledby="look-font">
+          {FONT_OPTS.map((o) => (
+            <button key={o.id} type="button" role="radio" aria-checked={look.font === o.id} className={`seg-opt ${o.id} ${look.font === o.id ? "on" : ""}`} onClick={() => setFont(o.id)}>
+              {t(o.label)}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="look-row">
+        <span className="look-label" id="look-size">{t("look.size")}</span>
+        <div className="seg" role="radiogroup" aria-labelledby="look-size">
+          {SIZE_OPTS.map((o) => (
+            <button key={o.id} type="button" role="radio" aria-checked={look.size === o.id} aria-label={t(o.label)} title={t(o.label)} className={`seg-opt size-${o.id} ${look.size === o.id ? "on" : ""}`} onClick={() => setSize(o.id)}>
+              {o.text}
+            </button>
+          ))}
+        </div>
+      </div>
+      <p className="hint">{t("look.hint")}</p>
+    </section>
+  );
+}
 
 export interface ModeInfo {
   demo: boolean;
@@ -60,6 +120,7 @@ export default function SettingsSheet({ open, onClose }: { open: boolean; onClos
         <LanguageSegments />
         <p className="hint">{t("lang.hint")}</p>
       </section>
+      <AppearanceSection />
       <h3 className="small-h">{t("settings.dataMode")}</h3>
       {!info ? (
         <p className="hint">{t("common.loading")}</p>
