@@ -525,7 +525,10 @@ def similar(book_id: str, branch: Optional[str] = None, k: int = 3) -> list[dict
     by_id = {e["id"]: e for e in pool}
     if ranked is not None:
         boosted = [(by_id[i], sim + 0.08 * len(_shared(me, by_id[i])) + (0.1 if by_id[i]["category"] == me["category"] else 0)) for i, sim in ranked]
-        shortlist = sorted(boosted, key=lambda x: -x[1])[:10]
+        boosted.sort(key=lambda x: -x[1])
+        # Prefer neighbours that share a category or subject, or are clearly similar; fill from the rest.
+        related = [(e, v) for e, v in boosted if e["category"] == me["category"] or _shared(me, e) or v >= 0.2]
+        shortlist = (related + [x for x in boosted if x not in related])[:10]
         chosen = _llm_neighbours(me, [e for e, _ in shortlist], k)
         sims = dict((e["id"], sim) for e, sim in shortlist)
         picks = [(e, sims[e["id"]]) for e, _ in chosen] if chosen else shortlist[:k]

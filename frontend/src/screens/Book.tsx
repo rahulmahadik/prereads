@@ -8,6 +8,8 @@ import { parseCallNumber, stepsFor } from "../components/WayfindMap";
 import WayfindMap from "../components/WayfindMap";
 import { Sheet, TopBar, getBranch, nlbSearchUrl, shelfStatus, shortBranch, useBack, useReadSet } from "../components/ui";
 import { navigate } from "../router";
+import HeartButton from "../components/HeartButton";
+import { getNote, setNote } from "../myshelf";
 import type { Neighbour, Route, Stop } from "../types";
 
 export default function Book({ id, title, author, stopId }: { id: string; title: string; author: string; stopId: string }) {
@@ -22,6 +24,7 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
   const [shownLibs, setShownLibs] = useState(0);   // 0 = collapsed (status block only)
   const branchPref = getBranch();
   const [similar, setSimilar] = useState<Neighbour[]>([]);
+  const [note, setNoteText] = useState("");
 
   useEffect(() => {
     api
@@ -34,6 +37,10 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
   const idx = stops.findIndex((s) => s.book.id === stopId);
   const stop: Stop | undefined = stops[idx];
   const stopBookId = stop?.book.id;
+
+  useEffect(() => {
+    setNoteText(stopBookId ? getNote(stopBookId) : "");
+  }, [stopBookId]);
 
   useEffect(() => {
     setSimilar([]);
@@ -116,6 +123,8 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
       level: readiness.level, hours: readiness.hours, status: statusText, callNumber: wayfind?.callNumber, branch: wayfind?.branch,
       assumes: readiness.assumed_concepts, steps: wayfind && wayfind.callNumber ? stepsFor(parseCallNumber(wayfind.callNumber), wayfind.callNumber).map((x) => x.text) : [],
     });
+  const queue = demand.reservations ?? 0;
+  const reserveLabel = st.kind === "waiting" || st.kind === "none" ? `Join waitlist${queue ? ` (${queue} in queue)` : ""}` : "Reserve on NLB";
   const read = readSet.has(book.id);
   const role = stop.role === "target" ? "Your book" : stop.role === "before" ? "PreRead" : "NextRead";
   let startX: number | null = null;
@@ -154,6 +163,7 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
             <div className="title-row">
               <h1 className="book-title">{book.title}</h1>
               <ListenButton id={`book:${book.id}`} text={narration} label="Listen" />
+              <HeartButton book={{ id: book.id, title: book.title, author: book.author, lineId: id, lineTitle: title, lineAuthor: author }} />
             </div>
             <p className="book-author">
               {book.author}
@@ -239,7 +249,23 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
             ))}
             {demand.hidden_gem && <span className="badge gem">Hidden gem — in everywhere, nobody's queuing</span>}
           </div>
-          {(availability.some((a) => a.demo) || demand.demo) && <p className="demo-note">Demo shelf data until the NLB key is connected.</p>}
+          <a className="reserve-link" href={nlbSearchUrl(book.title, book.isbn)} target="_blank" rel="noopener">
+            {reserveLabel} ↗
+          </a>
+          {(availability.some((a) => a.demo) || demand.demo) && <p className="demo-note">Demo shelf data until the NLB key is connected{queue ? "; queue length is demo too" : ""}.</p>}
+
+          <label className="note-box">
+            <span className="small-h">My note</span>
+            <textarea
+              value={note}
+              rows={3}
+              placeholder="A thought, a page number, who recommended it… saved on this device"
+              onChange={(e) => {
+                setNoteText(e.target.value);
+                setNote(book.id, e.target.value);
+              }}
+            />
+          </label>
         </div>
       </article>
 
@@ -277,7 +303,7 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
           </button>
         ) : (
           <a className="bar-btn link-as-btn" href={nlbSearchUrl(book.title, book.isbn)} target="_blank" rel="noopener">
-            {inSomewhere ? "Reserve" : "Waitlist"}
+            {inSomewhere ? "Reserve on NLB" : `Join waitlist${queue ? ` (${queue})` : ""}`}
           </a>
         )}
         {wayfind && wayfind.callNumber ? (

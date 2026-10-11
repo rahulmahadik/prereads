@@ -2518,3 +2518,20 @@ body { background: var(--paper); }
 /* share by QR */
 .share-qr { margin: 12px 0 0; display: grid; justify-items: start; gap: 6px; }
 .share-qr svg { width: min(100%, 200px); height: auto; border: 1.5px solid var(--rule); border-radius: var(--radius); display: block; }
+
+/* my shelf, hearts, notes, reserve */
+.heart-btn { min-width: var(--tap); min-height: var(--tap); display: inline-grid; place-items: center; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface); color: var(--muted); font-size: 20px; cursor: pointer; }
+.heart-btn.on { color: var(--hot); border-color: var(--hot-soft); background: var(--hot-soft); }
+.stop-row { position: relative; }
+.row-heart { position: absolute; top: 6px; right: 6px; min-width: 36px; min-height: 36px; font-size: 17px; }
+.note-chip { display: inline-block; margin-top: 4px; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--ink); font-size: 14px; }
+.note-box { display: grid; gap: 6px; margin-top: 16px; }
+.note-box textarea { width: 100%; min-height: 88px; padding: 10px 12px; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); color: var(--ink); font: inherit; font-size: var(--fs); resize: vertical; box-sizing: border-box; }
+.note-box textarea:focus-visible { outline: 2px solid var(--line); outline-offset: 1px; }
+.reserve-link { display: inline-flex; align-items: center; min-height: var(--tap); margin-top: 8px; color: var(--line); font-weight: 600; text-decoration: none; }
+.reserve-link:hover { text-decoration: underline; }
+.my-paths { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 8px; }
+.my-path { display: grid; gap: 4px; width: 100%; min-height: var(--tap); padding: 12px 14px; text-align: left; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); color: var(--ink); font: inherit; cursor: pointer; }
+.my-bar { display: block; height: 6px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
+.my-bar i { display: block; height: 100%; background: var(--stamp); }
+.heart-badge { color: var(--hot); }

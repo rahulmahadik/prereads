@@ -9,6 +9,8 @@ import { sameShelfGroups, sameShelfText } from "../shelf";
 import { ShareCard } from "../components/Extras";
 import { AvailToggle, FAMILIARITY, Sheet, TopBar, getBranch, getOnlyAvailable, getReaderLevel, setBranch, setOnlyAvailable, setReaderLevel, shelfStatus, shortBranch, useBack, useReadSet } from "../components/ui";
 import { navigate } from "../router";
+import HeartButton from "../components/HeartButton";
+import { getNote, recordPath, useStoreVersion } from "../myshelf";
 import type { Branch, Route, Stop } from "../types";
 
 function statusText(st: ReturnType<typeof shelfStatus>): { text: string; cls: string } {
@@ -56,9 +58,13 @@ export default function Line({ id, title, author }: { id: string; title: string;
     setError("");
     api
       .route(id, title, author)
-      .then(setRoute)
+      .then((r) => {
+        setRoute(r);
+        recordPath(r, title, author);
+      })
       .catch((e) => setError((e as Error).message));
   }, [id, title, author]);
+  useStoreVersion();
 
   useEffect(() => {
     api.branches().then((r) => setBranches(r.branches)).catch(() => setBranches([]));
@@ -123,11 +129,13 @@ export default function Line({ id, title, author }: { id: string; title: string;
             <span className="stop-why">{kind === "target" ? s.readiness.one_line || s.why : s.why}</span>
             <ReadinessMeter level={s.readiness.level} hours={s.readiness.hours} compact />
             <span className={`where ${where.cls}`}>{where.text}</span>
+            {getNote(s.book.id) && <span className="note-chip">📝 Note</span>}
           </span>
           <span className="chev" aria-hidden="true">
             ›
           </span>
         </button>
+        <HeartButton className="row-heart" book={{ id: s.book.id, title: s.book.title, author: s.book.author, lineId: id, lineTitle: title, lineAuthor: author }} />
       </li>
     );
   };

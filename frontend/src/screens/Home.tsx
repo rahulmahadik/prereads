@@ -4,6 +4,7 @@ import Cover from "../components/Cover";
 import Discover from "../components/Discover";
 import SettingsSheet from "../components/SettingsSheet";
 import { navigate } from "../router";
+import { listHearts, noteCount, pathsInProgress, readSetFrom, useStoreVersion } from "../myshelf";
 import type { ResolveHit } from "../types";
 
 interface Target {
@@ -100,6 +101,10 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
     }
   };
 
+  useStoreVersion();
+  const hearts = listHearts();
+  const paths = pathsInProgress(readSetFrom()).filter((p) => p.total > 0).slice(0, 6);
+
   const asBook = (t: Target) => ({ id: t.id, title: t.title, author: t.author, subjects: [], summary: "", source: "seed" });
 
   const BookList = ({ books }: { books: Target[] }) => (
@@ -190,6 +195,45 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
         )}
       </section>
 
+      {(hearts.length > 0 || paths.length > 0) && (
+        <section className="row-section my-shelf" aria-label="My shelf">
+          <div className="row-head">
+            <h3>♥ My shelf</h3>
+            <span className="hint">Saved on this device</span>
+          </div>
+          {paths.length > 0 && (
+            <ul className="my-paths">
+              {paths.map((p) => {
+                const notes = noteCount(p.before.map((b) => b.id).concat(p.id));
+                return (
+                  <li key={p.id}>
+                    <button type="button" className="my-path" onClick={() => go(p.id, p.title, p.author)}>
+                      <strong>{p.title}</strong>
+                      <span className="hint">
+                        {p.done === p.total ? "PreReads done — ready for the book" : `${p.done} of ${p.total} PreReads read · about ${p.hoursLeft} h left`}
+                        {notes > 0 ? ` · ${notes} ${notes === 1 ? "note" : "notes"}` : ""}
+                      </span>
+                      <span className="my-bar" aria-hidden="true"><i style={{ width: `${(p.done / p.total) * 100}%` }} /></span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+          {hearts.length > 0 && (
+            <div className="book-row" role="list">
+              {hearts.map((h) => (
+                <button key={h.id} type="button" className="row-item" role="listitem" onClick={() => navigate("book", { id: h.lineId, title: h.lineTitle, author: h.lineAuthor, stop: h.id })}>
+                  <Cover book={asBook(h)} size="m" />
+                  <span className="row-title">{h.title}</span>
+                  <span className="row-badge heart-badge">♥ Saved</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
+
       {popular.length > 0 && (
         <section className="row-section">
           <div className="row-head">
@@ -217,7 +261,7 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
         <section className="row-section">
           <div className="row-head">
             <h3>📚 Books people start and never finish</h3>
-            <span className="hint">The ones a reading line helps most</span>
+            <span className="hint">The ones a reading path helps most</span>
             {targets.filter((t) => t.unfinished).length > 6 && (
               <button type="button" className="link-btn inline" onClick={() => setShowAllUnfinished((v) => !v)}>
                 {showAllUnfinished ? "Show fewer" : `See all ${targets.filter((t) => t.unfinished).length}`}
