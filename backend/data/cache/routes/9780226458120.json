@@ -5,94 +5,98 @@
       "role": "before",
       "order": 0,
       "book": {
-        "id": "ol:philosophy-of-science-a-very-short-introduction-samir-okasha",
-        "title": "Philosophy of Science: A Very Short Introduction",
-        "author": "Samir Okasha",
-        "isbn": null,
+        "id": "9780702213410",
+        "title": "What is this thing called science?",
+        "author": "A. F. Chalmers, Chalmers",
+        "isbn": "9780702213410",
         "brn": null,
-        "year": null,
-        "pages": 144,
+        "year": 1976,
+        "pages": 179,
+        "ddc": "501",
         "subjects": [
-          "Philosophy of science",
-          "History of science"
+          "Philosophy",
+          "Science",
+          "open_syllabus_project",
+          "Wissenschaftstheorie",
+          "Philosophie",
+          "Sciences",
+          "Philosophie et sciences",
+          "Wetenschapsfilosofie",
+          "08.35 philosophy of science",
+          "Filosofia da ciencia",
+          "Science, philosophy",
+          "Aspectos sociais",
+          "Historia",
+          "Ciencia",
+          "Metodologia"
         ],
         "summary": "",
-        "cover_url": null,
+        "cover_url": "https://covers.openlibrary.org/b/id/3701792-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
-        "level": 2,
-        "hours": 4.0,
-        "assumed_concepts": [],
+        "level": 3,
+        "hours": 8.0,
+        "assumed_concepts": [
+          "Empiricism",
+          "Logical Positivism",
+          "Induction",
+          "Falsification",
+          "Observation",
+          "Theory"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to think critically about how science *really* works – it's more than just experiments and facts!"
       },
-      "why": "The questions and names Kuhn is responding to, in 140 pages.",
-      "confidence": 0.8999999999999999,
+      "why": "Reading 'What is this thing called science?' will give you a solid grounding in the philosophical concepts like falsification and induction that Kuhn frequently references and builds upon in 'The Structure of Scientific Revolutions,' making his arguments much more accessible.",
+      "confidence": 0.9,
       "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 501 CHA",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 501 OKA",
+          "call_number": "English 501 CHA",
           "available": 1,
-          "total": 3,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 501 OKA",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 501 OKA",
+          "call_number": "English 501 CHA",
           "available": 1,
           "total": 3,
           "demo": true
         },
         {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 501 OKA",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 501 OKA",
-          "available": 0,
+          "call_number": "English 501 CHA",
+          "available": 2,
           "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 501 OKA",
-          "available": 0,
-          "total": 1,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 501 OKA",
-          "available": 3,
-          "total": 3,
+          "call_number": "English 501 CHA",
+          "available": 0,
+          "total": 1,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Tampines Regional Library",
-          "Woodlands Regional Library"
+          "Tampines Regional Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -103,45 +107,65 @@
       "role": "before",
       "order": 1,
       "book": {
-        "id": "ol:what-is-this-thing-called-science-a-f-chalmers",
-        "title": "What Is This Thing Called Science?",
-        "author": "A. F. Chalmers",
-        "isbn": null,
+        "id": "9780351314216",
+        "title": "Cosmos",
+        "author": "Carl Sagan",
+        "isbn": "9780351314216",
         "brn": null,
-        "year": null,
-        "pages": 304,
+        "year": 1980,
+        "pages": 354,
+        "ddc": "523.1",
         "subjects": [
-          "Philosophy of science",
-          "History of science"
+          "Ouvrages de vulgarisation",
+          "Astronomie",
+          "Astronomy",
+          "Popular works",
+          "History",
+          "Science",
+          "Cosmology",
+          "Planetary science",
+          "Astronomy, popular works",
+          "Kosmos",
+          "Kosmosforschung",
+          "Raumfahrt",
+          "Weltall",
+          "Kosmologie",
+          "Einführung"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "This book is about science in its broadest human context, how science and civilization grew up together. It is the story of our long journey of discovery and the forces and individuals who helped to shape modern science, including Democritus, Hypatia, Kepler, Newton, Huygens, Champollion, Lowell and Humason. The book also explores spacecraft missions of discovery of the nearby planets, the research in the Library of ancient Alexandria, the human brain, Egyptian hieroglyphics, the origin of life, the death of the Sun, the evolution of galaxies and the origins of matter, suns and worlds. The author retraces the fifteen billion years of cosmic evolution that have transformed matter into life and consciousness, enabling the cosmos to wonder about itself. He considers the latest findings on life elsewhere and how we might communicate with the beings of other worlds. ~ WorldCat.org",
+        "cover_url": "https://covers.openlibrary.org/b/id/8283901-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 3,
-        "hours": 8.0,
-        "assumed_concepts": [],
+        "hours": 15.0,
+        "assumed_concepts": [
+          "basic physics",
+          "scientific method",
+          "historical timeline",
+          "ancient civilizations",
+          "mathematical notation"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready for a sweeping, beautiful journey through the history of science and our place in the universe – it's a lot to take in, but incredibly rewarding!"
       },
-      "why": "The standard undergraduate primer that sets Kuhn in context.",
-      "confidence": 0.7999999999999999,
+      "why": "Reading *Cosmos* first will give you a good foundation in the scientific method and historical context, which will be helpful for understanding Kuhn's discussion of how scientific theories evolve and are sometimes overturned.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 501 CHA",
+          "call_number": "English 523.1 SAG",
           "available": 0,
-          "total": 2,
+          "total": 1,
           "demo": true
         },
         {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 501 CHA",
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 523.1 SAG",
           "available": 3,
           "total": 3,
           "demo": true
@@ -149,7 +173,101 @@
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 501 CHA",
+          "call_number": "English 523.1 SAG",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 523.1 SAG",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 523.1 SAG",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 523.1 SAG",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Tampines Regional Library",
+          "Central Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 2,
+      "book": {
+        "id": "9780330426237",
+        "title": "The Immortal Life of Henrietta Lacks",
+        "author": "Rebecca Skloot",
+        "isbn": "9780330426237",
+        "brn": null,
+        "year": 2009,
+        "pages": 381,
+        "ddc": "362.1969940092",
+        "subjects": [
+          "Cancer",
+          "Cell culture",
+          "Research",
+          "Patients",
+          "Health",
+          "HeLa cells",
+          "African American women",
+          "Medical ethics",
+          "Human experimentation in medicine",
+          "Biography",
+          "History",
+          "Lacks, Henrietta, -- 1920-1951 -- Health",
+          "Cancer -- Patients -- Virginia -- Biography",
+          "African American women -- History",
+          "Human experimentation in medicine -- United States -- History"
+        ],
+        "summary": "Her name was Henrietta Lacks, but scientists know her as HeLa. She was a poor black tobacco farmer whose cells—taken without her knowledge in 1951—became one of the most important tools in medicine, vital for developing the polio vaccine, cloning, gene mapping, in vitro fertilization, and more. Henrietta’s cells have been bought and sold by the billions, yet she remains virtually unknown, and her family can’t afford health insurance.\r\n\r\nThis New York Times bestseller takes readers on an extraordinary journey, from the “colored” ward of Johns Hopkins Hospital in the 1950s to stark white laboratories with freezers filled with HeLa cells, from Henrietta’s small, dying hometown of Clover, Virginia, to East Baltimore today, where her children and grandchildren live and struggle with the legacy of her cells. The Immortal Life of Henrietta Lacks tells a riveting story of the collision between ethics, race, and medicine; of scientific discovery and faith healing; and of a daughter consumed with questions about the mother she never knew. It’s a story inextricably connected to the dark history of experimentation on African Americans, the birth of bioethics, and the legal battles over whether we control the stuff we’re made of.\r\n([source][1])\r\n\r\n\r\n  [1]: http://rebeccaskloot.com/the-immortal-life/",
+        "cover_url": "https://covers.openlibrary.org/b/id/8364866-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Cell biology basics",
+          "Medical terminology",
+          "History of medicine",
+          "Bioethics",
+          "African American history"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to learn about a fascinating, and sometimes troubling, intersection of science, family, and race – it's a story that will make you think about the cost of medical progress."
+      },
+      "why": "While 'The Structure of Scientific Revolutions' delves into the philosophy of science, 'The Immortal Life of Henrietta Lacks' will give you a foundational understanding of cell biology and the history of medicine, which will help you grasp the scientific context Kuhn discusses.",
+      "confidence": 0.7,
+      "availability": [
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 362.1969940092 SKL",
           "available": 1,
           "total": 3,
           "demo": true
@@ -157,30 +275,41 @@
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 501 CHA",
-          "available": 1,
-          "total": 1,
+          "call_number": "English 362.1969940092 SKL",
+          "available": 3,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 501 CHA",
-          "available": 1,
-          "total": 1,
+          "call_number": "English 362.1969940092 SKL",
+          "available": 2,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 501 CHA",
+          "call_number": "English 362.1969940092 SKL",
           "available": 0,
           "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 362.1969940092 SKL",
+          "available": 1,
+          "total": 2,
           "demo": true
         }
       ],
       "demand": {
-        "hot_branches": [],
+        "hot_branches": [
+          "Jurong West Public Library",
+          "Central Public Library"
+        ],
         "hidden_gem": false,
         "reservations": 0,
         "demo": true
@@ -188,24 +317,38 @@
     },
     {
       "role": "target",
-      "order": 2,
+      "order": 3,
       "book": {
-        "id": "9780226458120",
+        "id": "9780226458113",
         "title": "The Structure of Scientific Revolutions",
-        "author": "Thomas S. Kuhn",
-        "isbn": "9780226458120",
+        "author": "Thomas S. Kuhn, Dennis Holland",
+        "isbn": "9780226458113",
         "brn": null,
-        "year": 1962,
-        "pages": 264,
+        "year": 1955,
+        "pages": 210,
+        "ddc": "501",
         "subjects": [
-          "Philosophy of science",
-          "History of science"
+          "Sciences",
+          "Histoire",
+          "Philosophie",
+          "Science",
+          "Philosophy",
+          "History",
+          "Progress",
+          "Paradigm (Theory of knowledge)",
+          "Ciencia",
+          "Historia Da Ciencia",
+          "Série Ciência história",
+          "Wetenschapsdynamica",
+          "Progrès",
+          "open_syllabus_project",
+          "Long Now Manual for Civilization"
         ],
-        "summary": "Kuhn's account of paradigms and how science actually changes.",
-        "cover_url": null,
+        "summary": "Thomas S. Kuhn's classic book is now available with a new index.",
+        "cover_url": "https://covers.openlibrary.org/b/id/6566386-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 4,
@@ -222,27 +365,19 @@
       "confidence": 1.0,
       "availability": [
         {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 501 KUH",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
           "call_number": "English 501 KUH",
           "available": 0,
-          "total": 3,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
           "call_number": "English 501 KUH",
-          "available": 2,
-          "total": 3,
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
@@ -257,8 +392,16 @@
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
           "call_number": "English 501 KUH",
-          "available": 0,
-          "total": 2,
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 501 KUH",
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
@@ -272,7 +415,7 @@
       ],
       "demand": {
         "hot_branches": [
-          "Woodlands Regional Library"
+          "Central Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -281,7 +424,133 @@
     },
     {
       "role": "after",
-      "order": 3,
+      "order": 4,
+      "book": {
+        "id": "9781844674428",
+        "title": "Against Method",
+        "author": "Paul K. Feyerabend",
+        "isbn": "9781844674428",
+        "brn": null,
+        "year": 1975,
+        "pages": 344,
+        "ddc": "501",
+        "subjects": [
+          "Methodology",
+          "Philosophy",
+          "Rationalism",
+          "Science",
+          "Science -- Philosophy",
+          "Science -- Methodology",
+          "Sciences",
+          "Methods",
+          "Epistemological anarchism",
+          "Science, philosophy",
+          "Science, methodology",
+          "Knowledge, theory of",
+          "Theory of Knowledge",
+          "Anarchism",
+          "Philosophical positions & movements - general & miscellaneous"
+        ],
+        "summary": "**Against Method: Outline of an Anarchistic Theory of Knowledge** is a 1975 book about the philosophy of science by Paul Feyerabend, in which the author argues that science is an anarchic enterprise, not a nomic (customary) one. In the context of this work, the term anarchy refers to epistemological anarchy.\r\n\r\n(Source: [Wikipedia](https://en.wikipedia.org/wiki/Against_Method))",
+        "cover_url": "https://covers.openlibrary.org/b/id/9598338-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "scientific method",
+          "epistemology",
+          "rationalism",
+          "philosophical argument",
+          "the concept of 'method'"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to question everything you think you know about how science works – this book challenges the very idea of a 'right' way to do it!"
+      },
+      "why": "Where the argument goes if you keep pulling the thread.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 501 FEY",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 501 FEY",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 501 FEY",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 501 FEY",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 501 FEY",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 501 FEY",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 501 FEY",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 501 FEY",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library",
+          "Central Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 5,
       "book": {
         "id": "ol:the-logic-of-scientific-discovery-karl-popper",
         "title": "The Logic of Scientific Discovery",
@@ -290,9 +559,23 @@
         "brn": null,
         "year": null,
         "pages": 544,
+        "ddc": null,
         "subjects": [
-          "Philosophy of science",
-          "History of science"
+          "Sciences",
+          "Histoire",
+          "Philosophie",
+          "Science",
+          "Philosophy",
+          "History",
+          "Progress",
+          "Paradigm (Theory of knowledge)",
+          "Ciencia",
+          "Historia Da Ciencia",
+          "Série Ciência história",
+          "Wetenschapsdynamica",
+          "Progrès",
+          "open_syllabus_project",
+          "Long Now Manual for Civilization"
         ],
         "summary": "",
         "cover_url": null,
@@ -301,14 +584,21 @@
         "source": "seed"
       },
       "readiness": {
-        "level": 5,
+        "level": 4,
         "hours": 20.0,
-        "assumed_concepts": [],
+        "assumed_concepts": [
+          "Falsifiability",
+          "Induction",
+          "Hypothesis",
+          "Deduction",
+          "Scientific Method",
+          "Empiricism"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to challenge how you think about what it *means* for something to be scientific – this book dives deep into the philosophy behind how science actually works."
       },
       "why": "The view Kuhn pushed against.",
-      "confidence": 0.7999999999999999,
+      "confidence": 0.7,
       "availability": [
         {
           "branch": "Bishan Public Library",
@@ -376,88 +666,13 @@
         "reservations": 0,
         "demo": true
       }
-    },
-    {
-      "role": "after",
-      "order": 4,
-      "book": {
-        "id": "ol:against-method-paul-feyerabend",
-        "title": "Against Method",
-        "author": "Paul Feyerabend",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 336,
-        "subjects": [
-          "Philosophy of science",
-          "History of science"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 5,
-        "hours": 12.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "Where the argument goes if you keep pulling the thread.",
-      "confidence": 0.7999999999999999,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 501 FEY",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 501 FEY",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 501 FEY",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 501 FEY",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 501 FEY",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.768853+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T04:17:28.126762+00:00",
+  "engine": "llm",
+  "notes": [
+    "unverified, dropped: The Demon-Haunted World: Science as a Candle in the Dark",
+    "unverified, dropped: Gödel, Escher, Bach: An Eternal Golden Braid",
+    "'A Brief History of Time' judged same_level (0.70), not placed before"
+  ]
 }

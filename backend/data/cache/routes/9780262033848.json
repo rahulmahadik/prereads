@@ -5,34 +5,137 @@
       "role": "before",
       "order": 0,
       "book": {
-        "id": "ol:grokking-algorithms-aditya-y-bhargava",
-        "title": "Grokking Algorithms",
-        "author": "Aditya Y. Bhargava",
-        "isbn": null,
+        "id": "9781593276034",
+        "title": "Python crash course",
+        "author": "Eric Matthes",
+        "isbn": "9781593276034",
         "brn": null,
-        "year": null,
-        "pages": 256,
+        "year": 2015,
+        "pages": 543,
+        "ddc": null,
         "subjects": [
-          "Algorithms",
-          "Computer science",
-          "Mathematics"
+          "Python (Computer program language)",
+          "Python (computer program language)"
         ],
         "summary": "",
-        "cover_url": null,
+        "cover_url": "https://covers.openlibrary.org/b/id/8245395-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
-        "level": 1,
-        "hours": 6.0,
-        "assumed_concepts": [],
+        "level": 2,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "variables",
+          "loops",
+          "functions",
+          "data types (integers, strings)",
+          "basic algebra"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to dive into coding – a little bit of programming experience or a willingness to learn the basics will make this a really rewarding journey!"
       },
-      "why": "Illustrated, friendly, and covers the core ideas in a weekend.",
-      "confidence": 0.8999999999999999,
+      "why": "While 'Introduction to Algorithms' delves into mathematical proofs and complexity, 'Python Crash Course' will build your foundational programming skills with variables and loops, which will be helpful for implementing algorithms.",
+      "confidence": 0.7,
       "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.1 MAT",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 005.1 MAT",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 005.1 MAT",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 005.1 MAT",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 005.1 MAT",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 1,
+      "book": {
+        "id": "9781617292231",
+        "title": "Grokking Algorithms",
+        "author": "Aditya Y. Bhargava",
+        "isbn": "9781617292231",
+        "brn": null,
+        "year": 2016,
+        "pages": 256,
+        "ddc": null,
+        "subjects": [
+          "Computer algorithms",
+          "Computer programming",
+          "Handbooks, manuals",
+          "Algorithmus",
+          "Programmierung"
+        ],
+        "summary": "\"Grokking Algorithms is a fully illustrated, friendly guide that teaches you how to apply common algorithms to the practical problems you face every day as a programmer. You'll start with sorting and searching and, as you build up your skills in thinking algorithmically, you'll tackle more complex concerns such as data compression and artificial intelligence. Each carefully presented example includes helpful diagrams and fully annotated code samples in Python.\"--Publisher's desription.",
+        "cover_url": "https://covers.openlibrary.org/b/id/8512926-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 8.0,
+        "assumed_concepts": [
+          "Basic Python syntax",
+          "Variables and data types",
+          "Functions",
+          "Loops (for/while)",
+          "Data structures (lists, dictionaries)"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive into the logic behind how computers solve problems – a little programming experience will make this journey even more rewarding!"
+      },
+      "why": "Grokking Algorithms builds a solid foundation in programming fundamentals and data structures, which will make the more mathematically rigorous and abstract concepts in Introduction to Algorithms much more approachable.",
+      "confidence": 0.9,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.1 BHA",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
@@ -46,15 +149,15 @@
           "branch_code": "TRL",
           "call_number": "English 005.1 BHA",
           "available": 1,
-          "total": 2,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
           "call_number": "English 005.1 BHA",
-          "available": 1,
-          "total": 1,
+          "available": 3,
+          "total": 3,
           "demo": true
         },
         {
@@ -69,7 +172,7 @@
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
           "call_number": "English 005.1 BHA",
-          "available": 2,
+          "available": 1,
           "total": 2,
           "demo": true
         },
@@ -77,8 +180,8 @@
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
           "call_number": "English 005.1 BHA",
-          "available": 0,
-          "total": 1,
+          "available": 2,
+          "total": 3,
           "demo": true
         },
         {
@@ -92,88 +195,9 @@
       ],
       "demand": {
         "hot_branches": [
-          "Tampines Regional Library"
+          "Woodlands Regional Library",
+          "Punggol Regional Library"
         ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "before",
-      "order": 1,
-      "book": {
-        "id": "ol:algorithms-robert-sedgewick",
-        "title": "Algorithms",
-        "author": "Robert Sedgewick",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 976,
-        "subjects": [
-          "Algorithms",
-          "Computer science",
-          "Mathematics"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 3,
-        "hours": 30.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "Code-first treatment of the same material; the proofs come later.",
-      "confidence": 0.8999999999999999,
-      "availability": [
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 005.1 SED",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 005.1 SED",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 005.1 SED",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 005.1 SED",
-          "available": 2,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 005.1 SED",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [],
         "hidden_gem": false,
         "reservations": 0,
         "demo": true
@@ -183,93 +207,96 @@
       "role": "before",
       "order": 2,
       "book": {
-        "id": "ol:the-algorithm-design-manual-steven-s-skiena",
-        "title": "The Algorithm Design Manual",
-        "author": "Steven S. Skiena",
-        "isbn": null,
+        "id": "9780321573513",
+        "title": "Algorithms",
+        "author": "Robert Sedgewick",
+        "isbn": "9780321573513",
         "brn": null,
-        "year": null,
-        "pages": 730,
+        "year": 2011,
+        "pages": 955,
+        "ddc": "005.1",
         "subjects": [
+          "Computer algorithms",
+          "Textbooks",
           "Algorithms",
-          "Computer science",
-          "Mathematics"
+          "Computer programming"
         ],
         "summary": "",
-        "cover_url": null,
+        "cover_url": "https://covers.openlibrary.org/b/id/7992499-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 4,
-        "hours": 25.0,
-        "assumed_concepts": [],
+        "hours": 35.0,
+        "assumed_concepts": [
+          "Data Structures",
+          "Programming Fundamentals",
+          "Big O Notation",
+          "Recursion",
+          "Abstract Data Types",
+          "Pseudocode"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to dive deep – this book assumes you already have a solid foundation in programming and some understanding of how data is organized."
       },
-      "why": "Practical, war-story style; bridges to CLRS's rigour.",
-      "confidence": 0.7999999999999999,
+      "why": "Sedgewick's 'Algorithms' provides a more gentle introduction to concepts like data structures and recursion, which will give you a solid foundation for tackling the more rigorous mathematical proofs and programming exercises you'll encounter in Cormen's 'Introduction to Algorithms'.",
+      "confidence": 0.9,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 005.1 SKI",
+          "call_number": "English 005.1 SED",
           "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 005.1 SKI",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 005.1 SKI",
-          "available": 1,
-          "total": 1,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 005.1 SKI",
-          "available": 1,
-          "total": 1,
+          "call_number": "English 005.1 SED",
+          "available": 2,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 005.1 SKI",
-          "available": 0,
+          "call_number": "English 005.1 SED",
+          "available": 1,
           "total": 1,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 005.1 SKI",
+          "call_number": "English 005.1 SED",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 005.1 SED",
           "available": 1,
-          "total": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 005.1 SKI",
-          "available": 1,
-          "total": 1,
+          "call_number": "English 005.1 SED",
+          "available": 0,
+          "total": 2,
           "demo": true
         }
       ],
       "demand": {
-        "hot_branches": [],
+        "hot_branches": [
+          "Woodlands Regional Library"
+        ],
         "hidden_gem": false,
         "reservations": 0,
         "demo": true
@@ -279,23 +306,36 @@
       "role": "target",
       "order": 3,
       "book": {
-        "id": "9780262033848",
+        "id": "9780070131514",
         "title": "Introduction to Algorithms",
-        "author": "Thomas H. Cormen",
-        "isbn": "9780262033848",
+        "author": "Thomas H. Cormen, Charles E. Leiserson",
+        "isbn": "9780070131514",
         "brn": null,
         "year": 1990,
-        "pages": 1312,
+        "pages": 1292,
+        "ddc": "005.1",
         "subjects": [
           "Algorithms",
-          "Computer science",
-          "Mathematics"
+          "Computer algorithms",
+          "Computer programming",
+          "open_syllabus_project",
+          "Programming",
+          "Algorithmes",
+          "Programmation (Informatique)",
+          "54.10 theoretical informatics",
+          "Algorithmus",
+          "Informatik",
+          "Theoretische Informatik",
+          "Algorithmentheorie",
+          "COMPUTER PROGRAMS",
+          "PROGRAMMING LANGUAGES",
+          "FILE MAINTENANCE (COMPUTERS)"
         ],
-        "summary": "The comprehensive textbook on algorithms.",
-        "cover_url": null,
+        "summary": "This book provides a comprehensive introduction to the modern study of computer algorithms. It presents many algorithms and covers them in considerable depth, yet makes their design and analysis accessible to all levels of readers. We have tried to keep explanations elementary without sacrificing depth of coverage or mathematical rigor. Each chapter presents an algorithm, a design technique, an application area, or a related topic. Algorithms are described in English and in a \"pseudocode\" designed to be readable by anyone who has done a little programming. The book contains over 260 figrues illustrating how the algorithms work. Since we emphasize efficiency as a design criterion, we include careful analyses of the running times of all our algorithms. The text is intended primarily for use in undergraduate or graduate courses in algorithms or data structures. Because it discusses engineering issues in algorithm design, as well as mathematical aspects, it is equally well suited for self-study by technical professionals. --",
+        "cover_url": "https://covers.openlibrary.org/b/id/2341462-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 5,
@@ -313,10 +353,18 @@
       "confidence": 1.0,
       "availability": [
         {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.1 COR",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
           "call_number": "English 005.1 COR",
-          "available": 2,
+          "available": 0,
           "total": 2,
           "demo": true
         },
@@ -325,14 +373,14 @@
           "branch_code": "TRL",
           "call_number": "English 005.1 COR",
           "available": 0,
-          "total": 3,
+          "total": 2,
           "demo": true
         },
         {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
           "call_number": "English 005.1 COR",
-          "available": 1,
+          "available": 3,
           "total": 3,
           "demo": true
         },
@@ -340,15 +388,15 @@
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
           "call_number": "English 005.1 COR",
-          "available": 2,
-          "total": 2,
+          "available": 1,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
           "call_number": "English 005.1 COR",
-          "available": 1,
+          "available": 0,
           "total": 2,
           "demo": true
         },
@@ -356,15 +404,15 @@
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
           "call_number": "English 005.1 COR",
-          "available": 2,
+          "available": 3,
           "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Jurong West Public Library",
-          "Ang Mo Kio Public Library"
+          "Tampines Regional Library",
+          "Bukit Batok Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -375,70 +423,58 @@
       "role": "after",
       "order": 4,
       "book": {
-        "id": "ol:concrete-mathematics-ronald-l-graham",
-        "title": "Concrete Mathematics",
-        "author": "Ronald L. Graham",
-        "isbn": null,
+        "id": "9780130224187",
+        "title": "Algorithms + data structures=programs",
+        "author": "Niklaus Wirth",
+        "isbn": "9780130224187",
         "brn": null,
-        "year": null,
-        "pages": 672,
+        "year": 1976,
+        "pages": 366,
+        "ddc": "001.642",
         "subjects": [
+          "Computer programming",
+          "Data structures (Computer science)",
+          "Computer algorithms",
           "Algorithms",
-          "Computer science",
-          "Mathematics"
+          "Electronic digital computers",
+          "Computers",
+          "Programming"
         ],
         "summary": "",
-        "cover_url": null,
+        "cover_url": "https://covers.openlibrary.org/b/id/4482007-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
-        "level": 5,
-        "hours": 50.0,
-        "assumed_concepts": [],
+        "level": 4,
+        "hours": 25.0,
+        "assumed_concepts": [
+          "Variables",
+          "Loops",
+          "Functions",
+          "Boolean logic",
+          "Basic arithmetic",
+          "Memory addresses"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to dive deep – this book assumes you already have a foundational understanding of programming concepts and are eager to learn how they're built from the ground up."
       },
-      "why": "The mathematics CLRS leans on.",
-      "confidence": 0.6,
+      "why": "This is a classic text that emphasizes the interplay between algorithms and data structures, offering a more concise and mathematically rigorous perspective.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 510 GRA",
+          "call_number": "English 001.642 WIR",
           "available": 1,
           "total": 2,
           "demo": true
         },
         {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 510 GRA",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 510 GRA",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 510 GRA",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 510 GRA",
+          "call_number": "English 001.642 WIR",
           "available": 3,
           "total": 3,
           "demo": true
@@ -446,23 +482,24 @@
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 510 GRA",
-          "available": 0,
-          "total": 1,
+          "call_number": "English 001.642 WIR",
+          "available": 2,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 510 GRA",
-          "available": 1,
-          "total": 3,
+          "call_number": "English 001.642 WIR",
+          "available": 2,
+          "total": 2,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Tampines Regional Library"
+          "Central Public Library",
+          "Punggol Regional Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -473,54 +510,74 @@
       "role": "after",
       "order": 5,
       "book": {
-        "id": "ol:the-art-of-computer-programming-volume-1-donald-e-knuth",
-        "title": "The Art of Computer Programming, Volume 1",
-        "author": "Donald E. Knuth",
-        "isbn": null,
+        "id": "9782711748242",
+        "title": "Concrete mathematics",
+        "author": "Ronald L. Graham, Donald Knuth",
+        "isbn": "9782711748242",
         "brn": null,
-        "year": null,
-        "pages": 672,
+        "year": 1988,
+        "pages": 657,
+        "ddc": "004.015",
         "subjects": [
-          "Algorithms",
           "Computer science",
-          "Mathematics"
+          "Mathematics",
+          "Computer science, mathematics",
+          "Algorithmes",
+          "Informatique",
+          "Algorithme",
+          "Mathématiques pour informatique",
+          "Calcul formel",
+          "Programmation",
+          "Mathématiques",
+          "Computer science--mathematics",
+          "Matemáticas",
+          "Ciencias computacionales--matemáticas",
+          "Wiskundige methoden",
+          "Software"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "\"This book introduces the mathematics that supports advanced computer programming and the analysis of algorithms. The primary aim of its well-known authors is to provide a solid and relevant base of mathematical skills - the skills needed to solve complex problems, to evaluate horrendous sums, and to discover subtle patterns in data. It is an indispensable text and reference not only for computer scientists - the authors themselves rely heavily on it! - but for serious users of mathematics in virtually every discipline.\"",
+        "cover_url": "https://covers.openlibrary.org/b/id/135182-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 5,
-        "hours": 80.0,
-        "assumed_concepts": [],
+        "hours": 40.0,
+        "assumed_concepts": [
+          "Discrete Mathematics",
+          "Mathematical Induction",
+          "Functions (especially recursive)",
+          "Basic Set Theory",
+          "Combinatorics",
+          "Summations (Sigma Notation)"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to dive deep – this book builds a strong mathematical foundation for computer science, so a good grasp of basic math concepts will really help you enjoy the journey!"
       },
-      "why": "Where the field's rigour comes from.",
-      "confidence": 0.6,
+      "why": "The mathematics CLRS leans on.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 005.1 KNU",
-          "available": 1,
+          "call_number": "English 004.015 GRA",
+          "available": 0,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 005.1 KNU",
+          "call_number": "English 004.015 GRA",
           "available": 1,
-          "total": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 005.1 KNU",
+          "call_number": "English 004.015 GRA",
           "available": 0,
           "total": 1,
           "demo": true
@@ -528,8 +585,105 @@
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
+          "call_number": "English 004.015 GRA",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 004.015 GRA",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 004.015 GRA",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 004.015 GRA",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library",
+          "Jurong West Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 6,
+      "book": {
+        "id": "9780201485417",
+        "title": "Art of Computer Programming, The, Volumes 1-3 Boxed Set (2nd Edition) (The Art of Computer Programming Series)",
+        "author": "Donald Knuth",
+        "isbn": "9780201485417",
+        "brn": null,
+        "year": 1998,
+        "pages": 896,
+        "ddc": null,
+        "subjects": [
+          "Computer programming"
+        ],
+        "summary": "",
+        "cover_url": "https://covers.openlibrary.org/b/id/134954-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary"
+      },
+      "readiness": {
+        "level": 5,
+        "hours": 80.0,
+        "assumed_concepts": [
+          "Algorithms",
+          "Data Structures",
+          "Mathematical Induction",
+          "Recursion",
+          "Discrete Mathematics",
+          "Basic Calculus"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive deep – this is a foundational text for serious computer scientists, so a strong math and programming background will be incredibly helpful!"
+      },
+      "why": "Where the field's rigour comes from.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 005.1 KNU",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
           "call_number": "English 005.1 KNU",
           "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 005.1 KNU",
+          "available": 0,
           "total": 1,
           "demo": true
         },
@@ -537,8 +691,8 @@
           "branch": "Central Public Library",
           "branch_code": "CLPL",
           "call_number": "English 005.1 KNU",
-          "available": 0,
-          "total": 3,
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
@@ -547,6 +701,14 @@
           "call_number": "English 005.1 KNU",
           "available": 0,
           "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 005.1 KNU",
+          "available": 2,
+          "total": 3,
           "demo": true
         },
         {
@@ -559,14 +721,20 @@
         }
       ],
       "demand": {
-        "hot_branches": [],
+        "hot_branches": [
+          "Bukit Batok Library"
+        ],
         "hidden_gem": false,
         "reservations": 0,
         "demo": true
       }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.775532+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T04:28:02.741601+00:00",
+  "engine": "llm",
+  "notes": [
+    "'The algorithm design manual' judged same_level (0.80), not placed before",
+    "unverified, dropped: Algorithms Unlocked",
+    "unverified, dropped: Think Python: How to Think Like a Computer Scientist"
+  ]
 }

@@ -5,88 +5,105 @@
       "role": "before",
       "order": 0,
       "book": {
-        "id": "ol:the-drunkard-s-walk-leonard-mlodinow",
-        "title": "The Drunkard's Walk",
-        "author": "Leonard Mlodinow",
-        "isbn": null,
+        "id": "9781804220375",
+        "title": "Thinking, fast and slow",
+        "author": "Daniel Kahneman",
+        "isbn": "9781804220375",
         "brn": null,
-        "year": null,
-        "pages": 252,
+        "year": 2011,
+        "pages": 548,
         "subjects": [
-          "Probability",
-          "Risk",
-          "Epistemology",
-          "Finance"
+          "Intuition",
+          "Thought and thinking",
+          "Reasoning",
+          "Decision making",
+          "New York Times bestseller",
+          "Long Now Manual for Civilization",
+          "Thinking",
+          "Kognition",
+          "77.32 intelligence, creativity",
+          "New York Times reviewed",
+          "Reason",
+          "Cognition",
+          "Self-actualization (Psychology)",
+          "Cognitive psychology",
+          "Psychology"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "In his mega bestseller, Thinking, Fast and Slow, Daniel Kahneman, world-famous psychologist and winner of the Nobel Prize in Economics, takes us on a groundbreaking tour of the mind and explains the two systems that drive the way we think.\r\n\r\nSystem 1 is fast, intuitive, and emotional; System 2 is slower, more deliberative, and more logical. The impact of overconfidence on corporate strategies, the difficulties of predicting what will make us happy in the future, the profound effect of cognitive biases on everything from playing the stock market to planning our next vacation―each of these can be understood only by knowing how the two systems shape our judgments and decisions.\r\n\r\nEngaging the reader in a lively conversation about how we think, Kahneman reveals where we can and cannot trust our intuitions and how we can tap into the benefits of slow thinking. He offers practical and enlightening insights into how choices are made in both our business and our personal lives―and how we can use different techniques to guard against the mental glitches that often get us into trouble. Topping bestseller lists for almost ten years, Thinking, Fast and Slow is a contemporary classic, an essential book that has changed the lives of millions of readers.",
+        "cover_url": "https://covers.openlibrary.org/b/id/13290711-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "153.4"
       },
       "readiness": {
-        "level": 2,
-        "hours": 8.0,
-        "assumed_concepts": [],
+        "level": 3,
+        "hours": 15.0,
+        "assumed_concepts": [
+          "Cognitive biases",
+          "Behavioral economics",
+          "Psychology",
+          "Statistical reasoning",
+          "Heuristics"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to explore how your brain *really* works – it's fascinating, and a little surprising!"
       },
-      "why": "A friendly tour of randomness and probability intuition, the ground Taleb stands on.",
-      "confidence": 0.8999999999999999,
+      "why": "Understanding Kahneman's exploration of cognitive biases and heuristics in 'Thinking, Fast and Slow' will give you a strong foundation for grappling with Taleb's discussion of randomness and predictability in 'The Black Swan,' as both books challenge how we perceive and interpret the world.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 519.2 MLO",
-          "available": 1,
-          "total": 1,
+          "call_number": "English 153.4 KAH",
+          "available": 0,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 519.2 MLO",
-          "available": 0,
-          "total": 2,
+          "call_number": "English 153.4 KAH",
+          "available": 3,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 519.2 MLO",
+          "call_number": "English 153.4 KAH",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 153.4 KAH",
           "available": 0,
           "total": 2,
           "demo": true
         },
         {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 519.2 MLO",
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 153.4 KAH",
           "available": 1,
-          "total": 2,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 519.2 MLO",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 519.2 MLO",
+          "call_number": "English 153.4 KAH",
           "available": 0,
-          "total": 2,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Tampines Regional Library",
-          "Central Public Library"
+          "Bukit Batok Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -97,55 +114,172 @@
       "role": "before",
       "order": 1,
       "book": {
-        "id": "ol:fooled-by-randomness-nassim-nicholas-taleb",
-        "title": "Fooled by Randomness",
-        "author": "Nassim Nicholas Taleb",
-        "isbn": null,
+        "id": "9780743291262",
+        "title": "The Halo Effect",
+        "author": "Phil Rosenzweig",
+        "isbn": "9780743291262",
         "brn": null,
-        "year": null,
-        "pages": 368,
+        "year": 2007,
+        "pages": 256,
         "subjects": [
-          "Probability",
-          "Risk",
-          "Epistemology",
-          "Finance"
+          "Fallacies (Logic)",
+          "Industrial management",
+          "Public opinion",
+          "Success in business",
+          "Philosophy",
+          "Business enterprises"
         ],
         "summary": "",
-        "cover_url": null,
+        "cover_url": "https://covers.openlibrary.org/b/id/475409-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 3,
-        "hours": 10.0,
-        "assumed_concepts": [],
+        "hours": 8.0,
+        "assumed_concepts": [
+          "Cognitive biases",
+          "Correlation vs. Causation",
+          "Confirmation bias",
+          "Reputation management",
+          "Decision-making processes"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to question how we perceive success – this book explores how our minds can trick us into attributing outcomes to the wrong factors."
       },
-      "why": "Taleb's earlier, shorter book with the same ideas in simpler clothes.",
-      "confidence": 0.7999999999999999,
+      "why": "Understanding cognitive biases and decision-making frameworks in 'The Halo Effect' will give you a solid foundation for grappling with Taleb's exploration of randomness and how we misinterpret events in 'The Black Swan,' as both books challenge assumptions about how we perceive the world.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 332.6 TAL",
+          "call_number": "English 100 ROS",
           "available": 1,
-          "total": 2,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 332.6 TAL",
+          "call_number": "English 100 ROS",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 100 ROS",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 100 ROS",
           "available": 0,
           "total": 3,
           "demo": true
         },
         {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 100 ROS",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bukit Batok Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 2,
+      "book": {
+        "id": "9780606368056",
+        "title": "The Signal and the Noise",
+        "author": "Nate Silver",
+        "isbn": "9780606368056",
+        "brn": null,
+        "year": 2012,
+        "pages": 552,
+        "subjects": [
+          "Bayesian statistical decision theory",
+          "Theory of Knowledge",
+          "Forecasting",
+          "Methodology",
+          "History",
+          "Knowledge, theory of",
+          "nyt:combined-print-and-e-book-nonfiction=2012-10-14",
+          "New York Times bestseller",
+          "Economics",
+          "POLITICAL SCIENCE",
+          "Bayes-Entscheidungstheorie",
+          "Prognose",
+          "Prévision",
+          "Méthodologie",
+          "Histoire"
+        ],
+        "summary": "Nate Silver built an innovative system for predicting baseball performance, predicted the 2008 election within a hair’s breadth, and became a national sensation as a blogger—all by the time he was thirty. The New York Times now publishes FiveThirtyEight.com, where Silver is one of the nation’s most influential political forecasters.\r\n\r\nDrawing on his own groundbreaking work, Silver examines the world of prediction, investigating how we can distinguish a true signal from a universe of noisy data. Most predictions fail, often at great cost to society, because most of us have a poor understanding of probability and uncertainty. Both experts and laypeople mistake more confident predictions for more accurate ones. But overconfidence is often the reason for failure. If our appreciation of uncertainty improves, our predictions can get better too. This is the “prediction paradox”: The more humility we have about our ability to make predictions, the more successful we can be in planning for the future.\r\n\r\nIn keeping with his own aim to seek truth from data, Silver visits the most successful forecasters in a range of areas, from hurricanes to baseball, from the poker table to the stock market, from Capitol Hill to the NBA. He explains and evaluates how these forecasters think and what bonds they share. What lies behind their success? Are they good—or just lucky? What patterns have they unraveled? And are their forecasts really right? He explores unanticipated commonalities and exposes unexpected juxtapositions. And sometimes, it is not so much how good a prediction is in an absolute sense that matters but how good it is relative to the competition. In other cases, prediction is still a very rudimentary—and dangerous—science.\r\n\r\nSilver observes that the most accurate forecasters tend to have a superior command of probability, and they tend to be both humble and hardworking. They distinguish the predictable from the unpredictable, and they notice a thousand little details that lead them closer to the truth. Because of their appreciation of probability, they can distinguish the signal from the noise.\r\n\r\nWith everything from the health of the global economy to our ability to fight terrorism dependent on the quality of our predictions, Nate Silver’s insights are an essential read.",
+        "cover_url": "https://covers.openlibrary.org/b/id/7256893-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "ddc": "303.49"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Probability",
+          "Statistics",
+          "Data Analysis",
+          "Regression to the Mean",
+          "Confirmation Bias"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to think critically about how we make predictions – it's a fascinating look at how uncertainty shapes our world!"
+      },
+      "why": "Reading 'The Signal and the Noise' first will give you a solid foundation in statistical concepts like regression to the mean and confirmation bias, which are essential for understanding Taleb's discussions of probability distributions and randomness in 'The Black Swan'.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 303.49 SIL",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 303.49 SIL",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 303.49 SIL",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 332.6 TAL",
+          "call_number": "English 303.49 SIL",
           "available": 1,
           "total": 2,
           "demo": true
@@ -153,23 +287,39 @@
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 332.6 TAL",
-          "available": 3,
-          "total": 3,
+          "call_number": "English 303.49 SIL",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 303.49 SIL",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 303.49 SIL",
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 332.6 TAL",
-          "available": 1,
-          "total": 2,
+          "call_number": "English 303.49 SIL",
+          "available": 2,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Bishan Public Library",
+          "Jurong West Public Library",
           "Tampines Regional Library"
         ],
         "hidden_gem": false,
@@ -179,26 +329,38 @@
     },
     {
       "role": "target",
-      "order": 2,
+      "order": 3,
       "book": {
-        "id": "9780812973815",
+        "id": "9780141889238",
         "title": "The Black Swan",
-        "author": "Nassim Nicholas Taleb",
-        "isbn": "9780812973815",
+        "author": "Nassim Nicholas Taleb, David Chandler",
+        "isbn": "9780141889238",
         "brn": null,
-        "year": 2007,
-        "pages": 444,
+        "year": 2005,
+        "pages": 421,
         "subjects": [
-          "Probability",
-          "Risk",
-          "Epistemology",
-          "Finance"
+          "Ereignis",
+          "nyt:paperback_nonfiction=2010-05-09",
+          "Prévision",
+          "New York Times bestseller",
+          "Business",
+          "Social aspects",
+          "Philosophy",
+          "Informationstheorie",
+          "Teoria da informação (aspectos sociais)",
+          "Prognose",
+          "Incertitude (Théorie de l'information)",
+          "Aspect social",
+          "Wahrscheinlichkeit",
+          "Forecasting",
+          "Probability"
         ],
-        "summary": "On the extreme impact of rare, unpredictable events and our blindness to them.",
-        "cover_url": null,
+        "summary": "From the critically acclaimed author of Fooled by Randomness, a book about the impact of improbable events on every aspect of life.",
+        "cover_url": "https://covers.openlibrary.org/b/id/5721840-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "003.54"
       },
       "readiness": {
         "level": 4,
@@ -218,104 +380,23 @@
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 155.2 TAL",
+          "call_number": "English 003.54 TAL",
           "available": 0,
-          "total": 3,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 155.2 TAL",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 155.2 TAL",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 155.2 TAL",
+          "call_number": "English 003.54 TAL",
           "available": 1,
-          "total": 3,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "after",
-      "order": 3,
-      "book": {
-        "id": "ol:the-signal-and-the-noise-nate-silver",
-        "title": "The Signal and the Noise",
-        "author": "Nate Silver",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 544,
-        "subjects": [
-          "Probability",
-          "Risk",
-          "Epistemology",
-          "Finance"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 3,
-        "hours": 14.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "Prediction in practice, with the humility Taleb demands.",
-      "confidence": 0.7,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 519.5 SIL",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 519.5 SIL",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 519.5 SIL",
-          "available": 0,
           "total": 1,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 519.5 SIL",
+          "call_number": "English 003.54 TAL",
           "available": 1,
           "total": 2,
           "demo": true
@@ -323,23 +404,23 @@
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 519.5 SIL",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 519.5 SIL",
+          "call_number": "English 003.54 TAL",
           "available": 2,
           "total": 3,
           "demo": true
         },
         {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 003.54 TAL",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 519.5 SIL",
+          "call_number": "English 003.54 TAL",
           "available": 0,
           "total": 1,
           "demo": true
@@ -347,8 +428,8 @@
       ],
       "demand": {
         "hot_branches": [
-          "Bishan Public Library",
-          "Bukit Batok Library"
+          "Jurong West Public Library",
+          "Central Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -359,64 +440,90 @@
       "role": "after",
       "order": 4,
       "book": {
-        "id": "ol:antifragile-nassim-nicholas-taleb",
+        "id": "9781846141577",
         "title": "Antifragile",
-        "author": "Nassim Nicholas Taleb",
-        "isbn": null,
+        "author": "Nassim Nicholas Taleb, Genís Sánchez Barberán",
+        "isbn": "9781846141577",
         "brn": null,
-        "year": null,
-        "pages": 519,
+        "year": 2012,
+        "pages": 639,
         "subjects": [
-          "Probability",
-          "Risk",
-          "Epistemology",
-          "Finance"
+          "Resilience (Personality trait)",
+          "PSYCHOLOGY / General",
+          "BUSINESS & ECONOMICS / General",
+          "Long Now Manual for Civilization",
+          "Social aspects",
+          "Uncertainty (Information theory)",
+          "Forecasting",
+          "Complexity (Philosophy)",
+          "Psychological Resilience",
+          "Psychological Adaptation",
+          "Uncertainty",
+          "Adjustment (psychology)",
+          "Adaptability (psychology)",
+          "nyt:combined-print-and-e-book-nonfiction=2012-12-16",
+          "New York Times bestseller"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "\"The acclaimed author of the influential bestseller The Black Swan, Nicholas Nassim Taleb takes a next big step with a deceptively simple concept: the \"antifragile.\" Like the Greek hydra that grows two heads for each one it loses, people, systems, and institutions that are antifragile not only withstand shocks, they benefit from them. In a modern world dominated by chaos and uncertainty, Antifragile is a revolutionary vision from one of the most subversive and important thinkers of our time.  Praise for Nicholas Nassim Taleb     \"[This] is the lesson of Taleb. and also the lesson of our volatile times. There is more courage and heroism in defying the human impulse, in taking the purposeful and painful steps to prepare for the unimaginable.\"--Malcolm Gladwell, author of The Tipping Point     \"[Taleb writes] in a style that owes as much to Stephen Colbert as it does to Michel de Montaigne.\"--The Wall Street Journal     \"The most prophetic voice of all. [Taleb is] a genuinely significant philosopher. someone who is able to change the way we view the structure of the world through the strength, originality and veracity of his ideas alone.\"--GQ     \"Changed my view of how the world works.\"--Daniel Kahneman, Nobel laureate\"--\r\n\r\n\"Examples of Antifragility: When you stress your body by lifting a big weight, your body gets stronger. New York has the best restaurants in the world because particular restaurants are always going bust, making the aggregate stronger and stronger, or antifragile. Evolution is antifragile. Certain business and investment strategies are antifragile. Older things tend to be more antifragile than newer ones - because they've been exposed to more Black Swans\"--",
+        "cover_url": "https://covers.openlibrary.org/b/id/9180157-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "155.24"
       },
       "readiness": {
         "level": 4,
-        "hours": 18.0,
-        "assumed_concepts": [],
+        "hours": 25.0,
+        "assumed_concepts": [
+          "Black Swan theory",
+          "Chaos theory",
+          "Statistical distributions",
+          "Systems thinking",
+          "Montaigne's essays"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to challenge your assumptions about how the world works – this book rewards a curious mind and a willingness to grapple with complex ideas!"
       },
       "why": "What to do about black swans: build things that gain from disorder.",
-      "confidence": 0.6,
+      "confidence": 0.9,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
           "call_number": "English 155.24 TAL",
           "available": 0,
-          "total": 2,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
           "call_number": "English 155.24 TAL",
-          "available": 0,
-          "total": 1,
+          "available": 1,
+          "total": 2,
           "demo": true
         },
         {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
           "call_number": "English 155.24 TAL",
-          "available": 1,
-          "total": 2,
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
           "call_number": "English 155.24 TAL",
-          "available": 1,
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 155.24 TAL",
+          "available": 0,
           "total": 1,
           "demo": true
         },
@@ -424,14 +531,123 @@
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
           "call_number": "English 155.24 TAL",
-          "available": 3,
+          "available": 2,
           "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Tampines Regional Library"
+          "Central Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 5,
+      "book": {
+        "id": "9781846141577",
+        "title": "Antifragile",
+        "author": "Nassim Nicholas Taleb, Genís Sánchez Barberán",
+        "isbn": "9781846141577",
+        "brn": null,
+        "year": 2012,
+        "pages": 639,
+        "subjects": [
+          "Resilience (Personality trait)",
+          "PSYCHOLOGY / General",
+          "BUSINESS & ECONOMICS / General",
+          "Long Now Manual for Civilization",
+          "Social aspects",
+          "Uncertainty (Information theory)",
+          "Forecasting",
+          "Complexity (Philosophy)",
+          "Psychological Resilience",
+          "Psychological Adaptation",
+          "Uncertainty",
+          "Adjustment (psychology)",
+          "Adaptability (psychology)",
+          "nyt:combined-print-and-e-book-nonfiction=2012-12-16",
+          "New York Times bestseller"
+        ],
+        "summary": "\"The acclaimed author of the influential bestseller The Black Swan, Nicholas Nassim Taleb takes a next big step with a deceptively simple concept: the \"antifragile.\" Like the Greek hydra that grows two heads for each one it loses, people, systems, and institutions that are antifragile not only withstand shocks, they benefit from them. In a modern world dominated by chaos and uncertainty, Antifragile is a revolutionary vision from one of the most subversive and important thinkers of our time.  Praise for Nicholas Nassim Taleb     \"[This] is the lesson of Taleb. and also the lesson of our volatile times. There is more courage and heroism in defying the human impulse, in taking the purposeful and painful steps to prepare for the unimaginable.\"--Malcolm Gladwell, author of The Tipping Point     \"[Taleb writes] in a style that owes as much to Stephen Colbert as it does to Michel de Montaigne.\"--The Wall Street Journal     \"The most prophetic voice of all. [Taleb is] a genuinely significant philosopher. someone who is able to change the way we view the structure of the world through the strength, originality and veracity of his ideas alone.\"--GQ     \"Changed my view of how the world works.\"--Daniel Kahneman, Nobel laureate\"--\r\n\r\n\"Examples of Antifragility: When you stress your body by lifting a big weight, your body gets stronger. New York has the best restaurants in the world because particular restaurants are always going bust, making the aggregate stronger and stronger, or antifragile. Evolution is antifragile. Certain business and investment strategies are antifragile. Older things tend to be more antifragile than newer ones - because they've been exposed to more Black Swans\"--",
+        "cover_url": "https://covers.openlibrary.org/b/id/9180157-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "ddc": "155.24"
+      },
+      "readiness": {
+        "level": 4,
+        "hours": 20.0,
+        "assumed_concepts": [
+          "Chaos Theory",
+          "Black Swan Events",
+          "Statistical Variance",
+          "Systems Thinking",
+          "Heuristics"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to challenge your assumptions about how the world works – this book explores how to thrive, not just survive, in a world full of surprises."
+      },
+      "why": "It’s Taleb’s follow-up, expanding on Black Swan principles to explore how systems can benefit from disorder and volatility.",
+      "confidence": 0.9,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 155.24 TAL",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 155.24 TAL",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 155.24 TAL",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 155.24 TAL",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 155.24 TAL",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 155.24 TAL",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Central Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -439,7 +655,12 @@
       }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.760678+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T03:59:33.708927+00:00",
+  "engine": "llm",
+  "notes": [
+    "unverified, dropped: Fooled by Our Wits",
+    "'A short history of nearly everything' judged unrelated (0.70), not placed before",
+    "unverified, dropped: Sapiens: A Brief History of Humankind",
+    "dropped a duplicate after-stop (already a before-stop)"
+  ]
 }

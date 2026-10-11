@@ -5,22 +5,36 @@
       "role": "target",
       "order": 0,
       "book": {
-        "id": "9780385495325",
+        "id": "9781857028799",
         "title": "The Code Book",
         "author": "Simon Singh",
-        "isbn": "9780385495325",
+        "isbn": "9781857028799",
         "brn": null,
         "year": 1999,
         "pages": 416,
+        "ddc": "652.8",
         "subjects": [
           "Cryptography",
-          "History of science"
+          "History",
+          "Data encryption (Computer science)",
+          "Coding theory",
+          "Confidential communications",
+          "Ciphers",
+          "Codes",
+          "Cryptographie",
+          "Histoire",
+          "Geschichte",
+          "Kryptologie",
+          "Chiffrement (Informatique)",
+          "Geheimschrift",
+          "Long Now Manual for Civilization",
+          "Angewandte Mathematik"
         ],
-        "summary": "The history of secret writing from ancient Egypt to quantum cryptography.",
-        "cover_url": null,
+        "summary": "In his first book since the bestselling *Fermat's Enigma*, Simon Singh offers the first sweeping history of encryption, tracing its evolution and revealing the dramatic effects codes have had on wars, nations, and individual lives. From Mary, Queen of Scots, trapped by her own code, to the Navajo Code Talkers who helped the Allies win World War II, to the incredible (and incredibly simple) logisitical breakthrough that made Internet commerce secure, The Code Book tells the story of the most powerful intellectual weapon ever known: secrecy.\r\n\r\nThroughout the text are clear technical and mathematical explanations, and portraits of the remarkable personalities who wrote and broke the world's most difficult codes. Accessible, compelling, and remarkably far-reaching, this book will forever alter your view of history and what drives it.  It will also make you wonder how private that e-mail you just sent really is.",
+        "cover_url": "https://covers.openlibrary.org/b/id/8231826-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 2,
@@ -33,14 +47,6 @@
       "confidence": 1.0,
       "availability": [
         {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 652.8 SIN",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
           "call_number": "English 652.8 SIN",
@@ -53,6 +59,14 @@
           "branch_code": "CLPL",
           "call_number": "English 652.8 SIN",
           "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 652.8 SIN",
+          "available": 0,
           "total": 3,
           "demo": true
         },
@@ -60,23 +74,14 @@
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
           "call_number": "English 652.8 SIN",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 652.8 SIN",
-          "available": 1,
+          "available": 3,
           "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Bishan Public Library",
-          "Woodlands Regional Library"
+          "Bukit Batok Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -87,62 +92,54 @@
       "role": "after",
       "order": 1,
       "book": {
-        "id": "ol:serious-cryptography-jean-philippe-aumasson",
+        "id": "9781718503847",
         "title": "Serious Cryptography",
         "author": "Jean-Philippe Aumasson",
-        "isbn": null,
+        "isbn": "9781718503847",
         "brn": null,
-        "year": null,
+        "year": 2017,
         "pages": 312,
+        "ddc": null,
         "subjects": [
-          "Cryptography",
-          "History of science"
+          "Data encryption (Computer science)",
+          "Data encryption (computer science)",
+          "Long Now Manual for Civilization"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "This practical guide to modern encryption breaks down the fundamental mathematical concepts at the heart of cryptography without shying away from meaty discussions of how they work. You’ll learn about authenticated encryption, secure randomness, hash functions, block ciphers, and public-key techniques such as RSA and elliptic curve cryptography.\r\n\r\nYou'll also learn:\r\n\r\n    Key concepts in cryptography, such as computational security, attacker models, and forward secrecy\r\n    The strengths and limitations of the TLS protocol behind HTTPS secure websites\r\n    Quantum computation and post-quantum cryptography\r\n    About various vulnerabilities by examining numerous code examples and use cases\r\n    How to choose the best algorithm or protocol and ask vendors the right questions\r\n\r\nEach chapter includes a discussion of common implementation mistakes using real-world examples and details what could go wrong and how to avoid these pitfalls.\r\n\r\nWhether you’re a seasoned practitioner or a beginner looking to dive into the field, Serious Cryptography will provide a complete survey of modern encryption and its applications.",
+        "cover_url": "https://covers.openlibrary.org/b/id/8232506-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 4,
-        "hours": 14.0,
-        "assumed_concepts": [],
+        "hours": 25.0,
+        "assumed_concepts": [
+          "Basic algebra",
+          "Modular arithmetic",
+          "Probability",
+          "Computer programming (general)",
+          "Network communication"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to flex your math and logic muscles – this book dives deep into the fascinating world of keeping data safe!"
       },
       "why": "The modern mathematics behind the stories.",
-      "confidence": 0.8999999999999999,
+      "confidence": 0.8,
       "availability": [
         {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 005.82 AUM",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
           "call_number": "English 005.82 AUM",
           "available": 1,
           "total": 1,
           "demo": true
         },
         {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 005.82 AUM",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
           "call_number": "English 005.82 AUM",
-          "available": 2,
+          "available": 1,
           "total": 2,
           "demo": true
         },
@@ -150,16 +147,16 @@
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
           "call_number": "English 005.82 AUM",
-          "available": 2,
-          "total": 3,
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
           "call_number": "English 005.82 AUM",
-          "available": 3,
-          "total": 3,
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
@@ -167,14 +164,14 @@
           "branch_code": "AMKPL",
           "call_number": "English 005.82 AUM",
           "available": 1,
-          "total": 3,
+          "total": 2,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Woodlands Regional Library",
-          "Central Public Library"
+          "Central Public Library",
+          "Ang Mo Kio Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -185,46 +182,65 @@
       "role": "after",
       "order": 2,
       "book": {
-        "id": "ol:applied-cryptography-bruce-schneier",
+        "id": "9780471597568",
         "title": "Applied Cryptography",
         "author": "Bruce Schneier",
-        "isbn": null,
+        "isbn": "9780471597568",
         "brn": null,
-        "year": null,
+        "year": 1994,
         "pages": 784,
+        "ddc": "005.82",
         "subjects": [
+          "Security measures",
+          "Telecommunication",
+          "Computer security",
           "Cryptography",
-          "History of science"
+          "C (Computer program language)",
+          "COMPUTERS",
+          "Security",
+          "General",
+          "Cryptographie",
+          "C (Langage de programmation)",
+          "Telecommunication--security measures",
+          "Qa76.9.a25 s35 1996",
+          "005.8/2",
+          "Long Now Manual for Civilization"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "\". . .the best introduction to cryptography I've ever seen. . . .The book the National Security Agency wanted never to be published. . . .\" -Wired Magazine\r\n\r\n\". . .monumental . . . fascinating . . . comprehensive . . . the definitive work on cryptography for computer programmers . . .\" -Dr. Dobb's Journal\r\n\r\n\". . .easily ranks as one of the most authoritative in its field.\" -PC Magazine\r\n\r\n\". . .the bible of code hackers.\" -The Millennium Whole Earth Catalog\r\n\r\nThis new edition of the cryptography classic provides you with a comprehensive survey of modern cryptography. The book details how programmers and electronic communications professionals can use cryptography-the technique of enciphering and deciphering messages-to maintain the privacy of computer data. It describes dozens of cryptography algorithms, gives practical advice on how to implement them into cryptographic software, and shows how they can be used to solve security problems. Covering the latest developments in practical cryptographic techniques, this new edition shows programmers who design computer applications, networks, and storage systems how they can build security into their software and systems.\r\n\r\nWhat's new in the Second Edition?\r\n\\* New information on the Clipper Chip, including ways to defeat the key escrow mechanism\r\n\\* New encryption algorithms, including algorithms from the former Soviet Union and South Africa, and the RC4 stream cipher\r\n\\* The latest protocols for digital signatures, authentication, secure elections, digital cash, and more\r\n\\* More detailed information on key management and cryptographic implementations",
+        "cover_url": "https://covers.openlibrary.org/b/id/3930979-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 5,
         "hours": 30.0,
-        "assumed_concepts": [],
+        "assumed_concepts": [
+          "Basic Computer Science",
+          "Data Structures",
+          "Algorithms",
+          "Network Protocols",
+          "Mathematical Notation"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to dive deep – this book is a technical exploration of cryptography, best suited for those with a solid foundation in computer science and a willingness to grapple with complex mathematical concepts."
       },
       "why": "The professional reference.",
-      "confidence": 0.8999999999999999,
+      "confidence": 0.7,
       "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.82 SCH",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
           "call_number": "English 005.82 SCH",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 005.82 SCH",
-          "available": 0,
+          "available": 1,
           "total": 1,
           "demo": true
         },
@@ -232,8 +248,8 @@
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
           "call_number": "English 005.82 SCH",
-          "available": 1,
-          "total": 1,
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
@@ -241,29 +257,38 @@
           "branch_code": "CLPL",
           "call_number": "English 005.82 SCH",
           "available": 0,
-          "total": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 005.82 SCH",
+          "available": 2,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
           "call_number": "English 005.82 SCH",
-          "available": 1,
-          "total": 3,
+          "available": 2,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
           "call_number": "English 005.82 SCH",
-          "available": 2,
+          "available": 0,
           "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Jurong West Public Library"
+          "Punggol Regional Library",
+          "Bukit Batok Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -271,7 +296,14 @@
       }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.774633+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T04:25:53.284211+00:00",
+  "engine": "llm",
+  "notes": [
+    "unverified, dropped: Secrets of the Secret Services",
+    "unverified, dropped: Number Puzzles: A Beginner's Guide",
+    "unverified, dropped: Gödel, Escher, Bach: An Eternal Golden Braid",
+    "unverified, dropped: The History of Computing",
+    "'Alice's Adventures in Wonderland' judged unrelated (0.80), not placed before",
+    "'The Phantom Tollbooth' judged unrelated (0.80), not placed before"
+  ]
 }

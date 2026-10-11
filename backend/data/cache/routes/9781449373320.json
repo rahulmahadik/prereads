@@ -5,70 +5,199 @@
       "role": "before",
       "order": 0,
       "book": {
-        "id": "ol:learning-sql-alan-beaulieu",
-        "title": "Learning SQL",
-        "author": "Alan Beaulieu",
-        "isbn": null,
+        "id": "9780071843652",
+        "title": "Web scalability for startup engineers",
+        "author": "Artur Ejsmont",
+        "isbn": "9780071843652",
         "brn": null,
-        "year": null,
-        "pages": 384,
+        "year": 2015,
+        "pages": 396,
         "subjects": [
-          "Databases",
-          "Distributed systems",
-          "Software architecture"
+          "Development",
+          "Computer networks",
+          "Web applications",
+          "Application software",
+          "Scalability",
+          "Application software, development"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "\"Design and build scalable web applications quickly.This is an invaluable roadmap for meeting the rapid demand to deliver scalable applications in a startup environment. With a focus on core concepts and best practices rather than on individual languages, platforms, or technologies, Web Scalability for Startup Engineers describes how infrastructure and software architecture work together to support a scalable environment.You'll learn, step by step, how scalable systems work and how to solve common challenges. Helpful diagrams are included throughout, and real-world examples illustrate the concepts presented. Even if you have limited time and resources, you can successfully develop and deliver robust, scalable web applications with help from this practical guide. Learn the key principles of good software design required for scalable systems. Build the front-end layer to sustain the highest levels of concurrency and request rates. Design and develop web services, including REST-ful APIs. Enable a horizontally scalable data layer. Implement caching best practices. Leverage asynchronous processing, messaging, and event-driven architecture. Structure, index, and store data for optimized search. Explore other aspects of scalability, such as automation, project management, and agile teams\"--\r\n\r\n\"This is an invaluable roadmap for meeting the rapid demand to deliver scalable applications in a startup environment. With a focus on core concepts and best practices rather than on individual languages, platforms, or technologies, Web Scalability for Startup Engineers describes how infrastructure and software architecture work together to support a scalable environment\"--",
+        "cover_url": "https://covers.openlibrary.org/b/id/15125163-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "006.78"
       },
       "readiness": {
-        "level": 1,
-        "hours": 10.0,
-        "assumed_concepts": [],
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "HTTP",
+          "REST APIs",
+          "Databases (SQL or NoSQL)",
+          "Client-Server Architecture",
+          "Basic Software Development Lifecycle"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to dive into the behind-the-scenes magic of how websites handle tons of users – it's a bit technical, but this book breaks it down!"
       },
-      "why": "You need to be fluent in queries before chapters on storage engines make sense.",
-      "confidence": 0.8999999999999999,
+      "why": "While 'Designing Data-Intensive Applications' delves deeper into database concepts and concurrency, 'Web scalability for startup engineers' introduces the foundational concepts like HTTP, REST APIs, and basic software architecture that will make understanding the broader systems discussed in Kleppmann's book much smoother.",
+      "confidence": 0.8,
       "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 006.78 EJS",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 005.75 BEA",
+          "call_number": "English 006.78 EJS",
           "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 006.78 EJS",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 006.78 EJS",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 006.78 EJS",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 006.78 EJS",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 006.78 EJS",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Central Public Library",
+          "Bukit Batok Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 1,
+      "book": {
+        "id": "9788131722428",
+        "title": "The Pragmatic Programmer",
+        "author": "Andy Hunt, Dave Thomas",
+        "isbn": "9788131722428",
+        "brn": null,
+        "year": 1999,
+        "pages": 352,
+        "subjects": [
+          "Computer programming",
+          "Vocational education",
+          "Projectmanagement",
+          "Métodos ágeis",
+          "Programmeren (computers)",
+          "Beroepskwalificaties",
+          "Engenharia de programas",
+          "Qa76.6 .h857 1999",
+          "005.1"
+        ],
+        "summary": "The Pragmatic Programmer is one of those rare tech audiobooks you’ll listen, re-listen, and listen to again over the years. Whether you’re new to the field or an experienced practitioner, you’ll come away with fresh insights each and every time. \r\n\r\nDave Thomas and Andy Hunt wrote the first edition of this influential book in 1999 to help their clients create better software and rediscover the joy of coding. These lessons have helped a generation of programmers examine the very essence of software development, independent of any particular language, framework, or methodology, and the Pragmatic philosophy has spawned hundreds of books, screencasts, and audio books, as well as thousands of careers and success stories. \r\n\r\nNow, 20 years later, this new edition re-examines what it means to be a modern programmer. Topics range from personal responsibility and career development to architectural techniques for keeping your code flexible and easy to adapt and reuse. All the old favorite topics are there, updated for this new world. And there's a bunch of new content, reflecting what we've learned in the intervening years. \r\n\r\nWhether you’re a new coder, an experienced programmer, or a manager responsible for software projects, use these lessons daily, and you’ll quickly see improvements in personal productivity, accuracy, and job satisfaction. You’ll learn skills and develop habits and attitudes that form the foundation for long-term success in your career. You’ll become a pragmatic programmer. \r\n\r\nThis audiobook is organized as a series of sections, each containing a series of topics. It is read by Anna Katarina; Dave and Andy (and a few other folks) jump in every now and then to give their take on things.",
+        "cover_url": "https://covers.openlibrary.org/b/id/10143650-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 8.0,
+        "assumed_concepts": [
+          "Software Development Lifecycle",
+          "Version Control (e.g., Git)",
+          "Object-Oriented Programming Principles",
+          "Basic Command Line Usage",
+          "Code Refactoring"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to think differently about how you approach coding – this book is full of practical advice that will challenge and improve your programming habits."
+      },
+      "why": "While 'Designing Data-Intensive Applications' delves into advanced systems architecture, 'The Pragmatic Programmer' will give you a solid foundation in software development practices like debugging and version control, which are essential for understanding and implementing the concepts in the more complex book.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.1 HUN",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 005.1 HUN",
+          "available": 2,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 005.75 BEA",
-          "available": 2,
-          "total": 3,
+          "call_number": "English 005.1 HUN",
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 005.75 BEA",
-          "available": 2,
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 005.1 HUN",
+          "available": 3,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 005.75 BEA",
-          "available": 2,
+          "call_number": "English 005.1 HUN",
+          "available": 1,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 005.75 BEA",
+          "call_number": "English 005.1 HUN",
           "available": 0,
           "total": 1,
           "demo": true
@@ -76,9 +205,121 @@
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 005.75 BEA",
+          "call_number": "English 005.1 HUN",
           "available": 0,
           "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Tampines Regional Library",
+          "Central Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 2,
+      "book": {
+        "id": "9781838430214",
+        "title": "Understanding Distributed Systems, Second Edition",
+        "author": "Roberto Vitillo",
+        "isbn": "9781838430214",
+        "brn": null,
+        "year": 2022,
+        "pages": 344,
+        "subjects": [
+          "Mathematics"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 18.0,
+        "assumed_concepts": [
+          "Algorithms",
+          "Data Structures",
+          "Basic Probability",
+          "Network Protocols",
+          "Concurrency",
+          "Cloud Computing Fundamentals"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive into the complexities of how computers work together – a little bit of programming and networking knowledge will really help you appreciate the details!"
+      },
+      "why": "Understanding Distributed Systems covers fundamental algorithms and data structures which will give you a solid foundation for grasping the more complex system design concepts presented in Designing Data-Intensive Applications.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 100 VIT",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 100 VIT",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 100 VIT",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 100 VIT",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 100 VIT",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 100 VIT",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 100 VIT",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 100 VIT",
+          "available": 0,
+          "total": 3,
           "demo": true
         }
       ],
@@ -93,224 +334,34 @@
       }
     },
     {
-      "role": "before",
-      "order": 1,
-      "book": {
-        "id": "ol:database-design-for-mere-mortals-michael-j-hernandez",
-        "title": "Database Design for Mere Mortals",
-        "author": "Michael J. Hernandez",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 672,
-        "subjects": [
-          "Databases",
-          "Distributed systems",
-          "Software architecture"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 2,
-        "hours": 14.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "Schema thinking without the distributed-systems weight.",
-      "confidence": 0.8999999999999999,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 005.74 HER",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 005.74 HER",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 005.74 HER",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 005.74 HER",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 005.74 HER",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 005.74 HER",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 005.74 HER",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Bishan Public Library",
-          "Woodlands Regional Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "before",
-      "order": 2,
-      "book": {
-        "id": "ol:web-scalability-for-startup-engineers-artur-ejsmont",
-        "title": "Web Scalability for Startup Engineers",
-        "author": "Artur Ejsmont",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 416,
-        "subjects": [
-          "Databases",
-          "Distributed systems",
-          "Software architecture"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 2,
-        "hours": 12.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "A gentler first pass over caching, replication and queues.",
-      "confidence": 0.8999999999999999,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 005.1 EJS",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 005.1 EJS",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 005.1 EJS",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 005.1 EJS",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 005.1 EJS",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 005.1 EJS",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 005.1 EJS",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Bishan Public Library",
-          "Punggol Regional Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
       "role": "target",
       "order": 3,
       "book": {
-        "id": "9781449373320",
+        "id": "9789352135240",
         "title": "Designing Data-Intensive Applications",
         "author": "Martin Kleppmann",
-        "isbn": "9781449373320",
+        "isbn": "9789352135240",
         "brn": null,
         "year": 2017,
-        "pages": 616,
+        "pages": 618,
         "subjects": [
+          "Development",
+          "Web site development",
+          "Application software",
+          "Database management",
           "Databases",
-          "Distributed systems",
-          "Software architecture"
+          "COMPUTERS",
+          "Desktop Applications",
+          "Project Management software",
+          "Application software--development",
+          "Tk5105.888 .q44 2017",
+          "005.276"
         ],
-        "summary": "The big ideas behind reliable, scalable and maintainable data systems.",
-        "cover_url": null,
+        "summary": "Data is at the center of many challenges in system design today. Difficult issues need to be figured out, such as scalability, consistency, reliability, efficiency, and maintainability. In addition, we have an overwhelming variety of tools, including relational databases, NoSQL datastores, stream or batch processors, and message brokers. What are the right choices for your application? How do you make sense of all these buzzwords?\r\n\r\nIn this practical and comprehensive guide, author Martin Kleppmann helps you navigate this diverse landscape by examining the pros and cons of various technologies for processing and storing data. Software keeps changing, but the fundamental principles remain the same. With this book, software engineers and architects will learn how to apply those ideas in practice, and how to make full use of data in modern applications.\r\n\r\nPeer under the hood of the systems you already use, and learn how to use and operate them more effectively. Make informed decisions by identifying the strengths and weaknesses of different tools. Navigate the trade-offs around consistency, scalability, fault tolerance, and complexity. Understand the distributed systems research upon which modern databases are built. Peek behind the scenes of major online services, and learn from their architectures",
+        "cover_url": "https://covers.openlibrary.org/b/id/8434671-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 4,
@@ -328,35 +379,27 @@
       "confidence": 1.0,
       "availability": [
         {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
           "call_number": "English 005.7 KLE",
-          "available": 0,
+          "available": 2,
           "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 005.7 KLE",
-          "available": 1,
-          "total": 3,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
           "call_number": "English 005.7 KLE",
-          "available": 3,
-          "total": 3,
+          "available": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
           "call_number": "English 005.7 KLE",
-          "available": 3,
-          "total": 3,
+          "available": 1,
+          "total": 2,
           "demo": true
         },
         {
@@ -364,21 +407,21 @@
           "branch_code": "PRL",
           "call_number": "English 005.7 KLE",
           "available": 1,
-          "total": 1,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
           "call_number": "English 005.7 KLE",
-          "available": 1,
-          "total": 1,
+          "available": 0,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Woodlands Regional Library",
+          "Jurong West Public Library",
           "Central Public Library"
         ],
         "hidden_gem": false,
@@ -390,71 +433,102 @@
       "role": "after",
       "order": 4,
       "book": {
-        "id": "ol:fundamentals-of-software-architecture-mark-richards",
-        "title": "Fundamentals of Software Architecture",
-        "author": "Mark Richards",
-        "isbn": null,
+        "id": "9781492040347",
+        "title": "Database Internals",
+        "author": "Alex Petrov",
+        "isbn": "9781492040347",
         "brn": null,
-        "year": null,
-        "pages": 432,
+        "year": 2019,
+        "pages": 280,
         "subjects": [
+          "Development",
+          "Web site development",
+          "Application software",
+          "Database management",
           "Databases",
-          "Distributed systems",
-          "Software architecture"
+          "COMPUTERS",
+          "Desktop Applications",
+          "Project Management software",
+          "Application software--development",
+          "Tk5105.888 .q44 2017",
+          "005.276"
         ],
         "summary": "",
-        "cover_url": null,
+        "cover_url": "https://covers.openlibrary.org/b/id/14572292-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
-        "level": 4,
-        "hours": 16.0,
-        "assumed_concepts": [],
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "SQL",
+          "Data Structures (e.g., trees, hash tables)",
+          "Operating Systems basics",
+          "File Systems",
+          "Basic Programming Concepts",
+          "Relational Algebra"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to peek under the hood – this book will show you how databases *really* work, so a little programming and computer science background will be helpful!"
       },
-      "why": "Zooms out from data systems to whole-system trade-offs.",
-      "confidence": 0.6,
+      "why": "Opens up the storage and consensus machinery Kleppmann describes.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 005.1 RIC",
+          "call_number": "English 005.74 PET",
           "available": 2,
           "total": 2,
           "demo": true
         },
         {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 005.1 RIC",
-          "available": 0,
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 005.74 PET",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 005.74 PET",
+          "available": 1,
           "total": 1,
           "demo": true
         },
         {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 005.1 RIC",
-          "available": 2,
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 005.74 PET",
+          "available": 0,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 005.1 RIC",
-          "available": 0,
-          "total": 2,
+          "call_number": "English 005.74 PET",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 005.74 PET",
+          "available": 2,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Bishan Public Library",
-          "Punggol Regional Library"
+          "Woodlands Regional Library",
+          "Ang Mo Kio Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -465,38 +539,56 @@
       "role": "after",
       "order": 5,
       "book": {
-        "id": "ol:database-internals-alex-petrov",
-        "title": "Database Internals",
-        "author": "Alex Petrov",
-        "isbn": null,
+        "id": "9781492034025",
+        "title": "Building Microservices",
+        "author": "Sam Newman",
+        "isbn": "9781492034025",
         "brn": null,
-        "year": null,
-        "pages": 376,
+        "year": 2015,
+        "pages": 265,
         "subjects": [
-          "Databases",
-          "Distributed systems",
-          "Software architecture"
+          "Development",
+          "Computer architecture",
+          "Distributed operating systems (Computers)",
+          "Computer software",
+          "Ordinateurs",
+          "Architecture",
+          "Systèmes d'exploitation répartis",
+          "COMPUTERS",
+          "Computer Architecture",
+          "Web programming",
+          "General",
+          "Distributed systems & computing",
+          "Site design",
+          "Page design",
+          "Com060160"
         ],
         "summary": "",
-        "cover_url": null,
+        "cover_url": "https://covers.openlibrary.org/b/id/8513315-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
-        "level": 5,
-        "hours": 20.0,
-        "assumed_concepts": [],
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "REST APIs",
+          "Version Control (e.g., Git)",
+          "Object-Oriented Programming",
+          "HTTP Protocol",
+          "Databases (SQL or NoSQL)"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to dive into a practical guide – you'll want a good grasp of software development basics to really get the most out of this book!"
       },
-      "why": "Opens up the storage and consensus machinery Kleppmann describes.",
-      "confidence": 0.7999999999999999,
+      "why": "It builds on the principles of distributed systems by focusing on the design and implementation of microservice architectures, a common pattern in data-intensive applications.",
+      "confidence": 0.8,
       "availability": [
         {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 005.74 PET",
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 576.8 NEW",
           "available": 1,
           "total": 1,
           "demo": true
@@ -504,7 +596,7 @@
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 005.74 PET",
+          "call_number": "English 576.8 NEW",
           "available": 2,
           "total": 2,
           "demo": true
@@ -512,15 +604,7 @@
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 005.74 PET",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 005.74 PET",
+          "call_number": "English 576.8 NEW",
           "available": 1,
           "total": 1,
           "demo": true
@@ -528,31 +612,143 @@
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 005.74 PET",
-          "available": 2,
-          "total": 2,
+          "call_number": "English 576.8 NEW",
+          "available": 1,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 005.74 PET",
-          "available": 0,
+          "call_number": "English 576.8 NEW",
+          "available": 3,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 005.74 PET",
+          "call_number": "English 576.8 NEW",
           "available": 1,
-          "total": 1,
+          "total": 2,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Bukit Batok Library"
+          "Tampines Regional Library",
+          "Punggol Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 6,
+      "book": {
+        "id": "9780321122261",
+        "title": "Fundamentals of database systems",
+        "author": "Ramez Elmasri, Shamkant B. Navathe",
+        "isbn": "9780321122261",
+        "brn": null,
+        "year": 1989,
+        "pages": 1030,
+        "subjects": [
+          "Database management",
+          "Database design",
+          "Data base management",
+          "Data base design",
+          "open_syllabus_project",
+          "Modelagem de dados",
+          "Banco de dados (modelagem;gerenciamento;construðcäao)",
+          "Banco de dados orientado a objetos",
+          "Databases & data structures",
+          "Database Engineering",
+          "Computers",
+          "Computers - Data Base Management",
+          "Textbooks",
+          "Computer Books: Database",
+          "Database Management - General"
+        ],
+        "summary": "\"This book introduces the fundamental concepts necessary for designing, using, and implementing database systems and database applications. Our presentation stresses the fundamentals of database modeling and design, the languages and models provided by the database management systems, and database system implementation techniques\"--Page vii.",
+        "cover_url": "https://covers.openlibrary.org/b/id/3943051-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "ddc": "005.74"
+      },
+      "readiness": {
+        "level": 4,
+        "hours": 40.0,
+        "assumed_concepts": [
+          "Relational algebra",
+          "Data structures (lists, trees)",
+          "Basic programming concepts",
+          "Set theory",
+          "SQL (basic queries)",
+          "Data modeling principles"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive deep – this book lays the groundwork for understanding how databases *really* work, so a little computer science background will be a big help!"
+      },
+      "why": "For those wanting a more rigorous academic treatment of database principles, this textbook provides a comprehensive and detailed exploration.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 005.74 ELM",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 005.74 ELM",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 005.74 ELM",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 005.74 ELM",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 005.74 ELM",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 005.74 ELM",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Jurong West Public Library",
+          "Ang Mo Kio Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -560,7 +756,9 @@
       }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.766890+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T04:11:10.017973+00:00",
+  "engine": "llm",
+  "notes": [
+    "unverified, dropped: Clean Code: A Handbook of Agile Software Craftsmanship"
+  ]
 }

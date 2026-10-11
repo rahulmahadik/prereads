@@ -5,39 +5,58 @@
       "role": "before",
       "order": 0,
       "book": {
-        "id": "ol:astrophysics-for-people-in-a-hurry-neil-degrasse-tyson",
-        "title": "Astrophysics for People in a Hurry",
-        "author": "Neil deGrasse Tyson",
-        "isbn": null,
+        "id": "9780385611817",
+        "title": "George's Secret Key to the Universe",
+        "author": "Stephen Hawking, Lucy Hawking",
+        "isbn": "9780385611817",
         "brn": null,
-        "year": null,
-        "pages": 224,
+        "year": 1998,
+        "pages": 298,
         "subjects": [
+          "Fiction",
+          "Juvenile fiction",
+          "Exploration",
+          "Inventions",
+          "Universe",
+          "Outer space",
           "Cosmology",
-          "Physics",
-          "Black holes",
-          "Time"
+          "Cosmography",
+          "Large type books",
+          "Children's fiction",
+          "Science fiction",
+          "Computers, fiction",
+          "Adventure and adventurers, fiction",
+          "Scientists, fiction",
+          "Mystery and detective stories"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "Follows the adventures of a young boy and his neighbor friend as they travel through a computer portal into outer space, where they explore such mysteries as black holes and the origins of the universe, while trying to evade an evil scientist.",
+        "cover_url": "https://covers.openlibrary.org/b/id/6681655-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "520.83"
       },
       "readiness": {
-        "level": 1,
-        "hours": 4.0,
-        "assumed_concepts": [],
+        "level": 2,
+        "hours": 8.0,
+        "assumed_concepts": [
+          "basic computer use",
+          "planets",
+          "stars",
+          "gravity",
+          "scientific curiosity",
+          "simple storytelling tropes"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready for a fun, accessible adventure that introduces big ideas about space – it's a story first, science second, so just relax and enjoy the ride!"
       },
-      "why": "The vocabulary of the cosmos in an afternoon.",
-      "confidence": 0.8999999999999999,
+      "why": "George's Secret Key to the Universe introduces basic concepts like gravity and planets in a more accessible way, which will give you a foundation to better understand the more complex ideas about relativity and black holes presented in A Brief History of Time.",
+      "confidence": 0.8,
       "availability": [
         {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 523.01 TYS",
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 520.83 HAW",
           "available": 2,
           "total": 2,
           "demo": true
@@ -45,47 +64,48 @@
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 523.01 TYS",
-          "available": 0,
-          "total": 1,
+          "call_number": "English 520.83 HAW",
+          "available": 1,
+          "total": 2,
           "demo": true
         },
         {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 523.01 TYS",
-          "available": 0,
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 520.83 HAW",
+          "available": 2,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 523.01 TYS",
-          "available": 3,
+          "call_number": "English 520.83 HAW",
+          "available": 1,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 523.01 TYS",
+          "call_number": "English 520.83 HAW",
           "available": 0,
-          "total": 3,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 523.01 TYS",
-          "available": 0,
-          "total": 2,
+          "call_number": "English 520.83 HAW",
+          "available": 3,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Central Public Library"
+          "Tampines Regional Library",
+          "Woodlands Regional Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -96,63 +116,162 @@
       "role": "before",
       "order": 1,
       "book": {
-        "id": "ol:seven-brief-lessons-on-physics-carlo-rovelli",
-        "title": "Seven Brief Lessons on Physics",
+        "id": "9780147543912",
+        "title": "Seven Brief Lessons on Physics 8-Copy Counter Display",
         "author": "Carlo Rovelli",
-        "isbn": null,
+        "isbn": "9780147543912",
         "brn": null,
-        "year": null,
+        "year": 2016,
         "pages": 96,
         "subjects": [
-          "Cosmology",
-          "Physics",
-          "Black holes",
-          "Time"
+          "Physics, popular works",
+          "Physics, history"
         ],
         "summary": "",
         "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
-        "level": 1,
-        "hours": 2.0,
-        "assumed_concepts": [],
+        "level": 3,
+        "hours": 4.0,
+        "assumed_concepts": [
+          "General Relativity",
+          "Quantum Mechanics",
+          "Black Holes",
+          "Particles",
+          "Space-time",
+          "The Big Bang"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to have your mind stretched – this book introduces big ideas in physics, so a little curiosity about science will help you appreciate it!"
       },
-      "why": "Relativity and quantum theory as seven short, beautiful essays.",
-      "confidence": 0.8999999999999999,
+      "why": "While both books cover similar topics, 'Seven Brief Lessons on Physics' offers a more accessible introduction to concepts like relativity and quantum mechanics, which will make the more detailed and complex explanations in Hawking's 'A Brief History of Time' easier to grasp.",
+      "confidence": 0.8,
       "availability": [
         {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
           "call_number": "English 530 ROV",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 530 ROV",
-          "available": 2,
-          "total": 3,
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
           "call_number": "English 530 ROV",
-          "available": 0,
+          "available": 1,
           "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 530 ROV",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 530 ROV",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Woodlands Regional Library",
+          "Ang Mo Kio Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 2,
+      "book": {
+        "id": "9780351314216",
+        "title": "Cosmos",
+        "author": "Carl Sagan",
+        "isbn": "9780351314216",
+        "brn": null,
+        "year": 1980,
+        "pages": 354,
+        "subjects": [
+          "Ouvrages de vulgarisation",
+          "Astronomie",
+          "Astronomy",
+          "Popular works",
+          "History",
+          "Science",
+          "Cosmology",
+          "Planetary science",
+          "Astronomy, popular works",
+          "Kosmos",
+          "Kosmosforschung",
+          "Raumfahrt",
+          "Weltall",
+          "Kosmologie",
+          "Einführung"
+        ],
+        "summary": "This book is about science in its broadest human context, how science and civilization grew up together. It is the story of our long journey of discovery and the forces and individuals who helped to shape modern science, including Democritus, Hypatia, Kepler, Newton, Huygens, Champollion, Lowell and Humason. The book also explores spacecraft missions of discovery of the nearby planets, the research in the Library of ancient Alexandria, the human brain, Egyptian hieroglyphics, the origin of life, the death of the Sun, the evolution of galaxies and the origins of matter, suns and worlds. The author retraces the fifteen billion years of cosmic evolution that have transformed matter into life and consciousness, enabling the cosmos to wonder about itself. He considers the latest findings on life elsewhere and how we might communicate with the beings of other worlds. ~ WorldCat.org",
+        "cover_url": "https://covers.openlibrary.org/b/id/8283901-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "ddc": "523.1"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 18.0,
+        "assumed_concepts": [
+          "basic physics",
+          "scientific method",
+          "historical timeline",
+          "ancient civilizations",
+          "mathematical notation"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to be amazed – this book will take you on a sweeping journey through the history of science and the universe, so a little curiosity and a willingness to learn will go a long way!"
+      },
+      "why": "Reading 'Cosmos' first will give you a good foundation in basic physics and the scientific method, which are essential for understanding the more complex concepts like relativity and quantum mechanics introduced in 'A Brief History of Time'.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 523.1 SAG",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 523.1 SAG",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 523.1 SAG",
+          "available": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 530 ROV",
+          "call_number": "English 523.1 SAG",
           "available": 1,
           "total": 2,
           "demo": true
@@ -160,32 +279,24 @@
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 530 ROV",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 530 ROV",
-          "available": 2,
-          "total": 2,
+          "call_number": "English 523.1 SAG",
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 530 ROV",
+          "call_number": "English 523.1 SAG",
           "available": 2,
-          "total": 2,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Bishan Public Library",
-          "Tampines Regional Library"
+          "Tampines Regional Library",
+          "Central Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -194,26 +305,38 @@
     },
     {
       "role": "target",
-      "order": 2,
+      "order": 3,
       "book": {
-        "id": "9780553380163",
+        "id": "9786051067582",
         "title": "A Brief History of Time",
         "author": "Stephen Hawking",
-        "isbn": "9780553380163",
+        "isbn": "9786051067582",
         "brn": null,
         "year": 1988,
-        "pages": 212,
+        "pages": 241,
         "subjects": [
+          "Cosmologie",
+          "Temps (durée)",
+          "Espace-temps",
+          "Vulgarisation scientifique",
+          "Univers",
+          "Espace extraterrestre",
+          "Expansion",
           "Cosmology",
-          "Physics",
-          "Black holes",
+          "Origine",
+          "Trous noirs (astronomie)",
+          "Cosmogonie",
+          "Big Bang",
+          "Espace et temps",
+          "Cosmologia",
           "Time"
         ],
-        "summary": "Hawking's account of the universe, from the big bang to black holes.",
-        "cover_url": null,
+        "summary": "Stephen Hawking's ‘A Brief History of Time* has become an international publishing phenomenon. Translated into thirty languages, it has sold over ten million copies worldwide and lives on as a science book that continues to captivate and inspire new readers each year. When it was first published in 1988 the ideas discussed in it were at the cutting edge of what was then known about the universe. In the intervening twenty years there have been extraordinary advances in the technology of observing both the micro- and macro-cosmic world. Indeed, during that time cosmology and the theoretical sciences have entered a new golden age . Professor Hawking is one of the major scientists and thinkers to have contributed to this renaissance.",
+        "cover_url": "https://covers.openlibrary.org/b/id/10432365-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "530.11"
       },
       "readiness": {
         "level": 4,
@@ -232,7 +355,15 @@
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 523.1 HAW",
+          "call_number": "English 530.11 HAW",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 530.11 HAW",
           "available": 0,
           "total": 2,
           "demo": true
@@ -240,15 +371,15 @@
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 523.1 HAW",
-          "available": 0,
-          "total": 1,
+          "call_number": "English 530.11 HAW",
+          "available": 2,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 523.1 HAW",
+          "call_number": "English 530.11 HAW",
           "available": 0,
           "total": 1,
           "demo": true
@@ -256,31 +387,32 @@
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 523.1 HAW",
-          "available": 2,
-          "total": 2,
+          "call_number": "English 530.11 HAW",
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 523.1 HAW",
-          "available": 1,
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 530.11 HAW",
+          "available": 2,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 523.1 HAW",
+          "call_number": "English 530.11 HAW",
           "available": 1,
-          "total": 3,
+          "total": 1,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Bishan Public Library"
+          "Tampines Regional Library",
+          "Bukit Batok Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -289,7 +421,7 @@
     },
     {
       "role": "after",
-      "order": 3,
+      "order": 4,
       "book": {
         "id": "ol:the-order-of-time-carlo-rovelli",
         "title": "The Order of Time",
@@ -299,9 +431,20 @@
         "year": null,
         "pages": 240,
         "subjects": [
+          "Cosmologie",
+          "Temps (durée)",
+          "Espace-temps",
+          "Vulgarisation scientifique",
+          "Univers",
+          "Espace extraterrestre",
+          "Expansion",
           "Cosmology",
-          "Physics",
-          "Black holes",
+          "Origine",
+          "Trous noirs (astronomie)",
+          "Cosmogonie",
+          "Big Bang",
+          "Espace et temps",
+          "Cosmologia",
           "Time"
         ],
         "summary": "",
@@ -311,14 +454,20 @@
         "source": "seed"
       },
       "readiness": {
-        "level": 3,
-        "hours": 6.0,
-        "assumed_concepts": [],
+        "level": 4,
+        "hours": 8.0,
+        "assumed_concepts": [
+          "Quantum Mechanics",
+          "General Relativity",
+          "Black Holes",
+          "Spacetime",
+          "Particle Physics"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to have your understanding of time completely challenged – this book asks you to rethink everything you thought you knew about how the universe works."
       },
       "why": "Goes deeper on what Hawking means by time.",
-      "confidence": 0.7,
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
@@ -389,96 +538,86 @@
     },
     {
       "role": "after",
-      "order": 4,
+      "order": 5,
       "book": {
-        "id": "ol:the-fabric-of-the-cosmos-brian-greene",
+        "id": "9780375727207",
         "title": "The Fabric of the Cosmos",
         "author": "Brian Greene",
-        "isbn": null,
+        "isbn": "9780375727207",
         "brn": null,
-        "year": null,
-        "pages": 569,
+        "year": 2004,
+        "pages": 592,
         "subjects": [
+          "Cosmologia",
+          "Popular works",
+          "Kosmologie",
           "Cosmology",
-          "Physics",
-          "Black holes",
-          "Time"
+          "Nonfiction",
+          "Science",
+          "Tijd",
+          "Ruimte",
+          "Quantummechanica",
+          "Relativiteitstheorie",
+          "Astronomy"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "A magnificent challenge to conventional ideas' Financial Times'I thoroughly enjoyed this book. It manages to be both challenging and entertaining: it is highly recommended' the Independent'(Greene) send(s) the reader's imagination hurtling through the universe on an astonishing ride. As a popularizer of exquisitely abstract science, he is both a skilled and kindly explicator' the New York Times'Greene is as elegant as ever, cutting through the fog of complexity with insight and clarity; space and time become putty in his hands' Los Angeles Times Book Review",
+        "cover_url": "https://covers.openlibrary.org/b/id/6650337-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "523.1"
       },
       "readiness": {
         "level": 4,
         "hours": 18.0,
-        "assumed_concepts": [],
+        "assumed_concepts": [
+          "General Relativity",
+          "Quantum Mechanics",
+          "Spacetime",
+          "String Theory (basic understanding)",
+          "Planck Units"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to stretch your mind – this book dives deep into the mind-bending concepts of space, time, and the universe, so a little science background will really help you appreciate the journey!"
       },
       "why": "Space, time and the texture of reality, in more detail.",
-      "confidence": 0.6,
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 523.1 GRE",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 523.1 GRE",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 523.1 GRE",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
           "call_number": "English 523.1 GRE",
           "available": 3,
           "total": 3,
           "demo": true
         },
         {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
           "call_number": "English 523.1 GRE",
-          "available": 2,
+          "available": 3,
           "total": 3,
           "demo": true
         },
         {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
           "call_number": "English 523.1 GRE",
           "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 523.1 GRE",
-          "available": 0,
           "total": 2,
           "demo": true
         },
         {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 523.1 GRE",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
           "call_number": "English 523.1 GRE",
           "available": 1,
           "total": 1,
@@ -487,8 +626,8 @@
       ],
       "demand": {
         "hot_branches": [
-          "Jurong West Public Library",
-          "Central Public Library"
+          "Bishan Public Library",
+          "Jurong West Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -497,57 +636,76 @@
     },
     {
       "role": "after",
-      "order": 5,
+      "order": 6,
       "book": {
-        "id": "ol:black-holes-and-time-warps-kip-s-thorne",
-        "title": "Black Holes and Time Warps",
+        "id": "9780393035056",
+        "title": "Black holes and time warps",
         "author": "Kip S. Thorne",
-        "isbn": null,
+        "isbn": "9780393035056",
         "brn": null,
-        "year": null,
+        "year": 1994,
         "pages": 619,
         "subjects": [
-          "Cosmology",
+          "Astrophysics",
+          "Black holes (Astronomy)",
+          "Philosophy",
           "Physics",
-          "Black holes",
-          "Time"
+          "Relativity",
+          "Relativity (Physics)",
+          "Història de la ciència",
+          "Gravitació",
+          "Relativitat",
+          "Forats negres (Astronomia)",
+          "Físics",
+          "Filosofia de la ciència",
+          "Astrofísica",
+          "Space and time",
+          "Zwarte gaten"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "Black Holes & Time Warps: Einstein's Outrageous Legacy is a 1994 popular science book by physicist Kip Thorne. It provides an illustrated overview of the history and development of black hole theory, from its roots in Newtonian mechanics until the early 1990s.",
+        "cover_url": "https://covers.openlibrary.org/b/id/248886-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "530.11"
       },
       "readiness": {
-        "level": 5,
-        "hours": 22.0,
-        "assumed_concepts": [],
+        "level": 4,
+        "hours": 25.0,
+        "assumed_concepts": [
+          "Newtonian Mechanics",
+          "General Relativity (basic concepts)",
+          "Gravitational Fields",
+          "Space-time",
+          "Scientific History",
+          "Astrophysical Units (light years, etc.)"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to stretch your mind – this book dives deep into some of the most mind-bending concepts in physics, but Kip Thorne is a wonderful guide!"
       },
       "why": "The full story of black holes from a Nobel laureate.",
-      "confidence": 0.7999999999999999,
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 523.8 THO",
-          "available": 1,
-          "total": 2,
+          "call_number": "English 530.11 THO",
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 523.8 THO",
-          "available": 0,
-          "total": 2,
+          "call_number": "English 530.11 THO",
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 523.8 THO",
+          "call_number": "English 530.11 THO",
           "available": 0,
           "total": 2,
           "demo": true
@@ -555,40 +713,48 @@
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 523.8 THO",
-          "available": 0,
+          "call_number": "English 530.11 THO",
+          "available": 1,
           "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 530.11 THO",
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 523.8 THO",
+          "call_number": "English 530.11 THO",
           "available": 2,
-          "total": 2,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 523.8 THO",
-          "available": 0,
-          "total": 1,
+          "call_number": "English 530.11 THO",
+          "available": 3,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
-        "hot_branches": [
-          "Jurong West Public Library",
-          "Tampines Regional Library"
-        ],
+        "hot_branches": [],
         "hidden_gem": false,
         "reservations": 0,
         "demo": true
       }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.762546+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T04:03:15.285174+00:00",
+  "engine": "llm",
+  "notes": [
+    "'The Fabric of the Cosmos' judged follows (0.80), not placed before",
+    "unverified, dropped: Black Holes and Time Warps: Einstein's Outrageous Legacy"
+  ]
 }

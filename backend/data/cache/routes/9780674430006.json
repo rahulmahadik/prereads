@@ -5,95 +5,98 @@
       "role": "before",
       "order": 0,
       "book": {
-        "id": "ol:economics-the-user-s-guide-ha-joon-chang",
-        "title": "Economics: The User's Guide",
-        "author": "Ha-Joon Chang",
-        "isbn": null,
+        "id": "9788484608394",
+        "title": "The Undercover Economist",
+        "author": "Tim Harford",
+        "isbn": "9788484608394",
         "brn": null,
-        "year": null,
-        "pages": 512,
+        "year": 2005,
+        "pages": 288,
         "subjects": [
+          "Economy",
+          "Undercover Economist",
+          "Tim Harford",
           "Economics",
-          "Inequality",
-          "Economic history"
+          "Consumer education",
+          "Economic history",
+          "Economic history, 1990-",
+          "Histoire économique",
+          "Éducation",
+          "Consommateurs",
+          "Économie politique",
+          "Education du consommateur",
+          "Economic conditions",
+          "Science économique",
+          "History"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "Critically acclaimed as one of the most successful economy books of all time, and a 'must-read' for those of us in the general public who want to understand how society works, but do not want this information to be conveyed in an Oxbridge multipolysyllabic tone, Tim Harford's book gives us an insight into the relevance of the economy to our everyday lives. It begins humbly with the author's relatable bemoaning of coffee and its prices, which is cleverly analogized in the simple, but brilliant and still-relevant ideas of nineteenth-century economist David Ricardo. Organized into clear chapters which target different aspects of the economy's impacts on our life, the book later progresses onto more developed concepts such as the reasons (sub-prime mortgages!) behind the banking collapse of Lehman Brothers in 2008. Written in an aware style from an economist's perspective, this book is thoroughly worthwhile reading.",
+        "cover_url": "https://covers.openlibrary.org/b/id/189956-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "330.90511"
       },
       "readiness": {
         "level": 2,
-        "hours": 12.0,
-        "assumed_concepts": [],
+        "hours": 6.0,
+        "assumed_concepts": [
+          "Supply and Demand",
+          "Basic Market Principles",
+          "Comparative Advantage",
+          "Inflation",
+          "Historical Context (early 19th Century)"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to see how economic principles shape your everyday choices, from your morning coffee to major world events – it's surprisingly accessible!"
       },
-      "why": "A plain-language map of economics that explains the terms Piketty uses without stopping.",
-      "confidence": 0.8999999999999999,
+      "why": "Understanding basic market principles like supply and demand, which you'll learn in 'The Undercover Economist,' will give you a foundation for grasping the more complex concepts of GDP and rate of return that are central to 'Capital in the Twenty-First Century'.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 330 CHA",
-          "available": 1,
+          "call_number": "English 330.90511 HAR",
+          "available": 2,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 330 CHA",
-          "available": 2,
-          "total": 3,
+          "call_number": "English 330.90511 HAR",
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 330 CHA",
+          "call_number": "English 330.90511 HAR",
           "available": 1,
-          "total": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 330 CHA",
-          "available": 3,
-          "total": 3,
+          "call_number": "English 330.90511 HAR",
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 330 CHA",
+          "call_number": "English 330.90511 HAR",
           "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 330 CHA",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 330 CHA",
-          "available": 0,
-          "total": 1,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Woodlands Regional Library",
-          "Punggol Regional Library"
+          "Bishan Public Library",
+          "Jurong West Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -104,54 +107,65 @@
       "role": "before",
       "order": 1,
       "book": {
-        "id": "ol:the-undercover-economist-tim-harford",
-        "title": "The Undercover Economist",
-        "author": "Tim Harford",
-        "isbn": null,
+        "id": "9783548060415",
+        "title": "Factfulness",
+        "author": "Hans Rosling, Ola Rosling",
+        "isbn": "9783548060415",
         "brn": null,
-        "year": null,
-        "pages": 304,
+        "year": 2018,
+        "pages": 352,
         "subjects": [
-          "Economics",
-          "Inequality",
-          "Economic history"
+          "Critical thinking",
+          "Information literacy",
+          "Prejudices",
+          "Social perception",
+          "Social indicators",
+          "Quality of life",
+          "Forecasting",
+          "New York Times bestseller",
+          "Social prediction",
+          "Evaluation",
+          "Statistics.",
+          "Statistics",
+          "Verzerrte Kognition",
+          "Stereotypisierung",
+          "Entscheidungsfindung"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "Factfulness: The stress-reducing habit of only carrying opinions for which you have strong supporting facts.\r\n\r\nWhen asked simple questions about global trends―what percentage of the world’s population live in poverty; why the world’s population is increasing; how many girls finish school―we systematically get the answers wrong. So wrong that a chimpanzee choosing answers at random will consistently outguess teachers, journalists, Nobel laureates, and investment bankers.\r\n\r\nIn Factfulness, Professor of International Health and global TED phenomenon Hans Rosling, together with his two long-time collaborators, Anna and Ola, offers a radical new explanation of why this happens. They reveal the ten instincts that distort our perspective―from our tendency to divide the world into two camps (usually some version of us and them) to the way we consume media (where fear rules) to how we perceive progress (believing that most things are getting worse).\r\n\r\nOur problem is that we don’t know what we don’t know, and even our guesses are informed by unconscious and predictable biases.\r\n\r\nIt turns out that the world, for all its imperfections, is in a much better state than we might think. That doesn’t mean there aren’t real concerns. But when we worry about everything all the time instead of embracing a worldview based on facts, we can lose our ability to focus on the things that threaten us most.\r\n\r\nInspiring and revelatory, filled with lively anecdotes and moving stories, Factfulness is an urgent and essential book that will change the way you see the world and empower you to respond to the crises and opportunities of the future.",
+        "cover_url": "https://covers.openlibrary.org/b/id/8186237-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "155.9042"
       },
       "readiness": {
         "level": 2,
         "hours": 8.0,
-        "assumed_concepts": [],
+        "assumed_concepts": [
+          "Basic statistics (mean, median, mode)",
+          "Correlation vs. Causation",
+          "Confirmation bias",
+          "Media literacy",
+          "Global poverty indicators"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to challenge your assumptions about the world – this book will show you how our instincts often mislead us, and how to think more clearly about global trends."
       },
-      "why": "Economic reasoning in everyday situations; builds the intuition.",
-      "confidence": 0.8999999999999999,
+      "why": "Understanding basic statistics and correlation versus causation in *Factfulness* will give you a solid foundation for interpreting the economic data and charts presented in *Capital in the Twenty-First Century*.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 330 HAR",
-          "available": 1,
+          "call_number": "English 155.9042 ROS",
+          "available": 0,
           "total": 2,
           "demo": true
         },
         {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 330 HAR",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 330 HAR",
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 155.9042 ROS",
           "available": 1,
           "total": 1,
           "demo": true
@@ -159,14 +173,41 @@
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 330 HAR",
+          "call_number": "English 155.9042 ROS",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 155.9042 ROS",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 155.9042 ROS",
           "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 155.9042 ROS",
+          "available": 1,
           "total": 3,
           "demo": true
         }
       ],
       "demand": {
-        "hot_branches": [],
+        "hot_branches": [
+          "Bishan Public Library",
+          "Punggol Regional Library"
+        ],
         "hidden_gem": false,
         "reservations": 0,
         "demo": true
@@ -176,38 +217,44 @@
       "role": "before",
       "order": 2,
       "book": {
-        "id": "ol:naked-economics-charles-wheelan",
-        "title": "Naked Economics",
-        "author": "Charles Wheelan",
-        "isbn": null,
+        "id": "9780718197049",
+        "title": "Economics : the user's guide",
+        "author": "Ha-Joon Chang",
+        "isbn": "9780718197049",
         "brn": null,
-        "year": null,
-        "pages": 384,
+        "year": 2014,
+        "pages": 365,
         "subjects": [
           "Economics",
-          "Inequality",
-          "Economic history"
+          "Hb171 .c484 2014",
+          "330"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "\"Unlike many economists, who present only one view of their discipline, Chang introduces a wide range of economic theories, from classical to Keynesian, revealing how each has its strengths and weaknesses, and why there is no one way to explain economic behavior. Instead, by ignoring the received wisdom and exposing the myriad forces that shape our financial world, Chang gives us the tools we need to understand our increasingly global and interconnected world often driven by economics. From the future of the Euro, inequality in China, or the condition of the American manufacturing industry here in the United States--Economics: The User's Guide is a concise and expertly crafted guide to economic fundamentals that offers a clear and accurate picture of the global economy and how and why it affects our daily lives\" --",
+        "cover_url": "https://covers.openlibrary.org/b/id/8097878-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
-        "level": 2,
-        "hours": 10.0,
-        "assumed_concepts": [],
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Supply and Demand",
+          "Gross Domestic Product (GDP)",
+          "Inflation",
+          "Recessions",
+          "Free Market Ideology"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to explore different ways economists think about the world – it's a broad overview, so a little curiosity about how money and systems work will go a long way!"
       },
-      "why": "Macroeconomics without equations.",
-      "confidence": 0.8999999999999999,
+      "why": "Economics: The User's Guide introduces foundational concepts like GDP and inflation, which are essential building blocks for understanding the more complex data and analysis presented in Capital in the Twenty-First Century.",
+      "confidence": 0.9,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 330 WHE",
+          "call_number": "English 332.6 CHA",
           "available": 2,
           "total": 2,
           "demo": true
@@ -215,48 +262,64 @@
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 330 WHE",
-          "available": 1,
-          "total": 1,
+          "call_number": "English 332.6 CHA",
+          "available": 0,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 330 WHE",
+          "call_number": "English 332.6 CHA",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 332.6 CHA",
           "available": 2,
-          "total": 3,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 332.6 CHA",
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 330 WHE",
-          "available": 1,
+          "call_number": "English 332.6 CHA",
+          "available": 0,
           "total": 1,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 330 WHE",
-          "available": 1,
+          "call_number": "English 332.6 CHA",
+          "available": 2,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 330 WHE",
-          "available": 1,
-          "total": 1,
+          "call_number": "English 332.6 CHA",
+          "available": 3,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Bishan Public Library",
-          "Tampines Regional Library"
+          "Jurong West Public Library",
+          "Bukit Batok Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -362,186 +425,114 @@
       "role": "after",
       "order": 4,
       "book": {
-        "id": "ol:the-price-of-inequality-joseph-e-stiglitz",
-        "title": "The Price of Inequality",
-        "author": "Joseph E. Stiglitz",
-        "isbn": null,
+        "id": "9789501298864",
+        "title": "Capital and Ideology",
+        "author": "Thomas Piketty",
+        "isbn": "9789501298864",
         "brn": null,
-        "year": null,
-        "pages": 560,
+        "year": 2010,
+        "pages": 1171,
         "subjects": [
+          "Equality",
+          "Ideology",
+          "Socialism",
+          "Economics, political aspects",
+          "Social change",
+          "Property",
+          "nyt:combined-print-and-e-book-nonfiction=2020-03-29",
+          "New York Times bestseller",
+          "New York Times reviewed",
+          "Economic aspects",
           "Economics",
-          "Inequality",
-          "Economic history"
+          "Political aspects",
+          "BUSINESS & ECONOMICS / Economic History",
+          "BUSINESS & ECONOMICS / Economics / Comparative",
+          "BUSINESS & ECONOMICS / Development / Economic Development"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "\"Thomas Piketty's bestselling Capital in the Twenty-First Century galvanized global debate about inequality. In this audacious follow-up, Piketty challenges us to revolutionize how we think about politics, ideology, and history. He exposes the ideas that have sustained inequality for the past millennium, reveals why the shallow politics of right and left are failing us today, and outlines the structure of a fairer economic system. Our economy, Piketty observes, is not a natural fact. Markets, profits, and capital are all historical constructs that depend on choices. Piketty explores the material and ideological interactions of conflicting social groups that have given us slavery, serfdom, colonialism, communism, and hypercapitalism, shaping the lives of billions. He concludes that the great driver of human progress over the centuries has been the struggle for equality and education and not, as often argued, the assertion of property rights or the pursuit of stability. The new era of extreme inequality that has derailed that progress since the 1980s, he shows, is partly a reaction against communism, but it is also the fruit of ignorance, intellectual specialization, and our drift toward the dead-end politics of identity. Once we understand this, we can begin to envision a more balanced approach to economics and politics. Piketty argues for a new \"participatory\" socialism, a system founded on an ideology of equality, social property, education, and the sharing of knowledge and power\"--\n\nPiketty challenges us to revolutionize how we think about politics, ideology, and history. He exposes the ideas that have sustained inequality for the past millennium, reveals why the shallow politics of right and left are failing us today, and outlines the structure of a fairer economic system. Our economy, he observes, is not a natural fact. Markets, profits, and capital are all historical constructs that depend on choices. The great driver of human progress over the centuries has been the struggle for equality and education and not, as often argued, the assertion of property rights or the pursuit of stability. -- abridged from jacket",
+        "cover_url": "https://covers.openlibrary.org/b/id/9335113-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "305"
       },
       "readiness": {
-        "level": 4,
-        "hours": 16.0,
-        "assumed_concepts": [],
+        "level": 5,
+        "hours": 36.0,
+        "assumed_concepts": [
+          "Marxist theory",
+          "Historical materialism",
+          "Economic inequality metrics (Gini coefficient, wealth distribution)",
+          "Ideological frameworks (liberalism, socialism, conservatism)",
+          "Colonialism and its economic impact"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready for a deep dive into history, economics, and political thought – this book will challenge your assumptions about how the world works!"
       },
-      "why": "A Nobel laureate's take on the same question from the policy side.",
-      "confidence": 0.7,
+      "why": "The even larger sequel.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 339.2 STI",
+          "call_number": "English 305 PIK",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 305 PIK",
           "available": 1,
-          "total": 1,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 339.2 STI",
-          "available": 1,
-          "total": 1,
+          "call_number": "English 305 PIK",
+          "available": 2,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 339.2 STI",
-          "available": 1,
+          "call_number": "English 305 PIK",
+          "available": 0,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 339.2 STI",
-          "available": 2,
-          "total": 3,
+          "call_number": "English 305 PIK",
+          "available": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 339.2 STI",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 339.2 STI",
-          "available": 2,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 339.2 STI",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Central Public Library",
-          "Punggol Regional Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "after",
-      "order": 5,
-      "book": {
-        "id": "ol:capital-and-ideology-thomas-piketty",
-        "title": "Capital and Ideology",
-        "author": "Thomas Piketty",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 1104,
-        "subjects": [
-          "Economics",
-          "Inequality",
-          "Economic history"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 5,
-        "hours": 45.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "The even larger sequel.",
-      "confidence": 0.6,
-      "availability": [
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 330.9 PIK",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 330.9 PIK",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 330.9 PIK",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 330.9 PIK",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 330.9 PIK",
+          "call_number": "English 305 PIK",
           "available": 1,
           "total": 1,
           "demo": true
         },
         {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 330.9 PIK",
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 305 PIK",
           "available": 1,
-          "total": 2,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Tampines Regional Library",
-          "Ang Mo Kio Public Library"
+          "Bishan Public Library",
+          "Woodlands Regional Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -549,7 +540,12 @@
       }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.764676+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T04:07:16.271561+00:00",
+  "engine": "llm",
+  "notes": [
+    "unverified, dropped: Freakonomics",
+    "'A short history of nearly everything' judged unrelated (0.80), not placed before",
+    "dropped 'The Price of Inequality' from after-line: much easier than the target",
+    "dropped 'The Shock Doctrine' from after-line: much easier than the target"
+  ]
 }

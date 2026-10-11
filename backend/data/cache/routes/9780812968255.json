@@ -2,213 +2,17 @@
   "target_id": "9780812968255",
   "stops": [
     {
-      "role": "before",
+      "role": "target",
       "order": 0,
       "book": {
-        "id": "ol:how-to-think-like-a-roman-emperor-donald-j-robertson",
-        "title": "How to Think Like a Roman Emperor",
-        "author": "Donald J. Robertson",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 304,
-        "subjects": [
-          "Stoicism",
-          "Philosophy",
-          "Ethics"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 1,
-        "hours": 8.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "Marcus's life and the Stoic method, so the notes make sense.",
-      "confidence": 0.8999999999999999,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 188 ROB",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 188 ROB",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 188 ROB",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 188 ROB",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 188 ROB",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 188 ROB",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 188 ROB",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Central Public Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "before",
-      "order": 1,
-      "book": {
-        "id": "ol:a-guide-to-the-good-life-william-b-irvine",
-        "title": "A Guide to the Good Life",
-        "author": "William B. Irvine",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 336,
-        "subjects": [
-          "Stoicism",
-          "Philosophy",
-          "Ethics"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 2,
-        "hours": 8.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "Stoicism as a practice, in modern terms.",
-      "confidence": 0.7999999999999999,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 188 IRV",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 188 IRV",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 188 IRV",
-          "available": 2,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 188 IRV",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 188 IRV",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 188 IRV",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 188 IRV",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Bishan Public Library",
-          "Woodlands Regional Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "target",
-      "order": 2,
-      "book": {
-        "id": "9780812968255",
+        "id": "9798633637694",
         "title": "Meditations",
-        "author": "Marcus Aurelius",
-        "isbn": "9780812968255",
+        "author": "Marcus Aurelius Aurelius",
+        "isbn": "9798633637694",
         "brn": null,
-        "year": 180,
+        "year": 2020,
         "pages": 256,
+        "ddc": "888",
         "subjects": [
           "Stoicism",
           "Philosophy",
@@ -218,7 +22,7 @@
         "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 3,
@@ -236,15 +40,15 @@
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 188 AUR",
-          "available": 0,
-          "total": 3,
+          "call_number": "English 888 AUR",
+          "available": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 188 AUR",
+          "call_number": "English 888 AUR",
           "available": 1,
           "total": 1,
           "demo": true
@@ -252,23 +56,198 @@
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 188 AUR",
-          "available": 0,
-          "total": 1,
+          "call_number": "English 888 AUR",
+          "available": 2,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 188 AUR",
+          "call_number": "English 888 AUR",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 1,
+      "book": {
+        "id": "9781805222484",
+        "title": "The Obstacle is the Way: 10th Anniversary Edition: The Timeless Art of Turning Trials into Triumph",
+        "author": "Ryan Holiday",
+        "isbn": "9781805222484",
+        "brn": null,
+        "year": null,
+        "pages": null,
+        "ddc": null,
+        "subjects": [
+          "Stoicism",
+          "Philosophy",
+          "Ethics"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary"
+      },
+      "readiness": {
+        "level": 2,
+        "hours": 8.0,
+        "assumed_concepts": [
+          "Ancient Greek Philosophy",
+          "Virtue Ethics",
+          "Self-Control",
+          "Logic",
+          "Resilience"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to explore a practical philosophy that's all about finding strength and opportunity in challenging situations – it's a mindset shift, not just a read!"
+      },
+      "why": "Holiday popularizes Stoicism by applying its principles to modern challenges, inspired by Aurelius and other Stoic thinkers.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 523.1 HOL",
           "available": 1,
           "total": 1,
           "demo": true
         },
         {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 188 AUR",
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 523.1 HOL",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 523.1 HOL",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 523.1 HOL",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 523.1 HOL",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 523.1 HOL",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Ang Mo Kio Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 2,
+      "book": {
+        "id": "9780140442106",
+        "title": "Letters from a Stoic",
+        "author": "Seneca the Younger",
+        "isbn": "9780140442106",
+        "brn": null,
+        "year": 1969,
+        "pages": 254,
+        "ddc": "188",
+        "subjects": [
+          "Early works to 1800",
+          "Conduct of life.",
+          "Ethics",
+          "Conduct of life",
+          "Philosophy",
+          "Bj214.s4 e73",
+          "188",
+          "Stoa",
+          "Morale pratique",
+          "Ouvrages avant 1800"
+        ],
+        "summary": "The power and wealth which Seneca the Younger (C.4 B.C.- A.D. 65) acquired as Nero's minister were in conflict with his Stoic beliefs. Nevertheless he was the outstanding figure of his age. The Stoic philosophy which Seneca professed in his writings, later supported by Marcus Aurelius, provided Rome with a passable bridge to Christianity. Seneca's major contribution to Stoicism was to spiritualize and humanize a system which could appear cold and unrealistic.",
+        "cover_url": "https://covers.openlibrary.org/b/id/103759-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 8.0,
+        "assumed_concepts": [
+          "Roman history",
+          "Ancient philosophy",
+          "Virtue ethics",
+          "Correspondence (letters)",
+          "Nero's reign"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to slow down and reflect – these letters offer timeless wisdom, but understanding a little about the historical context will really enrich your experience."
+      },
+      "why": "The same philosophy in letters, warmer in tone.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 188 YOU",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 188 YOU",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 188 YOU",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 188 YOU",
           "available": 0,
           "total": 1,
           "demo": true
@@ -276,32 +255,24 @@
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 188 AUR",
+          "call_number": "English 188 YOU",
           "available": 1,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 188 AUR",
-          "available": 0,
-          "total": 3,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 188 AUR",
-          "available": 0,
-          "total": 2,
+          "call_number": "English 188 YOU",
+          "available": 1,
+          "total": 1,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Punggol Regional Library",
-          "Bukit Batok Library"
+          "Bishan Public Library",
+          "Jurong West Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -312,154 +283,106 @@
       "role": "after",
       "order": 3,
       "book": {
-        "id": "ol:letters-from-a-stoic-seneca",
-        "title": "Letters from a Stoic",
-        "author": "Seneca",
-        "isbn": null,
+        "id": "9780140449464",
+        "title": "Discourses and Selected Writings",
+        "author": "Epictetus",
+        "isbn": "9780140449464",
         "brn": null,
-        "year": null,
-        "pages": 254,
+        "year": 2008,
+        "pages": 400,
+        "ddc": "188",
         "subjects": [
-          "Stoicism",
+          "Ethics, modern, 17th century",
           "Philosophy",
-          "Ethics"
+          "History, ancient",
+          "Ethics",
+          "Early works to 1800",
+          "Morale",
+          "Ouvrages avant 1800",
+          "Ethik",
+          "Conduct of life",
+          "Philosophy--early works to 1800",
+          "Conduct of life--early works to 1800",
+          "Ethics--early works to 1800",
+          "B560.e5 d62 2008",
+          "188"
         ],
         "summary": "",
-        "cover_url": null,
+        "cover_url": "https://covers.openlibrary.org/b/id/12985050-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 3,
-        "hours": 8.0,
-        "assumed_concepts": [],
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Stoicism",
+          "Virtue Ethics",
+          "Ancient Greek Philosophy",
+          "Logic (basic)",
+          "Self-Control",
+          "Natural Law"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to gently challenge your assumptions about happiness and what's truly within your control – this is a classic guide to living a good life, rooted in ancient wisdom."
       },
-      "why": "The same philosophy in letters, warmer in tone.",
-      "confidence": 0.6,
+      "why": "The teacher behind Marcus's notes.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 188 SEN",
-          "available": 2,
-          "total": 2,
+          "call_number": "English 188 EPI",
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 188 SEN",
-          "available": 3,
-          "total": 3,
+          "call_number": "English 188 EPI",
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 188 SEN",
-          "available": 3,
-          "total": 3,
+          "call_number": "English 188 EPI",
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 188 SEN",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 188 SEN",
-          "available": 2,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 188 SEN",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 188 SEN",
+          "call_number": "English 188 EPI",
           "available": 1,
-          "total": 2,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Bishan Public Library",
-          "Tampines Regional Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "after",
-      "order": 4,
-      "book": {
-        "id": "ol:discourses-and-selected-writings-epictetus",
-        "title": "Discourses and Selected Writings",
-        "author": "Epictetus",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 304,
-        "subjects": [
-          "Stoicism",
-          "Philosophy",
-          "Ethics"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 4,
-        "hours": 10.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "The teacher behind Marcus's notes.",
-      "confidence": 0.7999999999999999,
-      "availability": [
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 188 EPI",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 188 EPI",
-          "available": 2,
-          "total": 3,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
           "call_number": "English 188 EPI",
-          "available": 0,
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 188 EPI",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 188 EPI",
+          "available": 1,
           "total": 3,
           "demo": true
         },
@@ -474,8 +397,7 @@
       ],
       "demand": {
         "hot_branches": [
-          "Jurong West Public Library",
-          "Central Public Library"
+          "Bukit Batok Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -483,7 +405,16 @@
       }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.769783+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T04:18:48.690677+00:00",
+  "engine": "llm",
+  "notes": [
+    "'How to Think Like a Roman Emperor' judged follows (0.90), not placed before",
+    "'A Guide to the Good Life' judged follows (0.80), not placed before",
+    "unverified, dropped: Morning Meditations: How to Live a Life of Meaning, Purpose, and Joy",
+    "'The inner citadel' judged follows (0.90), not placed before",
+    "'The Enchiridion' judged same_level (0.80), not placed before",
+    "unverified, dropped: Happiness: A Guide to Developing Life's Most Important Skill",
+    "unverified, dropped: A Guide to the Good Life: The Ancient Art of Stoic Joy",
+    "dropped 'Letters from a Stoic' from before-line: not easier than the target"
+  ]
 }

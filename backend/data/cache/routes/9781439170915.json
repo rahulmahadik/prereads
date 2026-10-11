@@ -2,199 +2,39 @@
   "target_id": "9781439170915",
   "stops": [
     {
-      "role": "before",
-      "order": 0,
-      "book": {
-        "id": "ol:the-immortal-life-of-henrietta-lacks-rebecca-skloot",
-        "title": "The Immortal Life of Henrietta Lacks",
-        "author": "Rebecca Skloot",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 381,
-        "subjects": [
-          "Cancer",
-          "History of medicine",
-          "Biography"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 2,
-        "hours": 10.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "Cells, research ethics and medical history through one family's story.",
-      "confidence": 0.7999999999999999,
-      "availability": [
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 616.027 SKL",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 616.027 SKL",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 616.027 SKL",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 616.027 SKL",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 616.027 SKL",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 616.027 SKL",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Tampines Regional Library",
-          "Woodlands Regional Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "before",
-      "order": 1,
-      "book": {
-        "id": "ol:being-mortal-atul-gawande",
-        "title": "Being Mortal",
-        "author": "Atul Gawande",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 304,
-        "subjects": [
-          "Cancer",
-          "History of medicine",
-          "Biography"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 2,
-        "hours": 8.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "Medicine from the patient's side; shorter and just as humane.",
-      "confidence": 0.7999999999999999,
-      "availability": [
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 362.175 GAW",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 362.175 GAW",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 362.175 GAW",
-          "available": 2,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 362.175 GAW",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 362.175 GAW",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Punggol Regional Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
       "role": "target",
-      "order": 2,
+      "order": 0,
       "book": {
         "id": "9781439170915",
         "title": "The Emperor of All Maladies",
-        "author": "Siddhartha Mukherjee",
+        "author": "Siddhartha Mukherjee, Nessa Carey",
         "isbn": "9781439170915",
         "brn": null,
         "year": 2010,
-        "pages": 592,
+        "pages": 582,
+        "ddc": "616.994",
         "subjects": [
+          "medical history",
+          "social sciences",
+          "history",
+          "civilization",
+          "oncology",
           "Cancer",
-          "History of medicine",
-          "Biography"
+          "nyt:paperback_nonfiction=2011-08-27",
+          "research",
+          "New York Times bestseller",
+          "medicine",
+          "Leukemia",
+          "Antineoplastic Agents",
+          "drug therapy",
+          "Cancer, popular works",
+          "History, 20th Century"
         ],
-        "summary": "A biography of cancer.",
-        "cover_url": null,
+        "summary": "The Emperor of All Maladies: A Biography of Cancer is a book written by Siddhartha Mukherjee, an Indian-born American physician and oncologist. Published on 16 November 2010 by Scribner, it won the 2011 Pulitzer Prize for General Non-Fiction.",
+        "cover_url": "https://covers.openlibrary.org/b/id/11320203-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 3,
@@ -268,64 +108,93 @@
     },
     {
       "role": "after",
-      "order": 3,
+      "order": 1,
       "book": {
-        "id": "ol:the-gene-siddhartha-mukherjee",
-        "title": "The Gene",
+        "id": "9781529111781",
+        "title": "The Song of the Cell",
         "author": "Siddhartha Mukherjee",
-        "isbn": null,
+        "isbn": "9781529111781",
         "brn": null,
-        "year": null,
-        "pages": 608,
+        "year": 2022,
+        "pages": 496,
+        "ddc": null,
         "subjects": [
-          "Cancer",
-          "History of medicine",
-          "Biography"
+          "biology",
+          "cells",
+          "Cytology",
+          "immunology",
+          "Research",
+          "Microbiology",
+          "oncology",
+          "nyt:paperback-nonfiction=2023-11-12",
+          "New York Times bestseller"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "A history of the cell, and the development of a multiplicity of subsequent cell sciences, biological and medical, with an emphasis on the human.",
+        "cover_url": "https://covers.openlibrary.org/b/id/12982914-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
-        "level": 4,
-        "hours": 22.0,
-        "assumed_concepts": [],
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "basic genetics",
+          "DNA structure",
+          "human anatomy",
+          "disease processes",
+          "scientific method"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to dive into a sweeping story – you'll need a little science background to fully appreciate the incredible journey of how we understand the cell!"
       },
-      "why": "Mukherjee's next history, on heredity.",
-      "confidence": 0.7999999999999999,
+      "why": "The third in the trilogy.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 576.5 MUK",
-          "available": 2,
-          "total": 3,
+          "call_number": "English 571.6 MUK",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 571.6 MUK",
+          "available": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 576.5 MUK",
-          "available": 1,
+          "call_number": "English 571.6 MUK",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 571.6 MUK",
+          "available": 0,
           "total": 1,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 576.5 MUK",
-          "available": 2,
-          "total": 2,
+          "call_number": "English 571.6 MUK",
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 576.5 MUK",
+          "call_number": "English 571.6 MUK",
           "available": 1,
           "total": 1,
           "demo": true
@@ -333,14 +202,25 @@
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 576.5 MUK",
-          "available": 0,
-          "total": 1,
+          "call_number": "English 571.6 MUK",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 571.6 MUK",
+          "available": 1,
+          "total": 2,
           "demo": true
         }
       ],
       "demand": {
-        "hot_branches": [],
+        "hot_branches": [
+          "Jurong West Public Library",
+          "Ang Mo Kio Public Library"
+        ],
         "hidden_gem": false,
         "reservations": 0,
         "demo": true
@@ -348,72 +228,91 @@
     },
     {
       "role": "after",
-      "order": 4,
+      "order": 2,
       "book": {
-        "id": "ol:the-song-of-the-cell-siddhartha-mukherjee",
-        "title": "The Song of the Cell",
-        "author": "Siddhartha Mukherjee",
-        "isbn": null,
+        "id": "9781501150128",
+        "title": "The Gene",
+        "author": "Siddhartha Mukherjee, Dennis Boutsikaris",
+        "isbn": "9781501150128",
         "brn": null,
-        "year": null,
-        "pages": 496,
+        "year": 2016,
+        "pages": 605,
+        "ddc": "616.042",
         "subjects": [
-          "Cancer",
-          "History of medicine",
-          "Biography"
+          "genetics",
+          "history",
+          "heredity",
+          "genes",
+          "family",
+          "medical ethics",
+          "health",
+          "abortion",
+          "prenatal tests",
+          "AIDS",
+          "acquired immunodeficiency syndrome",
+          "ADA deficiency",
+          "ADA gene mutations",
+          "ADCY5",
+          "addiction"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "The Gene: An Intimate History is a book written by Siddhartha Mukherjee, an Indian-born American physician and oncologist. It was published on 17 May 2016 by Scribner. The book chronicles the history of the gene and genetic research, all the way from Aristotle to Crick, Watson and Franklin and then the 21st century scientists who mapped the human genome. The book discusses the power of genetics in determining people's well-being and traits. It delves into the personal genetic history of Siddhartha Mukherjee's family, including mental illness. However, it is also a cautionary message toward not letting genetic predispositions define a person or their fate, a mentality that the author says led to the rise of eugenics in history.",
+        "cover_url": "https://covers.openlibrary.org/b/id/11320163-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 4,
         "hours": 18.0,
-        "assumed_concepts": [],
+        "assumed_concepts": [
+          "basic biology",
+          "DNA structure",
+          "dominant/recessive traits",
+          "medical terminology",
+          "historical context of scientific discovery"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready for a sweeping, thoughtful journey through the history of genetics – it's a big story, and a little science background will help you appreciate its complexities!"
       },
-      "why": "The third in the trilogy.",
-      "confidence": 0.7999999999999999,
+      "why": "Mukherjee's next history, on heredity.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 571.6 MUK",
-          "available": 2,
-          "total": 2,
+          "call_number": "English 616.042 MUK",
+          "available": 0,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 571.6 MUK",
-          "available": 3,
+          "call_number": "English 616.042 MUK",
+          "available": 1,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 571.6 MUK",
-          "available": 1,
-          "total": 3,
+          "call_number": "English 616.042 MUK",
+          "available": 2,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 571.6 MUK",
-          "available": 1,
-          "total": 2,
+          "call_number": "English 616.042 MUK",
+          "available": 0,
+          "total": 3,
           "demo": true
         },
         {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 571.6 MUK",
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 616.042 MUK",
           "available": 0,
           "total": 3,
           "demo": true
@@ -421,23 +320,23 @@
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 571.6 MUK",
-          "available": 0,
-          "total": 1,
+          "call_number": "English 616.042 MUK",
+          "available": 2,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 571.6 MUK",
-          "available": 2,
+          "call_number": "English 616.042 MUK",
+          "available": 3,
           "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Tampines Regional Library",
+          "Jurong West Public Library",
           "Woodlands Regional Library"
         ],
         "hidden_gem": false,
@@ -446,7 +345,16 @@
       }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.772284+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T04:22:31.229950+00:00",
+  "engine": "llm",
+  "notes": [
+    "'Being Mortal' judged unrelated (0.70), not placed before",
+    "unverified, dropped: Koch: The Biography of Ignaz Semmelweis",
+    "unverified, dropped: Polio: An American Story",
+    "unverified, dropped: The Ghost Map: The Story of London's Most Terrifying Epidemic--and How It Changed Science",
+    "unverified, dropped: Bedlam: London, Asylum, and the Brink of Madness",
+    "unverified, dropped: Spillover: Animal Infections and the Next Human Pandemic",
+    "dropped 'The Immortal Life of Henrietta Lacks' from before-line: not easier than the target",
+    "dropped 'The Immortal Life of Henrietta Lacks' from before-line: not easier than the target"
+  ]
 }

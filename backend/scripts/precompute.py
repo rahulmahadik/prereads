@@ -24,6 +24,7 @@ def main() -> int:
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--only", type=str, default="")
     ap.add_argument("--refresh", action="store_true", help="rebuild even if cached")
+    ap.add_argument("--stale", action="store_true", help="rebuild only cached paths not yet model-judged (engine != llm)")
     args = ap.parse_args()
 
     llm.HEAVY = True
@@ -36,7 +37,8 @@ def main() -> int:
         if args.only and args.only.lower() not in seed["title"].lower():
             continue
         key = seed.get("isbn") or seed.get("id")
-        if key and not args.refresh and load_route(key):
+        cached = load_route(key) if key else None
+        if cached and not args.refresh and not (args.stale and cached.engine != "llm"):
             skipped += 1
             continue
         t0 = time.time()

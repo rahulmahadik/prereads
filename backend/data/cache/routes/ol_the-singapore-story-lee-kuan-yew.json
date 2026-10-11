@@ -2,119 +2,27 @@
   "target_id": "ol:the-singapore-story-lee-kuan-yew",
   "stops": [
     {
-      "role": "before",
+      "role": "target",
       "order": 0,
       "book": {
-        "id": "ol:singapore-a-biography-mark-ravinder-frost",
-        "title": "Singapore: A Biography",
-        "author": "Mark Ravinder Frost",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 464,
-        "subjects": [
-          "Singapore",
-          "History",
-          "Memoir",
-          "Politics"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 2,
-        "hours": 14.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "A readable, illustrated history that gives you the backdrop for the memoir.",
-      "confidence": 0.7999999999999999,
-      "availability": [
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 959.57 FRO",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 959.57 FRO",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 959.57 FRO",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 959.57 FRO",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 959.57 FRO",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 959.57 FRO",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Jurong West Public Library",
-          "Tampines Regional Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "target",
-      "order": 1,
-      "book": {
-        "id": "ol:the-singapore-story-lee-kuan-yew",
+        "id": "9789812049841",
         "title": "The Singapore Story",
         "author": "Lee Kuan Yew",
-        "isbn": null,
+        "isbn": "9789812049841",
         "brn": null,
         "year": 1998,
-        "pages": 680,
+        "pages": 687,
+        "ddc": "959.5705092",
         "subjects": [
-          "Singapore",
-          "History",
-          "Memoir",
-          "Politics"
+          "Politics and government",
+          "Prime ministers",
+          "Biography"
         ],
-        "summary": "Lee Kuan Yew's memoirs up to 1965.",
-        "cover_url": null,
+        "summary": "The personal account of the life of Lee Kuan Yew. Information on Singapore's politics, history and much more.",
+        "cover_url": "https://covers.openlibrary.org/b/id/7432823-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 3,
@@ -132,139 +40,47 @@
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 959.5705 YEW",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 959.5705 YEW",
+          "call_number": "English 959.5705092 YEW",
           "available": 1,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 959.5705 YEW",
-          "available": 0,
           "total": 1,
           "demo": true
         },
         {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 959.5705 YEW",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 959.5705 YEW",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 959.5705 YEW",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 959.5705 YEW",
-          "available": 2,
-          "total": 3,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Central Public Library",
-          "Bukit Batok Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "after",
-      "order": 2,
-      "book": {
-        "id": "ol:from-third-world-to-first-lee-kuan-yew",
-        "title": "From Third World to First",
-        "author": "Lee Kuan Yew",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 752,
-        "subjects": [
-          "Singapore",
-          "History",
-          "Memoir",
-          "Politics"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 3,
-        "hours": 26.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "The second volume, 1965 to 2000.",
-      "confidence": 0.6,
-      "availability": [
-        {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 959.5705 YEW",
-          "available": 0,
+          "call_number": "English 959.5705092 YEW",
+          "available": 1,
           "total": 1,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 959.5705 YEW",
-          "available": 1,
-          "total": 1,
+          "call_number": "English 959.5705092 YEW",
+          "available": 3,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 959.5705 YEW",
-          "available": 1,
-          "total": 2,
+          "call_number": "English 959.5705092 YEW",
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 959.5705 YEW",
-          "available": 0,
+          "call_number": "English 959.5705092 YEW",
+          "available": 1,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 959.5705 YEW",
+          "call_number": "English 959.5705092 YEW",
           "available": 2,
           "total": 2,
           "demo": true
@@ -272,17 +88,17 @@
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 959.5705 YEW",
-          "available": 1,
+          "call_number": "English 959.5705092 YEW",
+          "available": 0,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 959.5705 YEW",
-          "available": 2,
-          "total": 2,
+          "call_number": "English 959.5705092 YEW",
+          "available": 0,
+          "total": 1,
           "demo": true
         }
       ],
@@ -298,7 +114,7 @@
     },
     {
       "role": "after",
-      "order": 3,
+      "order": 1,
       "book": {
         "id": "ol:hard-truths-to-keep-singapore-going-lee-kuan-yew",
         "title": "Hard Truths to Keep Singapore Going",
@@ -307,11 +123,11 @@
         "brn": null,
         "year": null,
         "pages": 458,
+        "ddc": null,
         "subjects": [
-          "Singapore",
-          "History",
-          "Memoir",
-          "Politics"
+          "Politics and government",
+          "Prime ministers",
+          "Biography"
         ],
         "summary": "",
         "cover_url": null,
@@ -321,13 +137,20 @@
       },
       "readiness": {
         "level": 3,
-        "hours": 14.0,
-        "assumed_concepts": [],
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Singaporean parliamentary system",
+          "Economic planning",
+          "Meritocracy",
+          "Social engineering",
+          "National identity",
+          "Political pragmatism"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to delve into the tough decisions and underlying philosophies that shaped Singapore – it's a thoughtful read best approached with some understanding of how Singapore's government works."
       },
       "why": "Interviews late in life; the same mind looking back.",
-      "confidence": 0.6,
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Tampines Regional Library",
@@ -386,9 +209,115 @@
         "reservations": 0,
         "demo": true
       }
+    },
+    {
+      "role": "after",
+      "order": 2,
+      "book": {
+        "id": "9780060197766",
+        "title": "From Third World to First : The Singapore Story",
+        "author": "Lee Kuan Yew",
+        "isbn": "9780060197766",
+        "brn": null,
+        "year": 2000,
+        "pages": 752,
+        "ddc": null,
+        "subjects": [
+          "Social conditions",
+          "Economic conditions",
+          "History"
+        ],
+        "summary": "",
+        "cover_url": "https://covers.openlibrary.org/b/id/23348-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary"
+      },
+      "readiness": {
+        "level": 4,
+        "hours": 20.0,
+        "assumed_concepts": [
+          "Post-colonialism",
+          "Nation-building",
+          "Economic planning",
+          "Political ideologies",
+          "GDP",
+          "Meritocracy"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive deep into the fascinating, and sometimes complex, story of Singapore's incredible transformation – it's a political and economic journey!"
+      },
+      "why": "The second volume, 1965 to 2000.",
+      "confidence": 0.9,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 959.5705 YEW",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 959.5705 YEW",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 959.5705 YEW",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 959.5705 YEW",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 959.5705 YEW",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 959.5705 YEW",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bukit Batok Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.773206+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T04:23:47.822101+00:00",
+  "engine": "llm",
+  "notes": [
+    "'Singapore: A Biography' judged follows (0.80), not placed before",
+    "'Long Walk to Freedom' judged same_level (0.70), not placed before",
+    "unverified, dropped: A Short History of the Modern Middle East",
+    "'My life' judged unrelated (0.80), not placed before",
+    "unverified, dropped: Gandhi: The Autobiography",
+    "'The Prince' judged same_level (0.70), not placed before",
+    "unverified, dropped: The Iron Curtain: A History"
+  ]
 }

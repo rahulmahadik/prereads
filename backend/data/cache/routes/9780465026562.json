@@ -5,96 +5,122 @@
       "role": "before",
       "order": 0,
       "book": {
-        "id": "ol:logicomix-apostolos-doxiadis",
-        "title": "Logicomix",
-        "author": "Apostolos Doxiadis",
-        "isbn": null,
+        "id": "9780465030781",
+        "title": "I Am a Strange Loop",
+        "author": "Douglas R. Hofstadter",
+        "isbn": "9780465030781",
         "brn": null,
-        "year": null,
-        "pages": 352,
+        "year": 2007,
+        "pages": 424,
         "subjects": [
-          "Logic",
-          "Mathematics",
-          "Artificial intelligence",
+          "Self (Philosophy)",
+          "Intellect",
           "Consciousness",
-          "Philosophy"
+          "Soul",
+          "Kognitiver Prozess",
+          "Metamathematik",
+          "Symbolen",
+          "Bewustzijn",
+          "Selbsterkenntnis",
+          "Künstliche Intelligenz",
+          "Selbstbezüglichkeit",
+          "Patronen (modellen)",
+          "Identity (psychology)",
+          "Medvetandet",
+          "Kèunstliche Intelligenz"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "Hofstadter's long-awaited return to the themes of Gödel, Escher, Bach--an original and controversial view of the nature of consciousness and identity. What do we mean when we say \"I\"? Can a self, a soul, a consciousness, an \"I\" arise out of mere matter? If it cannot, then how can you or I be here? This book argues that the key to understanding selves and consciousness is a special kind of abstract feedback loop inhabiting our brains. Deep down, a human brain is a chaotic soup of particles, on a higher level it is a jungle of neurons, and on a yet higher level it is a network of abstractions that we call \"symbols.\" The most central and complex symbol in your brain or mine is the one we both call \"I.\" But how can such a mysterious abstraction be real--or is our \"I\" merely a convenient fiction?--From publisher description.",
+        "cover_url": "https://covers.openlibrary.org/b/id/298651-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "153"
       },
       "readiness": {
-        "level": 2,
-        "hours": 5.0,
-        "assumed_concepts": [],
+        "level": 4,
+        "hours": 18.0,
+        "assumed_concepts": [
+          "Gödel's Incompleteness Theorems",
+          "Recursion",
+          "Symbolic Logic",
+          "Neural Networks",
+          "Abstraction"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to really *think* – this book dives deep into what it means to be you, and it's a journey that requires some mental flexibility!"
       },
-      "why": "A graphic novel about the quest for logical foundations; painless way to meet Russell, Gödel and the questions GEB plays with.",
-      "confidence": 0.8999999999999999,
+      "why": "While *Gödel, Escher, Bach* is a foundational work, *I Am a Strange Loop* explores similar concepts like recursion and self-reference in a more accessible, contemporary context, which will help you better grasp the complexities of *GEB*.",
+      "confidence": 0.9,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 741.5 DOX",
-          "available": 0,
-          "total": 1,
+          "call_number": "English 153 HOF",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 153 HOF",
+          "available": 1,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 741.5 DOX",
-          "available": 3,
-          "total": 3,
+          "call_number": "English 153 HOF",
+          "available": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 741.5 DOX",
-          "available": 1,
-          "total": 3,
+          "call_number": "English 153 HOF",
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 741.5 DOX",
-          "available": 1,
+          "call_number": "English 153 HOF",
+          "available": 0,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 741.5 DOX",
-          "available": 2,
-          "total": 2,
+          "call_number": "English 153 HOF",
+          "available": 1,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 741.5 DOX",
+          "call_number": "English 153 HOF",
           "available": 1,
-          "total": 1,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 741.5 DOX",
-          "available": 2,
+          "call_number": "English 153 HOF",
+          "available": 1,
           "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Woodlands Regional Library"
+          "Tampines Regional Library",
+          "Central Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -105,88 +131,105 @@
       "role": "before",
       "order": 1,
       "book": {
-        "id": "ol:g-del-s-proof-ernest-nagel",
-        "title": "Gödel's Proof",
-        "author": "Ernest Nagel",
+        "id": "ol:the-emperor-s-new-mind-concerning-computer-s-minds-and-the-laws-of-physics-roger",
+        "title": "The Emperor's New Mind Concerning computer's, Minds, and the Laws Of physics",
+        "author": "Roger Penrose",
         "isbn": null,
         "brn": null,
-        "year": null,
-        "pages": 160,
+        "year": 1989,
+        "pages": 482,
         "subjects": [
-          "Logic",
-          "Mathematics",
+          "Logics",
+          "Teoria Do Conhecimento",
           "Artificial intelligence",
-          "Consciousness",
-          "Philosophy"
+          "Metamathematics",
+          "Symmetry",
+          "Mathematics",
+          "Open Library Staff Picks",
+          "Symbolic and mathematical Logic",
+          "Long Now Manual for Civilization",
+          "Kognitiver Prozess",
+          "Metamathematik",
+          "Computer",
+          "Künstliche Intelligenz",
+          "Weltbild",
+          "Simetrâi"
         ],
         "summary": "",
         "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
-        "level": 3,
-        "hours": 5.0,
-        "assumed_concepts": [],
+        "level": 4,
+        "hours": 25.0,
+        "assumed_concepts": [
+          "Basic Calculus",
+          "Set Theory",
+          "Gödel's Incompleteness Theorems (general idea)",
+          "Quantum Superposition",
+          "Turing Machines",
+          "Computational Complexity"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to stretch your brain – this book dives deep into the intersection of physics, consciousness, and computation, so a little mathematical and philosophical background will really help you appreciate its arguments."
       },
-      "why": "A short, clear walk through the incompleteness theorem that GEB assumes you can follow.",
-      "confidence": 0.8999999999999999,
+      "why": "While both books explore complex ideas, *The Emperor's New Mind* provides a more accessible introduction to concepts like Turing Machines and computational complexity, which are foundational for understanding the computer science aspects of *Gödel, Escher, Bach*.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 511.3 NAG",
-          "available": 0,
-          "total": 2,
+          "call_number": "English 523.1 PEN",
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 511.3 NAG",
-          "available": 0,
+          "call_number": "English 523.1 PEN",
+          "available": 2,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 511.3 NAG",
-          "available": 0,
+          "call_number": "English 523.1 PEN",
+          "available": 1,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 511.3 NAG",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 511.3 NAG",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 511.3 NAG",
+          "call_number": "English 523.1 PEN",
           "available": 1,
           "total": 1,
           "demo": true
         },
         {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 523.1 PEN",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 523.1 PEN",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 511.3 NAG",
+          "call_number": "English 523.1 PEN",
           "available": 0,
           "total": 3,
           "demo": true
@@ -194,7 +237,8 @@
       ],
       "demand": {
         "hot_branches": [
-          "Bishan Public Library"
+          "Jurong West Public Library",
+          "Ang Mo Kio Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -205,89 +249,106 @@
       "role": "before",
       "order": 2,
       "book": {
-        "id": "ol:i-am-a-strange-loop-douglas-r-hofstadter",
-        "title": "I Am a Strange Loop",
-        "author": "Douglas R. Hofstadter",
-        "isbn": null,
+        "id": "9780262025485",
+        "title": "What is thought?",
+        "author": "Eric B. Baum",
+        "isbn": "9780262025485",
         "brn": null,
-        "year": null,
-        "pages": 412,
+        "year": 2003,
+        "pages": 494,
         "subjects": [
-          "Logic",
-          "Mathematics",
-          "Artificial intelligence",
-          "Consciousness",
-          "Philosophy"
+          "Cognition",
+          "Brain, mathematical models",
+          "Philosophy of mind",
+          "Cognitive science",
+          "Thought and thinking",
+          "Semantics (Philosophy)"
         ],
         "summary": "",
-        "cover_url": null,
+        "cover_url": "https://covers.openlibrary.org/b/id/7929234-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "128.2"
       },
       "readiness": {
         "level": 4,
-        "hours": 14.0,
-        "assumed_concepts": [],
+        "hours": 18.0,
+        "assumed_concepts": [
+          "Neural networks",
+          "Computational theory of mind",
+          "Qualia",
+          "Propositional logic",
+          "Representations (cognitive science)",
+          "Functionalism"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to wrestle with some big ideas – this book explores the nature of thought by blending neuroscience, philosophy, and computation, so a curious mind and some background in related fields will be helpful!"
       },
-      "why": "Hofstadter's own clearer restatement of GEB's central message, written because readers missed it.",
-      "confidence": 0.7999999999999999,
+      "why": "Understanding computational models and symbolic logic in 'What is Thought?' will give you a foundational grasp of the formal systems and self-reference concepts explored in the more complex 'Gödel, Escher, Bach'.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 126 HOF",
-          "available": 2,
+          "call_number": "English 128.2 BAU",
+          "available": 0,
           "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 126 HOF",
-          "available": 3,
-          "total": 3,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 126 HOF",
-          "available": 1,
-          "total": 2,
+          "call_number": "English 128.2 BAU",
+          "available": 2,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 126 HOF",
+          "call_number": "English 128.2 BAU",
           "available": 1,
-          "total": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 128.2 BAU",
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 126 HOF",
-          "available": 2,
+          "call_number": "English 128.2 BAU",
+          "available": 0,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 126 HOF",
-          "available": 2,
+          "call_number": "English 128.2 BAU",
+          "available": 0,
           "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 128.2 BAU",
+          "available": 2,
+          "total": 2,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Jurong West Public Library",
-          "Tampines Regional Library"
+          "Tampines Regional Library",
+          "Woodlands Regional Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -298,25 +359,36 @@
       "role": "target",
       "order": 3,
       "book": {
-        "id": "9780465026562",
+        "id": "9780394756820",
         "title": "Gödel, Escher, Bach",
         "author": "Douglas R. Hofstadter",
-        "isbn": "9780465026562",
+        "isbn": "9780394756820",
         "brn": null,
         "year": 1979,
         "pages": 777,
         "subjects": [
-          "Logic",
-          "Mathematics",
+          "Logics",
+          "Teoria Do Conhecimento",
           "Artificial intelligence",
-          "Consciousness",
-          "Philosophy"
+          "Metamathematics",
+          "Symmetry",
+          "Mathematics",
+          "Open Library Staff Picks",
+          "Symbolic and mathematical Logic",
+          "Long Now Manual for Civilization",
+          "Kognitiver Prozess",
+          "Metamathematik",
+          "Computer",
+          "Künstliche Intelligenz",
+          "Weltbild",
+          "Simetrâi"
         ],
-        "summary": "A Pulitzer-winning exploration of how meaning and self-awareness can arise from formal systems, braided through dialogues, puzzles, Bach and Escher.",
-        "cover_url": null,
+        "summary": "Winner of the Pulitzer Prize\r\n\r\nA metaphorical fugue on minds and machines in the spirit of Lewis Carroll\r\n\r\nDouglas Hofstadter's book is concerned directly with the nature of \"maps\" or links between formal systems. However, according to Hofstadter, the formal system that underlies all mental activity transcends the system that supports it. If life can grow out of the formal chemical substrate of the cell, if consciousness can emerge out of a formal system of firing neurons, then so too will computers attain human intelligence. Gödel, Escher, Bach is a wonderful exploration of fascinating ideas at the heart of cognitive science: meaning, reduction, recursion, and much more.",
+        "cover_url": "https://covers.openlibrary.org/b/id/14368453-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "511.3"
       },
       "readiness": {
         "level": 5,
@@ -335,33 +407,17 @@
       "confidence": 1.0,
       "availability": [
         {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 510.1 HOF",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 510.1 HOF",
-          "available": 3,
-          "total": 3,
+          "call_number": "English 511.3 HOF",
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 510.1 HOF",
-          "available": 2,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 510.1 HOF",
+          "call_number": "English 511.3 HOF",
           "available": 1,
           "total": 1,
           "demo": true
@@ -369,41 +425,22 @@
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 510.1 HOF",
-          "available": 1,
+          "call_number": "English 511.3 HOF",
+          "available": 0,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 510.1 HOF",
+          "call_number": "English 511.3 HOF",
           "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 510.1 HOF",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 510.1 HOF",
-          "available": 1,
           "total": 1,
           "demo": true
         }
       ],
       "demand": {
-        "hot_branches": [
-          "Tampines Regional Library",
-          "Bukit Batok Library"
-        ],
+        "hot_branches": [],
         "hidden_gem": false,
         "reservations": 0,
         "demo": true
@@ -413,40 +450,65 @@
       "role": "after",
       "order": 4,
       "book": {
-        "id": "ol:the-mind-s-i-douglas-r-hofstadter",
-        "title": "The Mind's I",
+        "id": "9789992925829",
+        "title": "Metamagical Themas",
         "author": "Douglas R. Hofstadter",
-        "isbn": null,
+        "isbn": "9789992925829",
         "brn": null,
-        "year": null,
-        "pages": 512,
+        "year": 1985,
+        "pages": 852,
         "subjects": [
-          "Logic",
-          "Mathematics",
+          "Intellect",
+          "Self (Philosophy)",
+          "Science",
+          "Philosophy",
+          "Metamathematics",
+          "Amusements",
           "Artificial intelligence",
-          "Consciousness",
-          "Philosophy"
+          "Artifical intelligence",
+          "Intellect.",
+          "Self",
+          "Esprit",
+          "Creativity",
+          "Sciences",
+          "Musicologie",
+          "Mathematics"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "Toen 'Godel, Escher, Bach' verscheen in 1979 was Hofstadter in een klap wereldberoemd. Het is maar weinigen gegeven zo met taal en kennis te spelen: briljant, erudiet, creatief, humoristisch, en didaktisch van zeer hoog niveau. Dezelfde kwaliteiten bepalen het gezicht van 'Metamagische thema's'. Het is een bundeling van artikelen die in de jaren 1981-1983 in de Scientific American verschenen en die nu met behulp van uitvoerige naschriften tot een geheel verweven zijn. De onderwerpen bestrijken ruwweg hetzelfde brede gebied dat we kennen uit 'Godel, Escher, Bach': kunstmatige intelligentie, creativiteit, muziek, zelfverwijzing, en ook Achilles en de schildpad zijn van de partij. Een intellectuele delicatesse. Bevat register en een uitvoerige bibliografie met toelichting.\r\n(NBD|Biblion recensie, Drs. D.G. van der Steen.)",
+        "cover_url": "https://covers.openlibrary.org/b/id/4961942-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "153.9"
       },
       "readiness": {
         "level": 4,
-        "hours": 16.0,
-        "assumed_concepts": [],
+        "hours": 25.0,
+        "assumed_concepts": [
+          "Gödel's Incompleteness Theorems",
+          "Recursion",
+          "Formal Systems",
+          "Turing Machines",
+          "Self-Reference"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Prepare to be challenged and delighted – this book explores deep ideas about thinking, creativity, and how minds work, so a curious and patient approach will be your best friend."
       },
-      "why": "Essays and stories on self and consciousness, curated with Dennett.",
-      "confidence": 0.7,
+      "why": "The Scientific American columns, for readers who want more of the same mind.",
+      "confidence": 0.9,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 126 HOF",
+          "call_number": "English 153.9 HOF",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 153.9 HOF",
           "available": 0,
           "total": 1,
           "demo": true
@@ -454,39 +516,40 @@
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 126 HOF",
+          "call_number": "English 153.9 HOF",
           "available": 1,
-          "total": 1,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 126 HOF",
-          "available": 0,
-          "total": 2,
+          "call_number": "English 153.9 HOF",
+          "available": 1,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 126 HOF",
-          "available": 0,
-          "total": 2,
+          "call_number": "English 153.9 HOF",
+          "available": 2,
+          "total": 3,
           "demo": true
         },
         {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 126 HOF",
-          "available": 1,
-          "total": 1,
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 153.9 HOF",
+          "available": 3,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Woodlands Regional Library"
+          "Woodlands Regional Library",
+          "Central Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -497,105 +560,122 @@
       "role": "after",
       "order": 5,
       "book": {
-        "id": "ol:metamagical-themas-douglas-r-hofstadter",
-        "title": "Metamagical Themas",
-        "author": "Douglas R. Hofstadter",
-        "isbn": null,
+        "id": "9780140062533",
+        "title": "The Mind's I",
+        "author": "Douglas R. Hofstadter, Daniel C. Dennett",
+        "isbn": "9780140062533",
         "brn": null,
-        "year": null,
-        "pages": 852,
+        "year": 1962,
+        "pages": 501,
         "subjects": [
-          "Logic",
-          "Mathematics",
-          "Artificial intelligence",
+          "Self (Philosophy)",
+          "Literary collections",
+          "Zelf",
           "Consciousness",
-          "Philosophy"
+          "Soul",
+          "Addresses, essays, lectures",
+          "Ziel",
+          "Conciousness",
+          "Intellect",
+          "Mente",
+          "Conciencia",
+          "Filosofia",
+          "Philosophy",
+          "Self Concept",
+          "Mind-Body Relations, Metaphysical"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "With contributions from Jorge Luis Borges, Richard Dawkins, John Searle, and Robert Nozick, The Mind's I explores the meaning of self and consciousness through the perspectives of literature, artificial intelligence, psychology, and other disciplines. In selections that range from fiction to scientific speculations about thinking machines, artificial intelligence, and the nature of the brain, Hofstadter and Dennett present a variety of conflicting visions of the self and the soul as explored through the writings of some of the twentieth century's most renowned thinkers.",
+        "cover_url": "https://covers.openlibrary.org/b/id/298658-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "126"
       },
       "readiness": {
         "level": 4,
-        "hours": 25.0,
-        "assumed_concepts": [],
+        "hours": 20.0,
+        "assumed_concepts": [
+          "Philosophy of Mind",
+          "Artificial Intelligence (basic concepts)",
+          "Cognitive Psychology",
+          "Metaphorical Reasoning",
+          "Philosophical Essays"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to wrestle with some big, beautiful questions about what it means to *be* – this book is a fascinating journey, but it's a thinker, not a light read!"
       },
-      "why": "The Scientific American columns, for readers who want more of the same mind.",
-      "confidence": 0.7,
+      "why": "Essays and stories on self and consciousness, curated with Dennett.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 500 HOF",
-          "available": 1,
+          "call_number": "English 126 HOF",
+          "available": 0,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 500 HOF",
-          "available": 2,
-          "total": 3,
+          "call_number": "English 126 HOF",
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 500 HOF",
+          "call_number": "English 126 HOF",
           "available": 1,
-          "total": 3,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 500 HOF",
-          "available": 3,
+          "call_number": "English 126 HOF",
+          "available": 0,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 500 HOF",
-          "available": 2,
-          "total": 3,
+          "call_number": "English 126 HOF",
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 500 HOF",
-          "available": 1,
-          "total": 3,
+          "call_number": "English 126 HOF",
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 500 HOF",
-          "available": 1,
-          "total": 1,
+          "call_number": "English 126 HOF",
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 500 HOF",
-          "available": 1,
-          "total": 2,
+          "call_number": "English 126 HOF",
+          "available": 3,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Woodlands Regional Library",
-          "Ang Mo Kio Public Library"
+          "Bishan Public Library",
+          "Tampines Regional Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -603,7 +683,10 @@
       }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.758347+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T03:55:38.378788+00:00",
+  "engine": "llm",
+  "notes": [
+    "unverified, dropped: Logic for Philosophy",
+    "unverified, dropped: Recursion: A Self-Improving Artificial Intelligence"
+  ]
 }

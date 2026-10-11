@@ -21,7 +21,8 @@
         "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "seed",
+        "ddc": "330.1"
       },
       "readiness": {
         "level": 2,
@@ -202,7 +203,8 @@
         "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "seed",
+        "ddc": "330.1"
       },
       "readiness": {
         "level": 5,
@@ -221,7 +223,7 @@
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 330.15 SMI",
+          "call_number": "English 330.1 SMI",
           "available": 1,
           "total": 3,
           "demo": true
@@ -229,7 +231,7 @@
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 330.15 SMI",
+          "call_number": "English 330.1 SMI",
           "available": 1,
           "total": 1,
           "demo": true
@@ -237,7 +239,7 @@
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 330.15 SMI",
+          "call_number": "English 330.1 SMI",
           "available": 3,
           "total": 3,
           "demo": true
@@ -245,7 +247,7 @@
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 330.15 SMI",
+          "call_number": "English 330.1 SMI",
           "available": 1,
           "total": 1,
           "demo": true
@@ -253,7 +255,7 @@
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 330.15 SMI",
+          "call_number": "English 330.1 SMI",
           "available": 1,
           "total": 3,
           "demo": true
@@ -261,7 +263,7 @@
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 330.15 SMI",
+          "call_number": "English 330.1 SMI",
           "available": 0,
           "total": 1,
           "demo": true
@@ -269,7 +271,7 @@
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 330.15 SMI",
+          "call_number": "English 330.1 SMI",
           "available": 0,
           "total": 1,
           "demo": true
@@ -277,7 +279,7 @@
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 330.15 SMI",
+          "call_number": "English 330.1 SMI",
           "available": 1,
           "total": 1,
           "demo": true
@@ -313,7 +315,8 @@
         "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "seed",
+        "ddc": "170"
       },
       "readiness": {
         "level": 5,
@@ -395,7 +398,8 @@
         "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "seed",
+        "ddc": "330.9"
       },
       "readiness": {
         "level": 5,

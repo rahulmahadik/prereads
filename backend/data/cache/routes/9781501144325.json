@@ -5,23 +5,36 @@
       "role": "target",
       "order": 0,
       "book": {
-        "id": "9781501144325",
+        "id": "9780141983776",
         "title": "Why We Sleep",
-        "author": "Matthew Walker",
-        "isbn": "9781501144325",
+        "author": "Matthew P. Walker, Matthew Walker",
+        "isbn": "9780141983776",
         "brn": null,
         "year": 2017,
-        "pages": 368,
+        "pages": 360,
+        "ddc": "612.821",
         "subjects": [
-          "Sleep",
-          "Neuroscience",
-          "Health"
+          "sleep",
+          "health & fitness",
+          "sleep & sleep disorders",
+          "science",
+          "life sciences",
+          "Human Anatomy & Physiology",
+          "psychology",
+          "mental health",
+          "Sleep, psychological aspects",
+          "Dreams",
+          "nyt:science=2017-11-12",
+          "New York Times bestseller",
+          "Physiological aspects",
+          "Physiology",
+          "Health and Wellbeing"
         ],
-        "summary": "The science of sleep and why it matters.",
-        "cover_url": null,
+        "summary": "With two appearances on CBS This Morning and Fresh Air's most popular interview of 2017, Matthew Walker has made abundantly clear that sleep is one of the most important but least understood aspects of our life. Until very recently, science had no answer to the question of why we sleep, or what good it served, or why we suffer such devastating health consequences when it is absent. Compared to the other basic drives in life—eating, drinking, and reproducing—the purpose of sleep remains more elusive.\r\n\r\nWithin the brain, sleep enriches a diversity of functions, including our ability to learn, memorize, and make logical decisions. It recalibrates our emotions, restocks our immune system, fine-tunes our metabolism, and regulates our appetite. Dreaming creates a virtual reality space in which the brain melds past and present knowledge, inspiring creativity.\r\n\r\nIn this “compelling and utterly convincing” (The Sunday Times) book, preeminent neuroscientist and sleep expert Matthew Walker provides a revolutionary exploration of sleep, examining how it affects every aspect of our physical and mental well-being. Charting the most cutting-edge scientific breakthroughs, and marshalling his decades of research and clinical practice, Walker explains how we can harness sleep to improve learning, mood and energy levels, regulate hormones, prevent cancer, Alzheimer’s and diabetes, slow the effects of aging, and increase longevity. He also provides actionable steps towards getting a better night’s sleep every night.",
+        "cover_url": "https://covers.openlibrary.org/b/id/8814155-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 2,
@@ -37,7 +50,7 @@
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
           "call_number": "English 612.821 WAL",
-          "available": 0,
+          "available": 1,
           "total": 3,
           "demo": true
         },
@@ -45,16 +58,16 @@
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
           "call_number": "English 612.821 WAL",
-          "available": 1,
-          "total": 3,
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
           "call_number": "English 612.821 WAL",
-          "available": 2,
-          "total": 2,
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
@@ -62,7 +75,7 @@
           "branch_code": "WRL",
           "call_number": "English 612.821 WAL",
           "available": 1,
-          "total": 1,
+          "total": 2,
           "demo": true
         },
         {
@@ -74,18 +87,10 @@
           "demo": true
         },
         {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 612.821 WAL",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
           "call_number": "English 612.821 WAL",
-          "available": 2,
+          "available": 0,
           "total": 3,
           "demo": true
         },
@@ -93,15 +98,14 @@
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
           "call_number": "English 612.821 WAL",
-          "available": 0,
+          "available": 1,
           "total": 1,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Tampines Regional Library",
-          "Punggol Regional Library"
+          "Bukit Batok Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -112,177 +116,69 @@
       "role": "after",
       "order": 1,
       "book": {
-        "id": "ol:the-circadian-code-satchin-panda",
-        "title": "The Circadian Code",
+        "id": "9781635652437",
+        "title": "The circadian code",
         "author": "Satchin Panda",
-        "isbn": null,
+        "isbn": "9781635652437",
         "brn": null,
-        "year": null,
-        "pages": 288,
+        "year": 2018,
+        "pages": 278,
+        "ddc": "612.022",
         "subjects": [
-          "Sleep",
-          "Neuroscience",
-          "Health"
+          "Circadian rhythms",
+          "Health behavior",
+          "Health aspects"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "A comprehensive health book and lifestyle plan to help manage the body's natural rhythms offers advice to overcome difficulty sleeping, hunger at odd times, and sudden fatigue.",
+        "cover_url": "https://covers.openlibrary.org/b/id/11112952-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 2,
-        "hours": 8.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "Timing of light, food and sleep, applied.",
-      "confidence": 0.6,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 612.022 PAN",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 612.022 PAN",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 612.022 PAN",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 612.022 PAN",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 612.022 PAN",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 612.022 PAN",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 612.022 PAN",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 612.022 PAN",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Bishan Public Library",
-          "Central Public Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "after",
-      "order": 2,
-      "book": {
-        "id": "ol:breath-james-nestor",
-        "title": "Breath",
-        "author": "James Nestor",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 304,
-        "subjects": [
-          "Sleep",
-          "Neuroscience",
-          "Health"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 2,
         "hours": 7.0,
-        "assumed_concepts": [],
+        "assumed_concepts": [
+          "hormones",
+          "metabolism",
+          "sleep cycles",
+          "nutrition",
+          "body clock"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to think about how your daily habits affect your internal clock – it's a fascinating journey into how your body truly works!"
       },
-      "why": "The other overlooked basic of the body.",
-      "confidence": 0.6,
+      "why": "Timing of light, food and sleep, applied.",
+      "confidence": 0.8,
       "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 612.2 NES",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 612.2 NES",
-          "available": 0,
+          "call_number": "English 612.022 PAN",
+          "available": 1,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 612.2 NES",
-          "available": 0,
-          "total": 3,
+          "call_number": "English 612.022 PAN",
+          "available": 2,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 612.2 NES",
-          "available": 1,
-          "total": 3,
+          "call_number": "English 612.022 PAN",
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 612.2 NES",
+          "call_number": "English 612.022 PAN",
           "available": 1,
           "total": 2,
           "demo": true
@@ -290,31 +186,32 @@
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 612.2 NES",
-          "available": 0,
+          "call_number": "English 612.022 PAN",
+          "available": 1,
           "total": 1,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 612.2 NES",
-          "available": 0,
-          "total": 1,
+          "call_number": "English 612.022 PAN",
+          "available": 2,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 612.2 NES",
+          "call_number": "English 612.022 PAN",
           "available": 2,
-          "total": 3,
+          "total": 2,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Woodlands Regional Library"
+          "Tampines Regional Library",
+          "Bukit Batok Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -322,7 +219,14 @@
       }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.771323+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T04:20:55.504226+00:00",
+  "engine": "llm",
+  "notes": [
+    "unverified, dropped: The Sleep Revolution: Transforming Your Life, One Night at a Time",
+    "unverified, dropped: Say Good Night to Insomnia",
+    "unverified, dropped: Wherever You Go, There You Are: Mindfulness Meditation in Everyday Life",
+    "unverified, dropped: Why You're Sleepy: How the Brain Explains Sleep",
+    "unverified, dropped: The Body Clock Guide to Better Sleep: Improve Your Health, Boost Your Energy, and Sharpen Your Mind",
+    "unverified, dropped: Good Night, Sleep Tight: The Surprising Scientifically Proven Plan for Sleep Success"
+  ]
 }

@@ -5,70 +5,94 @@
       "role": "before",
       "order": 0,
       "book": {
-        "id": "ol:the-little-book-of-common-sense-investing-john-c-bogle",
-        "title": "The Little Book of Common Sense Investing",
-        "author": "John C. Bogle",
-        "isbn": null,
+        "id": "9789577921154",
+        "title": "One Up On Wall Street",
+        "author": "Peter Lynch, John Rothchild",
+        "isbn": "9789577921154",
         "brn": null,
-        "year": null,
-        "pages": 304,
+        "year": 1989,
+        "pages": 318,
         "subjects": [
-          "Investing",
-          "Finance",
-          "Stock market"
+          "Speculation",
+          "Stocks",
+          "Investments",
+          "Investissements",
+          "Actions de sociétés",
+          "Spéculation",
+          "Tou zi",
+          "Investimentos",
+          "Finance, personal",
+          "Inversiones",
+          "Aktienanlage",
+          "Börsenspekulation"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "The manager of a top investment fund discusses how individuals can make a killing in the market through research and investment techniques that confound conventional market wisdom.",
+        "cover_url": "https://covers.openlibrary.org/b/id/6241104-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "332.632"
       },
       "readiness": {
-        "level": 1,
-        "hours": 5.0,
-        "assumed_concepts": [],
+        "level": 3,
+        "hours": 8.0,
+        "assumed_concepts": [
+          "Basic financial terminology",
+          "Company balance sheets",
+          "Market capitalization",
+          "Stock ticker symbols",
+          "The concept of 'value' in investing"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to think like an insider – this book will show you how to spot investment opportunities others miss, but it assumes you have a basic understanding of how the stock market works."
       },
-      "why": "The fundamentals of markets, costs and index funds in plain words.",
-      "confidence": 0.8999999999999999,
+      "why": "While both books cover balance sheets, 'One Up On Wall Street' introduces basic financial terminology and concepts in a more accessible way, which will make understanding Graham's more complex explanations in 'The Intelligent Investor' much smoother.",
+      "confidence": 0.9,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 332.63 BOG",
-          "available": 2,
-          "total": 2,
+          "call_number": "English 332.632 LYN",
+          "available": 0,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 332.63 BOG",
-          "available": 1,
-          "total": 2,
+          "call_number": "English 332.632 LYN",
+          "available": 3,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 332.63 BOG",
-          "available": 1,
+          "call_number": "English 332.632 LYN",
+          "available": 3,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 332.63 BOG",
-          "available": 2,
-          "total": 2,
+          "call_number": "English 332.632 LYN",
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 332.63 BOG",
+          "call_number": "English 332.632 LYN",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 332.632 LYN",
           "available": 1,
           "total": 1,
           "demo": true
@@ -76,24 +100,24 @@
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 332.63 BOG",
-          "available": 0,
-          "total": 2,
+          "call_number": "English 332.632 LYN",
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 332.63 BOG",
-          "available": 2,
+          "call_number": "English 332.632 LYN",
+          "available": 0,
           "total": 2,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Jurong West Public Library",
-          "Woodlands Regional Library"
+          "Bishan Public Library",
+          "Jurong West Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -104,78 +128,114 @@
       "role": "before",
       "order": 1,
       "book": {
-        "id": "ol:one-up-on-wall-street-peter-lynch",
-        "title": "One Up on Wall Street",
-        "author": "Peter Lynch",
-        "isbn": null,
+        "id": "9780393047813",
+        "title": "A Random Walk Down Wall Street",
+        "author": "Burton Gordon Malkiel",
+        "isbn": "9780393047813",
         "brn": null,
-        "year": null,
-        "pages": 304,
+        "year": 1973,
+        "pages": 440,
         "subjects": [
-          "Investing",
-          "Finance",
-          "Stock market"
+          "Stocks",
+          "Investments",
+          "Random walks (Mathematics)",
+          "Gestion financière",
+          "Actions de sociétés",
+          "Valores",
+          "Actions (Titres de société)",
+          "Trayectoria aleatoria (Matemáticas)",
+          "Beleggingen",
+          "Investissements",
+          "Marches aléatoires (Mathématiques)",
+          "Processus stochastiques",
+          "open_syllabus_project",
+          "Actions de societes",
+          "Marches aleatoires (mathematiques)"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "Using the dot-com crash as an object lesson in how not to manage your portfolio, this is an informative guide to navigating the turbulence of the market and managing investments with confidence. With its life-cycle guide to investing, this book matches the needs of investors at any age bracket.",
+        "cover_url": "https://covers.openlibrary.org/b/id/246978-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "332.6"
       },
       "readiness": {
-        "level": 2,
-        "hours": 9.0,
-        "assumed_concepts": [],
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Basic financial terminology",
+          "Stocks and bonds",
+          "Portfolio diversification",
+          "Statistical averages",
+          "The concept of risk"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to think about investing in a new way – this book uses math and history to show you how markets really work!"
       },
-      "why": "How to think about individual companies before Graham's stricter method.",
-      "confidence": 0.8999999999999999,
+      "why": "Reading 'A Random Walk Down Wall Street' will familiarize you with basic financial terminology and the concept of risk, which are essential building blocks for understanding the more in-depth analysis of value investing presented in 'The Intelligent Investor'.",
+      "confidence": 0.8,
       "availability": [
         {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 332.63 LYN",
-          "available": 3,
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 332.6 MAL",
+          "available": 1,
           "total": 3,
           "demo": true
         },
         {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 332.63 LYN",
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 332.6 MAL",
           "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 332.6 MAL",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 332.6 MAL",
+          "available": 1,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 332.63 LYN",
+          "call_number": "English 332.6 MAL",
           "available": 1,
-          "total": 2,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 332.63 LYN",
-          "available": 1,
+          "call_number": "English 332.6 MAL",
+          "available": 0,
           "total": 1,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 332.63 LYN",
-          "available": 2,
-          "total": 3,
+          "call_number": "English 332.6 MAL",
+          "available": 1,
+          "total": 1,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Central Public Library"
+          "Tampines Regional Library",
+          "Woodlands Regional Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -186,62 +246,99 @@
       "role": "before",
       "order": 2,
       "book": {
-        "id": "ol:a-random-walk-down-wall-street-burton-g-malkiel",
-        "title": "A Random Walk Down Wall Street",
-        "author": "Burton G. Malkiel",
-        "isbn": null,
+        "id": "9798533004695",
+        "title": "Your Money Or Your Life",
+        "author": "Joe Dominguez, Vicki Robin",
+        "isbn": "9798533004695",
         "brn": null,
-        "year": null,
-        "pages": 448,
+        "year": 1992,
+        "pages": 350,
         "subjects": [
-          "Investing",
-          "Finance",
-          "Stock market"
+          "Securities",
+          "Investments",
+          "investing",
+          "value investing",
+          "stock market",
+          "finance",
+          "personal finance",
+          "business",
+          "security analysis",
+          "Graham's number",
+          "security selection",
+          "margin of safety",
+          "Mr. MarketBenjamin Graham",
+          "Warren Buffett",
+          "Seth Klarman"
         ],
         "summary": "",
-        "cover_url": null,
+        "cover_url": "https://covers.openlibrary.org/b/id/13313358-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 3,
-        "hours": 14.0,
-        "assumed_concepts": [],
+        "hours": 12.0,
+        "assumed_concepts": [
+          "compound interest",
+          "asset allocation",
+          "inflation",
+          "debt",
+          "risk tolerance"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to rethink your relationship with money and how it impacts your freedom – this book will challenge your assumptions about work, spending, and what truly matters."
       },
-      "why": "The academic case about prices you'll want to weigh against Graham.",
-      "confidence": 0.7999999999999999,
+      "why": "While 'The Intelligent Investor' delves deeper into financial analysis, 'Your Money Or Your Life' lays a foundational understanding of concepts like debt and inflation, which will make grasping Graham's more complex discussions about value investing much smoother.",
+      "confidence": 0.8,
       "availability": [
         {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 332.63 MAL",
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 332.6 DOM",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 332.6 DOM",
           "available": 1,
-          "total": 1,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 332.63 MAL",
-          "available": 3,
+          "call_number": "English 332.6 DOM",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 332.6 DOM",
+          "available": 2,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 332.63 MAL",
-          "available": 1,
-          "total": 1,
+          "call_number": "English 332.6 DOM",
+          "available": 3,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
-        "hot_branches": [],
-        "hidden_gem": true,
+        "hot_branches": [
+          "Tampines Regional Library",
+          "Punggol Regional Library"
+        ],
+        "hidden_gem": false,
         "reservations": 0,
         "demo": true
       }
@@ -250,23 +347,36 @@
       "role": "target",
       "order": 3,
       "book": {
-        "id": "9780060555665",
+        "id": "9789584248930",
         "title": "The Intelligent Investor",
         "author": "Benjamin Graham",
-        "isbn": "9780060555665",
+        "isbn": "9789584248930",
         "brn": null,
         "year": 1949,
-        "pages": 623,
+        "pages": 360,
         "subjects": [
-          "Investing",
-          "Finance",
-          "Stock market"
+          "Securities",
+          "Investments",
+          "investing",
+          "value investing",
+          "stock market",
+          "finance",
+          "personal finance",
+          "business",
+          "security analysis",
+          "Graham's number",
+          "security selection",
+          "margin of safety",
+          "Mr. MarketBenjamin Graham",
+          "Warren Buffett",
+          "Seth Klarman"
         ],
-        "summary": "Graham's foundational text on value investing and the margin of safety.",
-        "cover_url": null,
+        "summary": "This classic text is annotated to update Graham's timeless wisdom for today's market conditions... \r\n\r\nThe greatest investment advisor of the twentieth century, Benjamin Graham, taught and inspired people worldwide. Graham's philosophy of \"value investing\" -- which shields investors from substantial error and teaches them to develop long-term strategies -- has made *The Intelligent Investor* the stock market bible ever since its original publication in 1949.\r\n\r\nOver the years, market developments have proven the wisdom of Graham's strategies. While preserving the integrity of Graham's original text, this revised edition includes updated commentary by noted financial journalist Jason Zweig, whose perspective incorporates the realities of today's market, draws parallels between Graham's examples and today's financial headlines, and gives readers a more thorough understanding of how to apply Graham's principles.\r\n\r\nVital and indispensable, this HarperBusiness Essentials edition of *The Intelligent Investor* is the most important book you will ever read on how to reach your financial goals.",
+        "cover_url": "https://covers.openlibrary.org/b/id/36434-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "332.6"
       },
       "readiness": {
         "level": 4,
@@ -287,7 +397,7 @@
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
           "call_number": "English 332.6 GRA",
-          "available": 3,
+          "available": 1,
           "total": 3,
           "demo": true
         },
@@ -295,31 +405,31 @@
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
           "call_number": "English 332.6 GRA",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 332.6 GRA",
           "available": 0,
-          "total": 1,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
           "call_number": "English 332.6 GRA",
-          "available": 1,
-          "total": 3,
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 332.6 GRA",
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
           "call_number": "English 332.6 GRA",
-          "available": 2,
+          "available": 0,
           "total": 2,
           "demo": true
         },
@@ -327,15 +437,23 @@
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
           "call_number": "English 332.6 GRA",
-          "available": 0,
-          "total": 2,
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 332.6 GRA",
+          "available": 2,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Punggol Regional Library",
-          "Bukit Batok Library"
+          "Bukit Batok Library",
+          "Ang Mo Kio Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -346,55 +464,57 @@
       "role": "after",
       "order": 4,
       "book": {
-        "id": "ol:the-most-important-thing-howard-marks",
-        "title": "The Most Important Thing",
+        "id": "9780231153683",
+        "title": "The most important thing",
         "author": "Howard Marks",
-        "isbn": null,
+        "isbn": "9780231153683",
         "brn": null,
-        "year": null,
-        "pages": 200,
+        "year": 2011,
+        "pages": 180,
         "subjects": [
-          "Investing",
-          "Finance",
-          "Stock market"
+          "Investment analysis",
+          "Risk management",
+          "Investments",
+          "Portfolio management",
+          "New York Times bestseller",
+          "nyt:hardcover_business_books=2011-07-30"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "This book explains the keys to successful investment and the pitfalls that can destroy capital or ruin a career. Utilizing passages from his memos to illustrate his ideas, Marks teaches by example, detailing the development of an investment philosophy that fully acknowledges the complexities of investing and the perils of the financial world. Brilliantly applying insight to today's volatile markets, Marks offers a volume that is part memoir, part creed, with a number of broad takeaways.",
+        "cover_url": "https://covers.openlibrary.org/b/id/10001222-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "332.6"
       },
       "readiness": {
         "level": 3,
-        "hours": 7.0,
-        "assumed_concepts": [],
+        "hours": 6.0,
+        "assumed_concepts": [
+          "Financial markets",
+          "Asset allocation",
+          "Risk tolerance",
+          "Diversification",
+          "Capital preservation"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to think deeply about how you approach investing – this book is full of wisdom, but it assumes you already have a basic understanding of financial concepts."
       },
       "why": "Modern value-investing judgment from a practitioner.",
-      "confidence": 0.7,
+      "confidence": 0.8,
       "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 332.6 MAR",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
           "call_number": "English 332.6 MAR",
-          "available": 2,
-          "total": 3,
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
           "call_number": "English 332.6 MAR",
-          "available": 1,
+          "available": 0,
           "total": 1,
           "demo": true
         },
@@ -402,7 +522,7 @@
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
           "call_number": "English 332.6 MAR",
-          "available": 0,
+          "available": 1,
           "total": 2,
           "demo": true
         },
@@ -410,7 +530,7 @@
           "branch": "Central Public Library",
           "branch_code": "CLPL",
           "call_number": "English 332.6 MAR",
-          "available": 1,
+          "available": 0,
           "total": 1,
           "demo": true
         },
@@ -418,14 +538,31 @@
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
           "call_number": "English 332.6 MAR",
-          "available": 1,
-          "total": 1,
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 332.6 MAR",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 332.6 MAR",
+          "available": 0,
+          "total": 2,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Jurong West Public Library"
+          "Woodlands Regional Library",
+          "Punggol Regional Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -436,166 +573,126 @@
       "role": "after",
       "order": 5,
       "book": {
-        "id": "ol:common-stocks-and-uncommon-profits-philip-a-fisher",
+        "id": "9781560150411",
         "title": "Common Stocks and Uncommon Profits",
         "author": "Philip A. Fisher",
-        "isbn": null,
+        "isbn": "9781560150411",
         "brn": null,
-        "year": null,
-        "pages": 292,
+        "year": 2000,
+        "pages": 4,
         "subjects": [
-          "Investing",
-          "Finance",
-          "Stock market"
+          "Securities",
+          "Investments",
+          "investing",
+          "value investing",
+          "stock market",
+          "finance",
+          "personal finance",
+          "business",
+          "security analysis",
+          "Graham's number",
+          "security selection",
+          "margin of safety",
+          "Mr. MarketBenjamin Graham",
+          "Warren Buffett",
+          "Seth Klarman"
         ],
         "summary": "",
-        "cover_url": null,
+        "cover_url": "https://covers.openlibrary.org/b/id/788750-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "332.63223"
       },
       "readiness": {
-        "level": 4,
-        "hours": 10.0,
-        "assumed_concepts": [],
+        "level": 3,
+        "hours": 15.0,
+        "assumed_concepts": [
+          "Basic accounting principles",
+          "Financial ratios (P/E, etc.)",
+          "Company valuations",
+          "Economic cycles",
+          "The concept of 'growth' in business"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to think long-term and deeply about businesses – this book will change how you view investing!"
       },
       "why": "The growth-investing counterpart Buffett pairs with Graham.",
-      "confidence": 0.6,
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 332.63 FIS",
-          "available": 1,
-          "total": 1,
+          "call_number": "English 332.63223 FIS",
+          "available": 0,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 332.63 FIS",
+          "call_number": "English 332.63223 FIS",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 332.63223 FIS",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 332.63223 FIS",
           "available": 0,
           "total": 2,
           "demo": true
         },
         {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 332.63 FIS",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        },
-        {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 332.63 FIS",
-          "available": 2,
-          "total": 2,
+          "call_number": "English 332.63223 FIS",
+          "available": 0,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 332.63 FIS",
+          "call_number": "English 332.63223 FIS",
           "available": 2,
-          "total": 3,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 332.63223 FIS",
+          "available": 0,
+          "total": 2,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
+          "Central Public Library",
           "Punggol Regional Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
         "demo": true
       }
-    },
-    {
-      "role": "after",
-      "order": 6,
-      "book": {
-        "id": "ol:security-analysis-benjamin-graham",
-        "title": "Security Analysis",
-        "author": "Benjamin Graham",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 766,
-        "subjects": [
-          "Investing",
-          "Finance",
-          "Stock market"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 5,
-        "hours": 40.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "Graham's full professional treatment.",
-      "confidence": 0.7999999999999999,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 332.6 GRA",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 332.6 GRA",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 332.6 GRA",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 332.6 GRA",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 332.6 GRA",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.763579+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T04:05:26.789622+00:00",
+  "engine": "llm",
+  "notes": [
+    "'The total money makeover' judged unrelated (0.80), not placed before",
+    "unverified, dropped: A Simple Path to Wealth",
+    "dropped a duplicate after-stop (already a before-stop)"
+  ]
 }

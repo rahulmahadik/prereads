@@ -5,22 +5,36 @@
       "role": "target",
       "order": 0,
       "book": {
-        "id": "9781603580557",
-        "title": "Thinking in Systems",
-        "author": "Donella H. Meadows",
-        "isbn": "9781603580557",
+        "id": "9781136551390",
+        "title": "Thinking in systems",
+        "author": "Donella H. Meadows, Diana Wright",
+        "isbn": "9781136551390",
         "brn": null,
         "year": 2008,
         "pages": 240,
+        "ddc": "361.25",
         "subjects": [
-          "Systems theory",
-          "Complexity"
+          "critical thinking",
+          "systems thinking",
+          "systems dynamics",
+          "complex systems",
+          "policy",
+          "Sustainable development",
+          "Environmental education",
+          "Economic development",
+          "System analysis",
+          "Simulation methods",
+          "Population",
+          "Social sciences",
+          "Decision making",
+          "Pollution",
+          "Systems Analysis"
         ],
-        "summary": "How to see stocks, flows and feedback loops everywhere.",
-        "cover_url": null,
+        "summary": "A clear, thoughtful, and wide-reaching exploration of complex systems, in theory and in practice. Meadows was a masterful and elegant writer and researcher, and an early voice in systems analysis at MIT and elsewhere. This book, completed from draft manuscript after Meadows' death, is both accessible and deeply thought-provoking. She connects the dots between careful descriptions of systems analysis and systems insights, and the personal, social, societal, and political implications of systems thinking.",
+        "cover_url": "https://covers.openlibrary.org/b/id/14420637-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 2,
@@ -33,66 +47,42 @@
       "confidence": 1.0,
       "availability": [
         {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 003 MEA",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 003 MEA",
-          "available": 2,
+          "call_number": "English 361.25 MEA",
+          "available": 1,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 003 MEA",
+          "call_number": "English 361.25 MEA",
           "available": 1,
-          "total": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 003 MEA",
+          "call_number": "English 361.25 MEA",
           "available": 2,
           "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 003 MEA",
-          "available": 0,
-          "total": 1,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 003 MEA",
+          "call_number": "English 361.25 MEA",
           "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 003 MEA",
-          "available": 2,
-          "total": 3,
+          "total": 1,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Bishan Public Library",
-          "Jurong West Public Library"
+          "Tampines Regional Library",
+          "Central Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -103,77 +93,107 @@
       "role": "after",
       "order": 1,
       "book": {
-        "id": "ol:the-fifth-discipline-peter-m-senge",
-        "title": "The Fifth Discipline",
-        "author": "Peter M. Senge",
-        "isbn": null,
+        "id": "9781931498869",
+        "title": "Limits to Growth",
+        "author": "Donella H. Meadows, Dennis Meadows",
+        "isbn": "9781931498869",
         "brn": null,
-        "year": null,
-        "pages": 464,
+        "year": 1972,
+        "pages": 207,
+        "ddc": "303.44",
         "subjects": [
-          "Systems theory",
-          "Complexity"
+          "Population",
+          "Economic development",
+          "National resources",
+          "Sustainable development",
+          "Economic aspects",
+          "Environmental aspects",
+          "Pollution",
+          "Human ecology",
+          "Economic history",
+          "Social history",
+          "Forecasting",
+          "Ecology",
+          "Economic development, environmental aspects",
+          "Futuring",
+          "Histoire sociale"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "*Limits to Growth*, a study of the patterns and dynamics of human presence on earth, pointed toward environmental and economic collapse within a century if \"business as usual\" continued. In 1972, the book's findings sparked a worldwide controversy about the earth's capacity to withstand constant human and economic expansion. More than 40 years later, with more than 10 million copies sold in 28 languages, this \"little book with powerful ideas\" endures as a touchstone for anyone seeking to understand the complex relationships underlying today's global environmental and economic trends.",
+        "cover_url": "https://covers.openlibrary.org/b/id/7284936-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 3,
-        "hours": 16.0,
-        "assumed_concepts": [],
+        "hours": 6.0,
+        "assumed_concepts": [
+          "Systems Thinking",
+          "Exponential Growth",
+          "Feedback Loops",
+          "Carrying Capacity",
+          "Resource Depletion",
+          "Basic Economics"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to think about the big picture – this book asks some tough questions about how our world works and where we might be headed."
       },
-      "why": "Systems thinking applied to organisations.",
-      "confidence": 0.7999999999999999,
+      "why": "The famous model behind the primer.",
+      "confidence": 0.8,
       "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 658.4 SEN",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 658.4 SEN",
-          "available": 1,
-          "total": 3,
+          "call_number": "English 303.44 MEA",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 303.44 MEA",
+          "available": 2,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 658.4 SEN",
-          "available": 0,
+          "call_number": "English 303.44 MEA",
+          "available": 1,
           "total": 2,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 658.4 SEN",
+          "call_number": "English 303.44 MEA",
           "available": 0,
-          "total": 3,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 303.44 MEA",
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 658.4 SEN",
-          "available": 2,
-          "total": 2,
+          "call_number": "English 303.44 MEA",
+          "available": 1,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Woodlands Regional Library"
+          "Jurong West Public Library",
+          "Tampines Regional Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -184,61 +204,97 @@
       "role": "after",
       "order": 2,
       "book": {
-        "id": "ol:limits-to-growth-donella-h-meadows",
-        "title": "Limits to Growth",
-        "author": "Donella H. Meadows",
-        "isbn": null,
+        "id": "9780553473216",
+        "title": "The Fifth Discipline",
+        "author": "Peter Senge, Peter M. Senge",
+        "isbn": "9780553473216",
         "brn": null,
-        "year": null,
-        "pages": 368,
+        "year": 1990,
+        "pages": 424,
+        "ddc": "658.4",
         "subjects": [
-          "Systems theory",
-          "Complexity"
+          "Business",
+          "Nonfiction",
+          "Organizational effectiveness",
+          "Teams in the workplace",
+          "Work groups",
+          "Efficacité organisationnelle",
+          "Organisatieontwikkeling",
+          "Efficiency",
+          "School Organization",
+          "Organization and Administration",
+          "Educational Environment",
+          "Learning",
+          "Équipes de travail",
+          "Apprentissage organisationnel",
+          "Grupos de trabajo"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "This revised edition of Peter Senge's bestselling classic, The Fifth Discipline, is based on fifteen years of experience in putting the book's ideas into practice. As Senge makes clear, in the long run the only sustainable competitive advantage is your organization's ability to learn faster than the competition. The leadership stories in the book demonstrate the many ways that the core ideas in The Fifth Discipline, many of which seemed radical when first published in 1990, have become deeply integrated into people's ways of seeing the world and their managerial practices. In The Fifth Discipline, Peter Senge describes how companies can rid themselves of the learning \"disabilities\" that threaten their productivity and success by adopting the strategies of learning organizations - ones in which new and expansive patterns of thinking are nurtured, collective aspiration is set free, and people are continually learning how to create results they truly desire. The revised and updated Currency edition of this business classic contains over one hundred pages of new material based on interviews with dozens of practitioners at companies like BP, Unilever, Intel, Ford, HP, Saudi Aramco, and organizations like Roca, Oxfam, and The World Bank. It features a new Foreword about the success Peter Senge has achieved with learning organizations since the book's inception, as well as new chapters on Impetus (getting started), Strategies, Leaders' New Work, Systems Citizens, and Frontiers for the Future. Mastering the disciplines Senge outlines in the book will reignite the spark of genuine learning driven by people focused on what truly matters to them; bridge teamwork into macro-creativity; free you of confining assumptions and mindsets; teach you to see the forest and the trees; end the struggle between work and personal time.--Book jacket.",
+        "cover_url": "https://covers.openlibrary.org/b/id/5306808-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 4,
-        "hours": 12.0,
-        "assumed_concepts": [],
+        "hours": 18.0,
+        "assumed_concepts": [
+          "Systems Thinking",
+          "Feedback Loops",
+          "Organizational Structure",
+          "Continuous Improvement (Kaizen)",
+          "Strategic Planning"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to dive deep into how organizations learn and adapt – it's a journey that requires patience and a willingness to rethink how things work!"
       },
-      "why": "The famous model behind the primer.",
-      "confidence": 0.8999999999999999,
+      "why": "Systems thinking applied to organisations.",
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 338.9 MEA",
+          "call_number": "English 658.4 SEN",
           "available": 1,
           "total": 1,
           "demo": true
         },
         {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 338.9 MEA",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 338.9 MEA",
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 658.4 SEN",
           "available": 0,
-          "total": 3,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 658.4 SEN",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 658.4 SEN",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 658.4 SEN",
+          "available": 1,
+          "total": 1,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Tampines Regional Library"
+          "Bukit Batok Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -246,7 +302,14 @@
       }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.773942+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T04:24:49.048980+00:00",
+  "engine": "llm",
+  "notes": [
+    "unverified, dropped: The Sixth Extinction: An Unnatural History",
+    "'Thinking, fast and slow' judged unrelated (0.70), not placed before",
+    "unverified, dropped: The Alchemy of Us: How Humans and Machines Interact to Create Our Highest Ideals",
+    "unverified, dropped: The Design of Everyday Things",
+    "unverified, dropped: Sapiens: A Brief History of Humankind",
+    "'A short history of nearly everything' judged unrelated (0.70), not placed before"
+  ]
 }

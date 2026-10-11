@@ -5,71 +5,106 @@
       "role": "before",
       "order": 0,
       "book": {
-        "id": "ol:why-evolution-is-true-jerry-a-coyne",
-        "title": "Why Evolution Is True",
-        "author": "Jerry A. Coyne",
-        "isbn": null,
+        "id": "9781416594796",
+        "title": "The Greatest Show on Earth",
+        "author": "Richard Dawkins",
+        "isbn": "9781416594796",
         "brn": null,
-        "year": null,
-        "pages": 304,
+        "year": 2009,
+        "pages": 470,
         "subjects": [
+          "Evolution (Biology)",
+          "Nonfiction",
+          "Science",
+          "Origin",
+          "Life",
+          "Human evolution",
+          "Religion and Science",
+          "Philosophy",
+          "Biological Evolution",
+          "Intelligent design (Teleology)",
           "Evolution",
-          "Genetics",
-          "Biology"
+          "Beweis",
+          "Evolutionstheorie",
+          "Biodiversität",
+          "nyt:hardcover-nonfiction=2009-10-11"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "Britain's greatest science writer comprehensively rebuts the creationists by pulling together the incontrovertible evidence for evolution. Charles Darwin's masterpiece, _On the Origin of Species_, shook society to its core on publication in 1859. Darwin was only too aware of the storm his theory of evolution would provoke but he would surely have raised an incredulous eyebrow at the controversy still raging a century and a half later. Evolution is accepted as scientific fact by all reputable scientists and indeed theologians, yet millions of people continue to question its veracity. In _The Greatest Show on Earth_ Richard Dawkins takes on creationists, including followers of 'Intelligent Design' and all those who question the fact of evolution through natural selection. Like a detective arriving on the scene of a crime, he sifts through fascinating layers of scientific facts and disciplines to build a cast-iron case: from the living examples of natural selection in birds and insects; the 'time clocks' of trees and radioactive dating that calibrate a timescale for evolution; the fossil record and the traces of our earliest ancestors; to confirmation from molecular biology and genetics. All of this, and much more, bears witness to the truth of evolution. The Greatest Show on Earth comes at a critical time: systematic opposition to the fact of evolution is now flourishing as never before, especially in America. In Britain and elsewhere in the world, teachers witness insidious attempts to undermine the status of science in their classrooms. Richard Dawkins provides unequivocal evidence that boldly and comprehensively rebuts such nonsense. At the same time he shares with us his palpable love of the natural world and the essential role that science plays in its interpretation. Written with elegance, wit and passion, it is hard-hitting, absorbing and totally convincing.",
+        "cover_url": "https://covers.openlibrary.org/b/id/6257082-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "576.8"
       },
       "readiness": {
-        "level": 2,
-        "hours": 9.0,
-        "assumed_concepts": [],
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "Natural Selection",
+          "Genetics",
+          "Fossil Record",
+          "Radioactive Dating",
+          "Molecular Biology"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to dive into a compelling scientific argument – a little background in biology will help you appreciate the full scope of Dawkins's case!"
       },
-      "why": "The plainest account of natural selection, which Dawkins takes as given.",
-      "confidence": 0.8999999999999999,
+      "why": "Reading 'The Greatest Show on Earth' first will give you a good foundation in concepts like natural selection and the fossil record, which are essential building blocks for understanding the more complex ideas about genes and game theory presented in 'The Selfish Gene'.",
+      "confidence": 0.9,
       "availability": [
         {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 576.8 COY",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 576.8 COY",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 576.8 COY",
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 576.8 DAW",
           "available": 0,
           "total": 1,
           "demo": true
         },
         {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 576.8 COY",
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 576.8 DAW",
           "available": 0,
           "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 576.8 DAW",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 576.8 DAW",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 576.8 DAW",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 576.8 DAW",
+          "available": 0,
+          "total": 1,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
           "Jurong West Public Library",
-          "Tampines Regional Library"
+          "Central Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -80,78 +115,198 @@
       "role": "before",
       "order": 1,
       "book": {
-        "id": "ol:the-greatest-show-on-earth-richard-dawkins",
-        "title": "The Greatest Show on Earth",
-        "author": "Richard Dawkins",
-        "isbn": null,
+        "id": "9781440685859",
+        "title": "Why evolution is true",
+        "author": "Jerry A. Coyne",
+        "isbn": "9781440685859",
         "brn": null,
-        "year": null,
-        "pages": 470,
+        "year": 2009,
+        "pages": 320,
         "subjects": [
+          "Science",
+          "Evolution (Biology)",
+          "Biological Evolution",
+          "Genetic Selection",
+          "Nonfiction",
+          "Reading Level-Grade 7",
+          "Reading Level-Grade 9",
+          "Reading Level-Grade 8",
+          "Reading Level-Grade 11",
+          "Reading Level-Grade 10",
+          "Reading Level-Grade 12",
           "Evolution",
-          "Genetics",
           "Biology"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "Why evolution is more than just a theory: it is a factIn all the current highly publicized debates about creationism and its descendant \"intelligent design,\" there is an element of the controversy that is rarely mentioned—the evidence, the empirical truth of evolution by natural selection. Even Richard Dawkins and Stephen Jay Gould, while extolling the beauty of evolution and examining case studies, have not focused on the evidence itself. Yet the proof is vast, varied, and magnificent, drawn from many different fields of science. Scientists are observing species splitting into two and are finding more and more fossils capturing change in the past—dinosaurs that have sprouted feathers, fish that have grown limbs.Why Evolution Is True weaves together the many threads of modern work in genetics, paleontology, geology, molecular biology, and anatomy that demonstrate the \"indelible stamp\" of the processes first proposed by Darwin. In crisp, lucid prose accessible to a wide audience, Why Evolution Is True dispels common misunderstandings and fears about evolution and clearly confirms that this amazing process of change has been firmly established as a scientific truth.",
+        "cover_url": "https://covers.openlibrary.org/b/id/5549166-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "576.8"
       },
       "readiness": {
         "level": 3,
-        "hours": 12.0,
-        "assumed_concepts": [],
+        "hours": 8.0,
+        "assumed_concepts": [
+          "Natural Selection",
+          "Genetics",
+          "Fossil Record",
+          "Comparative Anatomy",
+          "Molecular Biology"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to dive into a fascinating exploration of how we know evolution is real – a little science background will help you appreciate the full picture!"
       },
-      "why": "Dawkins on the evidence for evolution; warms you up to his style before the theory.",
-      "confidence": 0.7999999999999999,
+      "why": "Reading 'Why Evolution is True' first will give you a solid foundation in genetics and natural selection, which are essential concepts for understanding Dawkins' more complex exploration of genes and their role in evolution.",
+      "confidence": 0.8,
       "availability": [
         {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 576.8 DAW",
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 576.8 COY",
           "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 576.8 DAW",
-          "available": 0,
-          "total": 1,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 576.8 DAW",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 576.8 DAW",
+          "call_number": "English 576.8 COY",
           "available": 2,
           "total": 3,
           "demo": true
         },
         {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 576.8 DAW",
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 576.8 COY",
           "available": 2,
           "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 576.8 COY",
+          "available": 3,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Ang Mo Kio Public Library"
+          "Jurong West Public Library",
+          "Central Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 2,
+      "book": {
+        "id": "9780351314216",
+        "title": "Cosmos",
+        "author": "Carl Sagan",
+        "isbn": "9780351314216",
+        "brn": null,
+        "year": 1980,
+        "pages": 354,
+        "subjects": [
+          "Ouvrages de vulgarisation",
+          "Astronomie",
+          "Astronomy",
+          "Popular works",
+          "History",
+          "Science",
+          "Cosmology",
+          "Planetary science",
+          "Astronomy, popular works",
+          "Kosmos",
+          "Kosmosforschung",
+          "Raumfahrt",
+          "Weltall",
+          "Kosmologie",
+          "Einführung"
+        ],
+        "summary": "This book is about science in its broadest human context, how science and civilization grew up together. It is the story of our long journey of discovery and the forces and individuals who helped to shape modern science, including Democritus, Hypatia, Kepler, Newton, Huygens, Champollion, Lowell and Humason. The book also explores spacecraft missions of discovery of the nearby planets, the research in the Library of ancient Alexandria, the human brain, Egyptian hieroglyphics, the origin of life, the death of the Sun, the evolution of galaxies and the origins of matter, suns and worlds. The author retraces the fifteen billion years of cosmic evolution that have transformed matter into life and consciousness, enabling the cosmos to wonder about itself. He considers the latest findings on life elsewhere and how we might communicate with the beings of other worlds. ~ WorldCat.org",
+        "cover_url": "https://covers.openlibrary.org/b/id/8283901-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "ddc": "523.1"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 18.0,
+        "assumed_concepts": [
+          "basic physics",
+          "scientific method",
+          "historical timeline",
+          "ancient civilizations",
+          "mathematical notation"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to be amazed – this is a sweeping, beautiful journey through the history of science and our place in the universe, so a little scientific curiosity will go a long way!"
+      },
+      "why": "Cosmos introduces the scientific method and evolution, which will give you a foundational understanding of how Dawkins approaches explaining natural selection and the role of genes in 'The Selfish Gene'.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 523.1 SAG",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 523.1 SAG",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 523.1 SAG",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 523.1 SAG",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 523.1 SAG",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 523.1 SAG",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Tampines Regional Library",
+          "Central Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -160,25 +315,38 @@
     },
     {
       "role": "target",
-      "order": 2,
+      "order": 3,
       "book": {
-        "id": "9780198788607",
+        "id": "9782738112439",
         "title": "The Selfish Gene",
         "author": "Richard Dawkins",
-        "isbn": "9780198788607",
+        "isbn": "9782738112439",
         "brn": null,
         "year": 1976,
-        "pages": 496,
+        "pages": 352,
         "subjects": [
-          "Evolution",
+          "Evolution (Biology)",
           "Genetics",
-          "Biology"
+          "Sociobiology",
+          "Behavior genetics",
+          "Genetica",
+          "Etologia Animal",
+          "Genetics.\u001e 0",
+          "Long Now Manual for Civilization",
+          "Natural selection",
+          "Sociobiologie",
+          "Évolution (biologie)",
+          "Memen",
+          "Diergedrag",
+          "Génétique animale",
+          "Evolutionstheorie"
         ],
-        "summary": "Evolution seen from the gene's point of view.",
-        "cover_url": null,
+        "summary": "As influential today as when it was first published, The Selfish Gene has become a classic exposition of evolutionary thought. Professor Dawkins articulates a gene's eye view of evolution - a view giving centre stage to these persistent units of information, and in which organisms can be seen as vehicles for their replication. This imaginative, powerful, and stylistically brilliant work not only brought the insights of Neo-Darwinism to a wide audience, but galvanized the biology\r\ncommunity, generating much debate and stimulating whole new areas of research. Forty years later, its insights remain as relevant today as on the day it was published.\r\n\r\nThis 40th anniversary edition includes a new epilogue from the author discussing the continuing relevance of these ideas in evolutionary biology today, as well as the original prefaces and foreword, and extracts from early reviews.\r\n\r\nOxford Landmark Science books are 'must-read' classics of modern science writing which have crystallized big ideas, and shaped the way we think.",
+        "cover_url": "https://covers.openlibrary.org/b/id/133936-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "591.5"
       },
       "readiness": {
         "level": 4,
@@ -197,47 +365,47 @@
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 576.82 DAW",
-          "available": 3,
-          "total": 3,
+          "call_number": "English 591.5 DAW",
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 576.82 DAW",
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 591.5 DAW",
           "available": 1,
           "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 591.5 DAW",
+          "available": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 576.82 DAW",
+          "call_number": "English 591.5 DAW",
           "available": 1,
           "total": 1,
           "demo": true
         },
         {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 576.82 DAW",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        },
-        {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 576.82 DAW",
-          "available": 0,
-          "total": 3,
+          "call_number": "English 591.5 DAW",
+          "available": 2,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 576.82 DAW",
+          "call_number": "English 591.5 DAW",
           "available": 3,
           "total": 3,
           "demo": true
@@ -245,8 +413,7 @@
       ],
       "demand": {
         "hot_branches": [
-          "Bishan Public Library",
-          "Punggol Regional Library"
+          "Bukit Batok Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -255,65 +422,68 @@
     },
     {
       "role": "after",
-      "order": 3,
+      "order": 4,
       "book": {
-        "id": "ol:the-blind-watchmaker-richard-dawkins",
+        "id": "9780140291223",
         "title": "The Blind Watchmaker",
         "author": "Richard Dawkins",
-        "isbn": null,
+        "isbn": "9780140291223",
         "brn": null,
-        "year": null,
-        "pages": 332,
+        "year": 1986,
+        "pages": 368,
         "subjects": [
+          "Natural selection",
+          "Evolution (Biology)",
           "Evolution",
-          "Genetics",
+          "Biodiversity",
+          "Evolution.",
+          "Evolution.\u001e 0",
+          "open_syllabus_project",
+          "Evolutionstheorie",
+          "Selection naturelle",
+          "Evolutie",
+          "Natuurlijke selectie",
+          "Biological Evolution",
+          "Genetic Selection",
+          "Darwinismus",
           "Biology"
         ],
-        "summary": "",
-        "cover_url": null,
+        "summary": "In De blinde horlogemaker spelen zowel Paley als Darwin een belangrijke rol. De eerstgenoemde als belichaming van het geloof in een voor ede mens onbekende doelgerichtheid van de natuur. Darwin als ontdekker van het principe van de natuurlijke selectie. Uiterst boeiend schrijft Dawkins over zijn pogingen Darwins evolutieleer met behulp van computers na te bootsen. Het kunstmatige landschap van de computer verschaft meer inzicht in de ontwikkeling van de genen, de belangrijkste bouwstenen van het leven.\r\n[(bron)][1]\r\n\r\n\r\n  [1]: http://www.bol.com/nl/p/de-blinde-horlogemaker/1001004005445663/?country=BE",
+        "cover_url": "https://covers.openlibrary.org/b/id/95763-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary",
+        "ddc": "576.8"
       },
       "readiness": {
         "level": 3,
         "hours": 12.0,
-        "assumed_concepts": [],
+        "assumed_concepts": [
+          "Genetics",
+          "Basic Biology",
+          "Natural Selection (initial concept)",
+          "Computer Simulation",
+          "Darwin's Theory of Evolution"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to have your understanding of how life developed challenged – this book dives deep into the science of evolution!"
       },
       "why": "How complexity arises without a designer; the natural companion.",
-      "confidence": 0.7,
+      "confidence": 0.8,
       "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 576.8 DAW",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 576.8 DAW",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
           "call_number": "English 576.8 DAW",
           "available": 1,
-          "total": 2,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
           "call_number": "English 576.8 DAW",
-          "available": 0,
+          "available": 2,
           "total": 3,
           "demo": true
         },
@@ -321,16 +491,16 @@
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
           "call_number": "English 576.8 DAW",
-          "available": 3,
-          "total": 3,
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
           "call_number": "English 576.8 DAW",
-          "available": 1,
-          "total": 1,
+          "available": 2,
+          "total": 3,
           "demo": true
         },
         {
@@ -345,7 +515,7 @@
       "demand": {
         "hot_branches": [
           "Tampines Regional Library",
-          "Ang Mo Kio Public Library"
+          "Central Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -354,36 +524,182 @@
     },
     {
       "role": "after",
-      "order": 4,
+      "order": 5,
       "book": {
-        "id": "ol:the-extended-phenotype-richard-dawkins",
-        "title": "The Extended Phenotype",
-        "author": "Richard Dawkins",
-        "isbn": null,
+        "id": "9780965213677",
+        "title": "Genome..the Autobiography of a Species in 23 Chapters",
+        "author": "Matt Ridley",
+        "isbn": "9780965213677",
         "brn": null,
-        "year": null,
-        "pages": 313,
+        "year": 1999,
+        "pages": null,
         "subjects": [
-          "Evolution",
+          "Evolution (Biology)",
           "Genetics",
-          "Biology"
+          "Sociobiology",
+          "Behavior genetics",
+          "Genetica",
+          "Etologia Animal",
+          "Genetics.\u001e 0",
+          "Long Now Manual for Civilization",
+          "Natural selection",
+          "Sociobiologie",
+          "Évolution (biologie)",
+          "Memen",
+          "Diergedrag",
+          "Génétique animale",
+          "Evolutionstheorie"
         ],
         "summary": "",
         "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
+      },
+      "readiness": {
+        "level": 4,
+        "hours": 18.0,
+        "assumed_concepts": [
+          "DNA",
+          "Genes",
+          "Natural Selection",
+          "Evolutionary Biology",
+          "Heritability",
+          "Behavioral Traits"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive into a fascinating exploration of how our genes shape who we are, but be prepared to brush up on some basic biology!"
+      },
+      "why": "It provides a detailed exploration of the human genome, illustrating the complexity and mechanics of genetic inheritance in a contemporary context.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 153.4 RID",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 153.4 RID",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 153.4 RID",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 153.4 RID",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 153.4 RID",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 153.4 RID",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 153.4 RID",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library",
+          "Woodlands Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 6,
+      "book": {
+        "id": "9780192860880",
+        "title": "The Extended Phenotype",
+        "author": "Richard Dawkins, Wolfgang Mayer",
+        "isbn": "9780192860880",
+        "brn": null,
+        "year": 1981,
+        "pages": 307,
+        "subjects": [
+          "Gene expression",
+          "Natural selection",
+          "Genetics",
+          "Evolution",
+          "Evolution (Biology)",
+          "Natuurlijke selectie",
+          "Évolution (biologie)",
+          "Gene Expression Regulation",
+          "Expressivité génétique",
+          "Genetic Selection",
+          "Génétique",
+          "Expression génique",
+          "Évolution",
+          "Sélection naturelle",
+          "Evolutie"
+        ],
+        "summary": "By suggesting that individual organisms should be viewed as a single coherent unit, working to maximize their own reproductive success, the author explains that as these organisms are \"selfish\" they have the capacity to effect the body of another animal, so revolutionizing our views of adaptation.",
+        "cover_url": "https://covers.openlibrary.org/b/id/119978-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "ddc": "575"
       },
       "readiness": {
         "level": 5,
-        "hours": 16.0,
-        "assumed_concepts": [],
+        "hours": 18.0,
+        "assumed_concepts": [
+          "DNA",
+          "Genes",
+          "Reproduction",
+          "Adaptation",
+          "Species",
+          "Natural Variation"
+        ],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to really stretch your understanding of how evolution works – this book challenges some fundamental assumptions about what it means to be alive!"
       },
       "why": "Dawkins's own pick as his most important book, and the hardest.",
-      "confidence": 0.7999999999999999,
+      "confidence": 0.9,
       "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 575 DAW",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
@@ -393,11 +709,19 @@
           "demo": true
         },
         {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
           "call_number": "English 575 DAW",
           "available": 1,
           "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 575 DAW",
+          "available": 3,
+          "total": 3,
           "demo": true
         },
         {
@@ -405,7 +729,7 @@
           "branch_code": "CLPL",
           "call_number": "English 575 DAW",
           "available": 0,
-          "total": 2,
+          "total": 1,
           "demo": true
         },
         {
@@ -413,14 +737,14 @@
           "branch_code": "PRL",
           "call_number": "English 575 DAW",
           "available": 0,
-          "total": 3,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
           "call_number": "English 575 DAW",
-          "available": 3,
+          "available": 2,
           "total": 3,
           "demo": true
         },
@@ -428,14 +752,14 @@
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
           "call_number": "English 575 DAW",
-          "available": 3,
-          "total": 3,
+          "available": 1,
+          "total": 1,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Central Public Library",
+          "Bishan Public Library",
           "Punggol Regional Library"
         ],
         "hidden_gem": false,
@@ -444,7 +768,13 @@
       }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.761572+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T04:01:15.579830+00:00",
+  "engine": "llm",
+  "notes": [
+    "unverified, dropped: What Darwin Didn't Know: A Doctor's Discovery of How Sex and Genes Create Life",
+    "unverified, dropped: Your Inner Fish: A Journey into the 3.5-Billion-Year History of Our Bodies",
+    "unverified, dropped: The Greatest Show on Earth: The Evidence for Evolution",
+    "unverified, dropped: Origins: How the Earth Developed Life",
+    "unverified, dropped: She Has Her Mother's Laugh: The Powers, Perversions, and Potential of Heredity"
+  ]
 }

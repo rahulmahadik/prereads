@@ -2,194 +2,29 @@
   "target_id": "9780134494166",
   "stops": [
     {
-      "role": "before",
+      "role": "target",
       "order": 0,
       "book": {
-        "id": "ol:clean-code-robert-c-martin",
-        "title": "Clean Code",
-        "author": "Robert C. Martin",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 464,
-        "subjects": [
-          "Software architecture",
-          "Software design"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 2,
-        "hours": 12.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "The function-level habits this book scales up to systems.",
-      "confidence": 0.7999999999999999,
-      "availability": [
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 005.1 MAR",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 005.1 MAR",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 005.1 MAR",
-          "available": 2,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 005.1 MAR",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 005.1 MAR",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 005.1 MAR",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "before",
-      "order": 1,
-      "book": {
-        "id": "ol:the-pragmatic-programmer-david-thomas",
-        "title": "The Pragmatic Programmer",
-        "author": "David Thomas",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 352,
-        "subjects": [
-          "Software architecture",
-          "Software design"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 2,
-        "hours": 10.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "The working engineer's mindset the architecture advice assumes.",
-      "confidence": 0.7999999999999999,
-      "availability": [
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 005.1 THO",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 005.1 THO",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 005.1 THO",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 005.1 THO",
-          "available": 3,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 005.1 THO",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Tampines Regional Library",
-          "Woodlands Regional Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "target",
-      "order": 2,
-      "book": {
-        "id": "9780134494166",
+        "id": "9789352865123",
         "title": "Clean Architecture",
         "author": "Robert C. Martin",
-        "isbn": "9780134494166",
+        "isbn": "9789352865123",
         "brn": null,
         "year": 2017,
         "pages": 432,
         "subjects": [
+          "Development",
           "Software architecture",
-          "Software design"
+          "Computer software",
+          "Computer programming",
+          "History",
+          "Computer architecture"
         ],
         "summary": "Martin's principles for structuring software so it stays easy to change.",
-        "cover_url": null,
+        "cover_url": "https://covers.openlibrary.org/b/id/8605114-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 3,
@@ -206,43 +41,35 @@
       "confidence": 1.0,
       "availability": [
         {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 005.1 MAR",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
           "call_number": "English 005.1 MAR",
           "available": 1,
-          "total": 3,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
           "call_number": "English 005.1 MAR",
-          "available": 3,
-          "total": 3,
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
           "call_number": "English 005.1 MAR",
-          "available": 1,
-          "total": 1,
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
           "call_number": "English 005.1 MAR",
-          "available": 1,
-          "total": 1,
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
@@ -257,23 +84,132 @@
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
           "call_number": "English 005.1 MAR",
-          "available": 2,
-          "total": 3,
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
           "call_number": "English 005.1 MAR",
-          "available": 0,
+          "available": 2,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Central Public Library",
+          "Ang Mo Kio Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 1,
+      "book": {
+        "id": "9781492034025",
+        "title": "Building Microservices",
+        "author": "Sam Newman",
+        "isbn": "9781492034025",
+        "brn": null,
+        "year": 2015,
+        "pages": 265,
+        "subjects": [
+          "Development",
+          "Computer architecture",
+          "Distributed operating systems (Computers)",
+          "Computer software",
+          "Ordinateurs",
+          "Architecture",
+          "Systèmes d'exploitation répartis",
+          "COMPUTERS",
+          "Computer Architecture",
+          "Web programming",
+          "General",
+          "Distributed systems & computing",
+          "Site design",
+          "Page design",
+          "Com060160"
+        ],
+        "summary": "",
+        "cover_url": "https://covers.openlibrary.org/b/id/8513315-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 12.0,
+        "assumed_concepts": [
+          "REST APIs",
+          "Version Control (e.g., Git)",
+          "HTTP",
+          "Databases (SQL or NoSQL)",
+          "Basic Object-Oriented Programming"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive into a practical guide – you'll want a solid grasp of software development fundamentals and some experience with web technologies to really get the most out of this book."
+      },
+      "why": "While not a direct follow-on, it explores a specific architectural style that often benefits from the principles of separation and testability outlined in *Clean Architecture*.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 576.8 NEW",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 576.8 NEW",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 576.8 NEW",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 576.8 NEW",
+          "available": 1,
           "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 576.8 NEW",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 576.8 NEW",
+          "available": 1,
+          "total": 2,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
           "Tampines Regional Library",
-          "Bukit Batok Library"
+          "Punggol Regional Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -282,139 +218,53 @@
     },
     {
       "role": "after",
-      "order": 3,
+      "order": 2,
       "book": {
-        "id": "ol:patterns-of-enterprise-application-architecture-martin-fowler",
-        "title": "Patterns of Enterprise Application Architecture",
-        "author": "Martin Fowler",
-        "isbn": null,
+        "id": "9780321125217",
+        "title": "Domain-Driven Design",
+        "author": "Eric Evans",
+        "isbn": "9780321125217",
         "brn": null,
-        "year": null,
-        "pages": 560,
+        "year": 2003,
+        "pages": 529,
         "subjects": [
-          "Software architecture",
-          "Software design"
+          "Development",
+          "Computer software",
+          "Object-oriented programming (Computer science)",
+          "Computer software, development",
+          "Computer software--development",
+          "Qa76.76.d47 e82 2004",
+          "005.1"
         ],
         "summary": "",
-        "cover_url": null,
+        "cover_url": "https://covers.openlibrary.org/b/id/5548424-M.jpg",
         "reservations": 0,
         "audience": [],
-        "source": "seed"
+        "source": "openlibrary"
       },
       "readiness": {
         "level": 4,
-        "hours": 18.0,
-        "assumed_concepts": [],
-        "style_tags": [],
-        "one_line": ""
-      },
-      "why": "The catalogue of patterns Martin references.",
-      "confidence": 0.7999999999999999,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 005.1 FOW",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 005.1 FOW",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 005.1 FOW",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 005.1 FOW",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 005.1 FOW",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 005.1 FOW",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Jurong West Public Library",
-          "Bukit Batok Library"
+        "hours": 20.0,
+        "assumed_concepts": [
+          "Ubiquitous Language",
+          "Bounded Context",
+          "Entity",
+          "Value Object",
+          "Aggregate",
+          "Domain Expert"
         ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "after",
-      "order": 4,
-      "book": {
-        "id": "ol:domain-driven-design-eric-evans",
-        "title": "Domain-Driven Design",
-        "author": "Eric Evans",
-        "isbn": null,
-        "brn": null,
-        "year": null,
-        "pages": 560,
-        "subjects": [
-          "Software architecture",
-          "Software design"
-        ],
-        "summary": "",
-        "cover_url": null,
-        "reservations": 0,
-        "audience": [],
-        "source": "seed"
-      },
-      "readiness": {
-        "level": 5,
-        "hours": 26.0,
-        "assumed_concepts": [],
         "style_tags": [],
-        "one_line": ""
+        "one_line": "Get ready to dive deep into a strategic approach to software development – this book assumes you already have a solid grasp of object-oriented programming principles."
       },
       "why": "The deep end of modelling a business in code.",
-      "confidence": 0.8999999999999999,
+      "confidence": 0.8,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
           "call_number": "English 005.1 EVA",
-          "available": 2,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 005.1 EVA",
-          "available": 1,
-          "total": 1,
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
@@ -422,22 +272,14 @@
           "branch_code": "TRL",
           "call_number": "English 005.1 EVA",
           "available": 1,
-          "total": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
           "call_number": "English 005.1 EVA",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 005.1 EVA",
-          "available": 1,
+          "available": 0,
           "total": 3,
           "demo": true
         },
@@ -446,23 +288,15 @@
           "branch_code": "PRL",
           "call_number": "English 005.1 EVA",
           "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 005.1 EVA",
-          "available": 0,
-          "total": 1,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
           "call_number": "English 005.1 EVA",
-          "available": 2,
-          "total": 2,
+          "available": 0,
+          "total": 1,
           "demo": true
         }
       ],
@@ -475,9 +309,137 @@
         "reservations": 0,
         "demo": true
       }
+    },
+    {
+      "role": "after",
+      "order": 3,
+      "book": {
+        "id": "9780321127426",
+        "title": "Patterns of Enterprise Application Architecture",
+        "author": "Martin Fowler",
+        "isbn": "9780321127426",
+        "brn": null,
+        "year": 2002,
+        "pages": 533,
+        "subjects": [
+          "Application software",
+          "Business",
+          "Computer architecture",
+          "Data processing",
+          "Development",
+          "System design",
+          "Business, data processing"
+        ],
+        "summary": "",
+        "cover_url": "https://covers.openlibrary.org/b/id/192501-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "ddc": "005.1"
+      },
+      "readiness": {
+        "level": 5,
+        "hours": 20.0,
+        "assumed_concepts": [
+          "Object-Oriented Programming",
+          "Design Patterns",
+          "Layered Architecture",
+          "Distributed Systems",
+          "UML",
+          "Database Normalization"
+        ],
+        "style_tags": [],
+        "one_line": "Get ready to dive deep – this book is your guide to designing flexible and adaptable software systems, but it assumes you already have a solid foundation in software development principles."
+      },
+      "why": "The catalogue of patterns Martin references.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 005.1 FOW",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 005.1 FOW",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 005.1 FOW",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 005.1 FOW",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 005.1 FOW",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 005.1 FOW",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 005.1 FOW",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 005.1 FOW",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Woodlands Regional Library",
+          "Ang Mo Kio Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
     }
   ],
-  "generated_at": "2026-10-09T06:38:50.767830+00:00",
-  "engine": "seed",
-  "notes": []
+  "generated_at": "2026-10-11T04:12:59.313323+00:00",
+  "engine": "llm",
+  "notes": [
+    "unverified, dropped: Refactoring: Improving the Design of Existing Code",
+    "unverified, dropped: Don't Repeat Yourself (DRY)",
+    "'Introduction to Algorithms' judged unrelated (0.80), not placed before",
+    "dropped 'Clean Code' from before-line: not easier than the target",
+    "dropped 'The Pragmatic Programmer' from before-line: not easier than the target",
+    "dropped 'Head First design patterns' from before-line: not easier than the target",
+    "dropped 'Clean Code' from before-line: not easier than the target",
+    "dropped 'The Pragmatic Programmer' from before-line: not easier than the target"
+  ]
 }
