@@ -1,4 +1,4 @@
-.PHONY: setup backend frontend build serve precompute precompute-demo test clean
+.PHONY: setup backend frontend build serve precompute precompute-demo test clean warmup
 
 setup:            ## one-time: python venv + deps, npm deps
 	cd backend && python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
@@ -30,6 +30,9 @@ serve: build      ## one process serves API + UI on http://localhost:8000
 test:
 	cd backend && . .venv/bin/activate && python -m pytest -q tests
 	cd frontend && npm test --silent
+
+warmup:           ## before the demo: load local models, fill caches (QUICK=1 for demo paths only)
+	python3 scripts/warmup.py $(if $(QUICK),--quick,)
 
 clean:
 	rm -rf frontend/dist backend/data/cache/routes/*.json backend/data/cache/index.json
