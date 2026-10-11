@@ -3,6 +3,7 @@ import { api } from "../api";
 import Cover from "../components/Cover";
 import ReadinessMeter from "../components/ReadinessMeter";
 import ListenButton from "../components/ListenButton";
+import NearestLibraries from "../components/NearestLibraries";
 import { lineScript } from "../speech";
 import { sameShelfGroups, sameShelfText } from "../shelf";
 import { ShareCard } from "../components/Extras";
@@ -241,6 +242,7 @@ export default function Line({ id, title, author }: { id: string; title: string;
           </div>
 
           <Sheet open={walk} title="Which library are you in?" onClose={() => setWalk(false)}>
+            <NearestLibraries branches={branches} onPick={chooseBranch} />
             <select className="select" aria-label="Library" value={branch} onChange={(e) => chooseBranch(e.target.value)}>
               <option value="">Any library</option>
               {branches.map((b) => (

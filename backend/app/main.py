@@ -204,7 +204,30 @@ def chat(turn: ChatTurn):
 
 @app.get("/api/branches")
 def branches():
-    return {"branches": [{"code": c, "name": n} for c, n in BRANCHES.items()]}
+    import json, re
+
+    def key(name: str) -> str:
+        return re.sub(r"\b(public|regional)\b|\s+", "", name.lower())
+
+    def index() -> dict:
+        path = Path(__file__).resolve().parent.parent / "data" / "libraries.json"
+        try:
+            return {key(x["name"]): x for x in json.loads(path.read_text())["libraries"]}
+        except (OSError, ValueError, KeyError):
+            return {}
+
+    libs = index()
+    out = []
+    for c, n in BRANCHES.items():
+        lib = libs.get(key(n), {})
+        out.append({
+            "code": c, "name": n,
+            "lat": lib.get("lat"), "lng": lib.get("lng"),
+            "address": lib.get("address"), "hours": lib.get("hours"),
+            "hours_source": lib.get("hours_source"),
+        })
+    return {"branches": out}
+
 
 
 @app.get("/api/targets")

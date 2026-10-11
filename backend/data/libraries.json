@@ -1,0 +1,316 @@
+{
+  "source": "data.gov.sg",
+  "dataset_id": "d_27b8dae65d9ca1539e14d09578b17cbf",
+  "hours_note": "Typical hours, check NLB.",
+  "libraries": [
+    {
+      "name": "Ang Mo Kio Public Library",
+      "address": "4300 Ang Mo Kio Avenue 6, Singapore 569842",
+      "lat": 1.37479,
+      "lng": 103.845581,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Bedok Public Library",
+      "address": "11 Bedok North St. 1, Singapore 469662",
+      "lat": 1.326989,
+      "lng": 103.931691,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Bishan Public Library",
+      "address": "5 Bishan Place, Singapore 579841",
+      "lat": 1.349851,
+      "lng": 103.84884,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Bukit Batok Public Library",
+      "address": "1 Bukit Batok Central Link West Mall, Singapore 658713",
+      "lat": 1.349498,
+      "lng": 103.749285,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Bukit Panjang Public Library",
+      "address": "1 Jelebu Road Bukit Panjang Plaza, Singapore 677743",
+      "lat": 1.379936,
+      "lng": 103.76435,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Central Public Library",
+      "address": "100 Victoria Street (Basement 1), Singapore 188064",
+      "lat": 1.29742,
+      "lng": 103.854235,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Cheng San Public Library",
+      "address": "90 Hougang Avenue 10 Hougang Mall, Singapore 538766",
+      "lat": 1.372573,
+      "lng": 103.893775,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Chua Chu Kang Public Library",
+      "address": "21 Choa Chu Kang Avenue 4 Lot One, Singapore 689812",
+      "lat": 1.384959,
+      "lng": 103.745039,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Clementi Public Library",
+      "address": "3155 Commonwealth Avenue West The Clementi Mall, Singapore 129588",
+      "lat": 1.315062,
+      "lng": 103.764306,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Geylang East Public Library",
+      "address": "50 Geylang East Ave 1, Singapore 389777",
+      "lat": 1.317443,
+      "lng": 103.885837,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Harbour Front Public Library",
+      "address": "1 Harbourfront Walk VivoCity, Singapore 98585",
+      "lat": 1.263922,
+      "lng": 103.821631,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Jurong Regional Library",
+      "address": "21 Jurong East Central 1, Singapore 609732",
+      "lat": 1.332895,
+      "lng": 103.739243,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Jurong West Public Library",
+      "address": "60 Jurong West Central 3, Singapore 648346",
+      "lat": 1.340636,
+      "lng": 103.704512,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Marine Parade Public Library",
+      "address": "278 Marine Parade Road Marine Parade Community Building, Singapore 449282",
+      "lat": 1.30467,
+      "lng": 103.909581,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "National Library Building",
+      "address": "100 Victoria Street, Singapore 188064",
+      "lat": 1.297202,
+      "lng": 103.854287,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Pasir Ris Public Library",
+      "address": "1 Pasir Ris Central St 3 White Sands, Singapore 518457",
+      "lat": 1.372358,
+      "lng": 103.94944,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Punggol Regional Library",
+      "address": "1 Punggol Drive, Waterway Point, Singapore 828629",
+      "lat": 1.4066,
+      "lng": 103.9022,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default",
+      "source": "manual"
+    },
+    {
+      "name": "Queenstown Public Library",
+      "address": "53 Margaret Drive, Singapore 149297",
+      "lat": 1.298713,
+      "lng": 103.80552,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Sembawang Public Library",
+      "address": "30 Sembawang Drive Sun Plaza, Singapore 757713",
+      "lat": 1.448197,
+      "lng": 103.819499,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Sengkang Public Library",
+      "address": "1 Sengkang Square Compass One, Singapore 545078",
+      "lat": 1.391329,
+      "lng": 103.894688,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Serangoon Public Library",
+      "address": "23 Serangoon Central NEX, Singapore 556083",
+      "lat": 1.350727,
+      "lng": 103.872257,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Tampines Regional Library",
+      "address": "1 Tampines Walk Our Tampines Hub, Singapore 528523",
+      "lat": 1.356292,
+      "lng": 103.944556,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Toa Payoh Public Library",
+      "address": "6 Toa Payoh Central, Singapore 319191",
+      "lat": 1.333625,
+      "lng": 103.850969,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Woodlands Regional Library",
+      "address": "900 South Woodlands Drive, Singapore 730900",
+      "lat": 1.435037,
+      "lng": 103.786928,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "Yishun Public Library",
+      "address": "930 Yishun Ave 2 Northpoint City (North Wing), Singapore 769098",
+      "lat": 1.429715,
+      "lng": 103.835803,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "library@chinatown",
+      "address": "133 North Bridge Road Chinatown Point, Singapore 59413",
+      "lat": 1.285261,
+      "lng": 103.844943,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "library@esplanade",
+      "address": "8 Raffles Avenue, Singapore 39802",
+      "lat": 1.289412,
+      "lng": 103.85577,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    },
+    {
+      "name": "library@orchard",
+      "address": "277 Orchard Road Orchard Gateway, Singapore 238858",
+      "lat": 1.300408,
+      "lng": 103.839669,
+      "hours": {
+        "open": "10:00",
+        "close": "21:00"
+      },
+      "hours_source": "default"
+    }
+  ]
+}
