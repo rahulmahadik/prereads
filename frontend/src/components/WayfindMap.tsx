@@ -7,14 +7,18 @@
  * corner, lift, stairs, toilets. The plan is seeded by the branch (wayfind.ts), so each
  * library looks different but always the same. Schematic, not to scale.
  *
- * Motion (CSS only, reduced-motion safe): "You are here" pulses 3 times, the route draws
- * (900 ms), a walker follows it (1200 ms), then the shelf unit, row and label light up
- * (300 ms). Steps light in sync; tapping a step or Replay runs it again.
+ * Motion loops (timeline in wayfind.ts LOOP/frameAt, driven by requestAnimationFrame):
+ * "You are here" pulses, the route draws, a walker follows it, the shelf unit, row and label
+ * light up, it holds ~1.5 s, the trail fades and it runs again. Steps light in sync; tapping a
+ * step puts the walker there. The loop pauses off-screen and in a hidden tab; with reduced
+ * motion the finished route is shown still. "Full screen" opens the same map over the page.
  */
-import { useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from "react";
+import { createPortal } from "react-dom";
 import {
   FIC_ROWS, FIC_SECTIONS, FIC_W, FIC_X, H, KIDS, MAIN_X, NF_AISLE_Y, NF_H, NF_LABELS, NF_W, NF_Y, ROW_NAMES, UNIT_H, W, DOOR_Y,
-  hash, locate, parseCallNumber, planFor, planSignature, routeFor, stepsFor,
+  LOOP, STILL_MS, frameAt, hash, locate, parseCallNumber, planFor, planSignature, pointAlong, routeFor, stepsFor, timeForStep,
+  type Parsed, type Plan, type Route, type Spot, type Step,
 } from "../wayfind";
 import { t, useLang, type Key } from "../i18n";
 
@@ -28,14 +32,6 @@ export interface Target {
 }
 
 const SPINES = ["#6E2A2A", "#1F4D3A", "#223A5E", "#8A6D1F", "#4A4E69", "#5C3D6E", "#2E6B6B", "#A1512A", "#9A3B3B", "#2F5D8A"];
-
-// timeline (ms)
-const PATH_AT = 150;
-const PATH_MS = 900;
-const WALK_AT = PATH_AT + PATH_MS;
-const WALK_MS = 1200;
-const ARRIVE_AT = WALK_AT + WALK_MS;
-const HL_MS = 300;
 
 const SVC_ICON: Record<string, string> = { toilets: "🚻", lift: "🛗", stairs: "" };
 const SVC_NAME: Record<string, Key> = { toilets: "wf.svc.toilets", lift: "wf.svc.lift", stairs: "wf.svc.stairs" };
@@ -115,13 +111,13 @@ function Plant({ x, y }: { x: number; y: number }) {
 
 
 /** Front view of the target shelf unit: three rows of spines, the target row glowing. */
-function ShelfFace({ x, y, row, slot, label, seed }: { x: number; y: number; row: number; slot: number; label: string; seed: string }) {
+function ShelfFace({ x, y, row, slot, label, seed, gRef }: { x: number; y: number; row: number; slot: number; label: string; seed: string; gRef: RefObject<SVGGElement> }) {
   const fw = 172;
   const fh = 104;
   const rowH = 20;
   const inner = fw - 24;
   return (
-    <g className="wf-face" transform={`translate(${x} ${y})`} style={{ "--wf-d": `${ARRIVE_AT + 120}ms` } as CSSProperties}>
+    <g className="wf-face" ref={gRef} transform={`translate(${x} ${y})`}>
       <rect width={fw} height={fh} rx="10" className="wf-face-card" />
       <text x="12" y="18" className="wf-face-label">{label}</text>
       {ROW_NAMES.map((_, r) => {
@@ -150,51 +146,172 @@ function ShelfFace({ x, y, row, slot, label, seed }: { x: number; y: number; row
   );
 }
 
-export default function WayfindMap({ target }: { target: Target }) {
-  const lang = useLang();
-  const parsed = useMemo(() => parseCallNumber(target.callNumber), [target.callNumber]);
-  const seedKey = target.code || target.branch;
-  const plan = useMemo(() => planFor(seedKey), [seedKey]);
-  const spot = useMemo(() => locate(parsed, plan), [parsed, plan, lang]);
-  const route = useMemo(() => routeFor(parsed, plan, spot), [parsed, plan, spot]);
-  const steps = useMemo(() => stepsFor(parsed, target.callNumber, seedKey), [parsed, target.callNumber, seedKey, lang]);
-  const [run, setRun] = useState(0);
-  const replay = () => setRun((r) => r + 1);
-  const runKey = `${run}-${target.callNumber}-${planSignature(plan)}`;
+// --- loop helpers ----------------------------------------------------------------
+function useMedia(query: string): boolean {
+  const [on, setOn] = useState(() => typeof window !== "undefined" && !!window.matchMedia?.(query).matches);
+  useEffect(() => {
+    const mq = window.matchMedia?.(query);
+    if (!mq) return;
+    const f = () => setOn(mq.matches);
+    f();
+    mq.addEventListener?.("change", f);
+    return () => mq.removeEventListener?.("change", f);
+  }, [query]);
+  return on;
+}
+
+function usePageVisible(): boolean {
+  const [on, setOn] = useState(() => typeof document === "undefined" || document.visibilityState !== "hidden");
+  useEffect(() => {
+    const f = () => setOn(document.visibilityState !== "hidden");
+    document.addEventListener("visibilitychange", f);
+    return () => document.removeEventListener("visibilitychange", f);
+  }, []);
+  return on;
+}
+
+function useOnScreen(ref: RefObject<Element>): boolean {
+  const [on, setOn] = useState(true);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver((entries) => setOn(entries.some((e) => e.isIntersecting)));
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ref]);
+  return on;
+}
+
+interface ViewProps {
+  target: Target;
+  parsed: Parsed;
+  plan: Plan;
+  spot: Spot;
+  route: Route;
+  steps: Step[];
+  /** false pauses the loop (e.g. the inline map while full screen covers it) */
+  live: boolean;
+  children?: ReactNode;
+}
+
+/** The floor plan and its written steps, with the looping route animation. */
+function MapView({ target, parsed, plan, spot, route, steps, live, children }: ViewProps) {
+  const uid = "wf" + useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const rootRef = useRef<HTMLDivElement>(null);
+  const runRef = useRef<SVGGElement>(null);
+  const pulseRef = useRef<SVGCircleElement>(null);
+  const shadowRef = useRef<SVGPathElement>(null);
+  const pathRef = useRef<SVGPathElement>(null);
+  const walkerRef = useRef<SVGGElement>(null);
+  const unitRef = useRef<SVGGElement>(null);
+  const pinRef = useRef<SVGGElement>(null);
+  const linkRef = useRef<SVGLineElement>(null);
+  const faceRef = useRef<SVGGElement>(null);
+  const stepsRef = useRef<HTMLOListElement>(null);
+  const timeRef = useRef(0);
+  const shown = useRef<{ step: number; arrived: boolean | null }>({ step: -2, arrived: null });
+
+  const reduced = useMedia("(prefers-reduced-motion: reduce)");
+  const pageVisible = usePageVisible();
+  const onScreen = useOnScreen(rootRef);
+  const running = live && pageVisible && onScreen && !reduced;
+
   const [tx, ty] = spot.stand.map((v) => Math.round(v));
   const nf = parsed.kind === "nonfiction";
-  const marks = route.marks;
   const svcLabel = plan.services.map((s) => t(SVC_NAME[s])).join(" · ");
   const faceX = Math.min(W - 24 - 172, Math.max(24, (spot.bayLabelX ?? tx) - 86));
+  const loopKey = `${target.callNumber}-${planSignature(plan)}`;
+
+  /** Draw the loop at `ms`: only styles and attributes change, React never re-renders per frame. */
+  const draw = (ms: number) => {
+    const f = frameAt(ms, route.marks);
+    const fade = (el: Element | null, v: number) => el && ((el as SVGElement).style.opacity = String(+v.toFixed(3)));
+    const pulse = pulseRef.current;
+    if (pulse) {
+      pulse.style.opacity = f.pulse < 0 ? "0" : String(+(0.45 * (1 - f.pulse)).toFixed(3));
+      pulse.style.transform = `scale(${(0.5 + 1.5 * (1 - (1 - Math.max(0, f.pulse)) ** 2)).toFixed(3)})`;
+    }
+    if (pathRef.current) pathRef.current.style.strokeDashoffset = String(+(1 - f.draw).toFixed(4));
+    fade(pathRef.current, f.trail);
+    fade(shadowRef.current, f.shadow * f.trail);
+    if (walkerRef.current) {
+      const [x, y] = pointAlong(route.points, f.walk);
+      walkerRef.current.setAttribute("transform", `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
+      fade(walkerRef.current, f.walker * f.trail);
+    }
+    fade(unitRef.current, f.unit * f.trail);
+    fade(pinRef.current, f.pin * f.trail);
+    fade(linkRef.current, f.link * f.trail);
+    if (faceRef.current) {
+      fade(faceRef.current, f.face * f.trail);
+      faceRef.current.style.setProperty("scale", f.faceScale.toFixed(3));
+    }
+    if (f.arrived !== shown.current.arrived) {
+      shown.current.arrived = f.arrived;
+      runRef.current?.classList.toggle("arrived", f.arrived);
+    }
+    if (f.step !== shown.current.step) {
+      shown.current.step = f.step;
+      stepsRef.current?.querySelectorAll(".wf-step").forEach((b, i) => b.classList.toggle("on", i === f.step));
+    }
+  };
+  const drawRef = useRef(draw);
+  drawRef.current = draw;
+
+  // a new book or branch starts the loop from the beginning
+  useLayoutEffect(() => {
+    timeRef.current = reduced ? STILL_MS : 0;
+    shown.current = { step: -2, arrived: null };
+  }, [loopKey, reduced]);
+
+  useLayoutEffect(() => {
+    drawRef.current(timeRef.current);
+    if (!running) return;
+    let raf = 0;
+    let last = -1;
+    const tick = (now: number) => {
+      if (last >= 0) timeRef.current = (timeRef.current + Math.min(64, now - last)) % LOOP.cycle;
+      last = now;
+      drawRef.current(timeRef.current);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [running, loopKey]);
+
+  const jump = (i: number) => {
+    timeRef.current = timeForStep(route.marks, i);
+    drawRef.current(timeRef.current);
+  };
 
   return (
-    <div className="wayfind wf2">
+    <div className={`wayfind wf2 wf-loop ${running ? "" : "paused"}`} ref={rootRef}>
       <div className="wf-map-wrap">
       <svg className="map floorplan" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t("wf.svg", { call: target.callNumber, branch: target.branch, label: spot.label })}>
         <defs>
-          <pattern id="carpet" width="8" height="8" patternUnits="userSpaceOnUse">
+          <pattern id={`${uid}carpet`} width="8" height="8" patternUnits="userSpaceOnUse">
             <rect width="8" height="8" fill="#eef1f5" />
             <circle cx="4" cy="4" r="0.8" fill="#dfe4ea" />
           </pattern>
-          <pattern id="rug" width="14" height="14" patternUnits="userSpaceOnUse">
+          <pattern id={`${uid}rug`} width="14" height="14" patternUnits="userSpaceOnUse">
             <rect width="14" height="14" fill="#ffe9cf" />
             <circle cx="7" cy="7" r="3" fill="#ffd5a6" />
           </pattern>
-          <pattern id="wood" width="60" height="6" patternUnits="userSpaceOnUse">
+          <pattern id={`${uid}wood`} width="60" height="6" patternUnits="userSpaceOnUse">
             <rect width="60" height="6" fill="#efe6d8" />
             <line x1="0" x2="60" y1="5.5" y2="5.5" stroke="#e3d6c2" strokeWidth="1" />
           </pattern>
         </defs>
 
         {/* floor */}
-        <rect x="12" y="12" width={W - 24} height={H - 24} rx="10" fill="url(#carpet)" />
+        <rect x="12" y="12" width={W - 24} height={H - 24} rx="10" fill={`url(#${uid}carpet)`} />
         <rect x={FIC_X - 12} y={FIC_ROWS[0] - 20} width={FIC_W + 60} height={FIC_ROWS[4] - FIC_ROWS[0] + 64} rx="12" className="carpet-fiction" />
         <rect x={440} y={204} width={316} height={192} rx="12" className="carpet-reading" />
         <rect x={KIDS.x} y={KIDS.y} width={KIDS.w} height={KIDS.h} rx="14" className="carpet-kids" />
         {/* aisles (wood) */}
-        <rect x={MAIN_X - 22} y={NF_AISLE_Y - 14} width="44" height={H - NF_AISLE_Y - 20} rx="8" fill="url(#wood)" className="aisle" />
-        <rect x={28} y={NF_AISLE_Y - 14} width={W - 56} height="28" rx="8" fill="url(#wood)" className="aisle" />
-        {plan.doorX !== MAIN_X && <rect x={Math.min(plan.doorX, MAIN_X) - 22} y={506} width={Math.abs(plan.doorX - MAIN_X) + 44} height="28" rx="8" fill="url(#wood)" className="aisle" />}
+        <rect x={MAIN_X - 22} y={NF_AISLE_Y - 14} width="44" height={H - NF_AISLE_Y - 20} rx="8" fill={`url(#${uid}wood)`} className="aisle" />
+        <rect x={28} y={NF_AISLE_Y - 14} width={W - 56} height="28" rx="8" fill={`url(#${uid}wood)`} className="aisle" />
+        {plan.doorX !== MAIN_X && <rect x={Math.min(plan.doorX, MAIN_X) - 22} y={506} width={Math.abs(plan.doorX - MAIN_X) + 44} height="28" rx="8" fill={`url(#${uid}wood)`} className="aisle" />}
 
         {/* walls + windows */}
         <rect x="12" y="12" width={W - 24} height={H - 24} rx="10" className="wall" />
@@ -271,7 +388,7 @@ export default function WayfindMap({ target }: { target: Target }) {
 
         {/* children's corner */}
         <g className={`zone ${parsed.kind === "children" ? "active" : ""}`}>
-          <circle cx={KIDS.x + 110} cy={KIDS.y + 60} r="42" fill="url(#rug)" className="rug" />
+          <circle cx={KIDS.x + 110} cy={KIDS.y + 60} r="42" fill={`url(#${uid}rug)`} className="rug" />
           {[0, 1, 2].map((k) => (
             <Range key={k} x={KIDS.x + 180} y={KIDS.y + 16 + k * 28} w={100} h={14} vertical={false} seed={`k${k + 1}`} active={parsed.kind === "children"} />
           ))}
@@ -308,39 +425,39 @@ export default function WayfindMap({ target }: { target: Target }) {
           <Plant key={`${px}-${py}`} x={px} y={py} />
         ))}
 
-        {/* the run: remounted on Replay / new target so every animation restarts */}
-        <g key={runKey} className="wf-run">
+        {/* the run: drawn frame by frame by draw(); starts hidden */}
+        <g className="wf-run" ref={runRef} data-loop={loopKey}>
           {spot.unitRect && (
-            <g className="wf-target" style={{ "--wf-d": `${ARRIVE_AT}ms`, "--wf-hl": `${HL_MS}ms` } as CSSProperties}>
+            <g className="wf-target" ref={unitRef} style={{ opacity: 0 }}>
               <rect x={spot.unitRect.x - 3} y={spot.unitRect.y - 3} width={spot.unitRect.w + 6} height={spot.unitRect.h + 6} rx="5" className="wf-unit" />
             </g>
           )}
-          <path d={route.d} className="map-path-shadow wf-shadow" style={{ "--wf-d": `${PATH_AT}ms` } as CSSProperties} />
-          <path d={route.d} pathLength={1} className="wf-path" style={{ "--wf-d": `${PATH_AT}ms`, "--wf-ms": `${PATH_MS}ms` } as CSSProperties} />
+          <path d={route.d} ref={shadowRef} className="map-path-shadow wf-shadow" style={{ opacity: 0 }} />
+          <path d={route.d} ref={pathRef} pathLength={1} className="wf-path" style={{ strokeDashoffset: 1 }} />
           <g className="wf-here" transform={`translate(${plan.doorX} ${DOOR_Y})`}>
-            <circle r="16" className="wf-here-pulse" />
+            <circle r="16" ref={pulseRef} className="wf-here-pulse" />
             <circle r="7" className="wf-here-dot" />
             <g transform={`translate(${plan.doorX > MAIN_X ? 22 : -22} -16)`}>
               <rect x={plan.doorX > MAIN_X ? 0 : -86} y="-12" width="86" height="22" rx="11" className="wf-here-tag" />
               <text x={plan.doorX > MAIN_X ? 43 : -43} y="4" textAnchor="middle" className="wf-here-text">{t("wf.here")}</text>
             </g>
           </g>
-          <g className="wf-walker" style={{ offsetPath: `path("${route.d}")`, "--wf-d": `${WALK_AT}ms`, "--wf-ms": `${WALK_MS}ms` } as CSSProperties}>
+          <g className="wf-walker" ref={walkerRef} style={{ opacity: 0 }}>
             <circle r="9" className="wf-walker-halo" />
             <circle r="5.5" className="wf-walker-dot" />
           </g>
-          <g className="map-pin wf-pin" transform={`translate(${tx} ${ty})`} style={{ "--wf-d": `${ARRIVE_AT}ms` } as CSSProperties}>
+          <g className="map-pin wf-pin" ref={pinRef} transform={`translate(${tx} ${ty})`} style={{ opacity: 0 }}>
             <circle r="13" className="pin-ring wf-pin-ring" />
             <circle r="5.5" className="pin-dot" />
           </g>
           {nf && spot.unitRect && (
             <>
-              <line x1={spot.bayLabelX} y1={spot.unitRect.y + spot.unitRect.h} x2={faceX + 86} y2={NF_AISLE_Y + 24} className="wf-face-link" style={{ "--wf-d": `${ARRIVE_AT + 80}ms` } as CSSProperties} />
-              <ShelfFace x={faceX} y={NF_AISLE_Y + 24} row={parsed.shelfRow ?? 1} slot={parsed.slot ?? 0.5} label={spot.label} seed={`face${parsed.dewey}`} />
+              <line ref={linkRef} x1={spot.bayLabelX} y1={spot.unitRect.y + spot.unitRect.h} x2={faceX + 86} y2={NF_AISLE_Y + 24} className="wf-face-link" style={{ opacity: 0 }} />
+              <ShelfFace gRef={faceRef} x={faceX} y={NF_AISLE_Y + 24} row={parsed.shelfRow ?? 1} slot={parsed.slot ?? 0.5} label={spot.label} seed={`face${parsed.dewey}`} />
             </>
           )}
           {!nf && spot.unitRect && (
-            <g className="wf-face wf-chip" transform={`translate(${Math.min(W - 180, Math.max(20, tx - 80))} ${Math.max(20, ty - 52)})`} style={{ "--wf-d": `${ARRIVE_AT + 120}ms` } as CSSProperties}>
+            <g className="wf-face wf-chip" ref={faceRef} transform={`translate(${Math.min(W - 180, Math.max(20, tx - 80))} ${Math.max(20, ty - 52)})`}>
               <rect width="160" height="26" rx="13" className="wf-face-card" />
               <text x="80" y="17" textAnchor="middle" className="wf-face-label">{spot.label}</text>
             </g>
@@ -353,29 +470,95 @@ export default function WayfindMap({ target }: { target: Target }) {
           </g>
         )}
       </svg>
-      <button type="button" className="wf-replay" onClick={replay} aria-label={t("wf.replayAria")}>
-        <span aria-hidden="true">↻</span> {t("wf.replay")}
-      </button>
+      {children}
       </div>
 
-      <ol className="steps wf-steps" key={`steps-${runKey}`}>
-        {steps.map((s, i) => {
-          const from = WALK_AT + (marks[i] ?? 1) * WALK_MS;
-          const to = i + 1 < steps.length ? WALK_AT + (marks[i + 1] ?? 1) * WALK_MS : from + 400;
-          const last = i === steps.length - 1;
-          return (
-            <li key={i} className={last ? "wf-last" : ""} style={{ "--wf-d": `${i === 0 ? WALK_AT - 200 : Math.round(from)}ms`, "--wf-ms": `${Math.max(300, Math.round(to - from))}ms`, animationDelay: `${120 + i * 80}ms` } as CSSProperties}>
-              <button type="button" className="wf-step" onClick={replay} title={t("wf.replayAria")}>
-                <span className="step-icon" aria-hidden="true">{s.icon}</span>
-                <span>{s.text}</span>
-              </button>
-            </li>
-          );
-        })}
+      <ol className="steps wf-steps" ref={stepsRef}>
+        {steps.map((s, i) => (
+          <li key={i} className={i === steps.length - 1 ? "wf-last" : ""} style={{ animationDelay: `${120 + i * 80}ms` }}>
+            <button type="button" className="wf-step" onClick={() => jump(i)} title={t("wf.showStep")}>
+              <span className="step-icon" aria-hidden="true">{s.icon}</span>
+              <span>{s.text}</span>
+            </button>
+          </li>
+        ))}
       </ol>
       <p className="hint map-note">
-        {t("wf.note", { place: target.branch ? target.branch.replace(/\s+(public|regional)?\s*library$/i, "") : t("wf.thisLibrary") })}
+        {t("wf.noteLoop", { place: placeName(target.branch) })}
       </p>
     </div>
+  );
+}
+
+const placeName = (branch: string) => (branch ? branch.replace(/\s+(public|regional)?\s*library$/i, "") : t("wf.thisLibrary"));
+
+export default function WayfindMap({ target }: { target: Target }) {
+  const lang = useLang();
+  const parsed = useMemo(() => parseCallNumber(target.callNumber), [target.callNumber]);
+  const seedKey = target.code || target.branch;
+  const plan = useMemo(() => planFor(seedKey), [seedKey]);
+  const spot = useMemo(() => locate(parsed, plan), [parsed, plan, lang]);
+  const route = useMemo(() => routeFor(parsed, plan, spot), [parsed, plan, spot]);
+  const steps = useMemo(() => stepsFor(parsed, target.callNumber, seedKey), [parsed, target.callNumber, seedKey, lang]);
+  const view = { target, parsed, plan, spot, route, steps };
+
+  const [full, setFull] = useState(false);
+  const openRef = useRef<HTMLButtonElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const titleId = useId();
+
+  // full screen: lock page scroll, focus the close button, Escape closes, Tab stays inside
+  useEffect(() => {
+    if (!full) return;
+    const body = document.body;
+    const prev = body.style.overflow;
+    body.style.overflow = "hidden";
+    closeRef.current?.focus({ preventScroll: true });
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setFull(false);
+      } else if (e.key === "Tab" && dialogRef.current) {
+        const items = Array.from(dialogRef.current.querySelectorAll<HTMLElement>("button, [href], [tabindex]:not([tabindex='-1'])"));
+        if (!items.length) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        else if (!dialogRef.current.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      body.style.overflow = prev;
+      document.removeEventListener("keydown", onKey);
+      openRef.current?.focus({ preventScroll: true });
+    };
+  }, [full]);
+
+  return (
+    <>
+      <MapView {...view} live={!full}>
+        <button type="button" ref={openRef} className="wf-fs-btn" aria-pressed={full} onClick={() => setFull(true)}>
+          <span aria-hidden="true">⛶</span> {t("wf.fullscreen")}
+        </button>
+      </MapView>
+      {full && typeof document !== "undefined" &&
+        createPortal(
+          <div className="wf-fs" role="dialog" aria-modal="true" aria-labelledby={titleId} ref={dialogRef}>
+            <div className="wf-fs-bar">
+              <h2 className="wf-fs-title" id={titleId}>
+                {t("book.findAt", { branch: placeName(target.branch) })} <span className="hint">· {target.callNumber}</span>
+              </h2>
+              <button type="button" ref={closeRef} className="wf-fs-close" onClick={() => setFull(false)} aria-label={t("wf.exitFullscreen")} title={t("wf.exitFullscreen")}>
+                <span aria-hidden="true">✕</span>
+              </button>
+            </div>
+            <MapView {...view} live />
+          </div>,
+          document.body,
+        )}
+    </>
   );
 }

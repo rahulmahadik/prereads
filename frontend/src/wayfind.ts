@@ -270,3 +270,108 @@ export function stepsFor(p: Parsed, callNumber: string, branch?: string): Step[]
   }
   return [{ icon: "🛎️", text: t("wf.ask") }];
 }
+
+// --- the route animation (one loop) ------------------------------------------------
+/** Timeline of one loop, in ms: "You are here" pulses, the route draws, the walker follows it,
+ *  the shelf unit, row and label light up, it holds ~1.5 s, the trail fades, and it starts again. */
+export const LOOP = (() => {
+  const pathAt = 150, pathMs = 900, walkMs = 1200, hlMs = 300, popMs = 300, holdMs = 1500, outMs = 500;
+  const walkAt = pathAt + pathMs;                 // 1050
+  const arriveAt = walkAt + walkMs;               // 2250
+  const outAt = arriveAt + 120 + popMs + holdMs;  // the shelf card is in at +420, then hold
+  return { pathAt, pathMs, walkAt, walkMs, arriveAt, hlMs, popMs, holdMs, outAt, outMs, cycle: outAt + outMs + 150 };
+})();
+
+/** A moment in the loop where everything is drawn and lit (reduced motion shows this, still). */
+export const STILL_MS = LOOP.outAt - 1;
+
+/** CSS-style cubic-bezier(x1, y1, x2, y2) timing function. */
+function bezier(x1: number, y1: number, x2: number, y2: number): (x: number) => number {
+  const at = (p1: number, p2: number, s: number) => 3 * p1 * s * (1 - s) ** 2 + 3 * p2 * s * s * (1 - s) + s ** 3;
+  return (x) => {
+    if (x <= 0) return 0;
+    if (x >= 1) return 1;
+    let lo = 0, hi = 1, s = x;
+    for (let i = 0; i < 28; i++) {
+      s = (lo + hi) / 2;
+      if (at(x1, x2, s) < x) lo = s; else hi = s;
+    }
+    return at(y1, y2, s);
+  };
+}
+const easeWalk = bezier(0.45, 0.05, 0.4, 1);
+const easePage = bezier(0.22, 0.61, 0.36, 1);   // --ease-page
+const easePop = bezier(0.34, 1.56, 0.64, 1);    // slight overshoot
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+
+export interface Frame {
+  pulse: number;      // 0-1 phase of the "You are here" ripple, -1 when still
+  draw: number;       // 0-1 of the route drawn
+  shadow: number;     // 0-1 opacity of the route's soft shadow
+  walker: number;     // 0 hidden, 1 shown
+  walk: number;       // 0-1 distance along the route
+  unit: number;       // 0-1 shelf-unit highlight
+  pin: number;        // 0-1
+  link: number;       // 0-1 dotted line to the shelf card
+  face: number;       // 0-1 shelf card opacity
+  faceScale: number;  // shelf card pop
+  trail: number;      // 1 shown, fading to 0 at the end of the loop
+  step: number;       // index of the lit written step, -1 for none
+  arrived: boolean;
+}
+
+/** Where everything is at `ms` into the loop (wraps). `marks` are the route's step marks. */
+export function frameAt(ms: number, marks: number[]): Frame {
+  const L = LOOP;
+  const t = ((ms % L.cycle) + L.cycle) % L.cycle;
+  const walk = easeWalk(clamp01((t - L.walkAt) / L.walkMs));
+  const face = clamp01((t - L.arriveAt - 120) / L.popMs);
+  let step = -1;
+  if (t >= L.walkAt - 200 && t < L.outAt) {
+    step = 0;
+    if (t >= L.walkAt) for (let i = 1; i < marks.length; i++) if (walk >= marks[i] - 1e-6) step = i;
+  }
+  return {
+    pulse: t < 3 * 1200 ? (t % 1200) / 1200 : -1,
+    draw: easePage(clamp01((t - L.pathAt) / L.pathMs)),
+    shadow: clamp01((t - L.pathAt) / 300),
+    walker: t >= L.walkAt ? 1 : 0,
+    walk,
+    unit: easePage(clamp01((t - L.arriveAt) / L.hlMs)),
+    pin: clamp01((t - L.arriveAt) / 200),
+    link: clamp01((t - L.arriveAt - 80) / 200),
+    face,
+    faceScale: 0.85 + 0.15 * easePop(face),
+    trail: 1 - clamp01((t - L.outAt) / L.outMs),
+    step,
+    arrived: t >= L.arriveAt && t < L.outAt + L.outMs,
+  };
+}
+
+/** The moment in the loop when the walker reaches written step `i` (for tapping a step). */
+export function timeForStep(marks: number[], i: number): number {
+  const m = marks[i] ?? 1;
+  if (i <= 0) return LOOP.walkAt;
+  if (m >= 1) return LOOP.arriveAt;
+  let lo = 0, hi = 1;
+  for (let k = 0; k < 28; k++) {
+    const mid = (lo + hi) / 2;
+    if (easeWalk(mid) < m) lo = mid; else hi = mid;
+  }
+  return LOOP.walkAt + hi * LOOP.walkMs + 0.5;
+}
+
+/** The point `f` (0-1) of the way along a polyline. */
+export function pointAlong(points: [number, number][], f: number): [number, number] {
+  if (points.length < 2) return points[0] ?? [0, 0];
+  const seg = points.slice(1).map((p, i) => Math.hypot(p[0] - points[i][0], p[1] - points[i][1]));
+  let left = clamp01(f) * seg.reduce((a, b) => a + b, 0);
+  for (let i = 0; i < seg.length; i++) {
+    if (left <= seg[i] || i === seg.length - 1) {
+      const k = seg[i] ? Math.min(1, left / seg[i]) : 0;
+      return [points[i][0] + (points[i + 1][0] - points[i][0]) * k, points[i][1] + (points[i + 1][1] - points[i][1]) * k];
+    }
+    left -= seg[i];
+  }
+  return points[points.length - 1];
+}
