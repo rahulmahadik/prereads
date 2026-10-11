@@ -4,6 +4,7 @@ import Cover from "../components/Cover";
 import ReadinessMeter from "../components/ReadinessMeter";
 import ListenButton from "../components/ListenButton";
 import { lineScript } from "../speech";
+import { sameShelfGroups, sameShelfText } from "../shelf";
 import { ShareCard } from "../components/Extras";
 import { AvailToggle, FAMILIARITY, Sheet, TopBar, getBranch, getOnlyAvailable, getReaderLevel, setBranch, setOnlyAvailable, setReaderLevel, shelfStatus, shortBranch, useBack, useReadSet } from "../components/ui";
 import { navigate } from "../router";
@@ -83,6 +84,12 @@ export default function Line({ id, title, author }: { id: string; title: string;
       .filter((x) => x.a && x.a.available > 0)
       .sort((x, y) => (x.a!.call_number || "").localeCompare(y.a!.call_number || ""));
   }, [branch, stops, branches]);
+
+  const trip = useMemo(() => {
+    const name = branches.find((b) => b.code === branch)?.name;
+    const visible = new Set(visibleBefore.map((s) => s.book.id));
+    return sameShelfGroups(stops.filter((s) => visible.has(s.book.id)), branch, name, readSet)[0];
+  }, [branch, branches, stops, level, readSet]);
 
   const open = (s: Stop) => navigate("book", { id, title, author, stop: s.book.id });
 
@@ -174,6 +181,12 @@ export default function Line({ id, title, author }: { id: string; title: string;
             )}
             {skipped > 0 && <p className="hint">Skipped {skipped} easier {skipped === 1 ? "book" : "books"} because you know the topic a bit.</p>}
             {visibleBefore.length > 0 && <p className="hint">Tap a circle when you've finished that book.</p>}
+            {trip && (
+              <p className="trip-note" role="note">
+                <strong>{sameShelfText(trip)}</strong>
+                <span>{trip.stops.map((s) => s.book.title).join(" · ")}</span>
+              </p>
+            )}
             <div className="line-actions">
               <ListenButton
                 id={`line:${route.target_id}`}
@@ -182,6 +195,7 @@ export default function Line({ id, title, author }: { id: string; title: string;
                   lineScript({
                     target: target.book.title,
                     hours: hoursLeft,
+                    trip: trip ? sameShelfText(trip) : undefined,
                     before: visibleBefore.filter((s) => !readSet.has(s.book.id)).map((s) => ({ title: s.book.title, why: s.why, hours: s.readiness.hours, where: statusText(shelfStatus(s, branch || undefined)).text })),
                   })
                 }

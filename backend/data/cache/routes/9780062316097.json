@@ -5,90 +5,48 @@
       "role": "before",
       "order": 0,
       "book": {
-        "id": "9788492966790",
-        "title": "A short history of nearly everything",
+        "id": "ol:a-short-history-of-nearly-everything-bill-bryson",
+        "title": "A Short History of Nearly Everything",
         "author": "Bill Bryson",
-        "isbn": "9788492966790",
+        "isbn": null,
         "brn": null,
-        "year": 2003,
-        "pages": 592,
+        "year": null,
+        "pages": 544,
         "subjects": [
-          "Science",
-          "Popular works",
-          "Ciencia",
-          "Obras populares",
-          "Science, popular works",
-          "Obras de divulgacio n.",
-          "Natuurwetenschappen",
-          "Sciences",
-          "Ouvrages de vulgarisation",
-          "Wetenschapsbeoefening",
-          "Origin",
-          "Life",
-          "Humor",
-          "Travel",
-          "Philosophy"
+          "World history",
+          "Human evolution",
+          "Anthropology"
         ],
-        "summary": "A Short History of Nearly Everything by American author Bill Bryson is a popular science book that explains some areas of science, using easily accessible language that appeals more so to the general public than many other books dedicated to the subject. It was one of the bestselling popular science books of 2005 in the United Kingdom, selling over 300,000 copies.\r\n\r\nA Short History deviates from Bryson's popular travel book genre, instead describing general sciences such as chemistry, paleontology, astronomy, and particle physics. In it, he explores time from the Big Bang to the discovery of quantum mechanics, via evolution and geology.\r\n\r\nBill Bryson wrote this book because he was dissatisfied with his scientific knowledge—that was, not much at all. He writes that science was a distant, unexplained subject at school. Textbooks and teachers alike did not ignite the passion for knowledge in him, mainly because they never delved in the whys, hows, and whens.\r\n\r\nThe ebook can be found elsewhere on the web at:\r\nhttp://www.huzheng.org/bookstore/AShortHistoryofNearlyEverything.pdf",
-        "cover_url": "https://covers.openlibrary.org/b/id/12725620-M.jpg",
+        "summary": "",
+        "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "seed"
       },
       "readiness": {
-        "level": 3,
-        "hours": 18.0,
-        "assumed_concepts": [
-          "Big Bang theory",
-          "Evolution by natural selection",
-          "Geological time scale",
-          "Atoms and basic chemistry",
-          "The scientific method"
-        ],
+        "level": 2,
+        "hours": 16.0,
+        "assumed_concepts": [],
         "style_tags": [],
-        "one_line": "Get ready for a whirlwind tour of the universe and everything in it – it's a lot to take in, but Bill Bryson makes it wonderfully engaging!"
+        "one_line": ""
       },
-      "why": "Reading 'A Short History of Nearly Everything' first will give you a solid foundation in the scientific method and basic concepts like atoms and geological time, which are helpful for understanding the broader historical and scientific context explored in 'Sapiens'.",
-      "confidence": 0.8,
+      "why": "Gives you the deep-time scaffolding that Sapiens assumes, told with jokes.",
+      "confidence": 0.7999999999999999,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
           "call_number": "English 500 BRY",
           "available": 1,
-          "total": 3,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
           "call_number": "English 500 BRY",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 500 BRY",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 500 BRY",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 500 BRY",
-          "available": 2,
-          "total": 2,
+          "available": 3,
+          "total": 3,
           "demo": true
         },
         {
@@ -96,101 +54,66 @@
           "branch_code": "BBPL",
           "call_number": "English 500 BRY",
           "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 500 BRY",
-          "available": 2,
           "total": 3,
           "demo": true
         }
       ],
       "demand": {
-        "hot_branches": [
-          "Bishan Public Library",
-          "Jurong West Public Library"
-        ],
+        "hot_branches": [],
         "hidden_gem": false,
         "reservations": 0,
         "demo": true
       }
     },
     {
-      "role": "before",
+      "role": "target",
       "order": 1,
       "book": {
-        "id": "9780316392006",
-        "title": "Origin Story",
-        "author": "David Christian",
-        "isbn": "9780316392006",
+        "id": "9780062316097",
+        "title": "Sapiens",
+        "author": "Yuval Noah Harari",
+        "isbn": "9780062316097",
         "brn": null,
-        "year": 2018,
-        "pages": 368,
+        "year": 2011,
+        "pages": 464,
         "subjects": [
-          "Biocomplexity",
-          "Civilization",
-          "Human evolution",
           "World history",
-          "Philosophy",
-          "Cosmology",
-          "Civilization, philosophy",
-          "HISTORY / World",
-          "SCIENCE / History",
-          "SCIENCE / Natural History"
+          "Human evolution",
+          "Anthropology"
         ],
-        "summary": "\"Most historians study the smallest slivers of time, emphasizing specific dates, individuals, and documents. But what would it look like to study the whole of history, from the big bang through the present day--and even into the remote future? How would looking at the full span of time change the way we perceive the universe, the earth, and our very existence? These were the questions David Christian set out to answer when he created the field of \"Big History,\" the most exciting new approach to understanding where we have been, where we are, and where we are going. In Origin Story, Christian takes readers on a wild ride through the entire 13.8 billion years we've come to know as \"history.\" By focusing on defining events (thresholds), major trends, and profound questions about our origins, Christian exposes the hidden threads that tie everything together--from the creation of the planet to the advent of agriculture, nuclear war, and beyond. With stunning insights into the origin of the universe, the beginning of life, the emergence of humans, and what the future might bring, Origin Story boldly reframes our place in the cosmos.\"--Jacket.",
+        "summary": "A sweeping history of humankind from the cognitive revolution to the present.",
         "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "seed"
       },
       "readiness": {
         "level": 3,
-        "hours": 12.0,
+        "hours": 15.0,
         "assumed_concepts": [
-          "Big History",
-          "Cosmology",
-          "Geological Time Scale",
-          "Evolutionary Biology",
-          "Anthropocene"
+          "human evolution timeline",
+          "agricultural revolution",
+          "basic economics",
+          "world history outline"
         ],
         "style_tags": [],
-        "one_line": "Get ready for a sweeping, mind-expanding journey through *everything* – from the Big Bang to the future – it's a lot to take in, but incredibly rewarding!"
+        "one_line": "Readable, but it moves fast across 70,000 years; a light timeline of human history in your head helps."
       },
-      "why": "Origin Story lays a foundational understanding of deep time and evolutionary processes, which will make the sweeping historical narrative and concepts of human development in Sapiens feel more grounded.",
-      "confidence": 0.8,
+      "why": "Readable, but it moves fast across 70,000 years; a light timeline of human history in your head helps.",
+      "confidence": 1.0,
       "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 909 CHR",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 909 CHR",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 909 CHR",
-          "available": 1,
-          "total": 1,
+          "call_number": "English 909 HAR",
+          "available": 0,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 909 CHR",
+          "call_number": "English 909 HAR",
           "available": 1,
           "total": 2,
           "demo": true
@@ -198,15 +121,31 @@
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 909 CHR",
+          "call_number": "English 909 HAR",
           "available": 1,
-          "total": 3,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 909 HAR",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 909 HAR",
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 909 CHR",
+          "call_number": "English 909 HAR",
           "available": 1,
           "total": 2,
           "demo": true
@@ -223,67 +162,41 @@
       }
     },
     {
-      "role": "before",
+      "role": "after",
       "order": 2,
       "book": {
-        "id": "9783596145393",
-        "title": "Guns, Germs, and Steel",
-        "author": "Jared Diamond",
-        "isbn": "9783596145393",
+        "id": "ol:homo-deus-yuval-noah-harari",
+        "title": "Homo Deus",
+        "author": "Yuval Noah Harari",
+        "isbn": null,
         "brn": null,
-        "year": 1997,
-        "pages": 528,
+        "year": null,
+        "pages": 464,
         "subjects": [
-          "prize:pulitzer=1998",
-          "Ethnology",
-          "Criticism and interpretation",
-          "Culture diffusion",
-          "Effect of environment on",
-          "Civilization",
-          "Human beings",
-          "Social evolution",
-          "History",
-          "Sociale evolutie",
-          "Cultuur",
-          "Évolution sociale",
-          "Geografia (historia)",
-          "Geologia historica",
-          "Civilisation"
+          "World history",
+          "Human evolution",
+          "Anthropology"
         ],
-        "summary": "An epic detective story that offers a gripping expose on why the world is so unequal. Professor Jared Diamond traveled the globe for over 30 years trying to answer this question.",
-        "cover_url": "https://covers.openlibrary.org/b/id/7884018-M.jpg",
+        "summary": "",
+        "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "seed"
       },
       "readiness": {
         "level": 3,
-        "hours": 18.0,
-        "assumed_concepts": [
-          "geography",
-          "agriculture",
-          "domestication",
-          "disease transmission",
-          "basic historical timelines"
-        ],
+        "hours": 14.0,
+        "assumed_concepts": [],
         "style_tags": [],
-        "one_line": "Get ready to think big – this book connects geography, history, and biology to explain why some societies developed faster than others."
+        "one_line": ""
       },
-      "why": "Reading *Guns, Germs, and Steel* first will give you a solid foundation in understanding the development of agriculture and the spread of disease, which are key concepts that *Sapiens* builds upon when discussing the Agricultural Revolution and its impact on human societies.",
-      "confidence": 0.8,
+      "why": "The sequel, turning the same lens on the future.",
+      "confidence": 0.6,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
-          "call_number": "English 303.4 DIA",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 303.4 DIA",
+          "call_number": "English 909.83 HAR",
           "available": 0,
           "total": 1,
           "demo": true
@@ -291,7 +204,7 @@
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 303.4 DIA",
+          "call_number": "English 909.83 HAR",
           "available": 0,
           "total": 3,
           "demo": true
@@ -299,23 +212,23 @@
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 303.4 DIA",
-          "available": 1,
+          "call_number": "English 909.83 HAR",
+          "available": 0,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 303.4 DIA",
-          "available": 1,
-          "total": 1,
+          "call_number": "English 909.83 HAR",
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
-          "call_number": "English 303.4 DIA",
+          "call_number": "English 909.83 HAR",
           "available": 0,
           "total": 2,
           "demo": true
@@ -323,17 +236,17 @@
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
-          "call_number": "English 303.4 DIA",
-          "available": 2,
-          "total": 2,
+          "call_number": "English 909.83 HAR",
+          "available": 1,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 303.4 DIA",
-          "available": 0,
-          "total": 3,
+          "call_number": "English 909.83 HAR",
+          "available": 2,
+          "total": 2,
           "demo": true
         }
       ],
@@ -348,83 +261,57 @@
       }
     },
     {
-      "role": "target",
+      "role": "after",
       "order": 3,
       "book": {
-        "id": "9781716994982",
-        "title": "Sapiens",
-        "author": "Yuval Noah Harari",
-        "isbn": "9781716994982",
+        "id": "ol:guns-germs-and-steel-jared-diamond",
+        "title": "Guns, Germs, and Steel",
+        "author": "Jared Diamond",
+        "isbn": null,
         "brn": null,
-        "year": 2011,
-        "pages": 456,
+        "year": null,
+        "pages": 528,
         "subjects": [
-          "Technology and civilization",
-          "Human beings",
-          "Historical Chronology",
-          "Historia universal",
-          "Historia",
-          "Civilization",
-          "Hombre",
           "World history",
-          "History",
-          "Non-Fiction",
-          "Science",
-          "SCIENCE / Life Sciences / General",
-          "SCIENCE / General",
-          "SCIENCE / Life Sciences / Evolution",
-          "Weltgeschichte"
+          "Human evolution",
+          "Anthropology"
         ],
-        "summary": "From a renowned historian comes a groundbreaking narrative of humanity’s creation and evolution—a #1 international bestseller—that explores the ways in which biology and history have defined us and enhanced our understanding of what it means to be “human.”\r\n\r\nOne hundred thousand years ago, at least six different species of humans inhabited Earth. Yet today there is only one—homo sapiens. What happened to the others? And what may happen to us?\r\n\r\nMost books about the history of humanity pursue either a historical or a biological approach, but Dr. Yuval Noah Harari breaks the mold with this highly original book that begins about 70,000 years ago with the appearance of modern cognition. From examining the role evolving humans have played in the global ecosystem to charting the rise of empires, Sapiens integrates history and science to reconsider accepted narratives, connect past developments with contemporary concerns, and examine specific events within the context of larger ideas.\r\n\r\nDr. Harari also compels us to look ahead, because over the last few decades humans have begun to bend laws of natural selection that have governed life for the past four billion years. We are acquiring the ability to design not only the world around us, but also ourselves. Where is this leading us, and what do we want to become?\r\n\r\nFeaturing 27 photographs, 6 maps, and 25 illustrations/diagrams, this provocative and insightful work is sure to spark debate and is essential reading for aficionados of Jared Diamond, James Gleick, Matt Ridley, Robert Wright, and Sharon Moalem.",
-        "cover_url": "https://covers.openlibrary.org/b/id/8634250-M.jpg",
+        "summary": "",
+        "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "seed"
       },
       "readiness": {
         "level": 4,
         "hours": 18.0,
-        "assumed_concepts": [
-          "Cognitive Revolution",
-          "Agricultural Revolution",
-          "Natural Selection",
-          "Empire Building",
-          "Scientific Method"
-        ],
+        "assumed_concepts": [],
         "style_tags": [],
-        "one_line": "Get ready for a sweeping, big-picture look at human history that blends science and storytelling – it's thought-provoking and might challenge some of your assumptions!"
+        "one_line": ""
       },
-      "why": "Readable, but it moves fast across 70,000 years; a light timeline of human history in your head helps.",
-      "confidence": 1.0,
+      "why": "The deeper argument about why societies diverged.",
+      "confidence": 0.7999999999999999,
       "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 909 HAR",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
-          "call_number": "English 909 HAR",
-          "available": 0,
+          "call_number": "English 303.4 DIA",
+          "available": 1,
           "total": 3,
           "demo": true
         },
         {
           "branch": "Tampines Regional Library",
           "branch_code": "TRL",
-          "call_number": "English 909 HAR",
-          "available": 0,
-          "total": 2,
+          "call_number": "English 303.4 DIA",
+          "available": 1,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Woodlands Regional Library",
           "branch_code": "WRL",
-          "call_number": "English 909 HAR",
+          "call_number": "English 303.4 DIA",
           "available": 0,
           "total": 2,
           "demo": true
@@ -432,40 +319,32 @@
         {
           "branch": "Central Public Library",
           "branch_code": "CLPL",
-          "call_number": "English 909 HAR",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 909 HAR",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 909 HAR",
+          "call_number": "English 303.4 DIA",
           "available": 2,
           "total": 2,
           "demo": true
         },
         {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 303.4 DIA",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
           "branch": "Ang Mo Kio Public Library",
           "branch_code": "AMKPL",
-          "call_number": "English 909 HAR",
-          "available": 0,
-          "total": 2,
+          "call_number": "English 303.4 DIA",
+          "available": 1,
+          "total": 1,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Jurong West Public Library",
-          "Tampines Regional Library"
+          "Tampines Regional Library",
+          "Central Public Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -476,311 +355,55 @@
       "role": "after",
       "order": 4,
       "book": {
-        "id": "9781949061000",
-        "title": "21 Lessons for the 21st Century",
-        "author": "Yuval Noah Harari",
-        "isbn": "9781949061000",
-        "brn": null,
-        "year": 2018,
-        "pages": 400,
-        "subjects": [
-          "Modern Civilization",
-          "Twenty-first century",
-          "Forecasts",
-          "Social prediction",
-          "World politics",
-          "Conduct of life",
-          "HISTORY / Civilization",
-          "Social history",
-          "Civilization, modern, 21st century",
-          "World politics, 21st century",
-          "History, modern, 21st century",
-          "Social change",
-          "New York Times reviewed",
-          "HISTORY",
-          "Modern"
-        ],
-        "summary": "In a world deluged by irrelevant information, clarity is power. Censorship works not by blocking the flow of information, but rather by flooding people with disinformation and distractions. 21 Lessons for the 21st Century cuts through these muddy waters and confronts some of the most urgent questions on today’s global agenda.\r\n\r\nWhy is liberal democracy in crisis? Is God back? Is a new world war coming? What does the rise of Donald Trump signify? What can we do about the epidemic of fake news? Which civilisation dominates the world – the West, China, Islam? Should Europe keep its doors open to immigrants? Can nationalism solve the problems of inequality and climate change? What should we do about terrorism? What should we teach our kids?\r\n\r\nBillions of us can hardly afford the luxury of investigating these questions, because we have more pressing things to do: we have to go to work, take care of the kids, or look after elderly parents. Unfortunately, history makes no concessions. If the future of humanity is decided in your absence, because you are too busy feeding and clothing your kids – you and they will not be exempt from the consequences. This is very unfair; but who said history was fair?\r\n\r\nA book doesn’t give people food or clothes – but it can offer some clarity, thereby helping to level the global playing field. If this book empowers even a handful of people to join the debate about the future of our species, it has done its job.\r\n\r\n\r\n----------\r\n\r\n\r\nAfter Sapiens looked deep into humankind’s past and Homo Deus considered our existence in a future powered by intelligent design, 21 Lessons for the 21st Century stops to focus on the biggest questions of the present moment. What is really happening right now? What are today’s greatest challenges and choices? What should we pay attention to?\r\n\r\n21 Lessons builds on the ideas explored in the previous two books to take the pulse of our current global climate. It untangles political, technological, social, and existential questions, and highlights how they impact the everyday lives of humans worldwide. By presenting complex contemporary challenges clearly and accessibly, the book invites the reader to consider values, meaning and personal engagement in a world full of noise and uncertainty.",
-        "cover_url": "https://covers.openlibrary.org/b/id/10108277-M.jpg",
-        "reservations": 0,
-        "audience": [],
-        "source": "openlibrary"
-      },
-      "readiness": {
-        "level": 3,
-        "hours": 12.0,
-        "assumed_concepts": [
-          "Globalization",
-          "Political ideologies (liberalism, nationalism)",
-          "Technological disruption",
-          "Historical trends",
-          "Geopolitics"
-        ],
-        "style_tags": [],
-        "one_line": "Get ready to think critically about big, complex issues – this book will challenge your assumptions about the world and its future."
-      },
-      "why": "Harari’s subsequent work distills insights from *Sapiens* to address pressing contemporary challenges and consider humanity’s future.",
-      "confidence": 0.9,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 523.1 HAR",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 523.1 HAR",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 523.1 HAR",
-          "available": 1,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 523.1 HAR",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 523.1 HAR",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 523.1 HAR",
-          "available": 2,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 523.1 HAR",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Tampines Regional Library",
-          "Bukit Batok Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "after",
-      "order": 5,
-      "book": {
-        "id": "9783596145393",
-        "title": "Guns, Germs, and Steel",
-        "author": "Jared Diamond",
-        "isbn": "9783596145393",
-        "brn": null,
-        "year": 1997,
-        "pages": 528,
-        "subjects": [
-          "prize:pulitzer=1998",
-          "Ethnology",
-          "Criticism and interpretation",
-          "Culture diffusion",
-          "Effect of environment on",
-          "Civilization",
-          "Human beings",
-          "Social evolution",
-          "History",
-          "Sociale evolutie",
-          "Cultuur",
-          "Évolution sociale",
-          "Geografia (historia)",
-          "Geologia historica",
-          "Civilisation"
-        ],
-        "summary": "An epic detective story that offers a gripping expose on why the world is so unequal. Professor Jared Diamond traveled the globe for over 30 years trying to answer this question.",
-        "cover_url": "https://covers.openlibrary.org/b/id/7884018-M.jpg",
-        "reservations": 0,
-        "audience": [],
-        "source": "openlibrary"
-      },
-      "readiness": {
-        "level": 3,
-        "hours": 16.0,
-        "assumed_concepts": [
-          "Geographic determinism",
-          "Agriculture",
-          "Domestication of animals",
-          "Disease transmission",
-          "Climate zones"
-        ],
-        "style_tags": [],
-        "one_line": "Get ready for a sweeping, big-picture look at history – it's fascinating, but it's also a lot of information and some concepts might be new!"
-      },
-      "why": "The deeper argument about why societies diverged.",
-      "confidence": 0.8,
-      "availability": [
-        {
-          "branch": "Bishan Public Library",
-          "branch_code": "BIPL",
-          "call_number": "English 303.4 DIA",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Jurong West Public Library",
-          "branch_code": "JWPL",
-          "call_number": "English 303.4 DIA",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
-          "call_number": "English 303.4 DIA",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Woodlands Regional Library",
-          "branch_code": "WRL",
-          "call_number": "English 303.4 DIA",
-          "available": 1,
-          "total": 3,
-          "demo": true
-        },
-        {
-          "branch": "Central Public Library",
-          "branch_code": "CLPL",
-          "call_number": "English 303.4 DIA",
-          "available": 1,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Punggol Regional Library",
-          "branch_code": "PRL",
-          "call_number": "English 303.4 DIA",
-          "available": 0,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Bukit Batok Library",
-          "branch_code": "BBPL",
-          "call_number": "English 303.4 DIA",
-          "available": 2,
-          "total": 2,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 303.4 DIA",
-          "available": 0,
-          "total": 3,
-          "demo": true
-        }
-      ],
-      "demand": {
-        "hot_branches": [
-          "Tampines Regional Library",
-          "Punggol Regional Library"
-        ],
-        "hidden_gem": false,
-        "reservations": 0,
-        "demo": true
-      }
-    },
-    {
-      "role": "after",
-      "order": 6,
-      "book": {
-        "id": "9781250818669",
+        "id": "ol:the-dawn-of-everything-david-graeber",
         "title": "The Dawn of Everything",
-        "author": "David Graeber, David Wengrow",
-        "isbn": "9781250818669",
+        "author": "David Graeber",
+        "isbn": null,
         "brn": null,
-        "year": 2021,
+        "year": null,
         "pages": 704,
         "subjects": [
-          "Civilization, history",
-          "nyt:combined-print-and-e-book-nonfiction=2021-11-28",
-          "New York Times bestseller",
-          "Civilization",
-          "Philosophy",
-          "History",
-          "HISTORY, ANCIENT",
-          "Anthropology",
-          "Archaeology",
-          "Archaeology / Anthropology",
-          "schismogenisis"
+          "World history",
+          "Human evolution",
+          "Anthropology"
         ],
-        "summary": "The renowned activist and public intellectual David Graeber teams up with the professor of comparative archaeology David Wengrow to deliver a trailblazing account of human history, challenging our most fundamental assumptions about social evolution—from the development of agriculture and cities to the emergence of \"the state,\" political violence, and social inequality—and revealing new possibilities for human emancipation\r\n\r\nFor generations, our remote ancestors have been cast as primitive and childlike—either free and equal innocents, or thuggish and warlike. Civilization, we are told, could be achieved only by sacrificing those original freedoms or, alternatively, by taming our baser instincts. David Graeber and David Wengrow show how such theories first emerged in the eighteenth century as a conservative reaction to powerful critiques of European society posed by Indigenous observers and intellectuals. Revisiting this encounter has startling implications for how we make sense of human history today, including the origins of farming, property, cities, democracy, slavery, and civilization itself.\r\n\r\nDrawing on pathbreaking research in archaeology and anthropology, the authors show how history becomes a far more interesting place once we learn to throw off our conceptual shackles and perceive what’s really there. If humans did not spend 95 percent of their evolutionary past in tiny bands of hunter-gatherers, what were they doing all that time? If agriculture, and cities, did not mean a plunge into hierarchy and domination, then what kinds of social and economic organization did they lead to? What was really happening during the periods that we usually describe as the emergence of \"the state\"? The answers are often unexpected, and suggest that the course of human history may be less set in stone, and more full of playful, hopeful possibilities, than we tend to assume.\r\n\r\nThe Dawn of Everything fundamentally transforms our understanding of the human past and offers a path toward imagining new forms of freedom, new ways of organizing society. This is a monumental book of formidable intellectual range, animated by curiosity, moral vision, and a faith in the power of direct action.",
-        "cover_url": "https://covers.openlibrary.org/b/id/11359192-M.jpg",
+        "summary": "",
+        "cover_url": null,
         "reservations": 0,
         "audience": [],
-        "source": "openlibrary"
+        "source": "seed"
       },
       "readiness": {
-        "level": 3,
-        "hours": 20.0,
-        "assumed_concepts": [
-          "Anthropology",
-          "Archaeology",
-          "Hunter-gatherer societies",
-          "The concept of 'the state'",
-          "Social inequality"
-        ],
+        "level": 5,
+        "hours": 28.0,
+        "assumed_concepts": [],
         "style_tags": [],
-        "one_line": "Get ready to rethink everything you thought you knew about how societies developed – this book is a big, fascinating challenge to conventional history!"
+        "one_line": ""
       },
       "why": "A demanding counter-argument to Harari's story of early societies.",
-      "confidence": 0.7,
+      "confidence": 0.8999999999999999,
       "availability": [
         {
           "branch": "Bishan Public Library",
           "branch_code": "BIPL",
           "call_number": "English 909 GRA",
-          "available": 2,
-          "total": 3,
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
           "branch": "Jurong West Public Library",
           "branch_code": "JWPL",
           "call_number": "English 909 GRA",
-          "available": 1,
-          "total": 1,
+          "available": 0,
+          "total": 2,
           "demo": true
         },
         {
-          "branch": "Tampines Regional Library",
-          "branch_code": "TRL",
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
           "call_number": "English 909 GRA",
-          "available": 0,
+          "available": 2,
           "total": 2,
           "demo": true
         },
@@ -788,39 +411,31 @@
           "branch": "Central Public Library",
           "branch_code": "CLPL",
           "call_number": "English 909 GRA",
-          "available": 0,
-          "total": 1,
+          "available": 2,
+          "total": 3,
           "demo": true
         },
         {
           "branch": "Punggol Regional Library",
           "branch_code": "PRL",
           "call_number": "English 909 GRA",
-          "available": 3,
-          "total": 3,
+          "available": 0,
+          "total": 1,
           "demo": true
         },
         {
           "branch": "Bukit Batok Library",
           "branch_code": "BBPL",
           "call_number": "English 909 GRA",
-          "available": 0,
-          "total": 1,
-          "demo": true
-        },
-        {
-          "branch": "Ang Mo Kio Public Library",
-          "branch_code": "AMKPL",
-          "call_number": "English 909 GRA",
-          "available": 0,
-          "total": 2,
+          "available": 1,
+          "total": 3,
           "demo": true
         }
       ],
       "demand": {
         "hot_branches": [
-          "Bishan Public Library",
-          "Tampines Regional Library"
+          "Central Public Library",
+          "Bukit Batok Library"
         ],
         "hidden_gem": false,
         "reservations": 0,
@@ -828,11 +443,9 @@
       }
     }
   ],
-  "generated_at": "2026-10-11T03:45:53.769671+00:00",
-  "engine": "llm",
+  "generated_at": "2026-10-09T06:38:50.759629+00:00",
+  "engine": "seed",
   "notes": [
-    "unverified, dropped: The World: A Brief Introduction",
-    "unverified, dropped: Big History: From the Big Bang to the Big Crunch",
-    "unverified, dropped: Homo Deus: A Brief History of Tomorrow"
+    "'Origin Story' judged same_level (0.60), not placed before"
   ]
 }

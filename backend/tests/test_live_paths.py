@@ -128,3 +128,16 @@ def test_demo_mode_never_calls_network(monkeypatch):
     route = engine.build_route(seed)
     assert route.engine == "seed"
     assert all(a.demo for s in route.stops for a in s.availability)
+
+
+def test_librarian_onramp_survives_strict_model_but_rules_still_apply(live, monkeypatch):
+    monkeypatch.setattr(llm, "judge", lambda a, b, ra, rb: Judgment(relation="unrelated", confidence=0.9, reason="no"))
+    seed = {"title": "Thinking, Fast and Slow", "author": "Daniel Kahneman", "level": 4, "hours": 16,
+            "before": [{"title": "Predictably Irrational", "author": "Dan Ariely", "why": "gentler"}]}
+    route = engine.build_route(seed)
+    before = [s for s in route.stops if s.role == "before"]
+    assert [s.book.title for s in before] == ["Predictably Irrational"]          # librarian pick kept
+    assert all(s.readiness.level < 4 for s in before)                            # rules unchanged
+    assert any("librarian pick kept" in n for n in route.notes)
+    # a model-proposed (non-seed) candidate the model calls unrelated is still dropped
+    assert "Ghost Book" not in " ".join(s.book.title for s in route.stops)

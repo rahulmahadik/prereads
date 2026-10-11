@@ -26,6 +26,7 @@ serve: build      ## one process serves API + UI on http://localhost:8000
 
 test:
 	cd backend && . .venv/bin/activate && python -m pytest -q tests
+	cd frontend && npm test --silent
 
 clean:
 	rm -rf frontend/dist backend/data/cache/routes/*.json backend/data/cache/index.json

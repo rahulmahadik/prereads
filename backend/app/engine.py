@@ -141,7 +141,10 @@ def apply_rules(target: Stop, before: list[Stop], after: list[Stop], notes: list
 
 # ---------------------------------------------------------------------- route
 def _stop(role: str, book: Book, seed: Optional[dict], why: str, confidence: float) -> Stop:
-    r, _ = score_readiness(book, seed)
+    if role == "target" and seed and seed.get("level"):
+        r = heuristic_readiness(book, seed)    # a librarian's curated level for a seed target outranks a model estimate
+    else:
+        r, _ = score_readiness(book, seed)
     availability = get_availability(book)
     return Stop(role=role, order=0, book=book, readiness=r, why=why, confidence=confidence,
                 availability=availability, demand=get_demand(book, availability))
@@ -170,6 +173,10 @@ def build_route(target_seed: dict, target_book: Optional[Book] = None) -> Route:
         r, _ = score_readiness(b, c)
         j, je = judge_pair(b, target, r, t_stop.readiness, c.get("why", ""))
         engines.add(je)
+        if c.get("_seed") and (j.relation != "prepares_for" or j.confidence < MIN_CONFIDENCE) and r.level < t_stop.readiness.level:
+            # Librarian on-ramp: the model is advisory here; the readiness rules in apply_rules still decide.
+            notes.append(f"model judged '{b.title}' {j.relation} ({j.confidence:.2f}); librarian pick kept")
+            j, je = heuristic_judgment(r, t_stop.readiness, c.get("why", "")), "seed"
         if j.relation != "prepares_for":
             notes.append(f"'{b.title}' judged {j.relation} ({j.confidence:.2f}), not placed before")
             continue

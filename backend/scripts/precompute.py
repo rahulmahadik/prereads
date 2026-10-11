@@ -46,13 +46,12 @@ def main() -> int:
             failed += 1
             print(f"  FAIL {seed['title']}: {exc}")
             continue
+        # Seed ids stay stable: store under the seed key only, never under the catalogue's edition id.
+        if key and key != route.target_id:
+            route = route.model_copy(update={"target_id": key})
         save_route(route)
         target = next(s for s in route.stops if s.role == "target")
         index[route.target_id] = {"id": route.target_id, "title": target.book.title, "author": target.book.author, "cached": True}
-        # Keep seed ids stable: if the catalogue gave a different id, alias it.
-        if key and key != route.target_id:
-            save_route(route.model_copy(update={"target_id": key}))
-            index[key] = {"id": key, "title": target.book.title, "author": target.book.author, "cached": True}
         before = sum(1 for s in route.stops if s.role == "before")
         after = sum(1 for s in route.stops if s.role == "after")
         done += 1

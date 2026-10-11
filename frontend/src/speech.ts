@@ -223,10 +223,10 @@ export function bookScript(o: { title: string; author: string; why: string; leve
   return parts.join(" ");
 }
 
-export function lineScript(o: { target: string; before: { title: string; why: string; hours: number; where: string }[]; hours: number }): string {
+export function lineScript(o: { target: string; before: { title: string; why: string; hours: number; where: string }[]; hours: number; trip?: string }): string {
   if (!o.before.length) return `You can start ${o.target} today. Nothing needs to come first.`;
   const items = o.before.map((b, i) => `${i + 1}. ${b.title}. ${b.why} About ${Math.round(b.hours)} hours. ${b.where}.`);
-  return `${o.before.length} ${o.before.length === 1 ? "book" : "books"} before ${o.target}, about ${Math.round(o.hours)} hours in total. ${items.join(" ")}`;
+  return `${o.before.length} ${o.before.length === 1 ? "book" : "books"} before ${o.target}, about ${Math.round(o.hours)} hours in total. ${items.join(" ")}${o.trip ? ` ${o.trip}.` : ""}`;
 }
 
 export function picksScript(o: { summary: string; picks: { title: string; author: string; why: string; status: string }[] }): string {
