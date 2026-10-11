@@ -127,6 +127,17 @@ def _dedupe_author(stops: list[Stop]) -> list[Stop]:
     return out
 
 
+def _spread(ramp: list[Stop], k: int) -> list[Stop]:
+    """Trim an easiest-first ramp to k stops without losing the on-ramp: keep the easiest,
+    the one closest to the target, and fill the middle evenly (stable, easiest first)."""
+    if len(ramp) <= k:
+        return ramp
+    if k == 1:
+        return [ramp[-1]]
+    idx = sorted({round(i * (len(ramp) - 1) / (k - 1)) for i in range(k)})
+    return [ramp[i] for i in idx]
+
+
 def apply_rules(target: Stop, before: list[Stop], after: list[Stop], notes: list[str]) -> tuple[list[Stop], list[Stop]]:
     t = target.readiness.level
     kept_before = []
@@ -146,7 +157,7 @@ def apply_rules(target: Stop, before: list[Stop], after: list[Stop], notes: list
     for s in kept_before:
         if not ramp or s.readiness.level >= ramp[-1].readiness.level:
             ramp.append(s)
-    kept_before = ramp[-MAX_BEFORE:] if len(ramp) > MAX_BEFORE else ramp
+    kept_before = _spread(ramp, MAX_BEFORE)
 
     kept_after = []
     before_ids = {s.book.id for s in kept_before} | {_title_key(s.book.title) for s in kept_before}

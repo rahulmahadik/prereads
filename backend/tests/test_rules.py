@@ -60,3 +60,16 @@ def test_junk_titles_and_subjects_filtered():
     assert not junk_title("Seven Brief Lessons on Physics")
     assert clean_category(["Protected DAISY", "In library", "Physics"], "Catalogue") == "Physics"
     assert clean_category([], "Catalogue") == "Catalogue"
+
+
+def test_trim_keeps_the_easiest_on_ramp():
+    from app.engine import apply_rules
+    from app.models import Book, Readiness, Stop
+
+    def st(bid, level):
+        return Stop(role="before", order=0, book=Book(id=bid, title=bid, author=f"a-{bid}"), readiness=Readiness(level=level, hours=5), why="", confidence=0.9)
+
+    target = Stop(role="target", order=0, book=Book(id="T", title="T", author="t"), readiness=Readiness(level=5, hours=40), why="", confidence=1)
+    before, _ = apply_rules(target, [st("L1", 1), st("L2", 2), st("L3a", 3), st("L3b", 3), st("L4", 4)], [], [])
+    ids = [s.book.id for s in before]
+    assert len(ids) == 3 and ids[0] == "L1" and ids[-1] == "L4"
