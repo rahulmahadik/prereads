@@ -12,6 +12,9 @@ precompute-demo:  ## build the cache offline (no keys needed)
 precompute:       ## build the cache with whatever keys are in .env
 	cd backend && . .venv/bin/activate && python scripts/precompute.py --refresh
 
+eval:             ## re-score cached paths with the heavy local model (read-only)
+	cd backend && . .venv/bin/activate && python scripts/eval_paths.py
+
 backend:          ## API only, hot reload, http://localhost:8000
 	cd backend && . .venv/bin/activate && python -m uvicorn app.main:app --reload --port 8000
 
