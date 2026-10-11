@@ -14,6 +14,7 @@ interface Target {
   title: string;
   author: string;
   unfinished?: boolean;
+  cover_url?: string | null;
 }
 
 interface Popular extends Target {
@@ -134,7 +135,10 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
   const hearts = listHearts();
   const paths = pathsInProgress(readSetFrom()).filter((p) => p.total > 0).slice(0, 6);
 
-  const asBook = (t: Target) => ({ id: t.id, title: t.title, author: t.author, subjects: [], summary: "", source: "seed" });
+  const asBook = (t: Target) => ({ id: t.id, title: t.title, author: t.author, subjects: [], summary: "", source: "seed", cover_url: t.cover_url });
+
+  // Older hearts carry no cover: borrow it from the targets list (the book itself, or its path).
+  const coverFor = (id: string, lineId: string) => targets.find((x) => x.id === id)?.cover_url ?? targets.find((x) => x.id === lineId)?.cover_url ?? popular.find((x) => x.id === id)?.cover_url;
 
   const BookList = ({ books }: { books: Target[] }) => (
     <ul className="results" role="listbox" aria-label={t("home.books")}>
@@ -254,7 +258,7 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
             <div className="book-row" role="list">
               {hearts.map((h) => (
                 <button key={h.id} type="button" className="row-item" role="listitem" onClick={() => navigate("book", { id: h.lineId, title: h.lineTitle, author: h.lineAuthor, stop: h.id })}>
-                  <Cover book={asBook(h)} size="m" />
+                  <Cover book={asBook({ ...h, cover_url: h.cover_url ?? coverFor(h.id, h.lineId) })} size="m" />
                   <span className="row-title">{h.title}</span>
                   <span className="row-badge heart-badge">{t("home.saved")}</span>
                 </button>

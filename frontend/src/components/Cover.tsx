@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { Book } from "../types";
 
 // Library-binding colours. Picked by a stable hash of the title so a book always
@@ -34,14 +35,25 @@ interface Props {
 
 export default function Cover({ book, size = "m", level }: Props) {
   const b = bindingFor(book);
+  const [bad, setBad] = useState(false);
+  useEffect(() => setBad(false), [book.cover_url]);
   const words = book.title.split(" ");
   const big = words.length > 4 ? words.slice(0, 4).join(" ") : book.title;
   const rest = words.length > 4 ? words.slice(4).join(" ") : "";
   return (
     <div className={`cover cover-${size}`} style={{ background: b.bg, color: b.ink }} aria-hidden="true">
       <span className="cover-spine" />
-      {book.cover_url ? (
-        <img className="cover-img" src={book.cover_url} alt="" loading="lazy" onError={(e) => ((e.currentTarget as HTMLImageElement).style.display = "none")} />
+      {book.cover_url && !bad ? (
+        <img
+          className="cover-img"
+          src={book.cover_url}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          referrerPolicy="no-referrer"
+          onLoad={(e) => e.currentTarget.naturalWidth < 10 && setBad(true)}
+          onError={() => setBad(true)}
+        />
       ) : null}
       <div className="cover-text">
         <span className="cover-title">

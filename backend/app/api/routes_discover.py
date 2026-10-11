@@ -24,3 +24,11 @@ def discover_(req: DiscoverRequest):
 def similar_(id: str, branch: Optional[str] = None):
     """'Because you liked...': three catalogue-verified neighbours with a one-line reason."""
     return {"books": similar(id, branch or None)}
+
+
+@router.get("/suggestions")
+def suggestions_(lang: Optional[str] = None, n: int = 4, seed: Optional[int] = None):
+    """Example requests for Home's "Try:" row, generated from the catalogue (rotates daily)."""
+    from ..services.suggest import suggestions
+
+    return suggestions(lang, max(1, min(n, 8)), seed)

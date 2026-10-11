@@ -98,6 +98,7 @@ export interface FilterChip {
 }
 
 export interface Recommendation {
+  cover_url?: string | null;
   id: string;
   line_id: string;
   is_target: boolean;

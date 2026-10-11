@@ -89,13 +89,21 @@ def ask(req: AskRequest):
 def browse_(by: str = "category", ids: Optional[str] = None):
     """by=author|category -> groups; ids=a,b,c -> the books in a group."""
     if ids:
-        return {"books": books_for(ids.split(","))}
+        books = books_for(ids.split(","))
+        return {"books": [{**b, "cover_url": b.get("cover_url") or _cover_of(b["id"])} for b in books]}
     return {"groups": browse("author" if by == "author" else "category")}
+
+
+def _cover_of(target_id: str) -> Optional[str]:
+    """The cached path's target cover (None when there is no cached path or no cover)."""
+    r = load_route(target_id)
+    t = next((x for x in r.stops if x.role == "target"), None) if r else None
+    return t.book.cover_url if t else None
 
 
 @router.get("/targets")
 def targets():
-    return {"targets": [{"id": s.get("isbn") or s.get("id"), "title": s["title"], "author": s.get("author", ""), "unfinished": bool(s.get("unfinished"))} for s in seeds()]}
+    return {"targets": [{"id": s.get("isbn") or s.get("id"), "title": s["title"], "author": s.get("author", ""), "unfinished": bool(s.get("unfinished")), "cover_url": _cover_of(s.get("isbn") or s.get("id"))} for s in seeds()]}
 
 
 @router.get("/popular")
@@ -115,7 +123,7 @@ def popular(limit: int = 12):
         # Weights: a trending branch counts most, then each reservation, then the share on loan.
         score = 3 * len(t.demand.hot_branches) + 2 * t.demand.reservations + 2 * (out / total)
         rows.append({
-            "id": sid, "title": t.book.title, "author": t.book.author, "category": (s.get("subjects") or ["Other"])[0],
+            "id": sid, "title": t.book.title, "author": t.book.author, "cover_url": t.book.cover_url, "category": (s.get("subjects") or ["Other"])[0],
             "hot_at": [h.replace(" Public Library", "").replace(" Regional Library", "").replace(" Library", "") for h in t.demand.hot_branches],
             "queue": t.demand.reservations, "score": round(score, 2), "demo": t.demand.demo,
         })

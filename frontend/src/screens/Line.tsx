@@ -137,7 +137,7 @@ export default function Line({ id, title, author }: { id: string; title: string;
             ›
           </span>
         </button>
-        <HeartButton className="row-heart" book={{ id: s.book.id, title: s.book.title, author: s.book.author, lineId: id, lineTitle: title, lineAuthor: author }} />
+        <HeartButton className="row-heart" book={{ id: s.book.id, title: s.book.title, author: s.book.author, lineId: id, lineTitle: title, lineAuthor: author, cover_url: s.book.cover_url }} />
       </li>
     );
   };

@@ -10,6 +10,7 @@ export interface Heart {
   lineId: string;
   lineTitle: string;
   lineAuthor: string;
+  cover_url?: string | null;
   at: number;
 }
 
