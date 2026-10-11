@@ -12,15 +12,33 @@ import type { DiscoverResponse, FilterChip, Recommendation } from "../types";
 const EXAMPLE_KEYS = ["disc.ex1", "disc.ex2", "disc.ex3", "disc.ex4"] as const;
 
 // Fields the backend adds for two-phase discovery (optional, so older servers and the prototype still fit).
-type Rec = Recommendation & { ai_pick?: boolean };
-type Phased = Omit<DiscoverResponse, "results"> & { results: Rec[]; deep?: "ai" | "catalogue" | null };
+// ai_rank: the deep pass's rerank (1 = the local AI's best match); its `why` is then the AI's own reason.
+type Rec = Recommendation & { ai_pick?: boolean; ai_rank?: number | null };
+type Phased = Omit<DiscoverResponse, "results"> & { results: Rec[]; deep?: "ai" | "catalogue" | null; ai?: "ok" | "busy" | "off" | null };
 type DeepKind = "ai" | "catalogue";
-type DeepState = { phase: "idle" | "busy" | "done" | "gone"; kind: DeepKind };
+type DeepState = { phase: "idle" | "busy" | "done" | "slow" | "gone"; kind: DeepKind };
+// top: the AI's ranked best matches. swapped: they replaced the first page in place (the reader had not
+// scrolled or tapped yet); otherwise they head the "More picks from the AI" section.
+type AiExtra = { picks: Rec[]; others: Rec[]; top: Rec[]; swapped: boolean; at: number };
+const NO_AI: AiExtra = { picks: [], others: [], top: [], swapped: false, at: 0 };
 
 const PAGE = 10;
 const DEEP_LIMIT = 30; // ask the slow pass for a wide page; only the books the fast list lacks are shown
-const DEEP_TIMEOUT_MS = 60_000;
+const DEEP_TIMEOUT_MS = 35_000; // the server budgets deep at ~28 s; past this the instant list stands
 const OTHER_CAP = 6; // deep-only catalogue books (not model picks) shown under the AI picks
+const MOVED_PX = 8; // a scroll beyond this since the fast list rendered counts as the reader having moved
+
+/** The AI's ranked books first, in its order, then the rest of the list without repeats. */
+export function mergeRanked<T extends { id: string; title: string }>(top: T[], list: T[]): T[] {
+  const ids = new Set(top.map((r) => r.id));
+  const titles = new Set(top.map((r) => r.title.trim().toLowerCase()));
+  return [...top, ...list.filter((r) => !ids.has(r.id) && !titles.has(r.title.trim().toLowerCase()))];
+}
+
+/** The deep reply's ranked books, best first. */
+export function rankedOf<T extends { ai_rank?: number | null }>(results: T[]): T[] {
+  return results.filter((r) => r.ai_rank).sort((a, b) => (a.ai_rank ?? 0) - (b.ai_rank ?? 0));
+}
 
 function needSummary(d: Phased): string {
   const n = d.need;
@@ -44,7 +62,8 @@ function mergeChips(prev: FilterChip[], next: FilterChip[]): FilterChip[] {
 
 /** Honest copy for how a list was made. The main list is always the fast one; the AI's own picks
  * carry the "llm" copy in their section. A fast list with no AI pass to follow says the AI is off. */
-function engineNote(engine: string, deep?: DeepKind | null): string {
+function engineNote(engine: string, deep?: DeepKind | null, ranked = false): string {
+  if (ranked) return t("disc.engine.ranked");
   if (engine === "fast") return t(deep === "ai" ? "disc.engine.instant" : "disc.engine.rules");
   if (engine === "llm") return t("disc.engine.llm");
   if (engine.startsWith("prototype")) return t("disc.engine.proto");
@@ -60,7 +79,8 @@ export default function Discover({ initialText = "" }: { initialText?: string })
   const [text, setText] = useState(initialText);
   const [res, setRes] = useState<Phased | null>(null);
   const [chips, setChips] = useState<FilterChip[]>([]);
-  const [ai, setAi] = useState<{ picks: Rec[]; others: Rec[]; at: number }>({ picks: [], others: [], at: 0 });
+  const [ai, setAi] = useState<AiExtra>(NO_AI);
+  const [sugs, setSugs] = useState<string[] | null>(null); // catalogue-built examples; null = use the built-in ones
   const [deep, setDeep] = useState<DeepState>({ phase: "idle", kind: "ai" });
   const [filters, setFilters] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
@@ -75,6 +95,57 @@ export default function Discover({ initialText = "" }: { initialText?: string })
   const deepCtl = useRef<AbortController | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
   const anchor = useRef<number | null>(null); // list top before a background update, to undo any shift
+  const mainOl = useRef<HTMLOListElement | null>(null);
+  const fadeNext = useRef(false);
+  const touched = useRef(false); // the reader scrolled or tapped since the fast list rendered
+  const scrollAt = useRef(0);
+  const sugSeq = useRef(0);
+
+  // Has the reader moved since the instant list appeared? Then the AI's ranking must not reshuffle it.
+  useEffect(() => {
+    const tap = () => { touched.current = true; };
+    const scroll = () => { if (Math.abs(window.scrollY - scrollAt.current) > MOVED_PX) touched.current = true; };
+    const opts = { passive: true, capture: true } as const;
+    window.addEventListener("pointerdown", tap, opts);
+    window.addEventListener("keydown", tap, opts);
+    window.addEventListener("wheel", tap, opts);
+    window.addEventListener("touchmove", tap, opts);
+    window.addEventListener("scroll", scroll, opts);
+    return () => {
+      window.removeEventListener("pointerdown", tap, opts);
+      window.removeEventListener("keydown", tap, opts);
+      window.removeEventListener("wheel", tap, opts);
+      window.removeEventListener("touchmove", tap, opts);
+      window.removeEventListener("scroll", scroll, opts);
+    };
+  }, []);
+
+  const loadSuggestions = (seed?: number) => {
+    const my = ++sugSeq.current;
+    api
+      .suggestions(getLang(), 4, seed)
+      .then((r) => {
+        if (my !== sugSeq.current) return;
+        const got = r.suggestions.map((s) => s.text.trim()).filter(Boolean);
+        setSugs(got.length ? got : null);
+      })
+      .catch(() => {
+        if (my === sugSeq.current) setSugs(null); // no server or it failed: the built-in examples
+      });
+  };
+
+  useEffect(() => {
+    loadSuggestions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
+
+  // The ranked list swapped in place: a subtle fade instead of a jump.
+  useLayoutEffect(() => {
+    if (!fadeNext.current) return;
+    fadeNext.current = false;
+    const reduce = typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduce) mainOl.current?.animate?.([{ opacity: 0.35 }, { opacity: 1 }], { duration: 320, easing: "ease-out" });
+  }, [ai]);
 
   const commit = (r: Phased | null) => {
     resRef.current = r;
@@ -132,20 +203,28 @@ export default function Discover({ initialText = "" }: { initialText?: string })
       const d = (await api.discover(q, getBranch(), sent, 0, DEEP_LIMIT, { mode: "deep", signal: ctl.signal, lang: getLang() })) as Phased;
       const cur = resRef.current;
       if (my !== seq.current || !cur) return;
-      const shownIds = new Set(cur.results.map((r) => r.id));
-      const shownTitles = new Set(cur.results.map(key));
-      const extra = d.results.filter((r) => !shownIds.has(r.id) && !shownTitles.has(key(r)));
+      // The AI's ranking of the shortlist: swap it into the first page if the reader has not moved yet,
+      // otherwise it heads the AI section below, so nothing reshuffles under their finger.
+      const top = rankedOf(d.results);
+      const swapped = top.length > 0 && !touched.current;
+      const main = swapped ? mergeRanked(top, cur.results) : cur.results;
+      const shownIds = new Set(main.map((r) => r.id));
+      const shownTitles = new Set(main.map(key));
+      const extra = d.results.filter((r) => !r.ai_rank && !shownIds.has(r.id) && !shownTitles.has(key(r)));
       const picks = kind === "ai" ? extra.filter((r) => r.ai_pick) : [];
       const others = extra.filter((r) => !picks.includes(r)).slice(0, kind === "ai" ? OTHER_CAP : PAGE);
-      holdList();
-      setAi({ picks, others, at: cur.results.length });
+      if (swapped) fadeNext.current = true;
+      else holdList();
+      setAi({ picks, others, top, swapped, at: main.length });
       // The model read the request better (level, time, age): its chips win; on/off already reflects what was sent.
       if (d.engine === "llm") setChips((prev) => (sameIds(prev, d.chips) ? prev : d.chips));
-      setDeep({ phase: picks.length + others.length ? "done" : "gone", kind });
+      const added = top.length + picks.length + others.length;
+      setDeep({ phase: added ? "done" : kind === "ai" && d.ai === "busy" ? "slow" : "gone", kind });
     } catch {
       if (my === seq.current) {
         holdList();
-        setDeep({ phase: "gone", kind }); // failed, timed out or replaced: just hide the row
+        // failed or timed out (a replaced request has a newer seq): say so quietly, the instant list stands
+        setDeep({ phase: kind === "ai" ? "slow" : "gone", kind });
       }
     } finally {
       window.clearTimeout(timer);
@@ -164,8 +243,10 @@ export default function Discover({ initialText = "" }: { initialText?: string })
       const r = (await api.discover(q, getBranch(), sent, 0, PAGE, { mode: "fast", lang: getLang() })) as Phased;
       if (my !== seq.current) return;
       commit(r);
+      touched.current = false; // a fresh instant list: the AI may still reorder it until the reader moves
+      scrollAt.current = window.scrollY;
       setChips((prev) => (sameQuery && prev.length ? mergeChips(prev, r.chips) : r.chips));
-      setAi({ picks: [], others: [], at: 0 });
+      setAi(NO_AI);
       lastQuery.current = q;
       if (r.deep) runDeep(q, sent, my, r.deep);
       else setDeep({ phase: "idle", kind: "ai" });
@@ -188,7 +269,7 @@ export default function Discover({ initialText = "" }: { initialText?: string })
       const r = (await api.discover(lastQuery.current, getBranch(), withAvail(filters, availRef.current), res.offset + res.limit, PAGE, { mode: "fast", lang: getLang() })) as Phased;
       if (my !== seq.current) return;
       const cur = resRef.current ?? res;
-      const seen = new Set([...cur.results, ...ai.picks, ...ai.others].map((x) => x.id));
+      const seen = new Set([...cur.results, ...ai.top, ...ai.picks, ...ai.others].map((x) => x.id));
       commit({ ...r, results: [...cur.results, ...r.results.filter((x) => !seen.has(x.id))] });
     } catch (e) {
       setError((e as Error).message);
@@ -208,7 +289,7 @@ export default function Discover({ initialText = "" }: { initialText?: string })
     setText("");
     commit(null);
     setChips([]);
-    setAi({ picks: [], others: [], at: 0 });
+    setAi(NO_AI);
     setDeep({ phase: "idle", kind: "ai" });
     setFilters([]);
     setError("");
@@ -241,11 +322,16 @@ export default function Discover({ initialText = "" }: { initialText?: string })
   const card = (r: Rec, i: number, aiPick = false) => (
     <li key={r.id} className={`rec ${aiPick ? "rec-ai" : ""}`} style={{ animationDelay: `${i * 50}ms` }}>
       <button type="button" className="rec-card" onClick={() => open(r)}>
-        <Cover book={{ id: r.id, title: r.title, author: r.author, subjects: [], summary: "", source: "seed" }} size="m" level={r.level} />
+        <Cover book={{ id: r.id, title: r.title, author: r.author, subjects: [], summary: "", source: "seed", cover_url: r.cover_url }} size="m" level={r.level} />
         <span className="rec-main">
           <span className="rec-kicker">
             {aiPick && <span className="badge ai-pick small" title={t("disc.aiPickTip")}>{t("disc.aiPick")}</span>}
-            <span className="fit" title={t("disc.fitTip")}>{t("disc.fit", { n: Math.round(r.fit * 100) })}</span>
+            {r.ai_rank ? (
+              // the AI's order, not the heuristic fit, decides these; showing a % here would contradict it
+              <span className="badge ai-pick small" title={t("disc.aiRankTip")}>{t("disc.aiRank", { n: r.ai_rank })}</span>
+            ) : (
+              <span className="fit" title={t("disc.fitTip")}>{t("disc.fit", { n: Math.round(r.fit * 100) })}</span>
+            )}
             {" · "}{r.category}
           </span>
           <strong className="rec-title">{r.title}</strong>
@@ -264,10 +350,37 @@ export default function Discover({ initialText = "" }: { initialText?: string })
     </li>
   );
 
-  const extraCount = ai.picks.length + ai.others.length;
-  const at = res ? Math.min(ai.at, res.results.length) : 0;
-  const deepLabel = t(deep.kind === "ai" ? "disc.deep.ai" : "disc.deep.cat");
-  const doneLabel = deep.kind === "ai" && ai.picks.length ? tn("disc.done.ai", ai.picks.length) : t("disc.done.cat", { n: extraCount });
+  // The list the reader sees: the instant one, or (swapped) the AI's ranked books first, then the rest.
+  const main = res ? (ai.swapped ? mergeRanked(ai.top, res.results) : res.results) : [];
+  const topHere = ai.swapped ? [] : ai.top; // the reader had moved: the ranking heads the AI section instead
+  const extraCount = topHere.length + ai.picks.length + ai.others.length;
+  const at = Math.min(ai.at, main.length);
+  const deepLabel = t(deep.kind === "ai" ? "disc.deep.rank" : "disc.deep.cat");
+  const doneLabel = topHere.length ? t("disc.ranked") : deep.kind === "ai" && ai.picks.length ? tn("disc.done.ai", ai.picks.length) : t("disc.done.cat", { n: extraCount });
+  const aiHead = t(topHere.length || ai.picks.length ? "disc.moreAi" : "disc.moreCat");
+  const filtering = onlyAvail || filters.length > 0 || chips.some((c) => c.on && c.kind !== "branch");
+  const jump = () => document.getElementById("ai-picks")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const examples = sugs ?? EXAMPLE_KEYS.map((k) => t(k));
+  const tryRow = (
+    <div className="examples">
+      <span className="hint">{t("disc.try")}</span>
+      {examples.map((ex, i) => (
+        <button key={`${i}-${ex}`} type="button" className="example" onClick={() => { setText(ex); setFilters([]); run(ex, []); }}>
+          {ex}
+        </button>
+      ))}
+      <button
+        type="button"
+        className="example"
+        style={{ minWidth: "var(--tap)", minHeight: "var(--tap)", padding: 0, textAlign: "center" }}
+        onClick={() => loadSuggestions(Date.now())}
+        aria-label={t("disc.moreExamples")}
+        title={t("disc.moreExamples")}
+      >
+        ↻
+      </button>
+    </div>
+  );
 
   return (
     <section className="discover">
@@ -301,19 +414,7 @@ export default function Discover({ initialText = "" }: { initialText?: string })
         </div>
       </form>
 
-      {!res && !busy && (
-        <div className="examples">
-          <span className="hint">{t("disc.try")}</span>
-          {EXAMPLE_KEYS.map((k) => {
-            const ex = t(k);
-            return (
-              <button key={k} type="button" className="example" onClick={() => { setText(ex); setFilters([]); run(ex, []); }}>
-                {ex}
-              </button>
-            );
-          })}
-        </div>
-      )}
+      {!res && !busy && tryRow}
 
       {error && (
         <p className="error" role="alert">
@@ -337,14 +438,14 @@ export default function Discover({ initialText = "" }: { initialText?: string })
             <p className="need-line">
               <span aria-hidden="true">🧠 </span>
               {needSummary(res)}
-              <span className="hint engine-note"> · {engineNote(res.engine, res.deep)}</span>
+              <span className="hint engine-note"> · {engineNote(res.engine, res.deep, ai.swapped)}</span>
             </p>
             <span className="need-actions">
               <ListenButton
                 id="picks"
                 label={t("disc.listenPicks")}
                 lang={voiceLang(lang)}
-                text={() => picksScript({ summary: needSummary(res), picks: [...res.results, ...ai.picks].map((r) => ({ title: r.title, author: r.author, why: r.why, status: r.status })) })}
+                text={() => picksScript({ summary: needSummary(res), picks: [...main, ...ai.picks].map((r) => ({ title: r.title, author: r.author, why: r.why, status: r.status })) })}
               />
               <button type="button" className="secondary start-over" onClick={reset}>
                 ↺ {t("disc.startOver")}
@@ -369,43 +470,71 @@ export default function Discover({ initialText = "" }: { initialText?: string })
                   {deepLabel}
                 </>
               )}
-              {deep.phase === "done" && (
-                <button type="button" className="deep-jump" onClick={() => document.getElementById("ai-picks")?.scrollIntoView({ behavior: "smooth", block: "start" })}>
+              {deep.phase === "done" && ai.swapped && (
+                <>
+                  <span>✓ {t("disc.ranked")}</span>
+                  {extraCount > 0 && (
+                    <button type="button" className="deep-jump" onClick={jump}>
+                      {doneLabel} ↓
+                    </button>
+                  )}
+                </>
+              )}
+              {deep.phase === "done" && !ai.swapped && (
+                <button type="button" className="deep-jump" onClick={jump}>
                   ✓ {doneLabel} ↓
                 </button>
               )}
+              {deep.phase === "slow" && <span>{t("disc.aiBusy")}</span>}
             </p>
           )}
 
           <div ref={listRef}>
-            {res.results.length === 0 && extraCount === 0 && <p className="hint">{t("disc.empty")}</p>}
+            {main.length === 0 && extraCount === 0 && (
+              filtering ? (
+                <p className="hint">{t("disc.empty")}</p>
+              ) : (
+                <>
+                  <p className="hint">{t("disc.none")}</p>
+                  {tryRow}
+                </>
+              )
+            )}
             {res.total > 0 && (
               <p className="hint count-line">
-                {tn("disc.count", res.total, { shown: res.results.length, total: res.total })}
+                {tn("disc.count", res.total, { shown: main.length, total: res.total })}
               </p>
             )}
 
-            <ol className="rec-list">{res.results.slice(0, extraCount ? at : undefined).map((r, i) => card(r, i))}</ol>
+            <ol className="rec-list" ref={mainOl}>{main.slice(0, extraCount ? at : undefined).map((r, i) => card(r, i))}</ol>
 
             {extraCount > 0 && (
-              <section className="ai-picks" id="ai-picks" aria-label={t(ai.picks.length ? "disc.moreAi" : "disc.moreCat")}>
-                <h3 className="ai-head">{t(ai.picks.length ? "disc.moreAi" : "disc.moreCat")}</h3>
+              <section className="ai-picks" id="ai-picks" aria-label={aiHead}>
+                <h3 className="ai-head">{aiHead}</h3>
+                {topHere.length > 0 && (
+                  <>
+                    <h4 className="ai-sub">{t("disc.ranked")}</h4>
+                    <p className="hint ai-note">{t("disc.rankedNote")}</p>
+                    <ol className="rec-list">{topHere.map((r, i) => card(r, i))}</ol>
+                  </>
+                )}
                 {ai.picks.length > 0 && (
                   <>
+                    {topHere.length > 0 && <h4 className="ai-sub">{t("disc.aiPick")}</h4>}
                     <p className="hint ai-note">{t("disc.aiNote")}</p>
                     <ol className="rec-list">{ai.picks.map((r, i) => card(r, i, true))}</ol>
                   </>
                 )}
                 {ai.others.length > 0 && (
                   <>
-                    {ai.picks.length > 0 && <h4 className="ai-sub">{t("disc.alsoCat")}</h4>}
+                    {topHere.length + ai.picks.length > 0 && <h4 className="ai-sub">{t("disc.alsoCat")}</h4>}
                     <ol className="rec-list">{ai.others.map((r, i) => card(r, i))}</ol>
                   </>
                 )}
               </section>
             )}
 
-            {extraCount > 0 && res.results.length > at && <ol className="rec-list rec-list-after">{res.results.slice(at).map((r, i) => card(r, i))}</ol>}
+            {extraCount > 0 && main.length > at && <ol className="rec-list rec-list-after">{main.slice(at).map((r, i) => card(r, i))}</ol>}
           </div>
 
           <div className="more-row">

@@ -103,7 +103,8 @@ def test_deep_mode_adds_verified_model_picks(monkeypatch):
     monkeypatch.setattr(discover.llm, "structured", fake_structured)
     monkeypatch.setattr(discover, "resolve", fake_resolve)
     monkeypatch.setattr(discover, "score_readiness", lambda b: (Readiness(level=1, hours=5, assumed_concepts=[], style_tags=[], one_line=""), "llm"))
-    r = discover.discover(DiscoverRequest(text="investing for a beginner", mode="deep", limit=50))
+    # strategy="propose": the old deep path (new titles first), kept behind a flag; the rerank path is in test_rerank.py
+    r = discover.discover(DiscoverRequest(text="investing for a beginner", mode="deep", limit=50, strategy="propose"))
     assert r.engine == "llm" and r.deep is None
     titles = {x.title: x for x in r.results}
     assert "A Totally New Investing Book" in titles and titles["A Totally New Investing Book"].ai_pick
@@ -111,7 +112,7 @@ def test_deep_mode_adds_verified_model_picks(monkeypatch):
     assert titles[cached["title"]].ai_pick                      # a proposed book already in the catalogue is marked too
     assert r.need.level == 1 and any(c.id == "level:1" for c in r.chips)
     # A re-run for the same request (a filter toggle) reuses the model's answer.
-    discover.discover(DiscoverRequest(text="investing for a beginner", mode="deep", filters=["hours:10"]))
+    discover.discover(DiscoverRequest(text="investing for a beginner", mode="deep", filters=["hours:10"], strategy="propose"))
     assert calls == ["Proposal"]
 
 
@@ -127,3 +128,29 @@ def test_api_mode_field(monkeypatch):
     deep = c.post("/api/discover", json={"text": "universe", "mode": "deep"}).json()
     assert deep["engine"] == "heuristic"                        # AI off in tests: deep is the old heuristic path
     assert c.post("/api/discover", json={"text": "universe", "mode": "slow"}).status_code == 422
+
+
+def test_nonsense_gets_an_honest_empty_list_and_no_invented_time_chip(monkeypatch):
+    monkeypatch.setattr(config, "DEMO", True)
+    # nonsense: no keyword hit, and a centred similarity under the floor is not evidence
+    monkeypatch.setattr(discover, "_shortlist", lambda need, cat, budget: ({e["id"]: 0.16 for e in cat}, "on"))
+    r = discover.discover(DiscoverRequest(text="asdfgh"))
+    assert r.results == [] and r.total == 0
+    assert not any(c.kind == "hours" for c in r.chips)
+    assert discover.semantic_topic(0.16) == 0 and discover.semantic_topic(0.2) > 0
+
+
+def test_time_chip_only_when_the_reader_mentions_time(monkeypatch):
+    monkeypatch.setattr(config, "DEMO", True)
+    assert not any(c.kind == "hours" for c in discover.discover(DiscoverRequest(text="investing")).chips)
+    chips = discover.discover(DiscoverRequest(text="investing but I only have 2 weeks")).chips
+    assert any(c.id == "hours:10" for c in chips)
+    assert discover.mentions_time("something for this weekend") and discover.mentions_time("我只有两周")
+    assert not discover.mentions_time("Is AI dangerous for humanity?")
+
+
+def test_blurb_strips_html_and_entities():
+    raw = "<strong>A former Wall Street quant</strong> sounds an alarm on the mathematical models that pervade modern life &amp; threaten to rip apart our social fabric.<br/>"
+    b = discover.blurb(raw)
+    assert b.startswith("A former Wall Street quant sounds") and "<" not in b and "&amp;" not in b and "& threaten" in b
+    assert "<" not in discover.blurb("&lt;p&gt;An escaped paragraph that still needs its tags removed before the card shows it.&lt;/p&gt;")

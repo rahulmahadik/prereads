@@ -9,9 +9,13 @@
 Two phases, so a reader never stares at a spinner:
   fast  no model call, no network: heuristic need + the local embedding shortlist (with a
         time budget) + keyword score over the cached catalogue. Well under a second.
-  deep  the local model reads the need and proposes books, each verified in the catalogue,
-        merged with the catalogue results (and, live, catalogue search pages). Seconds to tens
-        of seconds; the UI runs it in the background and adds its picks as "AI pick".
+  deep  a retrieval-augmented rerank: the local model reads the request AND orders the fast
+        shortlist (top 16, already catalogue-verified, so nothing can be invented) in ONE
+        structured call, returning the best <=8 with a one-line reason each. Only when the reader
+        asks for something new, or fewer than 3 shortlisted books fit, does it also ask the model
+        for new titles (propose(), each verified in the catalogue, slow). DISCOVER_DEEP=propose
+        (or a request's strategy="propose") keeps the old path: new titles first, no rerank.
+        The UI runs deep in the background and swaps in the ranked list or adds "AI picks".
 With the AI off, a heuristic parser handles the common phrasings so the demo still feels
 intelligent, and the recommendations are drawn from the precomputed catalogue.
 
@@ -20,12 +24,16 @@ reuses its catalogue and scoring. Uses ai.llm + ai.embeddings, integrations.cata
 """
 from __future__ import annotations
 
+import hashlib
+import html
 import json
 import logging
+import os
 import re
 import threading
 import time
 from collections import OrderedDict
+from dataclasses import dataclass
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
 from typing import Literal, Optional
 
@@ -91,6 +99,8 @@ class Recommendation(BaseModel):
     blurb: Optional[str] = None                    # two-line plain description from the catalogue
     min_age: Optional[int] = None
     ai_pick: bool = False                          # proposed by the model (deep phase), then catalogue-verified
+    cover_url: Optional[str] = None
+    ai_rank: Optional[int] = None                  # deep rerank: 1 = the model's best match; `why` is then its reason
 
 
 class DiscoverRequest(BaseModel):
@@ -99,8 +109,9 @@ class DiscoverRequest(BaseModel):
     filters: list[str] = Field(default_factory=list)   # chip ids that are on
     offset: int = 0
     limit: int = 10
-    mode: Literal["fast", "deep"] = "fast"             # fast: no model, no network; deep: model proposals too
+    mode: Literal["fast", "deep"] = "fast"             # fast: no model, no network; deep: model rerank (+ proposals when needed)
     lang: Optional[str] = None                         # reader's UI language: AI-written reasons follow it
+    strategy: Optional[Literal["rerank", "propose"]] = None   # deep only; None = DEEP_STRATEGY
 
 
 class DiscoverResponse(BaseModel):
@@ -114,6 +125,7 @@ class DiscoverResponse(BaseModel):
     has_more: bool = False
     deep: Optional[Literal["ai", "catalogue"]] = None   # fast only: what a deep pass would add (None = nothing)
     timings_ms: dict[str, float] = Field(default_factory=dict)
+    ai: Optional[Literal["ok", "busy", "off"]] = None   # deep only: the model answered / was too slow or failed / is off
 
 
 # ------------------------------------------------------------------ parsing
@@ -197,21 +209,212 @@ def _cache_put(store: OrderedDict, key: str, value, cap: int = _CACHE_MAX) -> No
             store.popitem(last=False)
 
 
-def propose(text: str, lang: Optional[str] = None) -> tuple[Need, list[Proposed], str]:
+def propose(text: str, lang: Optional[str] = None, kind: str = "llm") -> tuple[Need, list[Proposed], str]:
     """(need, unverified proposals, engine). Deep phase only; falls back to heuristic_need with no
-    proposals when the model is off or fails. Proposals still have to pass resolve() before showing."""
+    proposals when the model is off or fails. Proposals still have to pass resolve() before showing.
+    kind="chat" (the rerank fallback) uses the fast chat tier; the old deep path keeps "llm"."""
     if config.llm_enabled():
         key = f"{config.mode()}|{(lang or 'en')[:2]}|{' '.join(text.lower().split())}"
         hit = _cache_get(_PROPOSALS, key)
         if hit is not None:
             return hit[0].model_copy(deep=True), list(hit[1]), "llm"
-        p = llm.structured(Proposal, llm.with_lang(PROPOSE_SYSTEM, lang), text, temperature=llm.TEMP_PROPOSE)
+        p = llm.structured(Proposal, llm.with_lang(PROPOSE_SYSTEM, lang), text, kind=kind, temperature=llm.TEMP_PROPOSE)
         if p:
             if not p.need.summary:
                 p.need.summary = text.strip()
             _cache_put(_PROPOSALS, key, (p.need.model_copy(deep=True), list(p.books)))
             return p.need, p.books, "llm"
     return heuristic_need(text), [], "heuristic"
+
+
+# ------------------------------------------------------------------ rerank (deep phase)
+DEEP_STRATEGY = os.getenv("DISCOVER_DEEP", "rerank").strip().lower()   # "rerank" (default) | "propose" (the old deep path)
+RERANK_K = 16              # fast-phase candidates the model reads
+RERANK_TOP = 8             # at most this many come back, best first
+RERANK_MIN = 3             # fewer good picks than this: also propose new titles (budgeted)
+RERANK_KIND = "chat"       # the fast chat tier (gemma3:12b, ~4-6 s); gpt-oss reasons first and takes 15-30 s
+DEEP_BUDGET_S = 28.0       # the whole deep request (a proxy cuts at ~100 s; the reader should not wait that long)
+RERANK_BUDGET_S = 20.0     # past this the fast order stands; the call still finishes and fills the cache
+PROPOSE_BUDGET_S = 20.0    # new titles + their catalogue checks, capped by what is left of DEEP_BUDGET_S
+RERANK_REASON_WORDS = 20
+RERANK_DIR = config.CACHE_DIR / "rerank"
+DEEP_EMBED_BUDGET_S = 5.0  # deep reuses the fast phase's query vector (same heuristic need), so this is a guard
+
+
+class RerankPick(BaseModel):
+    id: str
+    reason: str
+
+
+class RerankReply(BaseModel):
+    """One call, two jobs: read the request (the need fields) and order the verified shortlist."""
+    topics: list[str]
+    level: Optional[int] = None
+    max_hours: Optional[float] = None
+    picks: list[RerankPick]
+
+
+RERANK_SYSTEM = (
+    "You are a public-library readers' advisor. REQUEST is what a reader asked for. CANDIDATES are books on "
+    "the library's shelves (level 1 = anyone can start, 5 = specialist; hours = reading time). "
+    "First read the request: topics = 1-4 short English keywords for what they want to read about (not what "
+    "they say they already know); level = the reader's level 1-5 if implied, else null; max_hours = their total "
+    "reading time in hours if they mention time (a week = 5, a weekend = 6), else null. "
+    "Then rank up to 8 candidates on their topic, best first: topic first, then a level they can manage, then "
+    "a length within their time. Level and length only change the order; leave out only books off their topic. "
+    "reason: one plain sentence to the reader, at most 20 words, about THIS book: what it gives them for their "
+    "request (the topic, their level or their time). Use only ids from CANDIDATES."
+)
+
+
+@dataclass
+class Reranked:
+    need: Need                          # the heuristic need with the model's level / time / topics on top
+    picks: list[tuple[str, str]]        # (catalogue id, reader-facing reason), best first, all from the candidates
+    cached: bool = False
+
+
+_RERANKS: "OrderedDict[str, dict]" = OrderedDict()
+
+
+def _clip(s: Optional[str], n: int) -> str:
+    s = " ".join((s or "").split())
+    return s if len(s) <= n else s[:n].rsplit(" ", 1)[0].rstrip(",;:") + "…"
+
+
+def _rerank_item(sid: str, e: dict) -> dict:
+    """A candidate as the model sees it: ~60 tokens, no full summary."""
+    about: list[str] = []
+    subjects = [x for x in e["subjects"] if x and not _JUNK_SUBJECT.search(x) and len(x.split()) <= 4]
+    for x in subjects[:3] + list(e["concepts"])[:3]:
+        if x.lower() not in {a.lower() for a in about}:
+            about.append(x)
+    hours = e["hours"]
+    return {
+        "id": sid, "title": e["title"], "author": e["author"], "level": e["level"],
+        "hours": round(hours) if hours >= 2 else round(hours, 1), "about": about[:5],
+        "blurb": _clip(e.get("blurb") or e.get("one_line") or "", 160),
+    }
+
+
+def _reason(s: str) -> str:
+    """One reader-facing sentence: no markdown, at most ~20 words (cut in code, not trusted to the prompt)."""
+    words = re.sub(r"[*_`#]+", "", s or "").split()
+    if len(words) > RERANK_REASON_WORDS + 2:
+        return " ".join(words[:RERANK_REASON_WORDS]).rstrip(",;:.") + "…"
+    return " ".join(words)
+
+
+def _rerank_clean(reply: RerankReply, short: dict[str, str]) -> dict:
+    """Model reply -> cacheable dict with real catalogue ids. Unknown and repeated ids are dropped."""
+    real = set(short.values())
+    seen: set[str] = set()
+    picks: list[dict] = []
+    for p in reply.picks:
+        raw = (p.id or "").strip().strip('"')
+        sid = raw.lower()
+        sid = "b" + sid if sid.isdigit() else sid
+        rid = short.get(sid) or (raw if raw in real else None)
+        if rid is None or rid in seen:
+            continue
+        seen.add(rid)
+        picks.append({"id": rid, "reason": _reason(p.reason)})
+        if len(picks) >= RERANK_TOP:
+            break
+    level = reply.level if isinstance(reply.level, int) and 1 <= reply.level <= 5 else None
+    hours = reply.max_hours if reply.max_hours and 0 < reply.max_hours <= 500 else None
+    topics = [" ".join(t.split()) for t in reply.topics if t and t.strip()][:4]
+    return {"need": {"topics": topics, "level": level, "max_hours": hours}, "picks": picks}
+
+
+_TIME_WORDS = re.compile(
+    r"\d+\s*(h|hrs?|hours?|days?|weeks?|wks?|months?|mins?|minutes?)\b|\b(hours?|days?|weeks?|weekend|months?|tonight|"
+    r"evening|commute|flight|holiday|vacation|minutes?|jam|minggu|hari|bulan)\b|小时|周末|星期|[0-9一二两三四五六七八九十]+\s*[周天]|"
+    r"மணி|வாரம|வார இறுதி|நாள்", re.I)
+
+
+def mentions_time(text: str) -> bool:
+    """Does the request say anything about time? Only then may a time budget (and its chip) exist."""
+    return bool(_TIME_WORDS.search(text or ""))
+
+
+_NOT_TOPICS = {"understand", "learn", "learning", "simple", "easy", "beginner", "beginners", "introduction", "intro",
+               "book", "books", "read", "reading", "something", "basics", "quick", "short", "weekend"}
+
+
+def _merge_need(need: Need, got: dict, text: str = "") -> Need:
+    """The heuristic's explicit words ("beginner", "2 weeks") stand; the model fills the level or time only
+    where the heuristic found none (a time budget only if the request mentions time: the model likes to
+    invent one), and its topics replace the keyword ones (minus time and filler words)."""
+    out = need.model_copy(deep=True)
+    if got.get("level") and out.level is None:
+        out.level = int(got["level"])
+    if got.get("max_hours") and out.max_hours is None and mentions_time(text):
+        out.max_hours = float(got["max_hours"])
+    topics = [t for t in (got.get("topics") or []) if t.lower() not in _NOT_TOPICS and not mentions_time(t)]
+    if topics and _tokens(" ".join(topics)):        # the keyword scorer reads ASCII; keep heuristic topics otherwise
+        out.topics = topics
+    return out
+
+
+def _rerank_disk_get(key: str) -> Optional[dict]:
+    try:
+        path = RERANK_DIR / f"{key}.json"
+        if not path.exists():
+            return None
+        data = json.loads(path.read_text())
+        return data if isinstance(data, dict) and isinstance(data.get("picks"), list) else None
+    except Exception:  # noqa: BLE001 - a bad cache file is a miss
+        return None
+
+
+def _rerank_disk_put(key: str, data: dict) -> None:
+    try:
+        RERANK_DIR.mkdir(parents=True, exist_ok=True)
+        (RERANK_DIR / f"{key}.json").write_text(json.dumps(data, ensure_ascii=False))
+    except Exception as exc:  # noqa: BLE001
+        log.warning("rerank cache write failed: %s", exc)
+
+
+def rerank_key(query: str, ids: list[str], lang: Optional[str]) -> str:
+    q = " ".join(query.lower().split()).strip(" ?!.")
+    version = hashlib.sha1(f"{RERANK_SYSTEM}|{RERANK_KIND}".encode()).hexdigest()[:6]   # a new prompt or tier is a new answer
+    return hashlib.sha1(f"{version}|{q}|{','.join(ids)}|{(lang or 'en').strip().lower()[:2] or 'en'}".encode()).hexdigest()[:20]
+
+
+def rerank(need: Need, query: str, candidates: list[dict], lang: Optional[str] = None) -> Optional[Reranked]:
+    """Deep phase, retrieval-augmented: the local model orders the fast shortlist (catalogue entries, already
+    verified, so it cannot invent a book) and reads the request in the same structured call. Returns the best
+    <= RERANK_TOP with a reason each, or None when the model is off, fails, or there is nothing to rank (the
+    caller keeps the fast order). Cached by (query, candidate ids, lang) in memory and on disk."""
+    cands = candidates[:RERANK_K]
+    if not cands or not config.llm_enabled():
+        return None
+    ids = [c["id"] for c in cands]
+    key = rerank_key(query, ids, lang)
+    data = _cache_get(_RERANKS, key)
+    cached = data is not None
+    if data is None:
+        data = _rerank_disk_get(key)
+        cached = data is not None
+        if data is not None:
+            _cache_put(_RERANKS, key, data)
+    if data is None:
+        short = {f"b{i}": c["id"] for i, c in enumerate(cands, 1)}
+        user = json.dumps(
+            {"REQUEST": query.strip()[:400], "CANDIDATES": [_rerank_item(s, c) for s, c in zip(short, cands)]},
+            ensure_ascii=False, separators=(",", ":"),
+        )
+        reply = llm.structured(RerankReply, llm.with_lang(RERANK_SYSTEM, lang), user, kind=RERANK_KIND, temperature=llm.TEMP_SCORE)
+        if reply is None:
+            return None
+        data = _rerank_clean(reply, short)
+        _cache_put(_RERANKS, key, data)
+        if data["picks"]:                       # an empty answer is kept in memory only, so a fluke is not forever
+            _rerank_disk_put(key, data)
+    valid = set(ids)
+    picks = [(p["id"], p.get("reason", "")) for p in data.get("picks", []) if p.get("id") in valid][:RERANK_TOP]
+    return Reranked(need=_merge_need(need, data.get("need") or {}, query), picks=picks, cached=cached)
 
 
 # Open Library mixes format and shelving tags into subjects, and lists merchandising SKUs as books.
@@ -232,11 +435,13 @@ def junk_title(title: str) -> bool:
 
 
 def blurb(summary: Optional[str], limit: int = 220) -> Optional[str]:
-    """A short, plain description for result cards: catalogue text without markdown, links or
+    """A short, plain description for result cards: catalogue text without HTML, markdown, links or
     edition notes, cut at a sentence (or word) boundary."""
     if not summary:
         return None
-    text = re.split(r"^\s*[-=*_]{3,}\s*$", summary, maxsplit=1, flags=re.M)[0]
+    text = html.unescape(html.unescape(summary))                    # "&amp;lt;b&amp;gt;" arrives double-escaped too
+    text = re.sub(r"<!--.*?-->|</?[a-zA-Z][a-zA-Z0-9]*\b[^<>]*>", " ", text, flags=re.S)
+    text = re.split(r"^\s*[-=*_]{3,}\s*$", text, maxsplit=1, flags=re.M)[0]
     text = re.sub(r"\[([^\]]+)\]\[\d+\]|\[([^\]]+)\]\([^)]*\)", lambda m: m.group(1) or m.group(2), text)
     text = re.sub(r"https?://\S+|[*_`#>]+|\(\s*\[?source\]?[^)]*\)", "", text, flags=re.I)
     text = re.sub(r"\s+", " ", text).strip().strip('"')
@@ -280,6 +485,7 @@ def _catalogue() -> list[dict]:
                 "concepts": stop.readiness.assumed_concepts,
                 "one_line": stop.readiness.one_line or (stop.why if stop.role != "target" else ""),
                 "blurb": blurb(b.summary),
+                "cover_url": b.cover_url,
                 "availability": stop.availability,
                 "hot": stop.demand.hot_branches,
                 "before_count": len([x for x in before if x.readiness.level < stop.readiness.level]) if stop.role == "target" else 0,
@@ -325,9 +531,15 @@ def _expand(tokens: set[str]) -> set[str]:
 
 
 # ------------------------------------------------------------------ scoring
+SEMANTIC_MIN = 0.17   # below this a centred cosine is not evidence: nonsense ("asdfgh") tops out ~0.16, real topics 0.2-0.6
+
+
 def semantic_topic(sim: float) -> float:
-    """Centred nomic-embed-text cosine -> topic strength. Unrelated ~0, a clear match ~0.25.
+    """Centred nomic-embed-text cosine -> topic strength. Unrelated 0, a clear match ~0.25.
+    Under SEMANTIC_MIN it counts for nothing, so a request with no real match gets an honest empty list.
     Capped at 0.8 so an explicit keyword or model-proposed match (1.0) still ranks first."""
+    if sim < SEMANTIC_MIN:
+        return 0.0
     return max(0.0, min(0.8, (sim - 0.10) / 0.15))
 
 
@@ -417,10 +629,8 @@ def build_chips(need: Need, results: list[Recommendation], branch: Optional[str]
     chips: list[FilterChip] = []
     if need.level:
         chips.append(FilterChip(id=f"level:{need.level}", label=f"Level {need.level} or easier", kind="level", value=str(need.level)))
-    if need.max_hours:
+    if need.max_hours:      # only from the reader's own words about time (see mentions_time); never a default
         chips.append(FilterChip(id=f"hours:{int(need.max_hours)}", label=f"Under {int(need.max_hours)} hours", kind="hours", value=str(int(need.max_hours))))
-    else:
-        chips.append(FilterChip(id="hours:10", label="Under 10 hours", kind="hours", value="10"))
     if branch:
         chips.append(FilterChip(id=f"branch:{branch}", label=f"On shelf at {BRANCHES.get(branch, branch).replace(' Public Library', '').replace(' Regional Library', '').replace(' Library', '')}", kind="branch", value=branch))
     else:
@@ -531,7 +741,7 @@ def _catalogue_search(need: Need, branch: Optional[str], page: int, size: int) -
             level=rd.level, hours=rd.hours, why=(b.summary[:160] + "…") if b.summary else "From the catalogue search for your topic.",
             fit=min(0.89, fit), status=status, available_at=names,
             hot_at=[h.replace(" Public Library", "").replace(" Regional Library", "").replace(" Library", "") for h in dm.hot_branches], before_count=0,
-            blurb=blurb(b.summary), **_age_fields(estimate_age(b, rd)),
+            blurb=blurb(b.summary), cover_url=b.cover_url, **_age_fields(estimate_age(b, rd)),
         ))
     return out
 
@@ -596,7 +806,7 @@ def _from_catalogue(cat: list[dict], need: Need, proposed_titles: dict[str, str]
         out.append(Recommendation(
             id=e["id"], line_id=e["line_id"], is_target=e["is_target"], title=e["title"], author=e["author"], category=e["category"], level=e["level"], hours=e["hours"],
             why=why, fit=fit, status=status, available_at=names, hot_at=[h.replace(" Public Library", "").replace(" Regional Library", "").replace(" Library", "") for h in e["hot"]],
-            before_count=e["before_count"], ai_pick=proposed_here, blurb=e.get("blurb"), **_age_fields(age_heuristic([], [], e["level"], None)),
+            before_count=e["before_count"], ai_pick=proposed_here, blurb=e.get("blurb"), cover_url=e.get("cover_url"), **_age_fields(age_heuristic([], [], e["level"], None)),
         ))
     return out
 
@@ -639,7 +849,7 @@ def _from_proposals(proposed: list[Proposed], results: list[Recommendation], bra
             category=clean_category(b.subjects, "Suggested"), level=rd.level, hours=rd.hours, why=pr.why,
             fit=round(max(0.5, 0.95 - 0.04 * i), 3), status=status, available_at=names,
             hot_at=[h.replace(" Public Library", "").replace(" Regional Library", "").replace(" Library", "") for h in dm.hot_branches],
-            before_count=0, ai_pick=True, blurb=blurb(b.summary), **_age_fields(estimate_age(b, rd)),
+            before_count=0, ai_pick=True, blurb=blurb(b.summary), cover_url=b.cover_url, **_age_fields(estimate_age(b, rd)),
         ))
         have.add(b.title.lower())
     return out
@@ -651,6 +861,114 @@ def _safe_verify(pr: Proposed):
     except Exception as exc:  # noqa: BLE001 - one bad proposal never sinks the list
         log.warning("proposal check failed for %r: %s", pr.title, exc)
         return None
+
+
+def _by_fit(r: Recommendation) -> tuple:
+    return (-r.fit, r.level, r.hours)
+
+
+def _add_new(results: list[Recommendation], more: list[Recommendation]) -> None:
+    have = {r.title.lower() for r in results}
+    for r in more:
+        if r.title.lower() not in have:
+            results.append(r)
+            have.add(r.title.lower())
+
+
+def _ordered(results: list[Recommendation], ranked: list[tuple[str, str]], fallback: list[Recommendation]) -> list[Recommendation]:
+    """The model's picks first, in its order, with its reason as `why`; then everything else by fit."""
+    by_id = {r.id: r for r in results}
+    fb = {r.id: r for r in fallback}
+    head: list[Recommendation] = []
+    for i, (rid, reason) in enumerate(ranked, 1):
+        r = by_id.get(rid) or fb.get(rid)
+        if r is not None:
+            head.append(r.model_copy(update={"ai_rank": i, "why": reason or r.why}))
+    taken = {r.id for r in head}
+    titles = {r.title.lower() for r in head}
+    rest = sorted((r for r in results if r.id not in taken and r.title.lower() not in titles), key=_by_fit)
+    return head + rest
+
+
+# Deep work runs in workers so it can be cut off at a budget; an abandoned call still finishes and fills
+# its cache (rerank, proposals, catalogue checks), so the reader's next try is instant.
+_deep_pool = ThreadPoolExecutor(max_workers=4, thread_name_prefix="discover-deep")
+
+
+def _within(fut, budget: float, what: str):
+    """The worker's result if it is done within `budget` seconds, else None."""
+    try:
+        return fut.result(timeout=max(0.05, budget))
+    except FutureTimeout:
+        log.warning("deep %s over its %.1f s budget: keeping what we have", what, budget)
+    except Exception as exc:  # noqa: BLE001 - deep extras never sink the request
+        log.warning("deep %s failed: %s", what, exc)
+    return None
+
+
+def _propose_checked(text: str, lang: Optional[str], branch: Optional[str], known: list[Recommendation]):
+    """propose() on the fast chat tier, then the catalogue check of each new title (one budget for both)."""
+    need_p, proposed, eng = propose(text, lang, kind=RERANK_KIND)
+    return need_p, proposed, eng, (_from_proposals(proposed, known, branch) if eng == "llm" else [])
+
+
+def _deep_rerank(req: DiscoverRequest, on: set[str], lap, t0: float):
+    """Deep phase, rerank strategy: (need, ordered results, engine, embedding state, ai status).
+
+    1. the fast shortlist again (heuristic need, so the query vector is already cached), filtered by the
+       chips that are on, top RERANK_K;
+    2. ONE model call reads the request and orders those candidates (rerank()), within RERANK_BUDGET_S;
+    3. only if fewer than RERANK_MIN fit (or nothing matched at all), propose() new titles, within
+       PROPOSE_BUDGET_S and what is left of DEEP_BUDGET_S;
+    4. rescored with the model's need; live mode adds catalogue pages, fetched while the model runs."""
+    deadline = t0 + DEEP_BUDGET_S
+    left = lambda: deadline - time.perf_counter()  # noqa: E731
+    need = heuristic_need(req.text)
+    t = lap("need", t0)
+    cat = _catalogue()
+    sims, emb = _shortlist(need, cat, DEEP_EMBED_BUDGET_S)
+    t = lap("embed", t)
+    base = sorted(_from_catalogue(cat, need, {}, req.branch, sims), key=_by_fit)
+    pool = apply_filters(base, build_chips(need, base[:12], req.branch, on))
+    by_id = {e["id"]: e for e in cat}
+    cands = [by_id[r.id] for r in pool[:RERANK_K] if r.id in by_id]
+    t = lap("score", t)
+    search = None
+    if not config.effective_demo():   # network, so it overlaps the local model call
+        search = _deep_pool.submit(_catalogue_search, need, req.branch, max(0, req.offset // max(1, req.limit)), 20)
+    rr = None
+    if cands:
+        rr = _within(_deep_pool.submit(rerank, need, req.text, cands, req.lang), min(RERANK_BUDGET_S, left()), "rerank")
+        t = lap("rerank", t)
+    engine, status, ranked, proposed, extra = "heuristic", ("busy" if cands and rr is None else "ok"), [], [], []
+    if rr is not None:
+        need, ranked, engine = rr.need, rr.picks, "llm"
+    if (not cands or (rr is not None and len(ranked) < RERANK_MIN)) and left() > 2:
+        got = _within(_deep_pool.submit(_propose_checked, req.text, req.lang, req.branch, base), min(PROPOSE_BUDGET_S, left()), "propose")
+        t = lap("propose", t)
+        if got is not None:
+            need_p, proposed, eng_p, extra = got
+            if eng_p == "llm":
+                engine = "llm"
+                if rr is None:
+                    need = need_p
+                    if not mentions_time(req.text):
+                        need.max_hours = None
+        elif not cands:
+            status = "busy"
+    if engine == "llm":
+        # the model read the request (level, time, topics): rescore the rest with its reading
+        results = _from_catalogue(cat, need, {p.title.lower(): p.why for p in proposed}, req.branch, sims)
+        _add_new(results, extra)
+        t = lap("rescore", t)
+    else:
+        results = list(base)                           # model off, failed or slow: the fast order stands
+    if search is not None:
+        got = _within(search, left(), "catalogue search")
+        _add_new(results, got or [])
+        t = lap("search", t)
+    log.info("discover rerank picks=%d cached=%s proposed=%d status=%s", len(ranked), bool(rr and rr.cached), len(proposed), status)
+    return need, _ordered(results, ranked, base), engine, emb, status
 
 
 def deep_offer() -> Optional[str]:
@@ -677,32 +995,36 @@ def discover(req: DiscoverRequest) -> DiscoverResponse:
     # the screen fills at once; the client then calls again with mode="deep" in the background
     # (only when deep_offer() says it would add something) and merges the extra picks.
     fast = req.mode == "fast"
-    if fast:
-        need, proposed, engine = heuristic_need(req.text), [], "fast"
-    else:
-        need, proposed, engine = propose(req.text, req.lang)
-    t = lap("need", t0)
-    proposed_titles = {p.title.lower(): p.why for p in proposed}
     on = set(req.filters)
-    cat = _catalogue()
-    # Shortlist by embedding similarity; the keyword matcher stays as fallback.
-    sims, emb = _shortlist(need, cat, FAST_EMBED_BUDGET_S if fast else None)
-    t = lap("embed", t)
-    results = _from_catalogue(cat, need, proposed_titles, req.branch, sims)
-    t = lap("score", t)
-    if not fast and engine == "llm":
-        results += _from_proposals(proposed, results, req.branch)
-        t = lap("proposals", t)
-    # Live mode, deep only: widen with catalogue pages so the list grows like a library, not a shortlist.
-    if not fast and not config.effective_demo():
-        have = {r.title.lower() for r in results}
-        page = max(0, req.offset // max(1, req.limit))
-        for r in _catalogue_search(need, req.branch, page, 20):
-            if r.title.lower() not in have:
-                results.append(r)
-                have.add(r.title.lower())
-        t = lap("search", t)
-    results.sort(key=lambda r: (-r.fit, r.level, r.hours))
+    strategy = req.strategy or DEEP_STRATEGY
+    ai_status: Optional[str] = None
+    if not fast and strategy != "propose" and config.llm_enabled():
+        need, results, engine, emb, ai_status = _deep_rerank(req, on, lap, t0)
+    else:
+        if fast:
+            need, proposed, engine = heuristic_need(req.text), [], "fast"
+        else:
+            need, proposed, engine = propose(req.text, req.lang)
+            ai_status = "ok" if engine == "llm" else ("busy" if config.llm_enabled() else "off")
+            if not mentions_time(req.text):
+                need.max_hours = None              # the model likes to invent a time budget
+        t = lap("need", t0)
+        proposed_titles = {p.title.lower(): p.why for p in proposed}
+        cat = _catalogue()
+        # Shortlist by embedding similarity; the keyword matcher stays as fallback.
+        sims, emb = _shortlist(need, cat, FAST_EMBED_BUDGET_S if fast else None)
+        t = lap("embed", t)
+        results = _from_catalogue(cat, need, proposed_titles, req.branch, sims)
+        t = lap("score", t)
+        if not fast and engine == "llm":
+            results += _from_proposals(proposed, results, req.branch)
+            t = lap("proposals", t)
+        # Live mode, deep only: widen with catalogue pages so the list grows like a library, not a shortlist.
+        if not fast and not config.effective_demo():
+            page = max(0, req.offset // max(1, req.limit))
+            _add_new(results, _catalogue_search(need, req.branch, page, 20))
+            t = lap("search", t)
+        results.sort(key=_by_fit)
     chips = build_chips(need, results[:12], req.branch, on)
     filtered = apply_filters(results, chips)
     total = len(filtered)
@@ -713,7 +1035,7 @@ def discover(req: DiscoverRequest) -> DiscoverResponse:
     log.info("discover %s engine=%s embed=%s results=%d %s", req.mode, engine, emb, total,
              " ".join(f"{k}={v:.0f}ms" for k, v in timings.items()))
     return DiscoverResponse(need=need, chips=chips, results=page_items, engine=engine, total=total, offset=offset, limit=limit,
-                            has_more=offset + limit < total, deep=deep_offer() if fast else None, timings_ms=timings)
+                            has_more=offset + limit < total, deep=deep_offer() if fast else None, timings_ms=timings, ai=ai_status)
 
 
 def to_json(resp: DiscoverResponse) -> str:
@@ -827,7 +1149,7 @@ def similar(book_id: str, branch: Optional[str] = None, k: int = 3) -> list[dict
         status, _ = status_for(e, branch)
         line = next((x for x in seeds() if (x.get("isbn") or x.get("id")) == e["line_id"]), {})
         out.append({
-            "id": e["id"], "title": e["title"], "author": e["author"], "reason": reason, "level": e["level"], "hours": e["hours"],
+            "id": e["id"], "title": e["title"], "author": e["author"], "cover_url": e.get("cover_url"), "reason": reason, "level": e["level"], "hours": e["hours"],
             "status": status, "line_id": e["line_id"], "line_title": line.get("title", e["title"]), "line_author": line.get("author", e["author"]),
             "is_target": e["is_target"], "similarity": round(sim, 3),
         })

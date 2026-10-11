@@ -6,6 +6,8 @@ import type { Neighbour, AskResponse, Branch, DiscoverResponse, ResolveHit, Rout
 const BASE: string = (import.meta.env.VITE_API_BASE as string | undefined)?.replace(/\/$/, "") ?? "";
 const url = (path: string) => `${BASE}${path}`;
 
+export type Suggestions = { suggestions: { text: string; kind: string; source: string }[]; lang: string; from: string };
+
 async function json<T>(res: Response): Promise<T> {
   if (!res.ok) {
     let detail = res.statusText;
@@ -74,6 +76,12 @@ const live = {
       json<DiscoverResponse>(r),
     ),
   targets: () => fetch(url("/api/targets")).then((r) => json<{ targets: { id: string; title: string; author: string; unfinished?: boolean }[] }>(r)),
+  /** "Try:" examples generated from the catalogue, in the reader's language; a seed asks for a fresh set. */
+  suggestions: (lang: string, n = 4, seed?: number) => {
+    const p = new URLSearchParams({ lang, n: String(n) });
+    if (seed != null) p.set("seed", String(Math.floor(seed)));
+    return fetch(url(`/api/suggestions?${p.toString()}`)).then((r) => json<Suggestions>(r));
+  },
   popular: (limit = 12) => fetch(url(`/api/popular?limit=${limit}`)).then((r) => json<{ popular: { id: string; title: string; author: string; category: string; hot_at: string[]; queue: number; score: number; demo: boolean }[] }>(r)),
   ask: (target_id: string, intent: "why_before" | "time_budget" | "large_print", weeks?: number, lang?: string) =>
     fetch(url("/api/ask"), {
@@ -156,6 +164,7 @@ export const api: typeof live = P
       ...proto,
       discover: (text, _branch, filters, offset = 0, limit = 10) => wait(protoDiscover(text, filters, offset, limit)),
       chat: offline,
+      suggestions: offline, // no server: the UI keeps its built-in examples
       ask: offline,
       scan: offline,
     }
