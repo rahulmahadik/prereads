@@ -237,7 +237,7 @@ browser's built-in speech is used, so it still works.
 The UI is one responsive web app: phone layout below 760px, two-column layout above it,
 no horizontal page scroll (only the reading path scrolls). It ships a PWA manifest and
 icons, respects safe areas, and is WebView-safe (camera via file input, share-card
-preview when downloads are blocked). To wrap it as a mobile app later, see a WebView wrapper such as Capacitor. For a split deploy (UI on a CDN, API elsewhere) build with
+preview when downloads are blocked). To wrap it as a mobile app later, use a WebView wrapper such as Capacitor. For a split deploy (UI on a CDN, API elsewhere) build with
 `VITE_API_BASE=https://your-api.example.com npm run build`.
 
 ## 11. Project files
