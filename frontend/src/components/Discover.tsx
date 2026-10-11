@@ -251,6 +251,7 @@ export default function Discover({ initialText = "" }: { initialText?: string })
           <strong className="rec-title">{r.title}</strong>
           <span className="by">{r.author}</span>
           <span className="rec-why">{r.why}</span>
+          {r.blurb && r.blurb !== r.why && <span className="rec-blurb">{r.blurb}</span>}
           <ReadinessMeter level={r.level} hours={r.hours} compact />
           <span className="rec-foot">
             <span className={`where ${r.status.startsWith("Available") ? "ok" : r.status.startsWith("Not there") ? "alt" : "no"}`}>{r.status}</span>

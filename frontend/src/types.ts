@@ -112,6 +112,7 @@ export interface Recommendation {
   available_at: string[];
   hot_at: string[];
   before_count: number;
+  blurb?: string | null;
 }
 
 export interface DiscoverResponse {

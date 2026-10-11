@@ -189,24 +189,11 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
         </div>
 
         <div className="page page-right">
-          <p className="why">{stop.role === "target" ? readiness.one_line || stop.why : stop.why}</p>
-          {readiness.assumed_concepts.length > 0 && (
-            <>
-              <h3 className="small-h">{t("book.assumes")}</h3>
-              <ul className="chips">
-                {readiness.assumed_concepts.map((c, i) => (
-                  <li key={c} style={{ animationDelay: `${120 + i * 50}ms` }}>
-                    {c}
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
           {(() => {
             const about = cleanSummary(book.summary);
             const subjects = book.subjects.filter((x) => x.split(" ").length <= 4).slice(0, 5);
             if (!about && subjects.length === 0) return null;
-            const long = about.length > 360;
+            const long = about.length > 700;
             return (
               <section className="about" aria-label={t("book.about")}>
                 <h3 className="small-h">{t("book.about")}</h3>
@@ -221,6 +208,19 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
               </section>
             );
           })()}
+          <p className="why">{stop.role === "target" ? readiness.one_line || stop.why : stop.why}</p>
+          {readiness.assumed_concepts.length > 0 && (
+            <>
+              <h3 className="small-h">{t("book.assumes")}</h3>
+              <ul className="chips">
+                {readiness.assumed_concepts.map((c, i) => (
+                  <li key={c} style={{ animationDelay: `${120 + i * 50}ms` }}>
+                    {c}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
           <h3 className="small-h">{t("book.where")}</h3>
           {st.kind === "available" && (
             <div className="status ok">

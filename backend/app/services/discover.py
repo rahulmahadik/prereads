@@ -88,6 +88,7 @@ class Recommendation(BaseModel):
     hot_at: list[str]
     before_count: int
     reading_age: Optional[str] = None
+    blurb: Optional[str] = None                    # two-line plain description from the catalogue
     min_age: Optional[int] = None
     ai_pick: bool = False                          # proposed by the model (deep phase), then catalogue-verified
 
@@ -230,6 +231,24 @@ def junk_title(title: str) -> bool:
     return bool(_JUNK_TITLE.search(title or ""))
 
 
+def blurb(summary: Optional[str], limit: int = 220) -> Optional[str]:
+    """A short, plain description for result cards: catalogue text without markdown, links or
+    edition notes, cut at a sentence (or word) boundary."""
+    if not summary:
+        return None
+    text = re.split(r"^\s*[-=*_]{3,}\s*$", summary, maxsplit=1, flags=re.M)[0]
+    text = re.sub(r"\[([^\]]+)\]\[\d+\]|\[([^\]]+)\]\([^)]*\)", lambda m: m.group(1) or m.group(2), text)
+    text = re.sub(r"https?://\S+|[*_`#>]+|\(\s*\[?source\]?[^)]*\)", "", text, flags=re.I)
+    text = re.sub(r"\s+", " ", text).strip().strip('"')
+    if len(text) < 40:
+        return None
+    if len(text) <= limit:
+        return text
+    cut = text[:limit]
+    end = max(cut.rfind(". "), cut.rfind("! "), cut.rfind("? "))
+    return (cut[: end + 1] if end > 80 else cut.rsplit(" ", 1)[0] + "…").strip()
+
+
 # ------------------------------------------------------------------ catalogue
 def _catalogue() -> list[dict]:
     """Every book on every cached line is a candidate; each remembers its line."""
@@ -260,6 +279,7 @@ def _catalogue() -> list[dict]:
                 "hours": stop.readiness.hours,
                 "concepts": stop.readiness.assumed_concepts,
                 "one_line": stop.readiness.one_line or (stop.why if stop.role != "target" else ""),
+                "blurb": blurb(b.summary),
                 "availability": stop.availability,
                 "hot": stop.demand.hot_branches,
                 "before_count": len([x for x in before if x.readiness.level < stop.readiness.level]) if stop.role == "target" else 0,
@@ -502,7 +522,7 @@ def _catalogue_search(need: Need, branch: Optional[str], page: int, size: int) -
             level=rd.level, hours=rd.hours, why=(b.summary[:160] + "…") if b.summary else "From the catalogue search for your topic.",
             fit=min(0.89, fit), status=status, available_at=names,
             hot_at=[h.replace(" Public Library", "").replace(" Regional Library", "").replace(" Library", "") for h in dm.hot_branches], before_count=0,
-            **_age_fields(estimate_age(b, rd)),
+            blurb=blurb(b.summary), **_age_fields(estimate_age(b, rd)),
         ))
     return out
 
@@ -567,7 +587,7 @@ def _from_catalogue(cat: list[dict], need: Need, proposed_titles: dict[str, str]
         out.append(Recommendation(
             id=e["id"], line_id=e["line_id"], is_target=e["is_target"], title=e["title"], author=e["author"], category=e["category"], level=e["level"], hours=e["hours"],
             why=why, fit=fit, status=status, available_at=names, hot_at=[h.replace(" Public Library", "").replace(" Regional Library", "").replace(" Library", "") for h in e["hot"]],
-            before_count=e["before_count"], ai_pick=proposed_here, **_age_fields(age_heuristic([], [], e["level"], None)),
+            before_count=e["before_count"], ai_pick=proposed_here, blurb=e.get("blurb"), **_age_fields(age_heuristic([], [], e["level"], None)),
         ))
     return out
 
@@ -610,7 +630,7 @@ def _from_proposals(proposed: list[Proposed], results: list[Recommendation], bra
             category=clean_category(b.subjects, "Suggested"), level=rd.level, hours=rd.hours, why=pr.why,
             fit=round(max(0.5, 0.95 - 0.04 * i), 3), status=status, available_at=names,
             hot_at=[h.replace(" Public Library", "").replace(" Regional Library", "").replace(" Library", "") for h in dm.hot_branches],
-            before_count=0, ai_pick=True, **_age_fields(estimate_age(b, rd)),
+            before_count=0, ai_pick=True, blurb=blurb(b.summary), **_age_fields(estimate_age(b, rd)),
         ))
         have.add(b.title.lower())
     return out
