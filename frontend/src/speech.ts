@@ -1,7 +1,10 @@
 /* Listen & speak.
    speak(text): tries the server's natural voice (/api/tts); if unavailable, uses
    the browser's best built-in voice. Only one thing speaks at a time.
-   listen(): browser speech recognition for voice input (Chrome/Edge/Safari). */
+   listen(): browser speech recognition for voice input (Chrome/Edge/Safari).
+   lang is a BCP-47 code (en-SG, zh-CN, ms-MY, ta-IN; see voiceLang() in i18n.ts). The local natural
+   voice (Kokoro) is English-only, so other languages go straight to the browser voice. */
+import { currentLang, t } from "./i18n";
 
 type Listener = (state: SpeechState) => void;
 export type SpeechState = { speaking: boolean; id: string | null; source: "natural" | "browser" | null };
@@ -42,7 +45,9 @@ function pickVoice(lang: string): SpeechSynthesisVoice | undefined {
     if (v.localService) s += 1;
     return s;
   };
-  return [...voices].sort((a, b) => score(b) - score(a))[0];
+  const best = [...voices].sort((a, b) => score(b) - score(a))[0];
+  // Only a voice in the right language; otherwise let the browser choose one for u.lang.
+  return best && score(best) >= 5 ? best : undefined;
 }
 
 async function speakBrowser(text: string, id: string, lang: string): Promise<void> {
@@ -73,7 +78,7 @@ export async function speak(text: string, id = "x", lang = "en-SG"): Promise<voi
   stop();
   const clean = text.replace(/\s+/g, " ").trim();
   if (!clean) return;
-  if (naturalAvailable !== false) {
+  if (naturalAvailable !== false && lang.toLowerCase().startsWith("en")) {
     try {
       const res = await fetch("/api/tts", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text: clean, lang }) });
       if (res.ok) {
@@ -203,30 +208,34 @@ function listenBrowser(lang: string): Promise<string> {
 /* ---------------- narration scripts ---------------- */
 const short = (b: string) => b.replace(" Public Library", "").replace(" Regional Library", "").replace(" Library", "");
 
+/** "Level n of 5: …" words, in the current UI language. */
 export const LEVEL_WORDS: Record<number, string> = {
-  1: "anyone can start it",
-  2: "a little background helps",
-  3: "some familiarity is needed",
-  4: "it needs real background",
-  5: "it's specialist territory",
+  get 1() { return t("level.words.1"); },
+  get 2() { return t("level.words.2"); },
+  get 3() { return t("level.words.3"); },
+  get 4() { return t("level.words.4"); },
+  get 5() { return t("level.words.5"); },
 };
 
 export function bookScript(o: { title: string; author: string; why: string; level: number; hours: number; status: string; callNumber?: string; branch?: string; steps?: string[]; assumes?: string[] }): string {
   const parts = [
-    `${o.title}, by ${o.author}.`,
+    t("say.by", { title: o.title, author: o.author }),
     o.why,
-    `Level ${o.level} of 5: ${LEVEL_WORDS[o.level] || ""}. About ${Math.round(o.hours)} hours of reading.`,
+    t("say.level", { n: o.level, words: LEVEL_WORDS[o.level] || "", hours: Math.round(o.hours) }),
   ];
-  if (o.assumes && o.assumes.length) parts.push(`It assumes you know ${o.assumes.slice(0, 4).join(", ")}.`);
-  parts.push(o.status + (o.callNumber ? `, call number ${o.callNumber.replace(/\./g, " point ")}.` : "."));
+  if (o.assumes && o.assumes.length) parts.push(t("say.assumes", { list: o.assumes.slice(0, 4).join(t("say.sep")) }));
+  // English voices read "153.4" as "153 point 4"; other voices read the number as written.
+  const call = o.callNumber && (currentLang() === "en" ? o.callNumber.replace(/\./g, " point ") : o.callNumber);
+  parts.push(o.status + (call ? t("say.call", { call }) : t("say.end")));
   if (o.steps && o.steps.length) parts.push("To find it: " + o.steps.join(" Then, ").replace(/Then, Go/g, "Then go"));
   return parts.join(" ");
 }
 
 export function lineScript(o: { target: string; before: { title: string; why: string; hours: number; where: string }[]; hours: number; trip?: string }): string {
-  if (!o.before.length) return `You can start ${o.target} today. Nothing needs to come first.`;
-  const items = o.before.map((b, i) => `${i + 1}. ${b.title}. ${b.why} About ${Math.round(b.hours)} hours. ${b.where}.`);
-  return `${o.before.length} ${o.before.length === 1 ? "book" : "books"} before ${o.target}, about ${Math.round(o.hours)} hours in total. ${items.join(" ")}${o.trip ? ` ${o.trip}.` : ""}`;
+  if (!o.before.length) return t("say.readyNow", { target: o.target });
+  const items = o.before.map((b, i) => t("say.item", { i: i + 1, title: b.title, why: b.why, hours: Math.round(b.hours), where: b.where }));
+  const n = o.before.length;
+  return `${t(n === 1 ? "say.before.one" : "say.before.other", { n, target: o.target, hours: Math.round(o.hours) })} ${items.join(" ")}${o.trip ? t("say.trip", { trip: o.trip }) : ""}`;
 }
 
 export function picksScript(o: { summary: string; picks: { title: string; author: string; why: string; status: string }[] }): string {

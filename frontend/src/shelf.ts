@@ -1,3 +1,4 @@
+import { t } from "./i18n";
 import type { Stop } from "./types";
 
 /** Dewey class (first three digits) of a call number such as "English 153.4 KAH" or "332.024 TAN". */
@@ -31,5 +32,5 @@ export function sameShelfGroups(stops: Stop[], branchCode: string, branchName: s
 }
 
 export function sameShelfText(g: ShelfGroup): string {
-  return `${g.stops.length} of your PreReads are on the same shelf (${g.dewey}) — grab them in one trip`;
+  return t("trip.sameShelf", { n: g.stops.length, dewey: g.dewey });
 }
