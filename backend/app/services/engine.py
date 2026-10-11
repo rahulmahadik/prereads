@@ -155,7 +155,7 @@ def _spread(ramp: list[Stop], k: int) -> list[Stop]:
 
 
 def apply_rules(target: Stop, before: list[Stop], after: list[Stop], notes: list[str]) -> tuple[list[Stop], list[Stop]]:
-    """Enforce the path rules in code (AGENTS.md, non-negotiable 2) and return (before, after).
+    """Enforce the path rules in code (never in prompts) and return (before, after).
 
     Every drop is explained in `notes`, which is saved on the route for eval and debugging."""
     t = target.readiness.level

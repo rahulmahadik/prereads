@@ -230,7 +230,6 @@ preview when downloads are blocked). To wrap it as a mobile app later, see
 
 ## 11. Project files
 
-- `AGENTS.md` — Agent working contract and build-day task list
 - `backend/app/README.md` — backend package map and request flow. The backend is layered:
   `api/` (FastAPI routers) → `services/` (reading-path engine, discovery, chat, ask) →
   `integrations/` (NLB, Open Library, OverDrive, availability) and `ai/` (LLM, embeddings,

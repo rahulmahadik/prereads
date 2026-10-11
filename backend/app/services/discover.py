@@ -350,6 +350,15 @@ def score(entry: dict, need: Need, proposed_titles: dict[str, str], branch: Opti
         hits = nt & tt
         topic = min(1.0, len(hits) / 2)          # two overlapping concepts = a confident match
     topic = max(topic, semantic)
+    # A request often names several things ("AI ... Python"): a book covering all of them
+    # beats one that matches a single topic, so scale by how many asked-for topics it covers.
+    groups = [g for g in (_expand(_tokens(t)) for t in need.topics) if g]
+    if len(groups) > 1 and topic > 0:
+        # compare against the book's own words (not synonym-expanded), or "computer" → "machine"
+        # would make every programming book look like it covers "AI"
+        own = _tokens(entry["title"]) | _tokens(" ".join(entry["subjects"])) | _tokens(" ".join(entry["concepts"]))
+        covered = sum(1 for g in groups if g & own)
+        topic *= 0.6 + 0.4 * covered / len(groups)
     key = entry["title"].lower()
     if key in proposed_titles:
         topic = max(topic, 1.0)

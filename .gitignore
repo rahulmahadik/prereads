@@ -222,18 +222,12 @@ __marimo__/
 # macOS
 .DS_Store
 node_modules/
-.claude/settings.local.json
 backend/data/cache/tts/
 backend/data/cache/embeddings/
 backend/data/models/
-.claude/worktrees/
 backend/data/cache/similar/
 .run/
 
-# private / not for the public repo
-internal/
-.claude/
-CLAUDE.md
 backend/data/cache/digital/
 backend/data/cache/enrich/
 backend/data/cache/reading_age/
