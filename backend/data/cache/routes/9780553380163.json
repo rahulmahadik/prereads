@@ -1,0 +1,594 @@
+{
+  "target_id": "9780553380163",
+  "stops": [
+    {
+      "role": "before",
+      "order": 0,
+      "book": {
+        "id": "ol:astrophysics-for-people-in-a-hurry-neil-degrasse-tyson",
+        "title": "Astrophysics for People in a Hurry",
+        "author": "Neil deGrasse Tyson",
+        "isbn": null,
+        "brn": null,
+        "year": null,
+        "pages": 224,
+        "subjects": [
+          "Cosmology",
+          "Physics",
+          "Black holes",
+          "Time"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 1,
+        "hours": 4.0,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "The vocabulary of the cosmos in an afternoon.",
+      "confidence": 0.8999999999999999,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 523.01 TYS",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 523.01 TYS",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 523.01 TYS",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 523.01 TYS",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 523.01 TYS",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 523.01 TYS",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Central Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 1,
+      "book": {
+        "id": "ol:seven-brief-lessons-on-physics-carlo-rovelli",
+        "title": "Seven Brief Lessons on Physics",
+        "author": "Carlo Rovelli",
+        "isbn": null,
+        "brn": null,
+        "year": null,
+        "pages": 96,
+        "subjects": [
+          "Cosmology",
+          "Physics",
+          "Black holes",
+          "Time"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 1,
+        "hours": 2.0,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "Relativity and quantum theory as seven short, beautiful essays.",
+      "confidence": 0.8999999999999999,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 530 ROV",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 530 ROV",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 530 ROV",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 530 ROV",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 530 ROV",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 530 ROV",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 530 ROV",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library",
+          "Tampines Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "target",
+      "order": 2,
+      "book": {
+        "id": "9780553380163",
+        "title": "A Brief History of Time",
+        "author": "Stephen Hawking",
+        "isbn": "9780553380163",
+        "brn": null,
+        "year": 1988,
+        "pages": 212,
+        "subjects": [
+          "Cosmology",
+          "Physics",
+          "Black holes",
+          "Time"
+        ],
+        "summary": "Hawking's account of the universe, from the big bang to black holes.",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 4,
+        "hours": 8.0,
+        "assumed_concepts": [
+          "relativity in outline",
+          "quantum ideas in outline",
+          "what a black hole is"
+        ],
+        "style_tags": [],
+        "one_line": "Short, but every page assumes a passing acquaintance with relativity and quantum ideas."
+      },
+      "why": "Short, but every page assumes a passing acquaintance with relativity and quantum ideas.",
+      "confidence": 1.0,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 523.1 HAW",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 523.1 HAW",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 523.1 HAW",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 523.1 HAW",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 523.1 HAW",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 523.1 HAW",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 3,
+      "book": {
+        "id": "ol:the-order-of-time-carlo-rovelli",
+        "title": "The Order of Time",
+        "author": "Carlo Rovelli",
+        "isbn": null,
+        "brn": null,
+        "year": null,
+        "pages": 240,
+        "subjects": [
+          "Cosmology",
+          "Physics",
+          "Black holes",
+          "Time"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 6.0,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "Goes deeper on what Hawking means by time.",
+      "confidence": 0.7,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 530.11 ROV",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 530.11 ROV",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 530.11 ROV",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 530.11 ROV",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 530.11 ROV",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 530.11 ROV",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 530.11 ROV",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Jurong West Public Library",
+          "Woodlands Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 4,
+      "book": {
+        "id": "ol:the-fabric-of-the-cosmos-brian-greene",
+        "title": "The Fabric of the Cosmos",
+        "author": "Brian Greene",
+        "isbn": null,
+        "brn": null,
+        "year": null,
+        "pages": 569,
+        "subjects": [
+          "Cosmology",
+          "Physics",
+          "Black holes",
+          "Time"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 4,
+        "hours": 18.0,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "Space, time and the texture of reality, in more detail.",
+      "confidence": 0.6,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 523.1 GRE",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 523.1 GRE",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 523.1 GRE",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 523.1 GRE",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 523.1 GRE",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 523.1 GRE",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 523.1 GRE",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 523.1 GRE",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Jurong West Public Library",
+          "Central Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 5,
+      "book": {
+        "id": "ol:black-holes-and-time-warps-kip-s-thorne",
+        "title": "Black Holes and Time Warps",
+        "author": "Kip S. Thorne",
+        "isbn": null,
+        "brn": null,
+        "year": null,
+        "pages": 619,
+        "subjects": [
+          "Cosmology",
+          "Physics",
+          "Black holes",
+          "Time"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 5,
+        "hours": 22.0,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "The full story of black holes from a Nobel laureate.",
+      "confidence": 0.7999999999999999,
+      "availability": [
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 523.8 THO",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 523.8 THO",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 523.8 THO",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 523.8 THO",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 523.8 THO",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 523.8 THO",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Jurong West Public Library",
+          "Tampines Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    }
+  ],
+  "generated_at": "2026-10-09T06:38:50.762546+00:00",
+  "engine": "seed",
+  "notes": []
+}

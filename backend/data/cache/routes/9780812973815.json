@@ -1,0 +1,445 @@
+{
+  "target_id": "9780812973815",
+  "stops": [
+    {
+      "role": "before",
+      "order": 0,
+      "book": {
+        "id": "ol:the-drunkard-s-walk-leonard-mlodinow",
+        "title": "The Drunkard's Walk",
+        "author": "Leonard Mlodinow",
+        "isbn": null,
+        "brn": null,
+        "year": null,
+        "pages": 252,
+        "subjects": [
+          "Probability",
+          "Risk",
+          "Epistemology",
+          "Finance"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 2,
+        "hours": 8.0,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "A friendly tour of randomness and probability intuition, the ground Taleb stands on.",
+      "confidence": 0.8999999999999999,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 519.2 MLO",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 519.2 MLO",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 519.2 MLO",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 519.2 MLO",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 519.2 MLO",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 519.2 MLO",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Tampines Regional Library",
+          "Central Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 1,
+      "book": {
+        "id": "ol:fooled-by-randomness-nassim-nicholas-taleb",
+        "title": "Fooled by Randomness",
+        "author": "Nassim Nicholas Taleb",
+        "isbn": null,
+        "brn": null,
+        "year": null,
+        "pages": 368,
+        "subjects": [
+          "Probability",
+          "Risk",
+          "Epistemology",
+          "Finance"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 10.0,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "Taleb's earlier, shorter book with the same ideas in simpler clothes.",
+      "confidence": 0.7999999999999999,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 332.6 TAL",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 332.6 TAL",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 332.6 TAL",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 332.6 TAL",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 332.6 TAL",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library",
+          "Tampines Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "target",
+      "order": 2,
+      "book": {
+        "id": "9780812973815",
+        "title": "The Black Swan",
+        "author": "Nassim Nicholas Taleb",
+        "isbn": "9780812973815",
+        "brn": null,
+        "year": 2007,
+        "pages": 444,
+        "subjects": [
+          "Probability",
+          "Risk",
+          "Epistemology",
+          "Finance"
+        ],
+        "summary": "On the extreme impact of rare, unpredictable events and our blindness to them.",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 4,
+        "hours": 14.0,
+        "assumed_concepts": [
+          "probability distributions",
+          "randomness vs. skill",
+          "fat tails",
+          "basic statistics"
+        ],
+        "style_tags": [],
+        "one_line": "Taleb assumes you can tell a bell curve from a fat tail; the before-line gets you there gently."
+      },
+      "why": "Taleb assumes you can tell a bell curve from a fat tail; the before-line gets you there gently.",
+      "confidence": 1.0,
+      "availability": [
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 155.2 TAL",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 155.2 TAL",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 155.2 TAL",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 155.2 TAL",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 3,
+      "book": {
+        "id": "ol:the-signal-and-the-noise-nate-silver",
+        "title": "The Signal and the Noise",
+        "author": "Nate Silver",
+        "isbn": null,
+        "brn": null,
+        "year": null,
+        "pages": 544,
+        "subjects": [
+          "Probability",
+          "Risk",
+          "Epistemology",
+          "Finance"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 14.0,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "Prediction in practice, with the humility Taleb demands.",
+      "confidence": 0.7,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 519.5 SIL",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 519.5 SIL",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 519.5 SIL",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 519.5 SIL",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 519.5 SIL",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 519.5 SIL",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 519.5 SIL",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library",
+          "Bukit Batok Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 4,
+      "book": {
+        "id": "ol:antifragile-nassim-nicholas-taleb",
+        "title": "Antifragile",
+        "author": "Nassim Nicholas Taleb",
+        "isbn": null,
+        "brn": null,
+        "year": null,
+        "pages": 519,
+        "subjects": [
+          "Probability",
+          "Risk",
+          "Epistemology",
+          "Finance"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 4,
+        "hours": 18.0,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "What to do about black swans: build things that gain from disorder.",
+      "confidence": 0.6,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 155.24 TAL",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 155.24 TAL",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 155.24 TAL",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 155.24 TAL",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 155.24 TAL",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Tampines Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    }
+  ],
+  "generated_at": "2026-10-09T06:38:50.760678+00:00",
+  "engine": "seed",
+  "notes": []
+}

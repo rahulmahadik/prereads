@@ -1,0 +1,555 @@
+{
+  "target_id": "9780674430006",
+  "stops": [
+    {
+      "role": "before",
+      "order": 0,
+      "book": {
+        "id": "ol:economics-the-user-s-guide-ha-joon-chang",
+        "title": "Economics: The User's Guide",
+        "author": "Ha-Joon Chang",
+        "isbn": null,
+        "brn": null,
+        "year": null,
+        "pages": 512,
+        "subjects": [
+          "Economics",
+          "Inequality",
+          "Economic history"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 2,
+        "hours": 12.0,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "A plain-language map of economics that explains the terms Piketty uses without stopping.",
+      "confidence": 0.8999999999999999,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 330 CHA",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 330 CHA",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 330 CHA",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 330 CHA",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 330 CHA",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 330 CHA",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 330 CHA",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Woodlands Regional Library",
+          "Punggol Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 1,
+      "book": {
+        "id": "ol:the-undercover-economist-tim-harford",
+        "title": "The Undercover Economist",
+        "author": "Tim Harford",
+        "isbn": null,
+        "brn": null,
+        "year": null,
+        "pages": 304,
+        "subjects": [
+          "Economics",
+          "Inequality",
+          "Economic history"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 2,
+        "hours": 8.0,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "Economic reasoning in everyday situations; builds the intuition.",
+      "confidence": 0.8999999999999999,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 330 HAR",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 330 HAR",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 330 HAR",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 330 HAR",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "before",
+      "order": 2,
+      "book": {
+        "id": "ol:naked-economics-charles-wheelan",
+        "title": "Naked Economics",
+        "author": "Charles Wheelan",
+        "isbn": null,
+        "brn": null,
+        "year": null,
+        "pages": 384,
+        "subjects": [
+          "Economics",
+          "Inequality",
+          "Economic history"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 2,
+        "hours": 10.0,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "Macroeconomics without equations.",
+      "confidence": 0.8999999999999999,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 330 WHE",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 330 WHE",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 330 WHE",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 330 WHE",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 330 WHE",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 330 WHE",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library",
+          "Tampines Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "target",
+      "order": 3,
+      "book": {
+        "id": "9780674430006",
+        "title": "Capital in the Twenty-First Century",
+        "author": "Thomas Piketty",
+        "isbn": "9780674430006",
+        "brn": null,
+        "year": 2013,
+        "pages": 696,
+        "subjects": [
+          "Economics",
+          "Inequality",
+          "Economic history"
+        ],
+        "summary": "Piketty's analysis of wealth and income inequality across two centuries.",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 5,
+        "hours": 30.0,
+        "assumed_concepts": [
+          "GDP and national income",
+          "rate of return vs. growth",
+          "reading economic charts",
+          "tax policy basics"
+        ],
+        "style_tags": [],
+        "one_line": "A big economics book with charts on every page; you need the vocabulary of income, capital and growth first."
+      },
+      "why": "A big economics book with charts on every page; you need the vocabulary of income, capital and growth first.",
+      "confidence": 1.0,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 332.041 PIK",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 332.041 PIK",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 332.041 PIK",
+          "available": 0,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 332.041 PIK",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 332.041 PIK",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 332.041 PIK",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Central Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 4,
+      "book": {
+        "id": "ol:the-price-of-inequality-joseph-e-stiglitz",
+        "title": "The Price of Inequality",
+        "author": "Joseph E. Stiglitz",
+        "isbn": null,
+        "brn": null,
+        "year": null,
+        "pages": 560,
+        "subjects": [
+          "Economics",
+          "Inequality",
+          "Economic history"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 4,
+        "hours": 16.0,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "A Nobel laureate's take on the same question from the policy side.",
+      "confidence": 0.7,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 339.2 STI",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 339.2 STI",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 339.2 STI",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 339.2 STI",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 339.2 STI",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 339.2 STI",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 339.2 STI",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Central Public Library",
+          "Punggol Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 5,
+      "book": {
+        "id": "ol:capital-and-ideology-thomas-piketty",
+        "title": "Capital and Ideology",
+        "author": "Thomas Piketty",
+        "isbn": null,
+        "brn": null,
+        "year": null,
+        "pages": 1104,
+        "subjects": [
+          "Economics",
+          "Inequality",
+          "Economic history"
+        ],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "seed"
+      },
+      "readiness": {
+        "level": 5,
+        "hours": 45.0,
+        "assumed_concepts": [],
+        "style_tags": [],
+        "one_line": ""
+      },
+      "why": "The even larger sequel.",
+      "confidence": 0.6,
+      "availability": [
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 330.9 PIK",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 330.9 PIK",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 330.9 PIK",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 330.9 PIK",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 330.9 PIK",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 330.9 PIK",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Tampines Regional Library",
+          "Ang Mo Kio Public Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    }
+  ],
+  "generated_at": "2026-10-09T06:38:50.764676+00:00",
+  "engine": "seed",
+  "notes": []
+}

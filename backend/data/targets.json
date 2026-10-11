@@ -1,0 +1,1280 @@
+[
+  {
+    "isbn": "9780374533557",
+    "title": "Thinking, Fast and Slow",
+    "author": "Daniel Kahneman",
+    "year": 2011,
+    "pages": 499,
+    "level": 4,
+    "hours": 16,
+    "subjects": [
+      "Psychology",
+      "Decision making",
+      "Cognition",
+      "Behavioral economics"
+    ],
+    "concepts": [
+      "heuristics and biases",
+      "probability basics",
+      "expected value",
+      "experimental psychology"
+    ],
+    "one_line": "Dense but rewarding; it helps to already know what a cognitive bias is and to be comfortable with simple probability.",
+    "summary": "Kahneman's account of the two systems that drive how we think: the fast, intuitive System 1 and the slow, deliberate System 2.",
+    "before": [
+      {
+        "title": "Predictably Irrational",
+        "author": "Dan Ariely",
+        "level": 2,
+        "hours": 8,
+        "pages": 304,
+        "why": "Introduces the same biases through quick, funny experiments, so Kahneman's formal treatment feels familiar."
+      },
+      {
+        "title": "The Undoing Project",
+        "author": "Michael Lewis",
+        "level": 2,
+        "hours": 9,
+        "pages": 368,
+        "why": "Tells the story of Kahneman and Tversky, which gives the ideas in the big book a human thread to hang on."
+      },
+      {
+        "title": "Nudge",
+        "author": "Richard H. Thaler",
+        "level": 3,
+        "hours": 10,
+        "pages": 312,
+        "why": "Applies the biases to everyday choices before you meet the underlying theory."
+      }
+    ],
+    "after": [
+      {
+        "title": "Noise",
+        "author": "Daniel Kahneman",
+        "level": 4,
+        "hours": 14,
+        "pages": 464,
+        "why": "Kahneman's follow-up on the other source of bad judgment: inconsistency."
+      },
+      {
+        "title": "Superforecasting",
+        "author": "Philip E. Tetlock",
+        "level": 3,
+        "hours": 10,
+        "pages": 352,
+        "why": "Puts the ideas to work on prediction and shows how to actually get better at it."
+      },
+      {
+        "title": "Judgment under Uncertainty",
+        "author": "Daniel Kahneman",
+        "level": 5,
+        "hours": 30,
+        "pages": 555,
+        "why": "The original research papers, for readers who want the source."
+      }
+    ],
+    "unfinished": true
+  },
+  {
+    "isbn": "9780465026562",
+    "title": "Gödel, Escher, Bach",
+    "author": "Douglas R. Hofstadter",
+    "year": 1979,
+    "pages": 777,
+    "level": 5,
+    "hours": 40,
+    "subjects": [
+      "Logic",
+      "Mathematics",
+      "Artificial intelligence",
+      "Consciousness",
+      "Philosophy"
+    ],
+    "concepts": [
+      "formal systems",
+      "self-reference and recursion",
+      "Gödel's incompleteness theorems",
+      "basic computer science",
+      "fugue and canon structure"
+    ],
+    "one_line": "The most-abandoned book on many shelves. You want a working idea of formal systems and self-reference before you start.",
+    "summary": "A Pulitzer-winning exploration of how meaning and self-awareness can arise from formal systems, braided through dialogues, puzzles, Bach and Escher.",
+    "before": [
+      {
+        "title": "Logicomix",
+        "author": "Apostolos Doxiadis",
+        "level": 2,
+        "hours": 5,
+        "pages": 352,
+        "why": "A graphic novel about the quest for logical foundations; painless way to meet Russell, Gödel and the questions GEB plays with."
+      },
+      {
+        "title": "Gödel's Proof",
+        "author": "Ernest Nagel",
+        "level": 3,
+        "hours": 5,
+        "pages": 160,
+        "why": "A short, clear walk through the incompleteness theorem that GEB assumes you can follow."
+      },
+      {
+        "title": "I Am a Strange Loop",
+        "author": "Douglas R. Hofstadter",
+        "level": 4,
+        "hours": 14,
+        "pages": 412,
+        "why": "Hofstadter's own clearer restatement of GEB's central message, written because readers missed it."
+      }
+    ],
+    "after": [
+      {
+        "title": "The Mind's I",
+        "author": "Douglas R. Hofstadter",
+        "level": 4,
+        "hours": 16,
+        "pages": 512,
+        "why": "Essays and stories on self and consciousness, curated with Dennett."
+      },
+      {
+        "title": "Metamagical Themas",
+        "author": "Douglas R. Hofstadter",
+        "level": 4,
+        "hours": 25,
+        "pages": 852,
+        "why": "The Scientific American columns, for readers who want more of the same mind."
+      }
+    ],
+    "unfinished": true
+  },
+  {
+    "isbn": "9780062316097",
+    "title": "Sapiens",
+    "author": "Yuval Noah Harari",
+    "year": 2011,
+    "pages": 464,
+    "level": 3,
+    "hours": 15,
+    "subjects": [
+      "World history",
+      "Human evolution",
+      "Anthropology"
+    ],
+    "concepts": [
+      "human evolution timeline",
+      "agricultural revolution",
+      "basic economics",
+      "world history outline"
+    ],
+    "one_line": "Readable, but it moves fast across 70,000 years; a light timeline of human history in your head helps.",
+    "summary": "A sweeping history of humankind from the cognitive revolution to the present.",
+    "before": [
+      {
+        "title": "A Short History of Nearly Everything",
+        "author": "Bill Bryson",
+        "level": 2,
+        "hours": 16,
+        "pages": 544,
+        "why": "Gives you the deep-time scaffolding that Sapiens assumes, told with jokes."
+      },
+      {
+        "title": "Origin Story",
+        "author": "David Christian",
+        "level": 3,
+        "hours": 12,
+        "pages": 368,
+        "why": "Big-history framing of the same arc with clearer signposts."
+      }
+    ],
+    "after": [
+      {
+        "title": "Homo Deus",
+        "author": "Yuval Noah Harari",
+        "level": 3,
+        "hours": 14,
+        "pages": 464,
+        "why": "The sequel, turning the same lens on the future."
+      },
+      {
+        "title": "Guns, Germs, and Steel",
+        "author": "Jared Diamond",
+        "level": 4,
+        "hours": 18,
+        "pages": 528,
+        "why": "The deeper argument about why societies diverged."
+      },
+      {
+        "title": "The Dawn of Everything",
+        "author": "David Graeber",
+        "level": 5,
+        "hours": 28,
+        "pages": 704,
+        "why": "A demanding counter-argument to Harari's story of early societies."
+      }
+    ],
+    "unfinished": true
+  },
+  {
+    "isbn": "9780812973815",
+    "title": "The Black Swan",
+    "author": "Nassim Nicholas Taleb",
+    "year": 2007,
+    "pages": 444,
+    "level": 4,
+    "hours": 14,
+    "subjects": [
+      "Probability",
+      "Risk",
+      "Epistemology",
+      "Finance"
+    ],
+    "concepts": [
+      "probability distributions",
+      "randomness vs. skill",
+      "fat tails",
+      "basic statistics"
+    ],
+    "one_line": "Taleb assumes you can tell a bell curve from a fat tail; the before-line gets you there gently.",
+    "summary": "On the extreme impact of rare, unpredictable events and our blindness to them.",
+    "before": [
+      {
+        "title": "The Drunkard's Walk",
+        "author": "Leonard Mlodinow",
+        "level": 2,
+        "hours": 8,
+        "pages": 252,
+        "why": "A friendly tour of randomness and probability intuition, the ground Taleb stands on."
+      },
+      {
+        "title": "Fooled by Randomness",
+        "author": "Nassim Nicholas Taleb",
+        "level": 3,
+        "hours": 10,
+        "pages": 368,
+        "why": "Taleb's earlier, shorter book with the same ideas in simpler clothes."
+      }
+    ],
+    "after": [
+      {
+        "title": "Antifragile",
+        "author": "Nassim Nicholas Taleb",
+        "level": 4,
+        "hours": 18,
+        "pages": 519,
+        "why": "What to do about black swans: build things that gain from disorder."
+      },
+      {
+        "title": "The Signal and the Noise",
+        "author": "Nate Silver",
+        "level": 3,
+        "hours": 14,
+        "pages": 544,
+        "why": "Prediction in practice, with the humility Taleb demands."
+      }
+    ],
+    "unfinished": true
+  },
+  {
+    "isbn": "9780198788607",
+    "title": "The Selfish Gene",
+    "author": "Richard Dawkins",
+    "year": 1976,
+    "pages": 496,
+    "level": 4,
+    "hours": 14,
+    "subjects": [
+      "Evolution",
+      "Genetics",
+      "Biology"
+    ],
+    "concepts": [
+      "natural selection",
+      "genes and alleles",
+      "game theory basics"
+    ],
+    "one_line": "Clear prose, but it assumes natural selection is already comfortable for you.",
+    "summary": "Evolution seen from the gene's point of view.",
+    "before": [
+      {
+        "title": "Why Evolution Is True",
+        "author": "Jerry A. Coyne",
+        "level": 2,
+        "hours": 9,
+        "pages": 304,
+        "why": "The plainest account of natural selection, which Dawkins takes as given."
+      },
+      {
+        "title": "The Greatest Show on Earth",
+        "author": "Richard Dawkins",
+        "level": 3,
+        "hours": 12,
+        "pages": 470,
+        "why": "Dawkins on the evidence for evolution; warms you up to his style before the theory."
+      }
+    ],
+    "after": [
+      {
+        "title": "The Blind Watchmaker",
+        "author": "Richard Dawkins",
+        "level": 3,
+        "hours": 12,
+        "pages": 332,
+        "why": "How complexity arises without a designer; the natural companion."
+      },
+      {
+        "title": "The Extended Phenotype",
+        "author": "Richard Dawkins",
+        "level": 5,
+        "hours": 16,
+        "pages": 313,
+        "why": "Dawkins's own pick as his most important book, and the hardest."
+      }
+    ],
+    "unfinished": true
+  },
+  {
+    "isbn": "9780553380163",
+    "title": "A Brief History of Time",
+    "author": "Stephen Hawking",
+    "year": 1988,
+    "pages": 212,
+    "level": 4,
+    "hours": 8,
+    "subjects": [
+      "Cosmology",
+      "Physics",
+      "Black holes",
+      "Time"
+    ],
+    "concepts": [
+      "relativity in outline",
+      "quantum ideas in outline",
+      "what a black hole is"
+    ],
+    "one_line": "Short, but every page assumes a passing acquaintance with relativity and quantum ideas.",
+    "summary": "Hawking's account of the universe, from the big bang to black holes.",
+    "before": [
+      {
+        "title": "Astrophysics for People in a Hurry",
+        "author": "Neil deGrasse Tyson",
+        "level": 1,
+        "hours": 4,
+        "pages": 224,
+        "why": "The vocabulary of the cosmos in an afternoon."
+      },
+      {
+        "title": "Seven Brief Lessons on Physics",
+        "author": "Carlo Rovelli",
+        "level": 1,
+        "hours": 2,
+        "pages": 96,
+        "why": "Relativity and quantum theory as seven short, beautiful essays."
+      }
+    ],
+    "after": [
+      {
+        "title": "The Order of Time",
+        "author": "Carlo Rovelli",
+        "level": 3,
+        "hours": 6,
+        "pages": 240,
+        "why": "Goes deeper on what Hawking means by time."
+      },
+      {
+        "title": "The Fabric of the Cosmos",
+        "author": "Brian Greene",
+        "level": 4,
+        "hours": 18,
+        "pages": 569,
+        "why": "Space, time and the texture of reality, in more detail."
+      },
+      {
+        "title": "Black Holes and Time Warps",
+        "author": "Kip S. Thorne",
+        "level": 5,
+        "hours": 22,
+        "pages": 619,
+        "why": "The full story of black holes from a Nobel laureate."
+      }
+    ],
+    "unfinished": true
+  },
+  {
+    "isbn": "9780060555665",
+    "title": "The Intelligent Investor",
+    "author": "Benjamin Graham",
+    "year": 1949,
+    "pages": 623,
+    "level": 4,
+    "hours": 20,
+    "subjects": [
+      "Investing",
+      "Finance",
+      "Stock market"
+    ],
+    "concepts": [
+      "what a stock and a bond are",
+      "reading a balance sheet",
+      "price vs. value",
+      "inflation and interest"
+    ],
+    "one_line": "The classic, but 1949 prose and balance sheets; come with the basics of stocks, bonds and fees.",
+    "summary": "Graham's foundational text on value investing and the margin of safety.",
+    "before": [
+      {
+        "title": "The Little Book of Common Sense Investing",
+        "author": "John C. Bogle",
+        "level": 1,
+        "hours": 5,
+        "pages": 304,
+        "why": "The fundamentals of markets, costs and index funds in plain words."
+      },
+      {
+        "title": "One Up on Wall Street",
+        "author": "Peter Lynch",
+        "level": 2,
+        "hours": 9,
+        "pages": 304,
+        "why": "How to think about individual companies before Graham's stricter method."
+      },
+      {
+        "title": "A Random Walk Down Wall Street",
+        "author": "Burton G. Malkiel",
+        "level": 3,
+        "hours": 14,
+        "pages": 448,
+        "why": "The academic case about prices you'll want to weigh against Graham."
+      }
+    ],
+    "after": [
+      {
+        "title": "The Most Important Thing",
+        "author": "Howard Marks",
+        "level": 3,
+        "hours": 7,
+        "pages": 200,
+        "why": "Modern value-investing judgment from a practitioner."
+      },
+      {
+        "title": "Common Stocks and Uncommon Profits",
+        "author": "Philip A. Fisher",
+        "level": 4,
+        "hours": 10,
+        "pages": 292,
+        "why": "The growth-investing counterpart Buffett pairs with Graham."
+      },
+      {
+        "title": "Security Analysis",
+        "author": "Benjamin Graham",
+        "level": 5,
+        "hours": 40,
+        "pages": 766,
+        "why": "Graham's full professional treatment."
+      }
+    ],
+    "unfinished": true
+  },
+  {
+    "isbn": "9780674430006",
+    "title": "Capital in the Twenty-First Century",
+    "author": "Thomas Piketty",
+    "year": 2013,
+    "pages": 696,
+    "level": 5,
+    "hours": 30,
+    "subjects": [
+      "Economics",
+      "Inequality",
+      "Economic history"
+    ],
+    "concepts": [
+      "GDP and national income",
+      "rate of return vs. growth",
+      "reading economic charts",
+      "tax policy basics"
+    ],
+    "one_line": "A big economics book with charts on every page; you need the vocabulary of income, capital and growth first.",
+    "summary": "Piketty's analysis of wealth and income inequality across two centuries.",
+    "before": [
+      {
+        "title": "Economics: The User's Guide",
+        "author": "Ha-Joon Chang",
+        "level": 2,
+        "hours": 12,
+        "pages": 512,
+        "why": "A plain-language map of economics that explains the terms Piketty uses without stopping."
+      },
+      {
+        "title": "The Undercover Economist",
+        "author": "Tim Harford",
+        "level": 2,
+        "hours": 8,
+        "pages": 304,
+        "why": "Economic reasoning in everyday situations; builds the intuition."
+      },
+      {
+        "title": "Naked Economics",
+        "author": "Charles Wheelan",
+        "level": 2,
+        "hours": 10,
+        "pages": 384,
+        "why": "Macroeconomics without equations."
+      }
+    ],
+    "after": [
+      {
+        "title": "The Price of Inequality",
+        "author": "Joseph E. Stiglitz",
+        "level": 4,
+        "hours": 16,
+        "pages": 560,
+        "why": "A Nobel laureate's take on the same question from the policy side."
+      },
+      {
+        "title": "Capital and Ideology",
+        "author": "Thomas Piketty",
+        "level": 5,
+        "hours": 45,
+        "pages": 1104,
+        "why": "The even larger sequel."
+      }
+    ],
+    "unfinished": true
+  },
+  {
+    "isbn": "9780262035613",
+    "title": "Deep Learning",
+    "author": "Ian Goodfellow",
+    "year": 2016,
+    "pages": 800,
+    "level": 5,
+    "hours": 60,
+    "subjects": [
+      "Machine learning",
+      "Artificial intelligence",
+      "Neural networks",
+      "Mathematics"
+    ],
+    "concepts": [
+      "linear algebra",
+      "probability and statistics",
+      "calculus and gradients",
+      "Python"
+    ],
+    "one_line": "A graduate textbook. Linear algebra, probability and some calculus are assumed from chapter one.",
+    "summary": "The standard reference on deep learning, from the mathematical foundations to research topics.",
+    "before": [
+      {
+        "title": "Make Your Own Neural Network",
+        "author": "Tariq Rashid",
+        "level": 1,
+        "hours": 6,
+        "pages": 222,
+        "why": "Builds one neural network by hand with school maths; nothing is assumed."
+      },
+      {
+        "title": "Grokking Deep Learning",
+        "author": "Andrew W. Trask",
+        "level": 2,
+        "hours": 12,
+        "pages": 336,
+        "why": "The intuition for gradients and backprop, in code before symbols."
+      },
+      {
+        "title": "Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow",
+        "author": "Aurélien Géron",
+        "level": 3,
+        "hours": 30,
+        "pages": 856,
+        "why": "The practical bridge: you'll have trained real models before the theory arrives."
+      }
+    ],
+    "after": [
+      {
+        "title": "Reinforcement Learning: An Introduction",
+        "author": "Richard S. Sutton",
+        "level": 4,
+        "hours": 35,
+        "pages": 552,
+        "why": "The next pillar of the field, with the same rigour."
+      },
+      {
+        "title": "Probabilistic Machine Learning: An Introduction",
+        "author": "Kevin P. Murphy",
+        "level": 5,
+        "hours": 60,
+        "pages": 864,
+        "why": "The broader probabilistic view of everything Goodfellow covers."
+      }
+    ],
+    "unfinished": true
+  },
+  {
+    "isbn": "9781449373320",
+    "title": "Designing Data-Intensive Applications",
+    "author": "Martin Kleppmann",
+    "year": 2017,
+    "pages": 616,
+    "level": 4,
+    "hours": 28,
+    "subjects": [
+      "Databases",
+      "Distributed systems",
+      "Software architecture"
+    ],
+    "concepts": [
+      "relational databases and SQL",
+      "what an index is",
+      "networks and latency",
+      "basic concurrency"
+    ],
+    "one_line": "The book every backend engineer is told to read; it assumes you've already run a database in anger.",
+    "summary": "The big ideas behind reliable, scalable and maintainable data systems.",
+    "before": [
+      {
+        "title": "Learning SQL",
+        "author": "Alan Beaulieu",
+        "level": 1,
+        "hours": 10,
+        "pages": 384,
+        "why": "You need to be fluent in queries before chapters on storage engines make sense."
+      },
+      {
+        "title": "Database Design for Mere Mortals",
+        "author": "Michael J. Hernandez",
+        "level": 2,
+        "hours": 14,
+        "pages": 672,
+        "why": "Schema thinking without the distributed-systems weight."
+      },
+      {
+        "title": "Web Scalability for Startup Engineers",
+        "author": "Artur Ejsmont",
+        "level": 2,
+        "hours": 12,
+        "pages": 416,
+        "why": "A gentler first pass over caching, replication and queues."
+      }
+    ],
+    "after": [
+      {
+        "title": "Fundamentals of Software Architecture",
+        "author": "Mark Richards",
+        "level": 4,
+        "hours": 16,
+        "pages": 432,
+        "why": "Zooms out from data systems to whole-system trade-offs."
+      },
+      {
+        "title": "Database Internals",
+        "author": "Alex Petrov",
+        "level": 5,
+        "hours": 20,
+        "pages": 376,
+        "why": "Opens up the storage and consensus machinery Kleppmann describes."
+      }
+    ],
+    "unfinished": false
+  },
+  {
+    "isbn": "9780134494166",
+    "title": "Clean Architecture",
+    "author": "Robert C. Martin",
+    "year": 2017,
+    "pages": 432,
+    "level": 3,
+    "hours": 12,
+    "subjects": [
+      "Software architecture",
+      "Software design"
+    ],
+    "concepts": [
+      "object-oriented basics",
+      "unit testing",
+      "one real project's worth of experience"
+    ],
+    "one_line": "Approachable if you've written and tested a few programs; abstract if you haven't.",
+    "summary": "Martin's principles for structuring software so it stays easy to change.",
+    "before": [
+      {
+        "title": "Clean Code",
+        "author": "Robert C. Martin",
+        "level": 2,
+        "hours": 12,
+        "pages": 464,
+        "why": "The function-level habits this book scales up to systems."
+      },
+      {
+        "title": "The Pragmatic Programmer",
+        "author": "David Thomas",
+        "level": 2,
+        "hours": 10,
+        "pages": 352,
+        "why": "The working engineer's mindset the architecture advice assumes."
+      }
+    ],
+    "after": [
+      {
+        "title": "Patterns of Enterprise Application Architecture",
+        "author": "Martin Fowler",
+        "level": 4,
+        "hours": 18,
+        "pages": 560,
+        "why": "The catalogue of patterns Martin references."
+      },
+      {
+        "title": "Domain-Driven Design",
+        "author": "Eric Evans",
+        "level": 5,
+        "hours": 26,
+        "pages": 560,
+        "why": "The deep end of modelling a business in code."
+      }
+    ],
+    "unfinished": false
+  },
+  {
+    "isbn": "9780226458120",
+    "title": "The Structure of Scientific Revolutions",
+    "author": "Thomas S. Kuhn",
+    "year": 1962,
+    "pages": 264,
+    "level": 4,
+    "hours": 9,
+    "subjects": [
+      "Philosophy of science",
+      "History of science"
+    ],
+    "concepts": [
+      "what a scientific theory is",
+      "examples from the history of physics",
+      "basic philosophy vocabulary"
+    ],
+    "one_line": "Short and famous, but it argues with philosophers you may not have met.",
+    "summary": "Kuhn's account of paradigms and how science actually changes.",
+    "before": [
+      {
+        "title": "Philosophy of Science: A Very Short Introduction",
+        "author": "Samir Okasha",
+        "level": 2,
+        "hours": 4,
+        "pages": 144,
+        "why": "The questions and names Kuhn is responding to, in 140 pages."
+      },
+      {
+        "title": "What Is This Thing Called Science?",
+        "author": "A. F. Chalmers",
+        "level": 3,
+        "hours": 8,
+        "pages": 304,
+        "why": "The standard undergraduate primer that sets Kuhn in context."
+      }
+    ],
+    "after": [
+      {
+        "title": "The Logic of Scientific Discovery",
+        "author": "Karl Popper",
+        "level": 5,
+        "hours": 20,
+        "pages": 544,
+        "why": "The view Kuhn pushed against."
+      },
+      {
+        "title": "Against Method",
+        "author": "Paul Feyerabend",
+        "level": 5,
+        "hours": 12,
+        "pages": 336,
+        "why": "Where the argument goes if you keep pulling the thread."
+      }
+    ],
+    "unfinished": true
+  },
+  {
+    "isbn": "9780812968255",
+    "title": "Meditations",
+    "author": "Marcus Aurelius",
+    "year": 180,
+    "pages": 256,
+    "level": 3,
+    "hours": 6,
+    "subjects": [
+      "Stoicism",
+      "Philosophy",
+      "Ethics"
+    ],
+    "concepts": [
+      "Stoic vocabulary (logos, virtue, assent)",
+      "Roman context"
+    ],
+    "one_line": "A private notebook, not a treatise; it reads far better once you know what a Stoic was trying to do.",
+    "summary": "The emperor's private reflections on living well.",
+    "before": [
+      {
+        "title": "How to Think Like a Roman Emperor",
+        "author": "Donald J. Robertson",
+        "level": 1,
+        "hours": 8,
+        "pages": 304,
+        "why": "Marcus's life and the Stoic method, so the notes make sense."
+      },
+      {
+        "title": "A Guide to the Good Life",
+        "author": "William B. Irvine",
+        "level": 2,
+        "hours": 8,
+        "pages": 336,
+        "why": "Stoicism as a practice, in modern terms."
+      }
+    ],
+    "after": [
+      {
+        "title": "Letters from a Stoic",
+        "author": "Seneca",
+        "level": 3,
+        "hours": 8,
+        "pages": 254,
+        "why": "The same philosophy in letters, warmer in tone."
+      },
+      {
+        "title": "Discourses and Selected Writings",
+        "author": "Epictetus",
+        "level": 4,
+        "hours": 10,
+        "pages": 304,
+        "why": "The teacher behind Marcus's notes."
+      }
+    ],
+    "unfinished": false
+  },
+  {
+    "isbn": "9780735211292",
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "year": 2018,
+    "pages": 320,
+    "level": 1,
+    "hours": 6,
+    "subjects": [
+      "Habits",
+      "Self-improvement",
+      "Behavior change"
+    ],
+    "concepts": [],
+    "one_line": "You can start today. Nothing needs to come first.",
+    "summary": "A practical system for building good habits and breaking bad ones.",
+    "before": [],
+    "after": [
+      {
+        "title": "The Power of Habit",
+        "author": "Charles Duhigg",
+        "level": 2,
+        "hours": 9,
+        "pages": 371,
+        "why": "The science behind the habit loop Clear builds on."
+      },
+      {
+        "title": "Tiny Habits",
+        "author": "BJ Fogg",
+        "level": 1,
+        "hours": 7,
+        "pages": 320,
+        "why": "The research lab version of the same method."
+      },
+      {
+        "title": "Deep Work",
+        "author": "Cal Newport",
+        "level": 2,
+        "hours": 7,
+        "pages": 304,
+        "why": "What to do with the habits once you have them."
+      }
+    ],
+    "unfinished": false
+  },
+  {
+    "isbn": "9781501144325",
+    "title": "Why We Sleep",
+    "author": "Matthew Walker",
+    "year": 2017,
+    "pages": 368,
+    "level": 2,
+    "hours": 10,
+    "subjects": [
+      "Sleep",
+      "Neuroscience",
+      "Health"
+    ],
+    "concepts": [],
+    "one_line": "Written for everyone; no preparation needed.",
+    "summary": "The science of sleep and why it matters.",
+    "before": [],
+    "after": [
+      {
+        "title": "The Circadian Code",
+        "author": "Satchin Panda",
+        "level": 2,
+        "hours": 8,
+        "pages": 288,
+        "why": "Timing of light, food and sleep, applied."
+      },
+      {
+        "title": "Breath",
+        "author": "James Nestor",
+        "level": 2,
+        "hours": 7,
+        "pages": 304,
+        "why": "The other overlooked basic of the body."
+      }
+    ],
+    "unfinished": false
+  },
+  {
+    "isbn": "9781439170915",
+    "title": "The Emperor of All Maladies",
+    "author": "Siddhartha Mukherjee",
+    "year": 2010,
+    "pages": 592,
+    "level": 3,
+    "hours": 20,
+    "subjects": [
+      "Cancer",
+      "History of medicine",
+      "Biography"
+    ],
+    "concepts": [
+      "what a cell is",
+      "basic genetics",
+      "how clinical trials work"
+    ],
+    "one_line": "A page-turner, but it is long and assumes you can follow talk of cells, genes and trials.",
+    "summary": "A biography of cancer.",
+    "before": [
+      {
+        "title": "The Immortal Life of Henrietta Lacks",
+        "author": "Rebecca Skloot",
+        "level": 2,
+        "hours": 10,
+        "pages": 381,
+        "why": "Cells, research ethics and medical history through one family's story."
+      },
+      {
+        "title": "Being Mortal",
+        "author": "Atul Gawande",
+        "level": 2,
+        "hours": 8,
+        "pages": 304,
+        "why": "Medicine from the patient's side; shorter and just as humane."
+      }
+    ],
+    "after": [
+      {
+        "title": "The Gene",
+        "author": "Siddhartha Mukherjee",
+        "level": 4,
+        "hours": 22,
+        "pages": 608,
+        "why": "Mukherjee's next history, on heredity."
+      },
+      {
+        "title": "The Song of the Cell",
+        "author": "Siddhartha Mukherjee",
+        "level": 4,
+        "hours": 18,
+        "pages": 496,
+        "why": "The third in the trilogy."
+      }
+    ],
+    "unfinished": false
+  },
+  {
+    "id": "ol:the-singapore-story-lee-kuan-yew",
+    "title": "The Singapore Story",
+    "author": "Lee Kuan Yew",
+    "year": 1998,
+    "pages": 680,
+    "level": 3,
+    "hours": 24,
+    "subjects": [
+      "Singapore",
+      "History",
+      "Memoir",
+      "Politics"
+    ],
+    "concepts": [
+      "outline of Singapore's path to independence",
+      "names of the main political parties and figures"
+    ],
+    "one_line": "Long and detailed; a short history of Singapore first will make the names and dates land.",
+    "summary": "Lee Kuan Yew's memoirs up to 1965.",
+    "before": [
+      {
+        "title": "Singapore: A Biography",
+        "author": "Mark Ravinder Frost",
+        "level": 2,
+        "hours": 14,
+        "pages": 464,
+        "why": "A readable, illustrated history that gives you the backdrop for the memoir."
+      }
+    ],
+    "after": [
+      {
+        "title": "From Third World to First",
+        "author": "Lee Kuan Yew",
+        "level": 3,
+        "hours": 26,
+        "pages": 752,
+        "why": "The second volume, 1965 to 2000."
+      },
+      {
+        "title": "Hard Truths to Keep Singapore Going",
+        "author": "Lee Kuan Yew",
+        "level": 3,
+        "hours": 14,
+        "pages": 458,
+        "why": "Interviews late in life; the same mind looking back."
+      }
+    ],
+    "unfinished": false
+  },
+  {
+    "isbn": "9781603580557",
+    "title": "Thinking in Systems",
+    "author": "Donella H. Meadows",
+    "year": 2008,
+    "pages": 240,
+    "level": 2,
+    "hours": 7,
+    "subjects": [
+      "Systems theory",
+      "Complexity"
+    ],
+    "concepts": [],
+    "one_line": "A gentle primer; you can begin here.",
+    "summary": "How to see stocks, flows and feedback loops everywhere.",
+    "before": [],
+    "after": [
+      {
+        "title": "The Fifth Discipline",
+        "author": "Peter M. Senge",
+        "level": 3,
+        "hours": 16,
+        "pages": 464,
+        "why": "Systems thinking applied to organisations."
+      },
+      {
+        "title": "Limits to Growth",
+        "author": "Donella H. Meadows",
+        "level": 4,
+        "hours": 12,
+        "pages": 368,
+        "why": "The famous model behind the primer."
+      }
+    ],
+    "unfinished": false
+  },
+  {
+    "isbn": "9780385495325",
+    "title": "The Code Book",
+    "author": "Simon Singh",
+    "year": 1999,
+    "pages": 416,
+    "level": 2,
+    "hours": 11,
+    "subjects": [
+      "Cryptography",
+      "History of science"
+    ],
+    "concepts": [],
+    "one_line": "Written for curious general readers; start here.",
+    "summary": "The history of secret writing from ancient Egypt to quantum cryptography.",
+    "before": [],
+    "after": [
+      {
+        "title": "Serious Cryptography",
+        "author": "Jean-Philippe Aumasson",
+        "level": 4,
+        "hours": 14,
+        "pages": 312,
+        "why": "The modern mathematics behind the stories."
+      },
+      {
+        "title": "Applied Cryptography",
+        "author": "Bruce Schneier",
+        "level": 5,
+        "hours": 30,
+        "pages": 784,
+        "why": "The professional reference."
+      }
+    ],
+    "unfinished": false
+  },
+  {
+    "isbn": "9780262033848",
+    "title": "Introduction to Algorithms",
+    "author": "Thomas H. Cormen",
+    "year": 1990,
+    "pages": 1312,
+    "level": 5,
+    "hours": 80,
+    "subjects": [
+      "Algorithms",
+      "Computer science",
+      "Mathematics"
+    ],
+    "concepts": [
+      "discrete mathematics",
+      "proof by induction",
+      "programming in any language",
+      "big-O notation"
+    ],
+    "one_line": "The university reference; it is a wall unless you can already read a proof and write a loop.",
+    "summary": "The comprehensive textbook on algorithms.",
+    "before": [
+      {
+        "title": "Grokking Algorithms",
+        "author": "Aditya Y. Bhargava",
+        "level": 1,
+        "hours": 6,
+        "pages": 256,
+        "why": "Illustrated, friendly, and covers the core ideas in a weekend."
+      },
+      {
+        "title": "Algorithms",
+        "author": "Robert Sedgewick",
+        "level": 3,
+        "hours": 30,
+        "pages": 976,
+        "why": "Code-first treatment of the same material; the proofs come later."
+      },
+      {
+        "title": "The Algorithm Design Manual",
+        "author": "Steven S. Skiena",
+        "level": 4,
+        "hours": 25,
+        "pages": 730,
+        "why": "Practical, war-story style; bridges to CLRS's rigour."
+      }
+    ],
+    "after": [
+      {
+        "title": "Concrete Mathematics",
+        "author": "Ronald L. Graham",
+        "level": 5,
+        "hours": 50,
+        "pages": 672,
+        "why": "The mathematics CLRS leans on."
+      },
+      {
+        "title": "The Art of Computer Programming, Volume 1",
+        "author": "Donald E. Knuth",
+        "level": 5,
+        "hours": 80,
+        "pages": 672,
+        "why": "Where the field's rigour comes from."
+      }
+    ],
+    "unfinished": true
+  },
+  {
+    "id": "ol:the-phoenix-project-gene-kim",
+    "title": "The Phoenix Project",
+    "author": "Gene Kim",
+    "year": 2013,
+    "pages": 432,
+    "level": 1,
+    "hours": 9,
+    "subjects": [
+      "DevOps",
+      "IT management",
+      "Business fiction"
+    ],
+    "concepts": [],
+    "one_line": "A novel; anyone who has worked near IT can start it today.",
+    "summary": "A novel about IT, DevOps and helping your business win.",
+    "before": [],
+    "after": [
+      {
+        "title": "The DevOps Handbook",
+        "author": "Gene Kim",
+        "level": 3,
+        "hours": 16,
+        "pages": 480,
+        "why": "The non-fiction version of what the novel shows."
+      },
+      {
+        "title": "Accelerate",
+        "author": "Nicole Forsgren",
+        "level": 3,
+        "hours": 8,
+        "pages": 288,
+        "why": "The research evidence for the practices."
+      },
+      {
+        "title": "Site Reliability Engineering",
+        "author": "Betsy Beyer",
+        "level": 4,
+        "hours": 24,
+        "pages": 552,
+        "why": "How Google runs it at scale."
+      }
+    ],
+    "unfinished": false
+  },
+  {
+    "id": "ol:the-wealth-of-nations-adam-smith",
+    "title": "The Wealth of Nations",
+    "author": "Adam Smith",
+    "year": 1776,
+    "pages": 1264,
+    "level": 5,
+    "hours": 50,
+    "subjects": [
+      "Economics",
+      "Political economy",
+      "Classics"
+    ],
+    "concepts": [
+      "18th-century prose",
+      "basic economics vocabulary",
+      "British history context"
+    ],
+    "one_line": "Eighteenth-century prose and a thousand pages; meet Smith through a guide first.",
+    "summary": "The founding text of modern economics.",
+    "before": [
+      {
+        "title": "The Worldly Philosophers",
+        "author": "Robert L. Heilbroner",
+        "level": 2,
+        "hours": 10,
+        "pages": 368,
+        "why": "Smith and the economists after him as people and ideas, in one readable book."
+      },
+      {
+        "title": "Adam Smith: What He Thought, and Why It Matters",
+        "author": "Jesse Norman",
+        "level": 3,
+        "hours": 12,
+        "pages": 400,
+        "why": "A guide to the arguments you are about to read in the original."
+      }
+    ],
+    "after": [
+      {
+        "title": "The Theory of Moral Sentiments",
+        "author": "Adam Smith",
+        "level": 5,
+        "hours": 30,
+        "pages": 400,
+        "why": "Smith's other half; the ethics behind the economics."
+      },
+      {
+        "title": "The Great Transformation",
+        "author": "Karl Polanyi",
+        "level": 5,
+        "hours": 20,
+        "pages": 360,
+        "why": "The most influential reply to the market society Smith described."
+      }
+    ],
+    "unfinished": true
+  }
+]
