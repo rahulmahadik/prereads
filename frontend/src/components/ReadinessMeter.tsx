@@ -1,10 +1,6 @@
-const LABELS: Record<number, string> = {
-  1: "Anyone can start",
-  2: "A little background helps",
-  3: "Some familiarity needed",
-  4: "Needs real background",
-  5: "Specialist territory",
-};
+import { t, useLang } from "../i18n";
+
+const label = (level: number) => t(`level.${level}` as "level.1");
 
 /** A ladder: rungs filled to the level. Reads as "how far up", never as a rating. */
 function Ladder({ level, size }: { level: number; size: number }) {
@@ -25,19 +21,21 @@ function Ladder({ level, size }: { level: number; size: number }) {
 }
 
 export default function ReadinessMeter({ level, hours, compact = false }: { level: number; hours: number; compact?: boolean }) {
+  useLang();
   const lvl = Math.max(1, Math.min(5, level));
+  const h = Math.round(hours);
   return (
-    <div className={`meter ${compact ? "compact" : ""} lvl-${lvl}`} role="img" aria-label={`Readiness level ${lvl} of 5: ${LABELS[lvl]}. About ${Math.round(hours)} hours to read.`}>
+    <div className={`meter ${compact ? "compact" : ""} lvl-${lvl}`} role="img" aria-label={t("meter.aria", { n: lvl, label: label(lvl), hours: h })}>
       <span className="level-pill">
         <Ladder level={lvl} size={compact ? 16 : 22} />
         <span className="level-pill-text">
-          <strong>Level {lvl}</strong>
+          <strong>{t("meter.level", { n: lvl })}</strong>
           <span className="level-pill-sep" aria-hidden="true">·</span>
-          <span>{LABELS[lvl]}</span>
+          <span>{label(lvl)}</span>
         </span>
       </span>
       <span className="hours-chip" aria-hidden="true">
-        ⏱ {Math.round(hours)} h
+        {t("meter.hours", { hours: h })}
       </span>
     </div>
   );

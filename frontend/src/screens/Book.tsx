@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "../api";
 import Cover from "../components/Cover";
 import ReadinessMeter from "../components/ReadinessMeter";
+import { readingAge, type ReadingAge } from "../readingAge";
 import ListenButton from "../components/ListenButton";
 import { bookScript } from "../speech";
 import { parseCallNumber, stepsFor } from "../components/WayfindMap";
@@ -10,9 +11,20 @@ import { Sheet, TopBar, getBranch, nlbSearchUrl, shelfStatus, shortBranch, useBa
 import { navigate } from "../router";
 import HeartButton from "../components/HeartButton";
 import { getNote, setNote } from "../myshelf";
+import DigitalCopies from "../components/DigitalCopies";
+import { cleanSummary } from "../summary";
 import type { Neighbour, Route, Stop } from "../types";
+import { rich, t, tn, useLang, voiceLang, type Key } from "../i18n";
+
+/** readingAgeText() in the UI language: the label is keyed by its minimum age (8, 12, 13, 15, 18). */
+const ageText = (a: ReadingAge) => {
+  const key = `age.${a.min_age}` as Key;
+  const label = ["age.8", "age.12", "age.13", "age.15", "age.18"].includes(key) ? t(key) : a.label;
+  return label + (a.source === "estimated" ? t("age.estimated") : "");
+};
 
 export default function Book({ id, title, author, stopId }: { id: string; title: string; author: string; stopId: string }) {
+  const lang = useLang();
   const goBack = useBack("line");
   const [route, setRoute] = useState<Route | null>(null);
   const [error, setError] = useState("");
@@ -25,6 +37,7 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
   const branchPref = getBranch();
   const [similar, setSimilar] = useState<Neighbour[]>([]);
   const [note, setNoteText] = useState("");
+  const [moreAbout, setMoreAbout] = useState(false);
 
   useEffect(() => {
     api
@@ -111,22 +124,22 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
   const sorted = [...availability].sort((a, b) => b.available - a.available || a.branch.localeCompare(b.branch));
   const inSomewhere = availability.some((a) => a.available > 0);
   const st = shelfStatus(stop, branchPref || undefined);
-  const wayfind = st.kind === "available" || st.kind === "elsewhere" ? { callNumber: st.callNumber || "", branch: st.branch } : null;
+  const wayfind = st.kind === "available" || st.kind === "elsewhere" ? { callNumber: st.callNumber || "", branch: st.branch, code: st.code } : null;
   const statusText =
-    st.kind === "available" ? `It's available at ${shortBranch(st.branch)}` :
-    st.kind === "elsewhere" ? `It's not at ${shortBranch(st.here)} right now; the nearest copy is at ${shortBranch(st.branch)}` :
-    st.kind === "waiting" ? "All copies are out, so join the waiting list and read the PreReads while you wait" :
-    "No physical copies are listed; check the NLB app for an eBook";
+    st.kind === "available" ? t("say.available", { branch: shortBranch(st.branch) }) :
+    st.kind === "elsewhere" ? t("say.elsewhere", { here: shortBranch(st.here), branch: shortBranch(st.branch) }) :
+    st.kind === "waiting" ? t("say.waiting") :
+    t("say.none");
   const narration = () =>
     bookScript({
       title: book.title, author: book.author, why: stop.role === "target" ? readiness.one_line || stop.why : stop.why,
       level: readiness.level, hours: readiness.hours, status: statusText, callNumber: wayfind?.callNumber, branch: wayfind?.branch,
-      assumes: readiness.assumed_concepts, steps: wayfind && wayfind.callNumber ? stepsFor(parseCallNumber(wayfind.callNumber), wayfind.callNumber).map((x) => x.text) : [],
+      assumes: readiness.assumed_concepts, steps: lang === "en" && wayfind && wayfind.callNumber ? stepsFor(parseCallNumber(wayfind.callNumber), wayfind.callNumber, wayfind.code || wayfind.branch).map((x) => x.text) : [],
     });
   const queue = demand.reservations ?? 0;
-  const reserveLabel = st.kind === "waiting" || st.kind === "none" ? `Join waitlist${queue ? ` (${queue} in queue)` : ""}` : "Reserve on NLB";
+  const reserveLabel = st.kind === "waiting" || st.kind === "none" ? (queue ? t("book.waitlistQueue", { n: queue }) : t("book.waitlist")) : t("book.reserve");
   const read = readSet.has(book.id);
-  const role = stop.role === "target" ? "Your book" : stop.role === "before" ? "PreRead" : "NextRead";
+  const role = stop.role === "target" ? t("line.kicker.target") : stop.role === "before" ? t("line.kicker.before") : t("line.kicker.after");
   let startX: number | null = null;
 
   return (
@@ -143,13 +156,13 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
     >
       <TopBar
         onBack={goBack}
-        title={`${role} · ${idx + 1} of ${stops.length}`}
+        title={t("book.pos", { role, i: idx + 1, n: stops.length })}
         right={
           <span className="pager">
-            <button type="button" className="icon-btn" onClick={() => go(idx - 1)} disabled={idx <= 0} aria-label="Previous book">
+            <button type="button" className="icon-btn" onClick={() => go(idx - 1)} disabled={idx <= 0} aria-label={t("book.prev")}>
               ‹
             </button>
-            <button type="button" className="icon-btn" onClick={() => go(idx + 1)} disabled={idx >= stops.length - 1} aria-label="Next book">
+            <button type="button" className="icon-btn" onClick={() => go(idx + 1)} disabled={idx >= stops.length - 1} aria-label={t("book.next")}>
               ›
             </button>
           </span>
@@ -162,15 +175,16 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
           <div className="page-meta">
             <div className="title-row">
               <h1 className="book-title">{book.title}</h1>
-              <ListenButton id={`book:${book.id}`} text={narration} label="Listen" />
+              <ListenButton id={`book:${book.id}`} text={narration} label={t("book.listen")} lang={voiceLang(lang)} />
               <HeartButton book={{ id: book.id, title: book.title, author: book.author, lineId: id, lineTitle: title, lineAuthor: author }} />
             </div>
             <p className="book-author">
               {book.author}
               {book.year ? ` · ${book.year}` : ""}
-              {book.pages ? ` · ${book.pages} pp` : ""}
+              {book.pages ? t("book.pages", { n: book.pages }) : ""}
             </p>
             <ReadinessMeter level={readiness.level} hours={readiness.hours} />
+            <span className="age-chip">{ageText(readingAge(book.audience, book.subjects, readiness.level, book.pages))}</span>
           </div>
         </div>
 
@@ -178,7 +192,7 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
           <p className="why">{stop.role === "target" ? readiness.one_line || stop.why : stop.why}</p>
           {readiness.assumed_concepts.length > 0 && (
             <>
-              <h3 className="small-h">Assumes you know</h3>
+              <h3 className="small-h">{t("book.assumes")}</h3>
               <ul className="chips">
                 {readiness.assumed_concepts.map((c, i) => (
                   <li key={c} style={{ animationDelay: `${120 + i * 50}ms` }}>
@@ -188,30 +202,49 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
               </ul>
             </>
           )}
-          <h3 className="small-h">Where to get it</h3>
+          {(() => {
+            const about = cleanSummary(book.summary);
+            const subjects = book.subjects.filter((x) => x.split(" ").length <= 4).slice(0, 5);
+            if (!about && subjects.length === 0) return null;
+            const long = about.length > 360;
+            return (
+              <section className="about" aria-label={t("book.about")}>
+                <h3 className="small-h">{t("book.about")}</h3>
+                {about && <p className={`about-text ${long && !moreAbout ? "clamped" : ""}`}>{about}</p>}
+                {long && (
+                  <button type="button" className="link-btn inline" onClick={() => setMoreAbout((v) => !v)} aria-expanded={moreAbout}>
+                    {moreAbout ? t("common.showLess") : t("book.readMore")}
+                  </button>
+                )}
+                {subjects.length > 0 && <p className="about-subjects">{subjects.join(" · ")}</p>}
+                {about && <p className="hint about-src">{t("book.source", { src: t(book.source === "nlb" ? "book.src.nlb" : book.source === "openlibrary" ? "book.src.ol" : "book.src.seed") })}</p>}
+              </section>
+            );
+          })()}
+          <h3 className="small-h">{t("book.where")}</h3>
           {st.kind === "available" && (
             <div className="status ok">
-              <strong>Available at {shortBranch(st.branch)}</strong>
+              <strong>{t("book.availableAt", { branch: shortBranch(st.branch) })}</strong>
               <span className="call">{st.callNumber}</span>
-              {st.others > 0 && <span className="hint">Also in at {st.others} other {st.others === 1 ? "library" : "libraries"}</span>}
+              {st.others > 0 && <span className="hint">{tn("book.alsoIn", st.others)}</span>}
             </div>
           )}
           {st.kind === "elsewhere" && (
             <div className="status alt">
-              <strong>Not at {shortBranch(st.here)} right now</strong>
-              <span className="hint">Nearest copy: {shortBranch(st.branch)} · {st.callNumber}</span>
+              <strong>{t("book.notHere", { here: shortBranch(st.here) })}</strong>
+              <span className="hint">{t("book.nearest", { branch: shortBranch(st.branch), call: st.callNumber })}</span>
             </div>
           )}
           {st.kind === "waiting" && (
             <div className="status no">
-              <strong>All copies are out{demand.reservations ? ` · ${demand.reservations} in the queue` : ""}</strong>
-              <span className="hint">Join the waiting list on NLB, and read the PreReads while you wait.</span>
+              <strong>{t("book.allOut")}{demand.reservations ? t("book.inQueue", { n: demand.reservations }) : ""}</strong>
+              <span className="hint">{t("book.waitHint")}</span>
             </div>
           )}
           {st.kind === "none" && (
             <div className="status no">
-              <strong>No physical copies listed</strong>
-              <span className="hint">Check the NLB app for an eBook.</span>
+              <strong>{t("book.noCopies")}</strong>
+              <span className="hint">{t("book.ebookHint")}</span>
             </div>
           )}
           {shownLibs > 0 && (
@@ -222,7 +255,7 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
                     {shortBranch(a.branch)}
                     {a.call_number && <span className="call">{a.call_number}</span>}
                   </span>
-                  {a.available > 0 ? <span className="in">{a.available} in</span> : <span className="out">all out</span>}
+                  {a.available > 0 ? <span className="in">{t("book.nIn", { n: a.available })}</span> : <span className="out">{t("book.allOutShort")}</span>}
                 </li>
               ))}
             </ul>
@@ -231,12 +264,12 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
             <div className="more-row">
               {shownLibs < sorted.length && (
                 <button type="button" className="link-btn inline" onClick={() => setShownLibs((n) => Math.min(sorted.length, n + 3))}>
-                  {shownLibs === 0 ? `Other libraries (${sorted.length})` : `Load more (${sorted.length - shownLibs} left)`}
+                  {shownLibs === 0 ? t("book.otherLibs", { n: sorted.length }) : t("book.loadMore", { n: sorted.length - shownLibs })}
                 </button>
               )}
               {shownLibs > 0 && (
                 <button type="button" className="link-btn inline" onClick={() => setShownLibs(0)}>
-                  Show less
+                  {t("common.showLess")}
                 </button>
               )}
             </div>
@@ -244,22 +277,24 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
           <div className="badges">
             {demand.hot_branches.map((b) => (
               <span className="badge hot" key={b}>
-                Hot at {shortBranch(b)}
+                {t("book.hotAt", { branch: shortBranch(b) })}
               </span>
             ))}
-            {demand.hidden_gem && <span className="badge gem">Hidden gem — in everywhere, nobody's queuing</span>}
+            {demand.hidden_gem && <span className="badge gem">{t("book.gem")}</span>}
           </div>
           <a className="reserve-link" href={nlbSearchUrl(book.title, book.isbn)} target="_blank" rel="noopener">
             {reserveLabel} ↗
           </a>
-          {(availability.some((a) => a.demo) || demand.demo) && <p className="demo-note">Demo shelf data until the NLB key is connected{queue ? "; queue length is demo too" : ""}.</p>}
+          {(availability.some((a) => a.demo) || demand.demo) && <p className="demo-note">{t("book.demoNote", { extra: queue ? t("book.demoQueue") : "" })}</p>}
+
+          <DigitalCopies title={book.title} author={book.author} />
 
           <label className="note-box">
-            <span className="small-h">My note</span>
+            <span className="small-h">{t("book.myNote")}</span>
             <textarea
               value={note}
               rows={3}
-              placeholder="A thought, a page number, who recommended it… saved on this device"
+              placeholder={t("book.notePlaceholder")}
               onChange={(e) => {
                 setNoteText(e.target.value);
                 setNote(book.id, e.target.value);
@@ -272,15 +307,15 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
       {wayfind && wayfind.callNumber && (
         <section className="section wayfind-section" id="find">
           <h3 className="small-h">
-            Find it at {shortBranch(wayfind.branch)} <span className="hint">· {wayfind.callNumber}</span>
+            {t("book.findAt", { branch: shortBranch(wayfind.branch) })} <span className="hint">· {wayfind.callNumber}</span>
           </h3>
           <WayfindMap target={wayfind} />
         </section>
       )}
 
       {similar.length > 0 && (
-        <section className="section similar-section" aria-label={`Because you liked ${book.title}`}>
-          <h3 className="small-h">Because you liked {book.title}</h3>
+        <section className="section similar-section" aria-label={t("book.because", { title: book.title })}>
+          <h3 className="small-h">{t("book.because", { title: book.title })}</h3>
           <ul className="similar-list">
             {similar.map((n) => (
               <li key={n.id}>
@@ -299,49 +334,52 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
       <div className="action-bar">
         {stop.role !== "target" ? (
           <button type="button" className={`bar-btn ${read ? "on" : ""}`} onClick={() => toggleRead(book.id)} aria-pressed={read}>
-            {read ? "✓ Read it" : "Mark read"}
+            {read ? t("book.readIt") : t("book.markRead")}
           </button>
         ) : (
           <a className="bar-btn link-as-btn" href={nlbSearchUrl(book.title, book.isbn)} target="_blank" rel="noopener">
-            {inSomewhere ? "Reserve on NLB" : `Join waitlist${queue ? ` (${queue})` : ""}`}
+            {inSomewhere ? t("book.reserve") : queue ? t("book.waitlistN", { n: queue }) : t("book.waitlist")}
           </a>
         )}
         {wayfind && wayfind.callNumber ? (
           <a className="bar-btn primary" href="#find" onClick={(e) => { e.preventDefault(); document.getElementById("find")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>
-            Find on shelf
+            {t("book.findShelf")}
           </a>
         ) : (
           <a className="bar-btn primary link-as-btn" href={nlbSearchUrl(book.title, book.isbn)} target="_blank" rel="noopener">
-            Find on NLB
+            {t("book.findNlb")}
           </a>
         )}
         <button type="button" className="bar-btn" onClick={() => setAsk(true)}>
-          Ask
+          {t("book.ask")}
         </button>
       </div>
-      <p className="swipe-hint hint">Swipe to turn to the next book</p>
+      <p className="swipe-hint hint">{t("book.swipe")}</p>
+      <footer className="footer">{t("home.footer")}</footer>
 
-      <Sheet open={ask} title="Ask about this path" onClose={() => setAsk(false)}>
+      <Sheet open={ask} title={t("book.askTitle")} onClose={() => setAsk(false)}>
         <div className="chip-row">
           <button type="button" disabled={busy} onClick={() => runAsk("why_before")}>
-            Why these first?
+            {t("book.whyFirst")}
           </button>
           <button type="button" disabled={busy} onClick={() => runAsk("time_budget")}>
-            I have{" "}
-            <select aria-label="weeks" value={weeks} onClick={(e) => e.stopPropagation()} onChange={(e) => setWeeks(Number(e.target.value))}>
-              {[1, 2, 3, 4, 6, 8].map((w) => (
-                <option key={w} value={w}>
-                  {w}
-                </option>
-              ))}
-            </select>{" "}
-            weeks
+            {rich("book.iHave", {
+              weeks: (
+                <select aria-label={t("book.weeks")} value={weeks} onClick={(e) => e.stopPropagation()} onChange={(e) => setWeeks(Number(e.target.value))}>
+                  {[1, 2, 3, 4, 6, 8].map((w) => (
+                    <option key={w} value={w}>
+                      {w}
+                    </option>
+                  ))}
+                </select>
+              ),
+            })}
           </button>
           <button type="button" disabled={busy} onClick={() => runAsk("large_print")}>
-            Large print or audio?
+            {t("book.largePrint")}
           </button>
         </div>
-        {busy && <p className="hint">Thinking…</p>}
+        {busy && <p className="hint">{t("book.thinking")}</p>}
         {answer && (
           <p className="answer" aria-live="polite">
             {answer}
