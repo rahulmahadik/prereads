@@ -3244,3 +3244,10 @@ body:has(.sheet-backdrop) .chat-fab, body:has(.reader) .chat-fab, body:has(.wf-f
 @media (max-width: 340px) {
   .home-head, .hero, .row-section { padding-left: 12px; padding-right: 12px; }
 }
+
+/* shelf map: big on desktop (full width, steps below), never squeezed into half a column */
+@media (min-width: 900px) {
+  .wayfind.wf2 { grid-template-columns: minmax(0, 1fr); }
+  .wayfind.wf2 .wf-map-wrap svg.floorplan { width: 100%; height: auto; max-height: 72vh; }
+  .wayfind.wf2 .wf-steps, .wayfind.wf2 ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
+}
