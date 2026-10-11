@@ -202,6 +202,12 @@ def chat(turn: ChatTurn):
     return step(turn)
 
 
+@app.get("/api/digital")
+def digital_copies(title: str = Query(..., min_length=1), author: str = ""):
+    from .digital import lookup
+    return lookup(title, author)
+
+
 @app.get("/api/branches")
 def branches():
     import json, re
