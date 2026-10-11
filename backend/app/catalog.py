@@ -6,8 +6,10 @@ book that does not exist in a catalogue.
 """
 from __future__ import annotations
 
+import json
 import logging
 import re
+import time
 from typing import Any, Optional
 
 import httpx
@@ -366,3 +368,102 @@ def resolve(title: str, author: str = "", seed: Optional[dict] = None) -> Option
 
 def nlb() -> NLBClient:
     return _nlb
+
+
+# ----------------------------------------------------------------------- enrich
+ENRICH_DIR = config.CACHE_DIR / "enrich"
+ENRICH_TTL = 30 * 24 * 3600
+ENRICH_FIELDS = ("summary", "subjects", "pages", "cover_url", "ddc", "audience", "year")
+
+
+def _enrich_path(book_id: str):
+    return ENRICH_DIR / f"{re.sub(r'[^A-Za-z0-9_-]+', '_', book_id)[:120]}.json"
+
+
+def _enrich_cache_read(book_id: str) -> dict:
+    if not book_id:
+        return {}
+    try:
+        p = _enrich_path(book_id)
+        if p.exists():
+            d = json.loads(p.read_text(encoding="utf-8"))
+            if time.time() - float(d.get("ts", 0)) < ENRICH_TTL and isinstance(d.get("sources"), dict):
+                return d["sources"]
+    except Exception:  # noqa: BLE001
+        pass
+    return {}
+
+
+def _enrich_cache_write(book: Book, recs: dict) -> None:
+    if not book.id:
+        return
+    try:
+        ENRICH_DIR.mkdir(parents=True, exist_ok=True)
+        _enrich_path(book.id).write_text(json.dumps(
+            {"ts": time.time(), "id": book.id, "title": book.title, "author": book.author, "sources": recs},
+            indent=1, ensure_ascii=False), encoding="utf-8")
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def _empty(v) -> bool:
+    return v is None or v == "" or v == []
+
+
+def _valid(field: str, v):
+    """The value in Book's type, or None when it does not fit."""
+    if field in ("subjects", "audience"):
+        vals = [str(x).strip() for x in v if str(x).strip()] if isinstance(v, list) else []
+        return vals[:15] or None
+    if field == "pages":
+        return int(v) if isinstance(v, (int, float)) and 10 <= int(v) <= 5000 else None
+    if field == "year":
+        return int(v) if isinstance(v, (int, float)) and 1400 <= int(v) <= time.gmtime().tm_year + 1 else None
+    if field in ("summary", "cover_url", "ddc"):
+        return str(v).strip() or None if isinstance(v, str) else None
+    return None
+
+
+def enrich(book: Book, network: Optional[bool] = None) -> Book:
+    """Fill ONLY the missing summary, subjects, pages, cover_url, ddc, audience and year from open
+    sources, first source with a value wins (merge order: sources.ORDER). A field that already has
+    a value (NLB, Open Library or seed) is never touched; book.field_sources records who filled what.
+
+    Per-source records are cached in data/cache/enrich/<book id>.json; failures are not cached.
+    6 s budget per source. DEMO mode reads the cache only (network=True/False overrides).
+    Never raises: on any error the book comes back unchanged."""
+    try:
+        from . import sources  # local import: sources imports catalog
+
+        missing = [f for f in ENRICH_FIELDS if _empty(getattr(book, f))]
+        if not missing or not book.title:
+            return book
+        allow_net = (not config.effective_demo()) if network is None else bool(network)
+        recs = _enrich_cache_read(book.id)
+        failed: set[str] = set()
+        fetched = False
+        out = book.model_copy(deep=True)
+        for field in missing:
+            for src in sources.ORDER.get(field, ()):
+                if src not in recs:
+                    if not allow_net or src in failed or src not in sources.FETCHERS:
+                        continue
+                    try:
+                        recs[src] = sources.FETCHERS[src](book.title, book.author, book.isbn) or {}
+                        fetched = True
+                    except Exception as exc:  # noqa: BLE001  (SourceError or anything unexpected)
+                        log.info("enrich %s via %s failed: %s", book.id, src, exc)
+                        failed.add(src)
+                        continue
+                rec = recs.get(src)
+                val = _valid(field, rec.get(field)) if isinstance(rec, dict) and field in rec else None
+                if val is not None:
+                    setattr(out, field, val)
+                    out.field_sources = {**out.field_sources, field: src}
+                    break
+        if fetched:
+            _enrich_cache_write(book, recs)
+        return out
+    except Exception as exc:  # noqa: BLE001
+        log.warning("enrich %s failed: %s", getattr(book, "id", "?"), exc)
+        return book

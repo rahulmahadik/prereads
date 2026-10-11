@@ -235,6 +235,8 @@ def _catalogue() -> list[dict]:
         category = (s.get("subjects") or ["Other"])[0]
         for stop in route.stops:
             b = stop.book
+            if junk_title(b.title):
+                continue
             entry = out.get(b.id)
             if entry and entry["is_target"]:
                 continue

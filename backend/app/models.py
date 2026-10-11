@@ -27,6 +27,7 @@ class Book(BaseModel):
     reservations: int = 0                    # NLB activeReservationsCount when known
     audience: list[str] = Field(default_factory=list)   # e.g. ["Adult"], ["Children"]
     source: str = "seed"                     # seed | openlibrary | nlb
+    field_sources: dict[str, str] = Field(default_factory=dict)  # field -> source that filled it (catalog.enrich)
 
 
 class Readiness(BaseModel):

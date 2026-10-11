@@ -15,7 +15,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from app import config, llm  # noqa: E402
+from app import catalog, config, llm  # noqa: E402
 from app.engine import build_route, load_index, load_route, save_index, save_route, seeds  # noqa: E402
 
 
@@ -48,6 +48,12 @@ def main() -> int:
             failed += 1
             print(f"  FAIL {seed['title']}: {exc}")
             continue
+        # Fill missing descriptions, covers, Dewey and years from open catalogues (cached).
+        for st in route.stops:
+            try:
+                st.book = catalog.enrich(st.book)
+            except Exception:  # noqa: BLE001 - enrichment is best effort
+                pass
         # Seed ids stay stable: store under the seed key only, never under the catalogue's edition id.
         if key and key != route.target_id:
             route = route.model_copy(update={"target_id": key})
