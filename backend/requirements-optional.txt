@@ -1,0 +1,6 @@
+# Optional local speech. The app works without these (browser voice and speech recognition take over).
+# Install with: pip install -r requirements-optional.txt
+faster-whisper>=1.0      # speech-to-text (large-v3-turbo, downloaded on first use, ~1.6 GB)
+av>=14,<16               # audio decoding for faster-whisper (1.2 breaks on av 19)
+kokoro-onnx>=0.4         # natural voice (model files downloaded on first use)
+soundfile>=0.12          # WAV encoding for the voice
