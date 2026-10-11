@@ -230,15 +230,14 @@ browsers and WebViews, and any line is linkable.
 Every book, path and set of picks has a **Listen** button; the discovery box and the chat have
 a mic for voice input. Speech-to-text is `faster-whisper` large-v3-turbo (`/api/stt`) and the
 natural voice is Kokoro (`/api/tts`, cached), both open source. If either is missing the
-browser's built-in speech is used, so it still works. See `docs/GAPS_VS_NLB.md`.
+browser's built-in speech is used, so it still works.
 
 ## 10. Web first, mobile later
 
 The UI is one responsive web app: phone layout below 760px, two-column layout above it,
 no horizontal page scroll (only the reading path scrolls). It ships a PWA manifest and
 icons, respects safe areas, and is WebView-safe (camera via file input, share-card
-preview when downloads are blocked). To wrap it as a mobile app later, see
-`docs/MOBILE_SHELL.md`. For a split deploy (UI on a CDN, API elsewhere) build with
+preview when downloads are blocked). To wrap it as a mobile app later, see a WebView wrapper such as Capacitor. For a split deploy (UI on a CDN, API elsewhere) build with
 `VITE_API_BASE=https://your-api.example.com npm run build`.
 
 ## 11. Project files
@@ -247,11 +246,6 @@ preview when downloads are blocked). To wrap it as a mobile app later, see
   `api/` (FastAPI routers) → `services/` (reading-path engine, discovery, chat, ask) →
   `integrations/` (NLB, NLB open data, Open Library, OverDrive, Gutenberg, availability) and `ai/` (LLM, embeddings,
   speech) → `core/` (config, models). Entry point stays `app.main:app`.
-- `docs/DEMO_SCRIPT.md` — 60-second video shot list, finalist pitch
-- `docs/PROMPTS.md` — prompt contracts and sanity rules
-- `docs/MOBILE_SHELL.md` — wrapping the web app in a WebView (Capacitor) later
-- `docs/BACKLOG.md` — prioritised feature backlog after the build
-- `docs/GAPS_VS_NLB.md` — what NLB's portals lack and how PreReads fills it
 
 ## Credits and data sources
 

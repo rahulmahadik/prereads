@@ -57,7 +57,7 @@ response's `deep` field says it would add something.
   (return `None`/`[]`, log a warning) and caches under `config.CACHE_DIR`. Book titles
   from it still go through `catalog.resolve()` before the UI sees them.
 - **A model call**: a function in `ai/llm.py` built on `structured()` with a schema in
-  `core/models.py`; update `docs/PROMPTS.md`. Callers check `config.llm_enabled()` and
+  `core/models.py`. Callers check `config.llm_enabled()` and
   keep a heuristic fallback.
 - **Tests** monkeypatch the module where a name is used (`services.discover.resolve`,
   not `integrations.catalog.resolve`) because `from x import name` makes a copy.

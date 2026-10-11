@@ -3,7 +3,7 @@ Availability, Demand, Stop, Route, ScanResult and the ask request/response.
 
 Layer: core. These are also the structured-output schemas sent to the model (ai.llm builds
 the json_schema response_format from them), so a field change here is a prompt-contract
-change: update docs/PROMPTS.md with it.
+change: update the prompt that produces it.
 """
 from __future__ import annotations
 
