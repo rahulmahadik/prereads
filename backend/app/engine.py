@@ -142,7 +142,11 @@ def apply_rules(target: Stop, before: list[Stop], after: list[Stop], notes: list
     kept_before = ramp[-MAX_BEFORE:] if len(ramp) > MAX_BEFORE else ramp
 
     kept_after = []
+    before_ids = {s.book.id for s in kept_before}
     for s in after:
+        if s.book.id in before_ids:
+            notes.append(f"dropped '{s.book.title}' from after-line: already a before-stop")
+            continue
         if s.readiness.level < t - 1:
             notes.append(f"dropped '{s.book.title}' from after-line: much easier than the target")
             continue

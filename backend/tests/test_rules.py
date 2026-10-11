@@ -24,3 +24,18 @@ def test_dedupe_same_author_and_cap():
     b, _ = apply_rules(target, before, [], [])
     assert len(b) <= 3
     assert len({s.book.author for s in b}) == len(b)
+
+
+def test_book_cannot_be_both_before_and_after():
+    from app.engine import apply_rules
+    from app.models import Book, Readiness, Stop
+
+    def st(role, bid, level):
+        return Stop(role=role, order=0, book=Book(id=bid, title=bid, author=f"a-{bid}"), readiness=Readiness(level=level, hours=5), why="", confidence=0.9)
+
+    target = st("target", "T", 4)
+    notes: list[str] = []
+    before, after = apply_rules(target, [st("before", "X", 3)], [st("after", "X", 3), st("after", "Y", 4)], notes)
+    assert [s.book.id for s in before] == ["X"]
+    assert [s.book.id for s in after] == ["Y"]
+    assert any("already a before-stop" in n for n in notes)
