@@ -3,8 +3,9 @@ from __future__ import annotations
 
 from types import SimpleNamespace
 
-from app import config, llm
-from app.models import Judgment
+from app.core import config
+from app.ai import llm
+from app.core.models import Judgment
 
 
 class FakeCompletions:

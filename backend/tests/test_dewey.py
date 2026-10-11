@@ -1,5 +1,5 @@
-from app import availability, catalog
-from app.models import Book
+from app.integrations import availability, catalog
+from app.core.models import Book
 
 
 def test_pick_ddc():

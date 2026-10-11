@@ -17,9 +17,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from app import config, llm  # noqa: E402
-from app.engine import MAX_AFTER, MAX_BEFORE, MIN_CONFIDENCE  # noqa: E402
-from app.models import Route  # noqa: E402
+from app.core import config  # noqa: E402
+from app.ai import llm  # noqa: E402
+from app.services.engine import MAX_AFTER, MAX_BEFORE, MIN_CONFIDENCE  # noqa: E402
+from app.core.models import Route  # noqa: E402
 
 
 def _author_key(stop) -> str:

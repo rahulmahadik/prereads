@@ -1,6 +1,6 @@
 # Prompt contracts
 
-All prompts return structured outputs (Pydantic schemas in backend/app/models.py).
+All prompts return structured outputs (Pydantic schemas in backend/app/core/models.py).
 Rules live in code (engine.apply_rules), never in prompt text.
 
 ## How a prompt is sent

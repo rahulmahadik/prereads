@@ -10,6 +10,8 @@ internal/BOOK_DATA_SOURCES.md.
   openlibrary  search.json + /works/<key>.json. ddc, pages, first publish year, subjects,
                cover, description.
   google       Google Books volumes without a key. Rate-limited (429) per IP; last resort.
+
+Layer: integrations. Only catalog.enrich() calls these (and scripts/enrich_books.py through it).
 """
 from __future__ import annotations
 

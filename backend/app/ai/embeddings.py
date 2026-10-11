@@ -2,6 +2,9 @@
 
 Used to shortlist discovery candidates and to find a book's neighbours. Every function
 returns None / [] when the embedding model is unreachable so callers fall back to keywords.
+
+Layer: ai. Used by services.discover, services.chat and services.engine (proposal ordering).
+Cache: data/cache/embeddings/<model>.json, one file per model so a model switch never mixes vectors.
 """
 from __future__ import annotations
 
@@ -12,7 +15,8 @@ import math
 import threading
 from typing import Optional
 
-from . import config, llm
+from ..core import config
+from . import llm
 
 log = logging.getLogger("prereads.embeddings")
 
@@ -33,6 +37,7 @@ def _key(model: str, text: str) -> str:
 
 
 def _load(model: str) -> None:
+    """Swap the in-memory store to this model's cache file (no-op if already loaded)."""
     global _loaded_for
     if _loaded_for == model:
         return
@@ -51,6 +56,7 @@ def _flush(model: str) -> None:
 
 
 def available() -> bool:
+    # Embeddings are local-only: the OpenAI provider and demo mode use the keyword fallbacks.
     return not config.effective_demo() and config.AI_PROVIDER == "ollama" and llm.ollama_up()
 
 
@@ -89,7 +95,9 @@ def rank(query: str, items: list[tuple[str, str]], top_k: int = 40, *, query_pre
     if q is None or d is None:
         return None
     # Mean-centre against the pool: removes the shared "it's a book" direction, so generic
-    # "hub" titles stop matching every query.
+    # "hub" titles stop matching every query. Raw cosines between any two book blurbs are
+    # all fairly high; centred, unrelated pairs drop to ~0, which the callers' fixed
+    # thresholds assume. The query is centred on the same pool mean.
     n = len(d)
     mean = [sum(col) / n for col in zip(*d)]
     centre = lambda v: [a - m for a, m in zip(v, mean)]  # noqa: E731

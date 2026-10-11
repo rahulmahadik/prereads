@@ -14,8 +14,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from app import config  # noqa: E402
-from app.catalog import NLBClient, _pick  # noqa: E402
+from app.core import config  # noqa: E402
+from app.integrations.catalog import NLBClient, _pick  # noqa: E402
 
 
 def main() -> int:

@@ -1,11 +1,18 @@
-"""Runtime configuration. Everything is env-driven so the same code runs in
+"""Runtime configuration: env settings, data paths and the runtime mode switches.
+
+Everything is env-driven (repo-root .env, then backend/.env) so the same code runs in
 three modes:
 
   DEMO=1          -> no network, routes served from the precomputed cache only
-  keys present    -> live OpenAI (readiness, prerequisites, scan, ask) and
-                     live NLB (availability, demand) with cache in front
-  partial keys    -> whatever is missing falls back (NLB -> Open Library ->
-                     demo availability; OpenAI -> heuristics)
+  AI + NLB keys   -> the AI provider (local Ollama by default, or OpenAI) for readiness,
+                     prerequisites, scan and ask; live NLB (availability, demand); cache in front
+  partial         -> whatever is missing falls back (NLB -> Open Library -> demo
+                     availability; AI -> heuristics)
+
+Layer: core. Imported by nearly every module; imports nothing from the app at module
+level (llm is imported inside functions to avoid a cycle). Call the functions
+(llm_enabled(), nlb_enabled(), effective_demo()) rather than reading DEMO directly, so
+the /api/mode overrides in RUNTIME take effect.
 """
 from __future__ import annotations
 
@@ -15,8 +22,12 @@ from typing import Optional
 
 from dotenv import load_dotenv
 
-ROOT = Path(__file__).resolve().parent.parent
-load_dotenv(ROOT.parent / ".env")
+# This file lives at backend/app/core/config.py, so parents[2] is backend/.
+# Every data path in the app derives from here; nothing else should use __file__ for data.
+ROOT = Path(__file__).resolve().parents[2]        # backend/
+REPO_ROOT = ROOT.parent                           # repo root (holds frontend/ and the shared .env)
+# Repo-root .env first, then backend/.env; load_dotenv never overrides, so the first value wins.
+load_dotenv(REPO_ROOT / ".env")
 load_dotenv(ROOT / ".env")
 
 
@@ -83,7 +94,7 @@ def has_nlb_key() -> bool:
 
 
 def ollama_reachable() -> bool:
-    from . import llm  # local import: llm imports config
+    from ..ai import llm  # local import: llm imports config
 
     return llm.ollama_up()
 
@@ -98,18 +109,22 @@ def ai_available() -> bool:
 
 
 def llm_enabled() -> bool:
+    """Should this request call the model? Off in demo or when the provider is unusable;
+    otherwise the runtime switch decides (default on)."""
     if effective_demo() or not ai_available():
         return False
     return True if RUNTIME["use_llm"] is None else bool(RUNTIME["use_llm"])
 
 
 def nlb_enabled() -> bool:
+    """Should this request call NLB? Needs both keys; off in demo; then the runtime switch."""
     if effective_demo() or not has_nlb_key():
         return False
     return True if RUNTIME["use_nlb"] is None else bool(RUNTIME["use_nlb"])
 
 
 def mode() -> str:
+    """Short label such as "demo" or "ollama+openlibrary+demo-availability"; also part of cache keys."""
     if effective_demo():
         return "demo"
     parts = []
@@ -133,6 +148,6 @@ def mode_info() -> dict:
 
 
 def ollama_info() -> dict:
-    from . import llm
+    from ..ai import llm
 
     return llm.ollama_status()

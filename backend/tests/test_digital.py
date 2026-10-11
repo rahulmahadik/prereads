@@ -1,7 +1,7 @@
 import httpx
 import pytest
 
-from app import digital
+from app.integrations import digital
 
 
 def _item(kind, title="Thinking, Fast and Slow", owned=100, avail=16, holds=0, author="Daniel Kahneman", rid="abc"):

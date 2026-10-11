@@ -12,10 +12,14 @@ retrieval-augmented over our own data:
   shelves     reader-facing status for each option (demo data is labelled)
 
 Every reply carries `trace`: the steps that actually ran, with real counts and timings.
+
+Layer: services. Served by api/routes_chat.py (/api/chat); browse()/books_for() also back
+/api/browse. Reuses services.discover's catalogue and scoring, so both features agree.
 """
 from __future__ import annotations
 
 import concurrent.futures as cf
+import contextvars
 import json
 import logging
 import os
@@ -27,9 +31,11 @@ from typing import Iterator, Literal, Optional
 
 from pydantic import BaseModel, Field
 
-from . import config, discover, embeddings, llm
-from .availability import BRANCHES
-from .catalog import title_matches
+from ..core import config
+from . import discover
+from ..ai import embeddings, llm
+from ..integrations.availability import BRANCHES
+from ..integrations.catalog import title_matches
 from .engine import load_index, load_route, seeds
 
 log = logging.getLogger("prereads.chat")
@@ -55,6 +61,7 @@ class ChatOption(BaseModel):
 class ChatTurn(BaseModel):
     text: str
     state: ChatState
+    lang: Optional[str] = None          # reader's UI language: AI-written reasons follow it
 
 
 class TraceStep(BaseModel):
@@ -270,6 +277,7 @@ ASK_SYSTEM = (
     "reason: one plain, warm sentence to the reader, at most 14 words. Use only ids from CANDIDATES. Never invent a book."
 )
 
+_LANG: contextvars.ContextVar[Optional[str]] = contextvars.ContextVar("chat_lang", default=None)
 MODEL_BUDGET = float(os.getenv("CHAT_MODEL_BUDGET", "25"))   # seconds; past this the chat answers without the model
 _pool = cf.ThreadPoolExecutor(max_workers=2, thread_name_prefix="chat-llm")
 
@@ -283,7 +291,7 @@ def ask_model(request: str, hits: list[tuple[dict, float, str]]) -> tuple[Option
             "about": [x for x in e["subjects"] + e["concepts"] if len(x.split()) <= 4][:6],
         } for e, _, _ in hits],
     }, ensure_ascii=False)
-    fut = _pool.submit(llm.structured, Understood, ASK_SYSTEM, user, temperature=0.2)
+    fut = _pool.submit(llm.structured, Understood, llm.with_lang(ASK_SYSTEM, _LANG.get()), user, temperature=0.2)
     try:
         r = fut.result(timeout=MODEL_BUDGET)
     except cf.TimeoutError:
@@ -601,6 +609,15 @@ def _finish(state: ChatState) -> ChatReply:
 
 
 def step(turn: ChatTurn) -> ChatReply:
+    """Advance the chat one turn. Stateless: the client sends the whole turn state back each time."""
+    token = _LANG.set(turn.lang)
+    try:
+        return _step(turn)
+    finally:
+        _LANG.reset(token)
+
+
+def _step(turn: ChatTurn) -> ChatReply:
     state = turn.state
     text = (turn.text or "").strip()
 

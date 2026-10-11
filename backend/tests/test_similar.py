@@ -1,8 +1,10 @@
 """Embedding shortlist + 'Because you liked': offline fallbacks and the verified-only guard."""
 from __future__ import annotations
 
-from app import config, discover, embeddings, engine
-from app.models import Book
+from app.core import config
+from app.services import discover, engine
+from app.ai import embeddings
+from app.core.models import Book
 
 
 def test_similar_keyword_fallback_returns_verified_neighbours(monkeypatch):

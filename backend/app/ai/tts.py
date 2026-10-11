@@ -4,6 +4,8 @@ AI_PROVIDER=ollama (default): a local voice. Kokoro (kokoro-onnx, model files fe
 once into data/models) if available, else the macOS `say` voice, so it still works with no
 download. AI_PROVIDER=openai: OpenAI TTS (mp3). Returns None when nothing is available and
 the frontend falls back to the browser's built-in voices, so "Listen" always works.
+
+Layer: ai. Served by api/routes_media.py (/api/tts). Cache: data/cache/tts, keyed by text + voice.
 """
 from __future__ import annotations
 
@@ -19,7 +21,8 @@ from typing import Optional
 
 import httpx
 
-from . import config, llm
+from ..core import config
+from . import llm
 
 log = logging.getLogger("prereads.tts")
 

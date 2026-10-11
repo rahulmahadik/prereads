@@ -1,3 +1,10 @@
+"""Pydantic domain models shared by every layer: Book, Readiness, Judgment, CandidateList,
+Availability, Demand, Stop, Route, ScanResult and the ask request/response.
+
+Layer: core. These are also the structured-output schemas sent to the model (ai.llm builds
+the json_schema response_format from them), so a field change here is a prompt-contract
+change: update docs/PROMPTS.md with it.
+"""
 from __future__ import annotations
 
 import re
@@ -7,6 +14,7 @@ from pydantic import BaseModel, Field
 
 
 def slugify(title: str, author: str = "") -> str:
+    """Stable id for a book with no ISBN: lower-case title + author, dashes, max 80 chars."""
     base = f"{title} {author}".lower()
     base = re.sub(r"[^a-z0-9]+", "-", base).strip("-")
     return base[:80]
@@ -96,6 +104,7 @@ class AskRequest(BaseModel):
     intent: Literal["why_before", "time_budget", "large_print", "free"]
     weeks: Optional[int] = None
     question: Optional[str] = None
+    lang: Optional[str] = None          # reader's UI language (en/zh/ms/ta): AI-written text follows it
 
 
 class AskResponse(BaseModel):

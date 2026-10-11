@@ -3,8 +3,8 @@ No network: the source fetchers are monkeypatched and httpx.get is made to fail 
 import httpx
 import pytest
 
-from app import catalog, sources
-from app.models import Book
+from app.integrations import catalog, sources
+from app.core.models import Book
 
 
 @pytest.fixture(autouse=True)

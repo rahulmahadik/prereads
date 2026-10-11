@@ -1,10 +1,17 @@
-"""Conversational layer, grounded strictly on the route."""
+"""Grounded questions about one reading path (why_before, time_budget, large_print, free).
+
+The model is given only a brief of the cached route, so its answer is grounded in the stops
+already on it; with AI off, a template answers from the same data.
+
+Layer: services. Served by api/routes_paths.py (/api/ask).
+"""
 from __future__ import annotations
 
 import json
 
-from . import config, llm
-from .models import AskRequest, AskResponse, Route
+from ..core import config
+from ..ai import llm
+from ..core.models import AskRequest, AskResponse, Route
 
 
 def _route_brief(route: Route) -> str:
@@ -50,6 +57,7 @@ def _template(route: Route, req: AskRequest) -> AskResponse:
 
 
 def answer(route: Route, req: AskRequest) -> AskResponse:
+    """Model answer when AI is on and it replies, else the template (engine says which)."""
     if config.llm_enabled():
         q = {
             "why_before": "Why do the books before the target come first? Mention each by title.",
@@ -57,7 +65,8 @@ def answer(route: Route, req: AskRequest) -> AskResponse:
             "large_print": "The reader is 65 and prefers large print or audio. What should they know about this line?",
             "free": req.question or "Summarise the line.",
         }[req.intent]
-        text = llm.ask(_route_brief(route), q)
+        brief = _route_brief(route)
+        text = llm.ask(brief, q, req.lang) if req.lang else llm.ask(brief, q)
         if text:
             return AskResponse(answer=text, engine="llm")
     return _template(route, req)

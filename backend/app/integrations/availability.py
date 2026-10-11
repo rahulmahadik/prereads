@@ -3,6 +3,9 @@
 Live path: NLB GetAvailabilityInfo (per-branch items) and the checkout-trends
 endpoint. Fallback: a deterministic demo table derived from the book id so the
 UI is stable between runs. Demo rows carry demo=True and the UI labels them.
+
+Layer: integrations. Called by services.engine for every stop and by services.discover
+for proposals. Also holds BRANCHES (code -> name), the branch list the whole app uses.
 """
 from __future__ import annotations
 
@@ -11,7 +14,7 @@ import logging
 from collections import defaultdict
 
 from .catalog import _pick, nlb
-from .models import Availability, Book, Demand
+from ..core.models import Availability, Book, Demand
 
 log = logging.getLogger("prereads.availability")
 
@@ -95,11 +98,12 @@ def _author_code(book: Book) -> str:
 
 
 def demo_availability(book: Book) -> list[Availability]:
+    """Deterministic per-branch copies from a hash of the book id: same book, same table, every run."""
     h = int(hashlib.sha256(book.id.encode()).hexdigest(), 16)
     rows: list[Availability] = []
     codes = list(BRANCHES)
     for i, code in enumerate(codes):
-        bits = (h >> (i * 6)) & 0x3F
+        bits = (h >> (i * 6)) & 0x3F   # 6 independent hash bits per branch
         total = bits % 4            # 0..3 copies held
         if total == 0:
             continue
@@ -118,6 +122,7 @@ def demo_availability(book: Book) -> list[Availability]:
 
 
 def demo_demand(book: Book, availability: list[Availability]) -> Demand:
+    """Up to two "hot" branches from the hash; a book that is in everywhere and hot nowhere is a hidden gem."""
     h = int(hashlib.sha256(("demand:" + book.id).encode()).hexdigest(), 16)
     hot = [a.branch for i, a in enumerate(availability) if ((h >> i) & 1) and a.total >= 2][:2]
     all_available = bool(availability) and all(a.available == a.total for a in availability)
@@ -176,6 +181,7 @@ def live_demand(book: Book, availability: list[Availability]) -> Demand | None:
 
 
 def get_availability(book: Book) -> list[Availability]:
+    """Live NLB rows when keys are set and NLB returns items, else the labelled demo table."""
     if nlb().enabled():
         rows = live_availability(book)
         if rows:
@@ -184,6 +190,8 @@ def get_availability(book: Book) -> list[Availability]:
 
 
 def get_demand(book: Book, availability: list[Availability]) -> Demand:
+    """Live demand only alongside live availability; never mixes live demand with demo copies.
+    A live lookup that fails gives an empty (non-demo) Demand rather than invented numbers."""
     if nlb().enabled() and availability and not availability[0].demo:
         d = live_demand(book, availability)
         if d is not None:

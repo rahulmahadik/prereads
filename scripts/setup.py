@@ -17,7 +17,7 @@ Environment variables:
     PREREADS_PORT=8000        app port (the Vite dev proxy expects 8000)
     OLLAMA_BASE_URL, LOCAL_LLM_MODEL, LOCAL_LLM_MODEL_HEAVY, LOCAL_VISION_MODEL,
     LOCAL_EMBED_MODEL, AI_PROVIDER are read from the environment or the repo-root .env,
-    the same way backend/app/config.py reads them.
+    the same way backend/app/core/config.py reads them.
 
 Files:
     .run/app.pid        pid of the background app (process-group leader)

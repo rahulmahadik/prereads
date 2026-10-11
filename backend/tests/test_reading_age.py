@@ -1,5 +1,6 @@
-from app import config, reading_age
-from app.models import Book, Readiness
+from app.core import config
+from app.services import reading_age
+from app.core.models import Book, Readiness
 
 
 def rd(level):
@@ -44,7 +45,7 @@ def test_llm_result_cached(tmp_path, monkeypatch):
 
 
 def test_age_chip_filters():
-    from app.discover import FilterChip, Recommendation, apply_filters
+    from app.services.discover import FilterChip, Recommendation, apply_filters
     def rec(i, a):
         return Recommendation(id=i, line_id=i, is_target=True, title=i, author="", category="", level=1, hours=1, why="", fit=1, status="", available_at=[], hot_at=[], before_count=0, min_age=a)
     rs = [rec("k", 8), rec("t", 12), rec("a", 18)]

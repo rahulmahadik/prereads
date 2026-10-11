@@ -2,7 +2,7 @@ from datetime import datetime
 
 from fastapi.testclient import TestClient
 
-from app.availability import BRANCHES
+from app.integrations.availability import BRANCHES
 from app.main import app
 
 

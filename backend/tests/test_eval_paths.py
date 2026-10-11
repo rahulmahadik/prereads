@@ -3,7 +3,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
-from app.models import Book, Readiness, Route, Stop  # noqa: E402
+from app.core.models import Book, Readiness, Route, Stop  # noqa: E402
 from eval_paths import check_rules  # noqa: E402
 
 

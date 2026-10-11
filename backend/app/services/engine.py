@@ -5,6 +5,11 @@
 
 The rules are code, not prompt text, so a confident-sounding model cannot put a
 harder book before an easier one or pad the line with the same author.
+
+Layer: services. Called by api/routes_paths.py (/api/route) and scripts/precompute.py;
+uses ai.llm for proposals, readiness and judgments, integrations.catalog to verify
+every title, integrations.availability for shelf status. Also owns the route cache
+(data/cache/routes/*.json + index.json) and the seed targets (data/targets.json).
 """
 from __future__ import annotations
 
@@ -14,10 +19,11 @@ import logging
 from datetime import datetime, timezone
 from typing import Optional
 
-from . import config, llm
-from .availability import get_availability, get_demand
-from .catalog import resolve
-from .models import Book, CandidateList, Judgment, Readiness, Route, Stop
+from ..core import config
+from ..ai import llm
+from ..integrations.availability import get_availability, get_demand
+from ..integrations.catalog import resolve
+from ..core.models import Book, CandidateList, Judgment, Readiness, Route, Stop
 
 log = logging.getLogger("prereads.engine")
 
@@ -28,6 +34,8 @@ MAX_AFTER = 3
 
 # ------------------------------------------------------------------ readiness
 def heuristic_readiness(book: Book, seed: Optional[dict] = None) -> Readiness:
+    """Readiness without a model: the librarian's seed level when there is one, else
+    keywords in the title/subjects plus page count (~35 pages an hour)."""
     if seed and seed.get("level"):
         return Readiness(
             level=int(seed["level"]),
@@ -49,6 +57,7 @@ def heuristic_readiness(book: Book, seed: Optional[dict] = None) -> Readiness:
 
 
 def score_readiness(book: Book, seed: Optional[dict] = None) -> tuple[Readiness, str]:
+    """(readiness, engine) where engine is "llm" or "heuristic" (model off or no answer)."""
     if config.llm_enabled():
         r = llm.readiness(book)
         if r:
@@ -62,7 +71,7 @@ def score_readiness(book: Book, seed: Optional[dict] = None) -> tuple[Readiness,
 def _by_similarity(target: Book, items: list[dict]) -> list[dict]:
     """Order model proposals by embedding similarity to the target, so the verify/judge budget
     (first 8 before, 6 after) goes to the most related books. No-op when embeddings are down."""
-    from . import embeddings
+    from ..ai import embeddings
 
     if len(items) < 2:
         return items
@@ -74,6 +83,10 @@ def _by_similarity(target: Book, items: list[dict]) -> list[dict]:
 
 
 def propose(target: Book, seed: Optional[dict] = None) -> tuple[CandidateList, str]:
+    """Unverified before/after candidates and where they came from ("llm", "seed" or "none").
+
+    Seed picks are tagged `_seed` so resolve() may fall back to seed data for them;
+    model picks get no such fallback and must verify in a catalogue."""
     def tagged(items: list[dict]) -> list[dict]:
         return [{**i, "_seed": True} for i in items]   # human-verified picks may use seed fallback
 
@@ -101,6 +114,7 @@ def heuristic_judgment(a: Readiness, b: Readiness, why: str) -> Judgment:
 
 
 def judge_pair(a: Book, b: Book, ra: Readiness, rb: Readiness, why: str) -> tuple[Judgment, str]:
+    """How book a relates to book b (a prepares_for b, ...); model first, else by readiness level."""
     if config.llm_enabled():
         j = llm.judge(a, b, ra, rb)
         if j:
@@ -116,6 +130,7 @@ def _title_key(title: str) -> str:
 
 
 def _dedupe_author(stops: list[Stop]) -> list[Stop]:
+    """First stop per author wins (callers sort best-first). Key is the surname part of "Surname, Given"."""
     seen: set[str] = set()
     out: list[Stop] = []
     for s in stops:
@@ -133,15 +148,20 @@ def _spread(ramp: list[Stop], k: int) -> list[Stop]:
     if len(ramp) <= k:
         return ramp
     if k == 1:
-        return [ramp[-1]]
+        return [ramp[-1]]   # one slot: the stop nearest the target is the most useful
+    # k evenly spaced indexes from 0 to len-1; both ends are always included.
     idx = sorted({round(i * (len(ramp) - 1) / (k - 1)) for i in range(k)})
     return [ramp[i] for i in idx]
 
 
 def apply_rules(target: Stop, before: list[Stop], after: list[Stop], notes: list[str]) -> tuple[list[Stop], list[Stop]]:
+    """Enforce the path rules in code (AGENTS.md, non-negotiable 2) and return (before, after).
+
+    Every drop is explained in `notes`, which is saved on the route for eval and debugging."""
     t = target.readiness.level
     kept_before = []
     for s in before:
+        # Rule: a PreRead must be strictly easier than the target, whatever the model said.
         if s.readiness.level >= t:
             notes.append(f"dropped '{s.book.title}' from the reading path: not easier than your book")
             continue
@@ -151,14 +171,20 @@ def apply_rules(target: Stop, before: list[Stop], after: list[Stop], notes: list
         if s.book.id == target.book.id:
             continue
         kept_before.append(s)
+    # Rule: one book per author on the before-line. Sorting easiest-first, then most confident,
+    # means the author's gentlest, best-judged book is the one that stays.
     kept_before = _dedupe_author(sorted(kept_before, key=lambda s: (s.readiness.level, -s.confidence)))
-    # Keep the gentlest usable ramp: no hop larger than 2 levels when we can avoid it.
+    # Easiest-first ramp. kept_before is already sorted by level, so today this keeps every stop;
+    # it guards the order _spread relies on.
     ramp: list[Stop] = []
     for s in kept_before:
         if not ramp or s.readiness.level >= ramp[-1].readiness.level:
             ramp.append(s)
+    # Rule: at most MAX_BEFORE. _spread (not [:3]) so a long ramp keeps its easiest on-ramp.
     kept_before = _spread(ramp, MAX_BEFORE)
 
+    # Rule: a book can't be both before and after; the before-stop wins. Match on id and on
+    # main title, because two editions of one book have different ids.
     kept_after = []
     before_ids = {s.book.id for s in kept_before} | {_title_key(s.book.title) for s in kept_before}
     seen_after: set[str] = set()
@@ -166,6 +192,7 @@ def apply_rules(target: Stop, before: list[Stop], after: list[Stop], notes: list
         if s.book.id in before_ids or _title_key(s.book.title) in before_ids:
             notes.append(f"dropped '{s.book.title}' from next reads: already a PreRead")
             continue
+        # One level easier is fine for a follow-on (a lighter companion); two or more is a step back.
         if s.readiness.level < t - 1:
             notes.append(f"dropped '{s.book.title}' from next reads: much easier than your book")
             continue
@@ -190,6 +217,11 @@ def _stop(role: str, book: Book, seed: Optional[dict], why: str, confidence: flo
 
 
 def build_route(target_seed: dict, target_book: Optional[Book] = None) -> Route:
+    """Run the whole pipeline for one target and return the Route (not saved; see save_route).
+
+    target_seed is a targets.json entry or just {title, author}; target_book skips the
+    target lookup when the caller already resolved it. Raises ValueError if the target
+    does not resolve in any catalogue."""
     notes: list[str] = []
     target = target_book or resolve(target_seed["title"], target_seed.get("author", ""), seed=target_seed)
     if target is None:
@@ -199,6 +231,8 @@ def build_route(target_seed: dict, target_book: Optional[Book] = None) -> Route:
     cands, engine = propose(target, target_seed)
     engines = {engine}
 
+    # Budget: only the first 8 before / 6 after candidates are verified and judged
+    # (each costs a catalogue lookup and up to two model calls).
     before: list[Stop] = []
     for c in cands.before[:8]:
         b = resolve(c["title"], c.get("author", ""), seed=c if c.get("_seed") else None)
@@ -233,6 +267,7 @@ def build_route(target_seed: dict, target_book: Optional[Book] = None) -> Route:
         engines.add(je)
         if j.relation == "unrelated":
             continue
+        # Any related follow-on is acceptable, so confidence is floored at the MIN_CONFIDENCE cut.
         after.append(_stop("after", b, c, c.get("why", "") or j.reason, max(j.confidence, 0.6)))
 
     before, after = apply_rules(t_stop, before, after, notes)
@@ -277,6 +312,7 @@ def seeds() -> list[dict]:
 
 
 def find_seed(target_id: str) -> Optional[dict]:
+    """The targets.json entry whose isbn or id equals target_id, else None."""
     for s in seeds():
         if s.get("isbn") == target_id or s.get("id") == target_id:
             return s

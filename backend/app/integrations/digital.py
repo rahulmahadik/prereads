@@ -2,6 +2,9 @@
 
 Uses OverDrive's public "thunder" API with library key ``nlb`` (no API key needed).
 Light, user-triggered lookups only; cached in memory and on disk. Never raises.
+
+Layer: integrations. Served by api/routes_library.py (/api/digital); the Book screen
+asks only when the reader opens a book. Cache: data/cache/digital, 6 h TTL.
 """
 from __future__ import annotations
 
@@ -9,19 +12,19 @@ import hashlib
 import json
 import re
 import time
-from pathlib import Path
 from typing import Any, Optional
 from urllib.parse import quote
 
 import httpx
 
+from ..core import config
 from .catalog import title_matches
 
 BASE = "https://thunder.api.overdrive.com/v2/libraries/nlb/media"
 SITE = "https://nlb.overdrive.com"
 UA = "PreReads makeathon prototype"
 TTL = 6 * 3600
-CACHE_DIR = Path(__file__).resolve().parent.parent / "data" / "cache" / "digital"
+CACHE_DIR = config.CACHE_DIR / "digital"
 _mem: dict[str, tuple[float, dict]] = {}
 
 
@@ -34,6 +37,8 @@ def _key(title: str, author: str) -> str:
 
 
 def _author_ok(author: str, item: dict) -> bool:
+    """Loose author check: any name token of 3+ letters (usually the surname) appears in the
+    item's creators. Loose on purpose: OverDrive writes names in several orders and forms."""
     if not author.strip():
         return True
     names = " ".join(c.get("name", "") for c in item.get("creators", []) or []) or str(item.get("firstCreatorName", ""))
@@ -43,6 +48,12 @@ def _author_ok(author: str, item: dict) -> bool:
 
 
 def _parse(items: list[dict], title: str, author: str) -> dict:
+    """Keyword results -> {ebook, audiobook} copy counts for this book only.
+
+    OverDrive's search is a fuzzy keyword match, so a result counts only if its title matches
+    (catalog.title_matches, the same rule as the main catalogue) and an author name agrees;
+    the author check is what drops summaries and study guides that reuse the book's title.
+    Editions of the same format are summed."""
     out: dict[str, Optional[dict]] = {"ebook": None, "audiobook": None}
     for it in items:
         kind = (it.get("type") or {}).get("id")
@@ -86,6 +97,8 @@ def _write_disk(k: str, data: dict) -> None:
 
 
 def lookup(title: str, author: str = "") -> dict[str, Any]:
+    """{ebook, audiobook, source, live, search_url}; on any failure {live: False, search_url}
+    so the UI can still link to an OverDrive search."""
     fail: dict[str, Any] = {"live": False, "search_url": search_url(title or "")}
     title = (title or "").strip()
     if not title:

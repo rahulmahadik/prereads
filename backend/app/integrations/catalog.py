@@ -3,6 +3,9 @@
 Order of truth: NLB Catalogue v2 (if keys) -> Open Library -> seed data.
 A title that resolves nowhere is dropped by the engine; PreReads never shows a
 book that does not exist in a catalogue.
+
+Layer: integrations. resolve() is the single gate every title passes through (services.engine,
+services.discover, api/routes_paths). enrich() fills missing metadata from integrations.sources.
 """
 from __future__ import annotations
 
@@ -14,8 +17,8 @@ from typing import Any, Optional
 
 import httpx
 
-from . import config
-from .models import Book, slugify
+from ..core import config
+from ..core.models import Book, slugify
 
 log = logging.getLogger("prereads.catalog")
 
@@ -227,6 +230,7 @@ def openlibrary_ddc(title: str, author: str = "") -> Optional[str]:
 
 
 def openlibrary_search(title: str, author: str = "") -> Optional[Book]:
+    """Best Open Library match whose title passes title_matches(), or None (also in demo mode)."""
     if config.effective_demo():
         return None
     params = {"title": title, "limit": 5, "fields": "key,title,author_name,isbn,first_publish_year,number_of_pages_median,subject,cover_i,ddc"}
@@ -367,6 +371,7 @@ def resolve(title: str, author: str = "", seed: Optional[dict] = None) -> Option
 
 
 def nlb() -> NLBClient:
+    """The shared NLB client. Callers check .enabled() (keys present and NLB switched on)."""
     return _nlb
 
 

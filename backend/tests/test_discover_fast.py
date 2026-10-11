@@ -3,9 +3,12 @@ import time
 
 import pytest
 
-from app import catalog, config, discover, llm
-from app.discover import DiscoverRequest, Need, Proposal, Proposed
-from app.models import Book, Readiness
+from app.integrations import catalog
+from app.core import config
+from app.services import discover
+from app.ai import llm
+from app.services.discover import DiscoverRequest, Need, Proposal, Proposed
+from app.core.models import Book, Readiness
 
 
 CALLED: list[str] = []

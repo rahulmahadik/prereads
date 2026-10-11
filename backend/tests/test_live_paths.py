@@ -4,10 +4,13 @@ from __future__ import annotations
 
 import pytest
 
-from app import ask as ask_mod
-from app import availability as av
-from app import catalog, config, engine, llm
-from app.models import AskRequest, Book, CandidateList, Judgment, Readiness, ScanResult
+from app.services import ask as ask_mod
+from app.integrations import availability as av
+from app.integrations import catalog
+from app.core import config
+from app.services import engine
+from app.ai import llm
+from app.core.models import AskRequest, Book, CandidateList, Judgment, Readiness, ScanResult
 
 
 @pytest.fixture

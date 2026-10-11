@@ -14,6 +14,9 @@ Two phases, so a reader never stares at a spinner:
         of seconds; the UI runs it in the background and adds its picks as "AI pick".
 With the AI off, a heuristic parser handles the common phrasings so the demo still feels
 intelligent, and the recommendations are drawn from the precomputed catalogue.
+
+Layer: services. Served by api/routes_discover.py (/api/discover, /api/similar); services.chat
+reuses its catalogue and scoring. Uses ai.llm + ai.embeddings, integrations.catalog to verify.
 """
 from __future__ import annotations
 
@@ -28,9 +31,10 @@ from typing import Literal, Optional
 
 from pydantic import BaseModel, Field
 
-from . import config, embeddings, llm
-from .availability import BRANCHES, get_availability, get_demand
-from .catalog import nlb, openlibrary_search_many, resolve
+from ..core import config
+from ..ai import embeddings, llm
+from ..integrations.availability import BRANCHES, get_availability, get_demand
+from ..integrations.catalog import nlb, openlibrary_search_many, resolve
 from .engine import heuristic_readiness
 from .reading_age import estimate as estimate_age, heuristic as age_heuristic
 from .engine import load_route, score_readiness, seeds
@@ -95,6 +99,7 @@ class DiscoverRequest(BaseModel):
     offset: int = 0
     limit: int = 10
     mode: Literal["fast", "deep"] = "fast"             # fast: no model, no network; deep: model proposals too
+    lang: Optional[str] = None                         # reader's UI language: AI-written reasons follow it
 
 
 class DiscoverResponse(BaseModel):
@@ -122,6 +127,7 @@ _MOOD_WORDS = [(("practical", "hands-on", "how to", "apply"), "practical"), (("s
 
 
 def heuristic_need(text: str) -> Need:
+    """Need from keyword rules (level, age, language, mood, time words). No model, no network."""
     t = text.lower()
     need = Need(summary=text.strip())
     for words, lvl in _LEVEL_WORDS:
@@ -190,13 +196,15 @@ def _cache_put(store: OrderedDict, key: str, value, cap: int = _CACHE_MAX) -> No
             store.popitem(last=False)
 
 
-def propose(text: str) -> tuple[Need, list[Proposed], str]:
+def propose(text: str, lang: Optional[str] = None) -> tuple[Need, list[Proposed], str]:
+    """(need, unverified proposals, engine). Deep phase only; falls back to heuristic_need with no
+    proposals when the model is off or fails. Proposals still have to pass resolve() before showing."""
     if config.llm_enabled():
-        key = f"{config.mode()}|{' '.join(text.lower().split())}"
+        key = f"{config.mode()}|{(lang or 'en')[:2]}|{' '.join(text.lower().split())}"
         hit = _cache_get(_PROPOSALS, key)
         if hit is not None:
             return hit[0].model_copy(deep=True), list(hit[1]), "llm"
-        p = llm.structured(Proposal, PROPOSE_SYSTEM, text, temperature=llm.TEMP_PROPOSE)
+        p = llm.structured(Proposal, llm.with_lang(PROPOSE_SYSTEM, lang), text, temperature=llm.TEMP_PROPOSE)
         if p:
             if not p.need.summary:
                 p.need.summary = text.strip()
@@ -206,7 +214,7 @@ def propose(text: str) -> tuple[Need, list[Proposed], str]:
 
 
 # Open Library mixes format and shelving tags into subjects, and lists merchandising SKUs as books.
-_JUNK_SUBJECT = re.compile(r"(daisy|accessible book|in library|lending library|overdrive|large type|braille|nyt:|protected|internet archive|open library|staff picks|reading level|fiction, general)", re.I)
+_JUNK_SUBJECT = re.compile(r"(daisy|accessible book|in library|lending library|overdrive|large type|braille|nyt:|protected|internet archive|open library|staff picks|reading level|fiction, general|open_syllabus|_|long now manual|new york times|^nonfiction$|^fiction$|^general$|textbooks?$|^history$|^science$)", re.I)
 _JUNK_TITLE = re.compile(r"(counter display|\d+-copy|prepack|pre-pack|box set|boxed set|pack of \d+|summary of|study guide|workbook for|sparknotes|cliffsnotes|\bcopy\b)", re.I)
 
 
@@ -360,6 +368,7 @@ def score(entry: dict, need: Need, proposed_titles: dict[str, str], branch: Opti
 
 
 def status_for(entry: dict, branch: Optional[str]) -> tuple[str, list[str]]:
+    """Reader-facing shelf status for the reader's branch, plus the short names of branches that have it in."""
     av = entry["availability"]
     in_stock = [a for a in av if a.available > 0]
     names = [a.branch.replace(" Public Library", "").replace(" Regional Library", "").replace(" Library", "") for a in in_stock]
@@ -625,6 +634,8 @@ def deep_offer() -> Optional[str]:
 
 
 def discover(req: DiscoverRequest) -> DiscoverResponse:
+    """One page of recommendations for the reader's sentence (see the module docstring for
+    the two phases). Every result is a cached catalogue entry or a catalogue-verified proposal."""
     t0 = time.perf_counter()
     timings: dict[str, float] = {}
 
@@ -633,11 +644,14 @@ def discover(req: DiscoverRequest) -> DiscoverResponse:
         timings[name] = round((now - since) * 1000, 1)
         return now
 
+    # The split: fast must answer in well under a second with no model and no network, so
+    # the screen fills at once; the client then calls again with mode="deep" in the background
+    # (only when deep_offer() says it would add something) and merges the extra picks.
     fast = req.mode == "fast"
     if fast:
         need, proposed, engine = heuristic_need(req.text), [], "fast"
     else:
-        need, proposed, engine = propose(req.text)
+        need, proposed, engine = propose(req.text, req.lang)
     t = lap("need", t0)
     proposed_titles = {p.title.lower(): p.why for p in proposed}
     on = set(req.filters)
@@ -680,7 +694,7 @@ def to_json(resp: DiscoverResponse) -> str:
 # ------------------------------------------------------------------ neighbours
 def _shared(a: dict, b: dict) -> list[str]:
     """Readable concepts/subjects two catalogue entries have in common."""
-    short = lambda xs: [x for x in xs if len(x.split()) <= 3]  # noqa: E731 - catalogue subject strings can be noisy
+    short = lambda xs: [x for x in xs if len(x.split()) <= 3 and not _JUNK_SUBJECT.search(x)]  # noqa: E731 - catalogue subject strings are noisy
     la = {x.lower(): x for x in short(a["subjects"] + a["concepts"])}
     lb = {x.lower() for x in short(b["subjects"] + b["concepts"])}
     return [la[k] for k in la if k in lb]
@@ -697,8 +711,9 @@ class Neighbours(BaseModel):
 
 NEIGHBOURS_SYSTEM = (
     "You are a public-library readers' advisor. A reader liked BOOK. From CANDIDATES pick the 3 they would "
-    "most enjoy next. reason: one plain sentence, at most 16 words, naming the shared idea or why it follows "
-    "naturally. Use only ids from CANDIDATES."
+    "most enjoy next. Only pick books on the same subject or a clearly shared idea; return fewer than 3 if "
+    "nothing else fits. reason: one plain sentence, at most 16 words, naming the shared idea or why it "
+    "follows naturally. Use only ids from CANDIDATES."
 )
 SIMILAR_DIR = config.CACHE_DIR / "similar"
 
@@ -748,8 +763,15 @@ def similar(book_id: str, branch: Optional[str] = None, k: int = 3) -> list[dict
         boosted = [(by_id[i], sim + 0.08 * len(_shared(me, by_id[i])) + (0.1 if by_id[i]["category"] == me["category"] else 0)) for i, sim in ranked]
         boosted.sort(key=lambda x: -x[1])
         # Prefer neighbours that share a category or subject, or are clearly similar; fill from the rest.
-        related = [(e, v) for e, v in boosted if e["category"] == me["category"] or _shared(me, e) or v >= 0.2]
-        shortlist = (related + [x for x in boosted if x not in related])[:10]
+        # Neighbours must share the subject (same category or a shared topic); only when there
+        # are too few do clearly similar books (centred cosine >= 0.3) fill in. Never pad with
+        # unrelated books just to show three.
+        related = [(e, v) for e, v in boosted if e["category"] == me["category"] or _shared(me, e)]
+        if len(related) < k:
+            related += [(e, v) for e, v in boosted if (e, v) not in related and v >= 0.3]
+        shortlist = related[:10]
+        if not shortlist:
+            return []
         chosen = _llm_neighbours(me, [e for e, _ in shortlist], k)
         sims = dict((e["id"], sim) for e, sim in shortlist)
         picks = [(e, sims[e["id"]]) for e, _ in chosen] if chosen else shortlist[:k]

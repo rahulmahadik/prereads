@@ -213,6 +213,10 @@ preview when downloads are blocked). To wrap it as a mobile app later, see
 ## 11. Project files
 
 - `AGENTS.md` — Agent working contract and build-day task list
+- `backend/app/README.md` — backend package map and request flow. The backend is layered:
+  `api/` (FastAPI routers) → `services/` (reading-path engine, discovery, chat, ask) →
+  `integrations/` (NLB, Open Library, OverDrive, availability) and `ai/` (LLM, embeddings,
+  speech) → `core/` (config, models). Entry point stays `app.main:app`.
 - `docs/DEMO_SCRIPT.md` — 60-second video shot list, finalist pitch
 - `docs/PROMPTS.md` — prompt contracts and sanity rules
 - `docs/MOBILE_SHELL.md` — wrapping the web app in a WebView (Capacitor) later

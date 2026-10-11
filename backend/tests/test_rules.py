@@ -1,5 +1,5 @@
-from app.engine import apply_rules
-from app.models import Book, Readiness, Stop
+from app.services.engine import apply_rules
+from app.core.models import Book, Readiness, Stop
 
 
 def stop(role, title, level, conf=0.9, author="A"):
@@ -27,8 +27,8 @@ def test_dedupe_same_author_and_cap():
 
 
 def test_book_cannot_be_both_before_and_after():
-    from app.engine import apply_rules
-    from app.models import Book, Readiness, Stop
+    from app.services.engine import apply_rules
+    from app.core.models import Book, Readiness, Stop
 
     def st(role, bid, level):
         return Stop(role=role, order=0, book=Book(id=bid, title=bid, author=f"a-{bid}"), readiness=Readiness(level=level, hours=5), why="", confidence=0.9)
@@ -42,8 +42,8 @@ def test_book_cannot_be_both_before_and_after():
 
 
 def test_same_title_other_edition_not_repeated():
-    from app.engine import apply_rules
-    from app.models import Book, Readiness, Stop
+    from app.services.engine import apply_rules
+    from app.core.models import Book, Readiness, Stop
 
     def st(role, bid, title, level):
         return Stop(role=role, order=0, book=Book(id=bid, title=title, author="Taleb"), readiness=Readiness(level=level, hours=5), why="", confidence=0.9)
@@ -54,7 +54,7 @@ def test_same_title_other_edition_not_repeated():
 
 
 def test_junk_titles_and_subjects_filtered():
-    from app.discover import clean_category, junk_title
+    from app.services.discover import clean_category, junk_title
 
     assert junk_title("Seven Brief Lessons on Physics 8-Copy Counter Display")
     assert not junk_title("Seven Brief Lessons on Physics")
@@ -63,8 +63,8 @@ def test_junk_titles_and_subjects_filtered():
 
 
 def test_trim_keeps_the_easiest_on_ramp():
-    from app.engine import apply_rules
-    from app.models import Book, Readiness, Stop
+    from app.services.engine import apply_rules
+    from app.core.models import Book, Readiness, Stop
 
     def st(bid, level):
         return Stop(role="before", order=0, book=Book(id=bid, title=bid, author=f"a-{bid}"), readiness=Readiness(level=level, hours=5), why="", confidence=0.9)

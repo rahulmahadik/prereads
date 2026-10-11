@@ -1,4 +1,4 @@
-// Mirrors backend/app/reading_age.py::heuristic. Keep the two identical.
+// Mirrors backend/app/services/reading_age.py::heuristic. Keep the two identical.
 export interface ReadingAge {
   label: string;
   min_age: number;

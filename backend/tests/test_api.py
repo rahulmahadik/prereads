@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 
-from app import config
+from app.core import config
 from app.main import app
 
 
@@ -76,7 +76,7 @@ def test_discover_and_resolve_paging(monkeypatch):
 def test_stt_endpoint_transcribes_and_falls_back(monkeypatch):
     from fastapi.testclient import TestClient
 
-    from app import stt
+    from app.ai import stt
     from app.main import app
 
     c = TestClient(app)
@@ -91,7 +91,8 @@ def test_stt_endpoint_transcribes_and_falls_back(monkeypatch):
 def test_tts_local_caches_and_falls_back(monkeypatch, tmp_path):
     from fastapi.testclient import TestClient
 
-    from app import config, tts
+    from app.core import config
+    from app.ai import tts
     from app.main import app
 
     monkeypatch.setattr(config, "AI_PROVIDER", "ollama")

@@ -4,6 +4,9 @@ AI_PROVIDER=ollama (default) talks to local models through Ollama's OpenAI-compa
 API; AI_PROVIDER=openai uses the hosted API; none disables AI so the engine uses its
 heuristics. Both paths share one interface (`structured`), validate every reply with
 Pydantic, and retry once on invalid JSON. Nothing here may raise into the request path.
+
+Layer: ai. The only module that talks to a language model. Callers in services/ check
+`config.llm_enabled()` first and use a heuristic when a call returns None.
 """
 from __future__ import annotations
 
@@ -16,8 +19,8 @@ from typing import Optional, Type, TypeVar
 import httpx
 from pydantic import BaseModel
 
-from . import config
-from .models import Book, CandidateList, Judgment, Readiness, ScanResult
+from ..core import config
+from ..core.models import Book, CandidateList, Judgment, Readiness, ScanResult
 
 log = logging.getLogger("prereads.llm")
 T = TypeVar("T", bound=BaseModel)
@@ -50,6 +53,8 @@ def _fetch_tags() -> Optional[list[str]]:
 
 
 def installed_models(max_age: float = 15.0) -> Optional[list[str]]:
+    """Model names Ollama has pulled, or None if it is not answering. Cached for max_age
+    seconds because health, mode and every resolve_model() call ask."""
     if time.time() - _tags["at"] > max_age:
         _tags["models"], _tags["at"] = _fetch_tags(), time.time()
     return _tags["models"]
@@ -60,6 +65,7 @@ def ollama_up() -> bool:
 
 
 def _has(model: str, have: list[str]) -> bool:
+    # Ollama lists an untagged pull as "name:latest".
     return model in have or (":" not in model and f"{model}:latest" in have)
 
 
@@ -72,9 +78,13 @@ def resolve_model(kind: str = "llm") -> str:
         "embed": (config.LOCAL_EMBED_MODEL, []),
     }[kind]
     have = installed_models() or []
+    # Fallbacks keep the app working on a laptop that has not pulled the big models yet
+    # (a missing 120b heavy model degrades to gemma3:12b instead of failing every call).
     for m in [wanted, *fallbacks]:
         if _has(m, have):
             return m
+    # Nothing installed (or Ollama down): return the configured name so the call fails
+    # loudly in the log and the caller's heuristic takes over.
     return wanted
 
 
@@ -89,6 +99,8 @@ def ollama_status() -> dict:
 
 # ------------------------------------------------------------------ client
 def client():
+    """Shared OpenAI-compatible client (Ollama's /v1 or OpenAI). Created on first use while
+    AI is enabled; None until then."""
     global _client
     if _client is None and config.llm_enabled():
         from openai import OpenAI  # imported lazily so demo mode needs no key
@@ -255,6 +267,17 @@ def scan(image_bytes: bytes, mime: str = "image/jpeg") -> Optional[ScanResult]:
     return structured(ScanResult, SCAN_SYSTEM, "Identify this book.", kind="vision", temperature=TEMP_SCORE, image_url=f"data:{mime};base64,{b64}")
 
 
+LANG_NAMES = {"zh": "Simplified Chinese (中文)", "ms": "Bahasa Melayu", "ta": "Tamil (தமிழ்)"}
+
+
+def with_lang(system: str, lang: Optional[str]) -> str:
+    """Append the reader-language instruction to a system prompt (no-op for English or unknown codes)."""
+    name = LANG_NAMES.get((lang or "").strip().lower()[:2])
+    if not name:
+        return system
+    return f"{system} Write every reader-facing sentence (why, reason, answer, messages) in {name}. Keep book titles and author names exactly as published."
+
+
 ASK_SYSTEM = (
     "You are PreReads, a readers' advisor. Answer ONLY from the route JSON given. "
     "Never add books that are not in the route. Be warm, plain, and brief "
@@ -264,5 +287,5 @@ ASK_SYSTEM = (
 )
 
 
-def ask(route_json: str, question: str) -> Optional[str]:
-    return text(ASK_SYSTEM, f"ROUTE:\n{route_json}\n\nQUESTION: {question}")
+def ask(route_json: str, question: str, lang: Optional[str] = None) -> Optional[str]:
+    return text(with_lang(ASK_SYSTEM, lang), f"ROUTE:\n{route_json}\n\nQUESTION: {question}")

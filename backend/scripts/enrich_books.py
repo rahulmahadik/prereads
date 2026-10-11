@@ -19,8 +19,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from app import catalog  # noqa: E402
-from app.models import Book  # noqa: E402
+from app.integrations import catalog  # noqa: E402
+from app.core.models import Book  # noqa: E402
 
 ROUTES = Path(__file__).resolve().parent.parent / "data" / "cache" / "routes"
 FIELDS = catalog.ENRICH_FIELDS

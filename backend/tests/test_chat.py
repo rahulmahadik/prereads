@@ -1,6 +1,8 @@
 from fastapi.testclient import TestClient
 
-from app import chat, config, discover, llm
+from app.services import chat, discover
+from app.core import config
+from app.ai import llm
 from app.main import app
 
 

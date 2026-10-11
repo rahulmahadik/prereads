@@ -16,9 +16,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from app import catalog  # noqa: E402
-from app.availability import _author_code  # noqa: E402
-from app.models import Book  # noqa: E402
+from app.integrations import catalog  # noqa: E402
+from app.integrations.availability import _author_code  # noqa: E402
+from app.core.models import Book  # noqa: E402
 
 ROUTES = Path(__file__).resolve().parent.parent / "data" / "cache" / "routes"
 _memo: dict[tuple[str, str], str | None] = {}

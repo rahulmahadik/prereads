@@ -15,8 +15,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from app import catalog, config, llm  # noqa: E402
-from app.engine import build_route, load_index, load_route, save_index, save_route, seeds  # noqa: E402
+from app.integrations import catalog  # noqa: E402
+from app.core import config  # noqa: E402
+from app.ai import llm  # noqa: E402
+from app.services.engine import build_route, load_index, load_route, save_index, save_route, seeds  # noqa: E402
 
 
 def main() -> int:

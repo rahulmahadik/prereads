@@ -2,6 +2,8 @@
 
 The model loads on first use (and downloads once, ~1.6 GB). Returns None when
 faster-whisper is not installed or fails, and the browser's SpeechRecognition takes over.
+
+Layer: ai. Served by api/routes_media.py (/api/stt).
 """
 from __future__ import annotations
 
@@ -41,10 +43,11 @@ def _load():
 
 
 def transcribe(audio: bytes, language: Optional[str] = "en") -> Optional[str]:
+    """Text from an audio clip, or None (not installed, failed, or silence)."""
     if not audio or not available():
         return None
     try:
-        segments, _ = _load().transcribe(io.BytesIO(audio), language=language, vad_filter=True, beam_size=1)
+        segments, _ = _load().transcribe(io.BytesIO(audio), language=language, vad_filter=True, beam_size=1)  # VAD trims silence; greedy decoding keeps it fast on CPU
         text = " ".join(s.text.strip() for s in segments).strip()
         return text or None
     except Exception as exc:  # noqa: BLE001

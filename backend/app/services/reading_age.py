@@ -2,6 +2,8 @@
 
 Catalogue signals win (audience, then juvenile / young adult subjects). Otherwise the
 readiness level decides. Only a straight catalogue audience is marked "catalogue".
+
+Layer: services. Used by services.discover for every recommendation.
 """
 from __future__ import annotations
 
@@ -10,8 +12,8 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
-from . import config
-from .models import Book, Readiness
+from ..core import config
+from ..core.models import Book, Readiness
 
 CHILD = ("Children 8–12", 8)
 TEEN = ("Teen", 13)
@@ -34,6 +36,7 @@ def _result(label: str, min_age: int, source: str) -> dict:
 
 
 def heuristic(audience: list[str], subjects: list[str], level: int, pages: Optional[int]) -> dict:
+    """{label, min_age, source}. Catalogue audience, then juvenile/YA subjects, then readiness level."""
     aud = _kind(audience)
     if aud == "child":
         return _result(*CHILD, "catalogue")
@@ -71,7 +74,7 @@ def _label_for(min_age: int) -> str:
 
 
 def _llm_min_age(book: Book) -> Optional[int]:
-    from . import llm
+    from ..ai import llm
     r = llm.structured(
         _AgeReply,
         "You give the youngest age (5-18) at which a reader can comfortably read a book. Reply as JSON {\"min_age\": n}.",
@@ -82,6 +85,8 @@ def _llm_min_age(book: Book) -> Optional[int]:
 
 
 def estimate(book: Book, readiness: Readiness, use_llm: bool = False) -> dict:
+    """heuristic(), refined by the model only when asked (use_llm), AI is on and the catalogue
+    gave no audience. Model answers are cached per book id under data/cache/reading_age."""
     base = heuristic(book.audience, book.subjects, readiness.level, book.pages)
     if base["source"] == "catalogue" or not use_llm or not config.llm_enabled():
         return base
