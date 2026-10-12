@@ -140,8 +140,9 @@ def llm_enabled() -> bool:
 
 
 def nlb_enabled() -> bool:
-    """Should this request call NLB? Needs both keys; off in demo; then the runtime switch."""
-    if effective_demo() or not has_nlb_key():
+    """Should this request call NLB? Needs both keys; off in demo and when the data source is
+    pinned to dataset (no Catalogue calls at all, not even to verify titles); then the runtime switch."""
+    if effective_demo() or not has_nlb_key() or requested_data_source() not in ("api", "auto"):
         return False
     return True if RUNTIME["use_nlb"] is None else bool(RUNTIME["use_nlb"])
 

@@ -6,7 +6,7 @@ from fastapi.testclient import TestClient
 
 from app.core import config
 from app.core.models import Availability, Book
-from app.integrations import availability, nlb_datasets as nd
+from app.integrations import availability, catalog, nlb_datasets as nd
 from app.main import app
 
 BISHAN = """Address 5 Bishan Place
@@ -220,3 +220,12 @@ def test_popular_has_source_and_facts_fields(no_keys, nlb_dir, monkeypatch):
     assert r["facts"]["year"] == 2024 and r["facts"]["physical_loans"] == 23988369
     monkeypatch.setitem(config.RUNTIME, "data_source", "demo")
     assert c.get("/api/popular").json()["facts"] is None
+
+
+def test_dataset_source_makes_no_catalogue_calls_even_with_keys(keys, monkeypatch):
+    # the public site runs on open data while the Catalogue integration is finished
+    monkeypatch.setattr(config, "DATA_SOURCE", "dataset")
+    assert config.nlb_enabled() is False
+    assert catalog.NLBClient()._get("GetTitles", Title="Sapiens") is None
+    monkeypatch.setattr(config, "DATA_SOURCE", "api")
+    assert config.nlb_enabled() is True
