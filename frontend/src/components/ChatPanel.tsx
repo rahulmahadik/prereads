@@ -25,7 +25,11 @@ type Item =
   | { kind: "choices"; options: Option[]; chosen: string } // earlier options, kept read-only in the thread
   | { kind: "result"; result: Result };
 
-type ChatState = { step: string; book_id?: string | null; focus_id?: string | null; candidates?: unknown[]; level?: number | null; branch?: string | null };
+// Sent back to the server unchanged on every turn; topic/shown/history are its conversation memory.
+type ChatState = {
+  step: string; book_id?: string | null; focus_id?: string | null; candidates?: unknown[]; level?: number | null; branch?: string | null;
+  topic?: string | null; shown?: unknown[]; history?: { role: string; text: string }[];
+};
 
 interface Result {
   book_id: string;

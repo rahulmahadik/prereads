@@ -130,3 +130,106 @@ def test_chat_stream_sends_real_steps_then_reply():
     dones = [e["step"] for e in events if e["type"] == "done"]
     assert starts == dones                      # every step that started also finished
     assert [s["step"] for s in events[-1]["reply"]["trace"]] == dones   # the stream matches the final trace
+
+
+# ------------------------------------------------------------------ conversation memory
+def _say(c, text, state):
+    return c.post("/api/chat", json={"text": text, "state": state}).json()
+
+
+def _levels(state) -> list[int]:
+    by_id = {e["id"]: e for e in discover._catalogue()}
+    return [by_id[x["id"]]["level"] for x in state["candidates"]]
+
+
+def test_follow_ups_refer_to_the_books_on_screen(monkeypatch):
+    _demo(monkeypatch)
+    c = TestClient(app)
+    r = _say(c, "investing", {"step": "start"})
+    shown = r["state"]["candidates"]
+    assert r["state"]["topic"] and len(r["state"]["history"]) == 2
+    # "the second one" is the second book listed, not a title that happens to contain "Second"
+    more = _say(c, "tell me more about the second one", r["state"])
+    assert more["messages"][0].startswith(shown[1]["title"].split(":")[0].strip())
+    assert any(s["step"] == "Using the conversation" for s in more["trace"])
+    # "something easier": same subject, nothing already shown, easier than what was shown (or the gentlest left)
+    easier = _say(c, "something easier", r["state"])
+    ids = {x["id"] for x in easier["state"]["candidates"]}
+    assert ids and ids <= _verified_ids() and not ids & {x["id"] for x in shown}
+    assert "investing" in easier["messages"][0].lower()
+    if "already the easiest" not in easier["messages"][0]:
+        assert max(_levels(easier["state"])) < min(_levels(r["state"]))
+    # "the first one" picks it, like tapping the option
+    first = _say(c, "the first one", r["state"])
+    assert first["state"]["step"] == "level" and first["state"]["focus_id"] == shown[0]["id"]
+
+
+def test_side_question_mid_flow_keeps_the_pending_question(monkeypatch):
+    _demo(monkeypatch)
+    c = TestClient(app)
+    r = _say(c, "Fluent Python", {"step": "start"})
+    assert r["state"]["step"] == "level"
+    r = _say(c, "who wrote it?", r["state"])
+    assert "Luciano Ramalho" in r["messages"][0]
+    assert r["state"]["step"] == "level" and [o["value"] for o in r["options"]] == ["1", "3", "4"]
+    r = _say(c, "I'm new to this", r["state"])
+    assert r["state"]["step"] == "branch" and r["state"]["level"] == 1
+    r = _say(c, "woodlands", r["state"])
+    assert r["state"]["step"] == "done" and r["state"]["branch"] == "WRL"
+    r = _say(c, "is it available at Tampines?", r["state"])
+    assert "Tampines" in r["messages"][0] and "Fluent Python" in r["messages"][0]
+
+
+def test_for_kids_keeps_the_subject_and_a_new_request_starts_fresh(monkeypatch):
+    _demo(monkeypatch)
+    c = TestClient(app)
+    r = _say(c, "investing", {"step": "start"})
+    kids = _say(c, "what about for kids?", r["state"])
+    assert "investing" in kids["messages"][0].lower()
+    assert _levels(kids["state"]) == sorted(_levels(kids["state"]))
+    new = _say(c, "books about sleep", r["state"])
+    assert "Using the conversation" not in [s["step"] for s in new["trace"]]
+    assert new["state"]["topic"] != r["state"]["topic"]
+
+
+def test_ambiguous_it_answers_for_every_book_on_screen(monkeypatch):
+    _demo(monkeypatch)
+    c = TestClient(app)
+    r = _say(c, "investing", {"step": "start"})
+    who = _say(c, "who wrote it?", r["state"])
+    assert len(who["messages"]) == len(r["state"]["candidates"]) and all(" is by " in m for m in who["messages"])
+
+
+def test_no_other_edition_of_a_book_already_shown():
+    assert chat._edition_key("Python Crash Course, 2nd Edition") == chat._edition_key("Python crash course")
+    assert chat._edition_key("Understanding Distributed Systems, Second Edition") == chat._edition_key("Understanding Distributed Systems")
+    assert chat._edition_key("Sapiens: A Brief History of Humankind") == "sapiens"
+
+
+def test_the_model_reads_a_follow_up_with_the_conversation(monkeypatch):
+    _demo(monkeypatch, llm_on=True)
+    seen = []
+
+    def fake(schema, system, user, **kw):
+        seen.append(json.loads(user))
+        return None                     # fall back to scores; only the prompt matters here
+
+    import json
+
+    monkeypatch.setattr(llm, "structured", fake)
+    monkeypatch.setattr(chat.embeddings, "available", lambda: False)
+    c = TestClient(app)
+    r = _say(c, "I want to understand investing", {"step": "start"})
+    _say(c, "and the history of money", r["state"])
+    assert "CONVERSATION" not in seen[0]
+    convo = " ".join(seen[-1]["CONVERSATION"])
+    assert "reader: I want to understand investing" in convo and "PreReads:" in convo
+    assert "start over" not in convo
+
+
+def test_start_over_clears_the_memory(monkeypatch):
+    _demo(monkeypatch)
+    c = TestClient(app)
+    r = _say(c, "investing", {"step": "start"})
+    r = _say(c, "start over", r["state"])
+    assert r["state"]["history"] == [] and r["state"]["shown"] == [] and r["state"]["topic"] is None

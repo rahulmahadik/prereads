@@ -51,6 +51,11 @@ class ChatState(BaseModel):
     candidates: list[dict] = Field(default_factory=list)
     level: Optional[int] = None
     branch: Optional[str] = None
+    # Conversation memory, round-tripped by the client with the rest of the state, so a
+    # follow-up ("something easier", "the second one", "who wrote it?") has something to refer to.
+    topic: Optional[str] = None         # the subject in play, as a standalone search ("investing")
+    shown: list[dict] = Field(default_factory=list)    # the books last put in front of the reader, in order
+    history: list[dict] = Field(default_factory=list)  # recent turns [{role, text}], oldest first
 
 
 class ChatOption(BaseModel):
@@ -287,10 +292,13 @@ class Understood(BaseModel):
 
 ASK_SYSTEM = (
     "You are PreReads, a public-library readers' advisor. REQUEST is the reader's message. CANDIDATES were "
-    "retrieved from our library catalogue for it. 1) kind: title = they named a specific book; author = they "
+    "retrieved from our library catalogue for it. CONVERSATION, when present, is the chat so far, oldest first: "
+    "read REQUEST in its light, so a follow-up continues the earlier subject unless it names a new one. "
+    "1) kind: title = they named a specific book; author = they "
     "named a writer; topic = a subject, question or need; unclear = a greeting or no subject at all. value: the "
-    "book title, the author's name, or the subject in 1-4 plain words (e.g. 'investing', not 'understand investing'). "
-    "2) picks: the 3 CANDIDATES that best answer the request, best first; for a beginner prefer a gentle start. "
+    "book title, the author's name, or the subject in 1-4 plain words (e.g. 'investing', not 'understand investing'), "
+    "standalone even for a follow-up (e.g. 'the brain, for children'). "
+    "2) picks: the 3 CANDIDATES that best answer the request, best first; for a beginner or a child prefer a gentle start. "
     "reason: one plain, warm sentence to the reader, at most 14 words. Use only ids from CANDIDATES. Never invent a book."
 )
 
@@ -299,15 +307,16 @@ MODEL_BUDGET = float(os.getenv("CHAT_MODEL_BUDGET", "25"))   # seconds; past thi
 _pool = cf.ThreadPoolExecutor(max_workers=2, thread_name_prefix="chat-llm")
 
 
-def ask_model(request: str, hits: list[tuple[dict, float, str]]) -> tuple[Optional[Understood], str]:
+def ask_model(request: str, hits: list[tuple[dict, float, str]], history: Optional[list[dict]] = None) -> tuple[Optional[Understood], str]:
     """One model call: what the reader means, and the best 3 of the retrieved books. (None, why) on failure."""
-    user = json.dumps({
-        "REQUEST": request,
-        "CANDIDATES": [{
-            "id": e["id"], "title": e["title"], "author": e["author"], "level": e["level"], "hours": e["hours"],
-            "about": [x for x in e["subjects"] + e["concepts"] if len(x.split()) <= 4][:6],
-        } for e, _, _ in hits],
-    }, ensure_ascii=False)
+    payload: dict = {"REQUEST": request}
+    if history:
+        payload["CONVERSATION"] = [f"{h['role']}: {h['text']}" for h in history[-4:]]
+    payload["CANDIDATES"] = [{
+        "id": e["id"], "title": e["title"], "author": e["author"], "level": e["level"], "hours": e["hours"],
+        "about": [x for x in e["subjects"] + e["concepts"] if len(x.split()) <= 4][:6],
+    } for e, _, _ in hits]
+    user = json.dumps(payload, ensure_ascii=False)
     fut = _pool.submit(llm.structured, Understood, llm.with_lang(ASK_SYSTEM, _LANG.get()), user, kind="chat", temperature=0.2)
     try:
         r = fut.result(timeout=MODEL_BUDGET)
@@ -400,7 +409,8 @@ def _book_option(i: int, e: dict, reason: str = "") -> ChatOption:
 
 
 def _cand(e: dict) -> dict:
-    return {"id": e["id"], "line_id": e["line_id"], "title": e["title"], "author": e["author"], "is_target": e["is_target"]}
+    return {"id": e["id"], "line_id": e["line_id"], "title": e["title"], "author": e["author"], "is_target": e["is_target"],
+            "level": e.get("level"), "category": e.get("category", "")}
 
 
 def _shelf_step(tr: Trace, entries: list[dict]) -> None:
@@ -413,21 +423,40 @@ def _shelf_step(tr: Trace, entries: list[dict]) -> None:
 LEVELS = [("New to this", "1"), ("Read a bit", "3"), ("Know it well", "4")]
 
 
+LEVEL_Q = "How familiar are you with this topic?"
+BRANCH_Q = "Which library will you go to? I'll check the shelf there."
+
+
+def _level_options() -> list[ChatOption]:
+    return [ChatOption(label=l, value=v) for l, v in LEVELS]
+
+
+def _branch_options() -> list[ChatOption]:
+    return [ChatOption(label="Any library", value="")] + [ChatOption(label=_short_branch(n), value=c) for c, n in BRANCHES.items()]
+
+
 def _ask_level(state: ChatState, lead: str, trace: Optional[list[TraceStep]] = None) -> ChatReply:
     state.step = "level"
     state.candidates = []
-    return ChatReply(messages=[lead, "How familiar are you with this topic?"], options=[ChatOption(label=l, value=v) for l, v in LEVELS], state=state, trace=trace or [])
+    return ChatReply(messages=[lead, LEVEL_Q], options=_level_options(), state=state, trace=trace or [])
 
 
 def _ask_branch(state: ChatState) -> ChatReply:
     state.step = "branch"
-    opts = [ChatOption(label="Any library", value="")] + [ChatOption(label=_short_branch(n), value=c) for c, n in BRANCHES.items()]
-    return ChatReply(messages=["Which library will you go to? I'll check the shelf there."], options=opts, state=state)
+    return ChatReply(messages=[BRANCH_Q], options=_branch_options(), state=state)
+
+
+def _fresh(state: ChatState) -> ChatState:
+    """A new request: the flow starts over, the conversation memory carries on."""
+    return ChatState(topic=state.topic, shown=state.shown, history=state.history)
 
 
 def _choose_book(state: ChatState, c: dict, trace: Optional[list[TraceStep]] = None) -> ChatReply:
     state.book_id = c.get("line_id") or c["id"]
     state.focus_id = c["id"]
+    state.topic = c.get("category") or state.topic
+    if not any(x["id"] == c["id"] for x in state.shown):
+        state.shown = [c]
     lead = f"Got it: {c['title']} by {c['author']}."
     if not c.get("is_target"):
         line = _line_titles().get(c["line_id"])
@@ -436,12 +465,12 @@ def _choose_book(state: ChatState, c: dict, trace: Optional[list[TraceStep]] = N
     return _ask_level(state, lead, trace)
 
 
-def _clarify(tr: Trace, cat: list[dict], lead: str) -> ChatReply:
+def _clarify(tr: Trace, cat: list[dict], lead: str, state: Optional[ChatState] = None) -> ChatReply:
     with tr.step("Looking at what we have") as s:
         opts, s.detail = starter_options(cat)
     return ChatReply(
         messages=[lead, "These subjects have the most books."],
-        options=opts, state=ChatState(), trace=tr.steps,
+        options=opts, state=_fresh(state) if state else ChatState(), trace=tr.steps,
     )
 
 
@@ -449,6 +478,7 @@ def _offer(tr: Trace, state: ChatState, picks: list[tuple[dict, str]], messages:
     _shelf_step(tr, [e for e, _ in picks])
     state.step = "pick"
     state.candidates = [_cand(e) for e, _ in picks]
+    state.shown = list(state.candidates)
     return ChatReply(messages=messages, options=[_book_option(i, e, r) for i, (e, r) in enumerate(picks)], state=state, trace=tr.steps)
 
 
@@ -467,25 +497,26 @@ def _picked(tr: Trace, hits: list[tuple[dict, float, str]], res: Optional[Unders
         return picks
 
 
-def _ask(tr: Trace, request: str, hits: list[tuple[dict, float, str]], step_name: str) -> tuple[Optional[Understood], str]:
+def _ask(tr: Trace, request: str, hits: list[tuple[dict, float, str]], step_name: str, history: Optional[list[dict]] = None) -> tuple[Optional[Understood], str]:
     if not config.llm_enabled():
         return None, "no model"
     with tr.step(step_name) as s:
-        res, why_not = ask_model(request, hits)
+        res, why_not = ask_model(request, hits, history)
         s.detail = (f"{res.kind}: {res.value.strip()} · model {_model_name()}" if config.AI_PROVIDER == "ollama" else f"{res.kind}: {res.value.strip()} · {_model_name()}") if res else why_not
     return res, why_not
 
 
-def _search(tr: Trace, query: str, cat: list[dict], cats: frozenset = frozenset()) -> list[tuple[dict, float, str]]:
+def _search(tr: Trace, query: str, cat: list[dict], cats: frozenset = frozenset(), k: int = 8) -> list[tuple[dict, float, str]]:
     with tr.step("Searching the catalogue") as s:
-        hits, method = retrieve(query, cat, cats=cats)
+        hits, method = retrieve(query, cat, k=k, cats=cats)
         s.detail = f"{len(hits)} {'match' if len(hits) == 1 else 'matches'} from {len(cat)} books ({method})"
     return hits
 
 
 def _recommend(tr: Trace, state: ChatState, cat: list[dict], hits: list[tuple[dict, float, str]], picks: list[tuple[dict, str]], label: str, request: str) -> ChatReply:
     if not hits or not picks:
-        return _clarify(tr, cat, f"PreReads doesn't cover '{request.strip()}' yet. Here's what I can help with.")
+        return _clarify(tr, cat, f"PreReads doesn't cover '{request.strip()}' yet. Here's what I can help with.", state)
+    state.topic = label
     about = " ".join(w for w in label.split() if w.lower() not in _FILLER) or label
     about = about if len(about) <= 40 else "that"
     weak = hits[0][1] < 0.62
@@ -512,6 +543,7 @@ def _find_named(tr: Trace, state: ChatState, cat: list[dict], intent: Intent, te
     if hits:
         picks = [(e, "") for e in hits[:5]]
         who = hits[0]["author"].split(",")[0].strip()
+        state.topic = hits[0]["category"]
         return _offer(tr, state, picks, [f"I have {len(hits)} books by {who}. Which one?" if intent.kind == "author" else "A few books match. Which one did you mean?"])
     # not held: offer the nearest books we do hold, by meaning
     if not nearest:
@@ -520,18 +552,247 @@ def _find_named(tr: Trace, state: ChatState, cat: list[dict], intent: Intent, te
             s.detail = f"{len(near)} nearest from {len(cat)} books ({method})"
         nearest = top_by_score(near)
     if not nearest:
-        return _clarify(tr, cat, f"PreReads doesn't cover '{intent.value}' yet. Here's what I can help with.")
+        return _clarify(tr, cat, f"PreReads doesn't cover '{intent.value}' yet. Here's what I can help with.", state)
+    state.topic = intent.value
     return _offer(tr, state, nearest, [f"PreReads doesn't cover '{intent.value}' yet.", "These are the closest books PreReads has:"])
 
 
+# ------------------------------------------------------------------ follow-ups
+# Decided in code from the conversation memory (state.topic / shown / focus_id): which book
+# a message points at, what it asks about that book, and whether it nudges the last list.
+_ORD = "first|1st|second|2nd|third|3rd|fourth|4th|fifth|5th|last"
+_ORDINALS = {"first": 0, "1st": 0, "second": 1, "2nd": 1, "third": 2, "3rd": 2, "fourth": 3, "4th": 3, "fifth": 4, "5th": 4, "last": -1}
+_ORDINAL_RE = re.compile(rf"\bthe ({_ORD})\b|\b({_ORD}) (?:one|book|option|pick|title)\b|^\s*({_ORD})\b|(?:#|\bnumber |\bno\.? ?|\boption )([1-5])\b")
+_PRONOUN_RE = re.compile(r"\b(it|its|that|this|that one|this one|that book|this book|the book)\b")
+_PICK_RE = re.compile(rf"^\s*(i'?ll take |let'?s do |go with |pick |choose )?(the ({_ORD})( one| book)?|({_ORD})( one| book)?|that one|this one|that book|this book)( please)?\s*[.!]?\s*$")
+_QUESTIONS = [
+    ("author", re.compile(r"\bwho (wrote|writes|is the author|is it by)\b|\bauthor\b|\bwritten by\b|\bwho'?s it by\b")),
+    ("where", re.compile(r"\bwhere\b|\bavailab|\bon (the )?shelf\b|\bin stock\b|\bcop(y|ies)\b|\bborrow\b|\bwhich librar")),
+    ("before", re.compile(r"\bbefore\b|\bprereq|\bprepare\b|\bget ready\b|\breading path\b|\bread first\b|\bstart with\b|\bready for\b")),
+    ("level", re.compile(r"\bhow (hard|difficult|easy|long|advanced|technical)\b|\blevel\b|\bhow many (hours|pages)\b|\bdifficult")),
+    ("about", re.compile(r"\babout\b|\bmore (on|info|details)\b|\btell me\b|\bsummar|\bdescribe\b|\bwhat('?s| is) (it|that|this)\b|\bany good\b|\bworth\b")),
+]
+_MODIFIERS = [
+    ("easier", re.compile(r"\b(easier|simpler|gentler|lighter|shorter|less (technical|advanced|difficult)|more basic|basics?|beginners?|introductory|intro)\b")),
+    ("harder", re.compile(r"\b(harder|more advanced|advanced|deeper|more technical|in.depth|challenging|longer)\b")),
+    ("more", re.compile(r"\b(more like|similar|others?|another|anything else|something else|more books|more options|different|alternatives?)\b|^\s*(show\s+)?(me\s+)?more\b")),
+]
+_FOLLOW_WORDS = set(
+    """easier simpler gentler lighter shorter harder advanced deeper technical basic basics beginner beginners
+    introductory intro challenging longer depth similar other others another else different alternative alternatives
+    option options less than ones first 1st second 2nd third 3rd fourth 4th fifth 5th last take choose pick""".split()
+)
+_ASK_WORDS = set(
+    """wrote writes written writer author available availability shelf shelves stock copy copies borrow long hard
+    difficult easy level hours pages summary summarise summarize describe plot worth before prereq prerequisite
+    prerequisites prepare ready path""".split()
+)
+_AUDIENCE = set("""kid kids child children childrens teen teens teenager teenagers young younger student students family son daughter""".split())
+_BRANCH_WORDS = {w for n in BRANCHES.values() for w in _tokens(_short_branch(n))}
+
+
+def _leftover(text: str) -> set[str]:
+    """Words that would name a new subject, once filler, follow-up, question, branch and audience words are gone."""
+    return {w for w in _content(text) if w not in _FOLLOW_WORDS | _ASK_WORDS | _AUDIENCE | _BRANCH_WORDS}
+
+
+def _edition_key(title: str) -> str:
+    """'Python Crash Course, 2nd Edition' and 'Python crash course' -> the same key."""
+    main = re.sub(r",?\s*\(?\b(\d+(st|nd|rd|th)|second|third|fourth|fifth|new|revised|updated)\b.*\bedition\b.*$", "", title.split(":")[0], flags=re.I)
+    return _norm(main)
+
+
+def _topic_label(topic: str) -> str:
+    """'Python (Computer program language)' -> 'Python'; common nouns lower-cased for a sentence."""
+    t = re.sub(r"\s*\(.*?\)", "", topic).strip()
+    return t if t.split(" ")[0] in ("Python", "Singapore") or t.isupper() else t[:1].lower() + t[1:]
+
+
+def _branch_in(text: str) -> Optional[str]:
+    """A branch code from the reader's words ('Woodlands', 'at tampines', or the code itself)."""
+    if text in BRANCHES:
+        return text
+    low = text.lower()
+    return next((c for c, n in BRANCHES.items() if _short_branch(n).lower() in low), None)
+
+
+def _level_in(text: str) -> Optional[int]:
+    low = text.lower().strip()
+    if low.isdigit():
+        return int(low)
+    if re.search(r"\b(new|beginner|never|none|not at all|no idea|nothing)\b", low):
+        return 1
+    if re.search(r"\b(well|expert|advanced|a lot|lots)\b", low):
+        return 4
+    if re.search(r"\b(bit|some|little|a few)\b", low):
+        return 3
+    return None
+
+
+def _ref(text: str, state: ChatState, cat: list[dict]) -> tuple[Optional[dict], bool]:
+    """The book a follow-up points at: 'the second one', a title on screen, or 'it' / 'that one'.
+    Returns (entry, ambiguous): ambiguous when 'it' could be any of several books on screen."""
+    if not state.shown and not state.focus_id:
+        return None, False
+    by_id = {e["id"]: e for e in cat}
+    low = text.lower()
+    m = _ORDINAL_RE.search(low)
+    if m and state.shown:
+        w = m.group(1) or m.group(2) or m.group(3) or m.group(4)
+        i = int(w) - 1 if w.isdigit() else _ORDINALS[w]
+        if -len(state.shown) <= i < len(state.shown):
+            return by_id.get(state.shown[i]["id"]), False
+    words = _content(text)
+    for c in state.shown:
+        main = _content(c["title"].split(":")[0])
+        if main and main <= words:
+            return by_id.get(c["id"]), False
+    # 'it' / 'that' only when the rest of the message names no new subject ("books that explain tax" is a new request)
+    if _PRONOUN_RE.search(low) and not _leftover(text):
+        fid = state.focus_id or (state.shown[0]["id"] if len(state.shown) == 1 else None)
+        if fid:
+            return by_id.get(fid), False
+        return None, bool(state.shown)
+    return None, False
+
+
+def _pending(state: ChatState) -> tuple[list[str], list[ChatOption]]:
+    """The question the flow is waiting on, so a side question doesn't lose it."""
+    if state.step == "level":
+        return [LEVEL_Q], _level_options()
+    if state.step == "branch":
+        return [BRANCH_Q], _branch_options()
+    return [], []
+
+
+def _answer(e: dict, q: str, text: str) -> list[str]:
+    """A plain answer about one catalogue book, from our own data."""
+    title = e["title"].split(":")[0].strip()
+    if q == "author":
+        return [f"{title} is by {e['author']}."]
+    if q == "level":
+        out = [f"{title} is level {e['level']} of 5, about {round(e['hours'])} hours of reading."]
+        if e["concepts"]:
+            out.append("It helps to know: " + ", ".join(e["concepts"][:4]) + ".")
+        return out
+    if q == "where":
+        av = e["availability"]
+        code = _branch_in(text)
+        here = next((a for a in av if a.branch_code == code), None) if code else None
+        in_stock = [a for a in av if a.available > 0]
+        if here is not None and here.available > 0:
+            return [f"Yes, {title} is on the shelf at {_short_branch(here.branch)} ({here.call_number})."]
+        names = ", ".join(f"{_short_branch(a.branch)} ({a.call_number})" for a in in_stock[:3])
+        if here is not None or code:
+            where = _short_branch(BRANCHES.get(code or "", ""))
+            return [f"{title} isn't on the shelf at {where} right now." + (f" You'll find it at {names}." if names else " All copies are out; you can join the waiting list.")]
+        return [f"{title} is on the shelf at {names}." if names else f"All copies of {title} are out right now; you can join the waiting list."]
+    about = e.get("blurb") or e.get("one_line") or ""
+    out = [f"{title}, by {e['author']}." + (f" {about}" if about else "")]
+    out.append(f"Level {e['level']} of 5, about {round(e['hours'])} hours of reading.")
+    return out
+
+
+def _relative(tr: Trace, state: ChatState, cat: list[dict], mod: str, base: Optional[dict] = None) -> ChatReply:
+    """'Something easier' / 'more advanced' / 'more like this' / 'for kids': the last subject again,
+    measured against the books already shown."""
+    by_id = {e["id"]: e for e in cat}
+    topic = state.topic or (base or by_id.get((state.shown or [{}])[0].get("id", ""), {})).get("category", "")
+    seen = {c["id"] for c in state.shown}
+    levels = [base["level"]] if base else [by_id[c["id"]]["level"] for c in state.shown if c["id"] in by_id]
+    with tr.step("Using the conversation") as s:
+        s.detail = f"{mod} · topic: {topic or 'none'} · {len(seen)} {'book' if len(seen) == 1 else 'books'} already shown"
+    fresh = _fresh(state)
+    if not topic:
+        return _clarify(tr, cat, "Tell me a subject and I'll find books on it.", state)
+    hits = _search(tr, topic, cat, k=24)
+    # never another edition of a book already shown ("Python Crash Course, 2nd Edition")
+    seen_titles = {_edition_key(c["title"]) for c in state.shown}
+    pool = [h for h in hits if h[0]["id"] not in seen and _edition_key(h[0]["title"]) not in seen_titles]
+    if mod == "easier":
+        keep = sorted((h for h in pool if not levels or h[0]["level"] < min(levels)), key=lambda h: h[0]["level"])
+    elif mod == "harder":
+        keep = sorted((h for h in pool if not levels or h[0]["level"] > max(levels)), key=lambda h: h[0]["level"])
+    elif mod == "gentle":
+        keep = sorted(hits, key=lambda h: h[0]["level"])
+    else:
+        keep = pool
+    about = _topic_label(topic)
+    picks = top_by_score(keep)
+    if picks:
+        lead = {
+            "easier": f"Here are {len(picks)} easier books on {about}.",
+            "harder": f"Here are {len(picks)} more advanced books on {about}.",
+            "gentle": f"PreReads is for adult readers, but these are the gentlest books I have on {about}.",
+        }.get(mod, f"Here are {len(picks)} more on {about}.")
+        return _offer(tr, fresh, picks, [lead])
+    if pool:
+        word = "easiest" if mod == "easier" else "most advanced"
+        nearest = sorted(pool, key=lambda h: h[0]["level"] if mod == "easier" else -h[0]["level"])
+        return _offer(tr, fresh, top_by_score(nearest), [f"Those are already the {word} books I have on {about}. These are the closest others."])
+    return _clarify(tr, cat, f"That's everything I have on {about}. Here's what else I can help with.", state)
+
+
+def _followup(state: ChatState, text: str) -> Optional[ChatReply]:
+    """A message that refers back to the conversation, answered from memory; None when it's a new request."""
+    if not (state.shown or state.focus_id or state.topic) or not text or text.isdigit() or text in BRANCHES or text.startswith(("book:", "topic:")):
+        return None
+    cat = _books()
+    e, ambiguous = _ref(text, state, cat)
+    low = text.lower()
+    q = next((k for k, rx in _QUESTIONS if rx.search(low)), None)
+    mod = next((k for k, rx in _MODIFIERS if rx.search(low)), None)
+    if mod is None and _content(text) & _AUDIENCE:
+        mod = "gentle"
+    mid_flow = state.step in ("level", "branch")
+    tr = Trace()
+    if e is not None and q and not (mod and q == "about"):
+        with tr.step("Using the conversation") as s:
+            s.detail = f"{q} · {e['title']}"
+        if q == "before":
+            if mid_flow and e["id"] == state.focus_id:
+                ask, opts = _pending(state)
+                title = e["title"].split(":")[0].strip()
+                return ChatReply(messages=[f"I'll show you what to read before {title}. One quick question first."] + ask, options=opts, state=state, trace=tr.steps)
+            return _choose_book(_fresh(state), _cand(e), tr.steps)
+        if not mid_flow:
+            state.focus_id = e["id"]
+        ask, opts = _pending(state)
+        if not mid_flow:
+            opts = [ChatOption(label="Plan my reading path", value=f"book:{e['id']}"),
+                    ChatOption(label="Something easier", value="something easier"),
+                    ChatOption(label="More like this", value="more like this")]
+        return ChatReply(messages=_answer(e, q, text) + ask, options=opts, state=state, trace=tr.steps)
+    if mod and not _leftover(text):
+        return _relative(tr, state, cat, mod, e)
+    if e is not None and _PICK_RE.match(low):
+        with tr.step("Using the conversation") as s:
+            s.detail = f"you picked {e['title']}"
+        return _choose_book(_fresh(state), _cand(e), tr.steps)
+    if ambiguous and (q or _PICK_RE.match(low)) and not mid_flow:
+        state.step = "pick"
+        state.candidates = list(state.shown)
+        opts = [ChatOption(label=f"{c['title'].split(':')[0].strip()} — {c['author']}", value=str(i)) for i, c in enumerate(state.shown)]
+        by_id = {x["id"]: x for x in cat}
+        books = [by_id[c["id"]] for c in state.shown if c["id"] in by_id]
+        if q in ("author", "level", "where") and books:
+            # a short fact: answer it for every book on screen rather than asking which one
+            with tr.step("Using the conversation") as s:
+                s.detail = f"{q} · all {len(books)} books shown"
+            return ChatReply(messages=[_answer(b, q, text)[0] for b in books], options=opts, state=state, trace=tr.steps)
+        return ChatReply(messages=["Which book do you mean?"], options=opts, state=state)
+    return None
+
+
 def _start(state: ChatState, text: str) -> ChatReply:
+    """A new request. `state` carries the conversation memory; the flow itself starts over."""
     tr = Trace()
     with tr.step("Reading the catalogue") as s:
         cat = _books()
         s.detail = f"{len(cat)} catalogue-verified books on {len({e['line_id'] for e in cat})} reading paths"
-    fresh = ChatState()
+    fresh = _fresh(state)
     if not text:
-        return _clarify(tr, cat, "What would you like to read or learn?")
+        return _clarify(tr, cat, "What would you like to read or learn?", state)
     if text.startswith("book:"):
         e = next((x for x in cat if x["id"] == text[5:]), None)
         if e:
@@ -554,11 +815,11 @@ def _start(state: ChatState, text: str) -> ChatReply:
         with tr.step("Understanding your request") as s:
             s.detail = how
         if intent.kind == "unclear":
-            return _clarify(tr, cat, "Happy to help. Let's narrow it down a little.")
+            return _clarify(tr, cat, "Happy to help. Let's narrow it down a little.", state)
         return _find_named(tr, fresh, cat, intent, text)
-    # retrieval first, then one model call reads the request together with what we found
+    # retrieval first, then one model call reads the request (and the chat so far) together with what we found
     hits = _search(tr, text, cat)
-    res, why_not = _ask(tr, text, hits, "Understanding your request")
+    res, why_not = _ask(tr, text, hits, "Understanding your request", state.history)
     if res is None:
         intent = heuristic_intent(text)
         if why_not == "no model":
@@ -567,7 +828,7 @@ def _start(state: ChatState, text: str) -> ChatReply:
     else:
         intent = Intent(kind=res.kind, value=res.value.strip())
     if intent.kind == "unclear":
-        return _clarify(tr, cat, "Happy to help. Let's narrow it down a little.")
+        return _clarify(tr, cat, "Happy to help. Let's narrow it down a little.", state)
     if intent.kind in ("title", "author"):
         nearest = validate_picks(res.picks, hits)[0] if res else None
         return _find_named(tr, fresh, cat, intent, text, nearest)
@@ -630,27 +891,67 @@ def _finish(state: ChatState) -> ChatReply:
     if start.readiness.assumed_concepts:
         msgs.append("It helps to know: " + ", ".join(start.readiness.assumed_concepts[:4]) + ".")
     result["start_about"] = about or ""
+    # the books this answer talks about, so "is it at Tampines?" or "who wrote it?" can follow
+    by_id = {e["id"]: e for e in _books()}
+    state.shown = [_cand(by_id[i]) for i in dict.fromkeys([start.book.id, target.book.id]) if i in by_id] or state.shown
     return ChatReply(messages=msgs, state=state, result=result, trace=tr.steps)
 
 
+HISTORY_TURNS = 6
+_RESTART = ("start over", "restart", "reset")
+
+
 def step(turn: ChatTurn) -> ChatReply:
-    """Advance the chat one turn. Stateless: the client sends the whole turn state back each time."""
+    """Advance the chat one turn. Stateless: the client sends the whole turn state back each time,
+    including the conversation memory, which this adds the turn to."""
     token = _LANG.set(turn.lang)
     try:
-        return _step(turn)
+        reply = _step(turn)
     finally:
         _LANG.reset(token)
+    if (turn.text or "").strip().lower() not in _RESTART:
+        _remember(turn, reply)
+    return reply
+
+
+def _said(state: ChatState, text: str) -> str:
+    """What the reader said, in words: a tapped option becomes its label."""
+    if state.step == "pick" and text.isdigit() and int(text) < len(state.candidates):
+        return state.candidates[int(text)]["title"]
+    if state.step == "level" and text.isdigit():
+        return next((label for label, v in LEVELS if v == text), text)
+    if state.step == "branch" and (text in BRANCHES or not text):
+        return _short_branch(BRANCHES[text]) if text else "Any library"
+    if text.startswith("topic:"):
+        return text[6:]
+    if text.startswith("book:"):
+        return next((e["title"] for e in _books() if e["id"] == text[5:]), text[5:])
+    return text
+
+
+def _remember(turn: ChatTurn, reply: ChatReply) -> None:
+    said = _said(turn.state, (turn.text or "").strip())
+    books = [o.label for o in reply.options if o.value.isdigit()]
+    answer = " ".join(reply.messages) + (" Options: " + "; ".join(f"{i + 1}) {b}" for i, b in enumerate(books)) if books else "")
+    turns = list(turn.state.history) + ([{"role": "reader", "text": said[:200]}] if said else []) + [{"role": "PreReads", "text": answer[:400]}]
+    reply.state.history = turns[-HISTORY_TURNS:]
 
 
 def _step(turn: ChatTurn) -> ChatReply:
     state = turn.state
     text = (turn.text or "").strip()
 
-    if text.lower() in ("start over", "restart", "reset"):
+    if text.lower() in _RESTART:
         return ChatReply(messages=["Fresh start. What would you like to read about?"], state=ChatState())
 
+    # a message about what's already on screen ("the second one", "who wrote it?", "something easier")
+    if not (state.step == "level" and _level_in(text) is not None and not _PRONOUN_RE.search(text.lower())):
+        follow = _followup(state, text)
+        if follow is not None:
+            return follow
+
     if state.step in ("start", "done") or (state.step == "pick" and not text.isdigit()):
-        return _start(ChatState(), text)
+        return _start(state, text)
 
     if state.step == "pick":
         i = int(text)
@@ -659,18 +960,19 @@ def _step(turn: ChatTurn) -> ChatReply:
         return ChatReply(messages=["Which of these would you like?"], options=[ChatOption(label=f"{h['title']} — {h['author']}", value=str(i)) for i, h in enumerate(state.candidates)], state=state)
 
     if state.step == "level":
-        try:
-            state.level = int(text)
-        except ValueError:
-            lower = text.lower()
-            state.level = 4 if "well" in lower or "expert" in lower else 3 if "bit" in lower or "some" in lower else 1
+        level = _level_in(text)
+        if level is None:                 # not an answer to the question: a new request
+            return _start(state, text)
+        state.level = level
         return _ask_branch(state)
 
     if state.step == "branch":
-        state.branch = text if text in BRANCHES else None
+        if text and text.lower() not in ("any", "anywhere", "any library") and _branch_in(text) is None:
+            return _start(state, text)
+        state.branch = _branch_in(text) if text else None
         return _finish(state)
 
-    return ChatReply(messages=["What would you like to read about next?"], state=ChatState())
+    return ChatReply(messages=["What would you like to read about next?"], state=_fresh(state))
 
 
 # --------------------------------------------------------------------- browse
