@@ -1,8 +1,8 @@
 import MicIcon from "./MicIcon";
 import { useEffect, useRef, useState } from "react";
 import { api } from "../api";
-import { navigate } from "../router";
-import { setBranch, setReaderLevel } from "./ui";
+import { href, navigate } from "../router";
+import { scrollToShelf, setBranch, setReaderLevel } from "./ui";
 import { canListen, listen, speak, stop } from "../speech";
 import { getLang, t, tn, useLang, voiceLang, type Key } from "../i18n";
 
@@ -318,12 +318,15 @@ export default function ChatPanel() {
     navigate("line", { id: result.book_id, title: result.title, author: result.author });
   };
 
-  const openDirections = () => {
-    if (!result) return;
-    setReaderLevel(result.level);
-    setBranch(result.branch);
+  // Opens the first book's page at its shelf map (at=find). Already on that page: just scroll there.
+  const openDirections = (r: Result | null = result) => {
+    if (!r) return;
+    setReaderLevel(r.level);
+    setBranch(r.branch);
     setOpen(false);
-    navigate("book", { id: result.book_id, title: result.title, author: result.author, stop: result.start_id });
+    const params = { id: r.book_id, title: r.title, author: r.author, stop: r.start_id, at: "find" };
+    if (location.hash === href("book", params)) scrollToShelf();
+    else navigate("book", params);
   };
 
   const bookChoices = options.some((o) => o.hint && /^\d+$/.test(o.value));
@@ -376,7 +379,7 @@ export default function ChatPanel() {
                 </div>
               ) : m.kind === "result" ? (
                 <div key={i} className="chat-result past">
-                  <button type="button" className="secondary" onClick={() => navigate("book", { id: m.result.book_id, title: m.result.title, author: m.result.author, stop: m.result.start_id })}>
+                  <button type="button" className="secondary" onClick={() => openDirections(m.result)}>
                     {t("chat.directions", { title: m.result.start_title })}
                   </button>
                 </div>
@@ -409,7 +412,7 @@ export default function ChatPanel() {
             )}
             {result && !busy && (
               <div className="chat-result">
-                <button type="button" className="primary" onClick={openDirections}>
+                <button type="button" className="primary" onClick={() => openDirections()}>
                   {t("chat.directions", { title: result.start_title })}
                 </button>
                 <button type="button" className="secondary" onClick={openLine}>

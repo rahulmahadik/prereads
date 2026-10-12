@@ -25,7 +25,7 @@ export default function App() {
   let screen = <Home senior={senior} onSenior={() => setSenior((v) => !v)} />;
   if (loc.screen === "line" && p.id) screen = <Line {...common} />;
   else if (loc.screen === "meet" && p.id) screen = <Meet {...common} />;
-  else if (loc.screen === "book" && p.id && p.stop) screen = <Book {...common} stopId={p.stop} />;
+  else if (loc.screen === "book" && p.id && p.stop) screen = <Book {...common} stopId={p.stop} at={p.at} />;
   return (
     <>
       {screen}

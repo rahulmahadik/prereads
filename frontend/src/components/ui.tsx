@@ -166,3 +166,10 @@ export function AvailToggle({ on, onChange, label = t("avail.only") }: { on: boo
     </button>
   );
 }
+
+/** Scroll to the shelf map (#find), or to the shelf status when no copy is on a shelf to map. */
+export function scrollToShelf() {
+  const el = document.getElementById("find") ?? document.getElementById("where");
+  const smooth = !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  el?.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
+}

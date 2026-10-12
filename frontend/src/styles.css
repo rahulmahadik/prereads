@@ -1187,7 +1187,7 @@ body { background: var(--paper); }
 .bar-btn.on { border-color: var(--stamp); color: var(--stamp); font-weight: 700; }
 
 /* ---- wayfinding map ---- */
-.wayfind-section { scroll-margin-top: 12px; }
+.wayfind-section, .where-h { scroll-margin-top: 12px; }
 
 .map {
   width: 100%;

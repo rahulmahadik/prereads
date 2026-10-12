@@ -6,7 +6,7 @@ import { readingAge, type ReadingAge } from "../readingAge";
 import ListenButton from "../components/ListenButton";
 import { bookScript } from "../speech";
 import WayfindMap from "../components/WayfindMap";
-import { Sheet, TopBar, getBranch, nlbSearchUrl, shelfStatus, shortBranch, useBack, useReadSet } from "../components/ui";
+import { Sheet, TopBar, getBranch, nlbSearchUrl, scrollToShelf, shelfStatus, shortBranch, useBack, useReadSet } from "../components/ui";
 import { navigate } from "../router";
 import HeartButton from "../components/HeartButton";
 import { getNote, setNote } from "../myshelf";
@@ -24,7 +24,7 @@ const ageText = (a: ReadingAge) => {
   return label + (a.source === "estimated" ? t("age.estimated") : "");
 };
 
-export default function Book({ id, title, author, stopId }: { id: string; title: string; author: string; stopId: string }) {
+export default function Book({ id, title, author, stopId, at }: { id: string; title: string; author: string; stopId: string; at?: string }) {
   const lang = useLang();
   const goBack = useBack("line");
   const [route, setRoute] = useState<Route | null>(null);
@@ -99,6 +99,13 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
       live = false;
     };
   }, [stopBookId, branchPref]);
+
+  // "Directions" links (at=find) open the page at the shelf map once the page has rendered.
+  useEffect(() => {
+    if (at !== "find" || !stopBookId) return;
+    const timer = window.setTimeout(scrollToShelf, 150);
+    return () => window.clearTimeout(timer);
+  }, [at, stopBookId]);
 
   const go = (i: number) => {
     const s = stops[i];
@@ -252,7 +259,7 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
               </ul>
             </>
           )}
-          <h3 className="small-h">{t("book.where")}</h3>
+          <h3 className="small-h where-h" id="where">{t("book.where")}</h3>
           {st.kind === "available" && (
             <div className="status ok">
               <strong>{t("book.availableAt", { branch: shortBranch(st.branch) })}</strong>
