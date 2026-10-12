@@ -98,6 +98,9 @@ NLB_DATA_DIR: Path = DATA_DIR / "nlb"       # derived NLB open data (scripts/fet
 NLB_CACHE_DIR: Path = CACHE_DIR / "nlb"     # Catalogue API responses (TTL per endpoint; see catalog.NLBClient)
 
 HTTP_TIMEOUT: float = float(os.getenv("HTTP_TIMEOUT", "12"))
+# Optional visit log for whoever runs the site: one JSON line per request (time, visitor IP as
+# Cloudflare passes it, country, path, status, user agent). Off unless a file path is set.
+VISIT_LOG: str = os.getenv("VISIT_LOG", "").strip()
 
 
 # Runtime overrides (set from the Settings sheet via /api/mode). None = use .env.

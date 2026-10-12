@@ -6,10 +6,12 @@ jobs (daily NLB open-data refresh, embedding warm-up) and serves the built front
 """
 from __future__ import annotations
 
+import json
 import logging
 import threading
+import time
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -75,6 +77,33 @@ def _warm_embeddings() -> None:
 
 
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+
+_visit_lock = threading.Lock()
+
+
+@app.middleware("http")
+async def visit_log(request: Request, call_next):
+    """Append one JSON line per request to VISIT_LOG (off when unset). Static assets and health
+    checks are skipped; the visitor IP is Cloudflare's CF-Connecting-IP when present."""
+    response = await call_next(request)
+    path = request.url.path
+    if config.VISIT_LOG and not path.startswith(("/assets/", "/api/health")):
+        rec = {
+            "t": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            "ip": request.headers.get("cf-connecting-ip") or (request.client.host if request.client else ""),
+            "country": request.headers.get("cf-ipcountry", ""),
+            "method": request.method,
+            "path": path,
+            "query": request.url.query[:200],
+            "status": response.status_code,
+            "ua": request.headers.get("user-agent", "")[:300],
+        }
+        try:
+            with _visit_lock, open(config.VISIT_LOG, "a", encoding="utf-8") as f:
+                f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+        except OSError as exc:
+            log.warning("visit log write failed: %s", exc)
+    return response
 
 for _router in ROUTERS:
     app.include_router(_router)
