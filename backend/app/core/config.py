@@ -101,6 +101,11 @@ HTTP_TIMEOUT: float = float(os.getenv("HTTP_TIMEOUT", "12"))
 # Optional visit log for whoever runs the site: one JSON line per request (time, visitor IP as
 # Cloudflare passes it, country, path, status, user agent). Off unless a file path is set.
 VISIT_LOG: str = os.getenv("VISIT_LOG", "").strip()
+# Many readers at once. Model calls running or waiting across the app (chat, AI ranking); past this
+# the request answers without the model straight away instead of queueing behind other readers.
+LLM_MAX_PENDING: int = int(os.getenv("LLM_MAX_PENDING", "4"))   # Ollama runs 4 in parallel
+# Worker threads for the blocking endpoints (most of them just wait on the network or the model).
+SERVER_THREADS: int = int(os.getenv("SERVER_THREADS", "200"))
 
 
 # Runtime overrides (set from the Settings sheet via /api/mode). None = use .env.

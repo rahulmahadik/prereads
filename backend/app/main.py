@@ -11,6 +11,7 @@ import logging
 import threading
 import time
 
+import anyio
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
@@ -23,6 +24,13 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(messag
 log = logging.getLogger("prereads.api")
 
 app = FastAPI(title="PreReads", version="0.1.0")
+
+
+@app.on_event("startup")
+async def _more_worker_threads() -> None:
+    """Blocking endpoints share one thread pool (40 by default). Most of them wait on the network or
+    the model, so a few dozen readers at once could take every thread; give the pool more room."""
+    anyio.to_thread.current_default_thread_limiter().total_tokens = config.SERVER_THREADS
 
 
 @app.on_event("startup")
@@ -116,8 +124,9 @@ if _dist.exists():
     app.mount("/assets", StaticFiles(directory=_dist / "assets"), name="assets")
 
     @app.get("/{path:path}")
-    def spa(path: str):
-        """Static file if it exists, else index.html (the hash router takes over)."""
+    async def spa(path: str):
+        """Static file if it exists, else index.html (the hash router takes over). Async: the page
+        itself never waits behind busy worker threads when many readers are using the AI at once."""
         file = _dist / path
         if path and file.exists() and file.is_file():
             # the service worker, page shell and manifest must never be cached by the CDN,

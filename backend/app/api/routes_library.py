@@ -8,6 +8,7 @@ import re
 from fastapi import APIRouter, HTTPException, Query
 
 from ..core import config
+from ..core.ttl import ttl_cache
 from ..integrations.availability import BRANCHES
 
 router = APIRouter(prefix="/api", tags=["library"])
@@ -63,7 +64,13 @@ def branches():
     status "closed" + notice when NLB lists the branch as closed (e.g. relocation)."""
     from ..integrations import nlb_datasets
 
-    src = nlb_datasets.source()
+    return _branches(nlb_datasets.source())
+
+
+@ttl_cache(300)      # one answer per data source, shared by every reader for 5 minutes
+def _branches(src: str) -> dict:
+    from ..integrations import nlb_datasets
+
     libs = _libraries_by_key()
     out = []
     for c, n in BRANCHES.items():

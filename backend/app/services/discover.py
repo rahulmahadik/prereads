@@ -381,7 +381,7 @@ def rerank_key(query: str, ids: list[str], lang: Optional[str]) -> str:
     return hashlib.sha1(f"{version}|{q}|{','.join(ids)}|{(lang or 'en').strip().lower()[:2] or 'en'}".encode()).hexdigest()[:20]
 
 
-def rerank(need: Need, query: str, candidates: list[dict], lang: Optional[str] = None) -> Optional[Reranked]:
+def rerank(need: Need, query: str, candidates: list[dict], lang: Optional[str] = None, cache_only: bool = False) -> Optional[Reranked]:
     """Deep phase, retrieval-augmented: the model orders the fast shortlist (catalogue entries, already
     verified, so it cannot invent a book) and reads the request in the same structured call. Returns the best
     <= RERANK_TOP with a reason each, or None when the model is off, fails, or there is nothing to rank (the
@@ -398,6 +398,8 @@ def rerank(need: Need, query: str, candidates: list[dict], lang: Optional[str] =
         cached = data is not None
         if data is not None:
             _cache_put(_RERANKS, key, data)
+    if data is None and cache_only:
+        return None
     if data is None:
         short = {f"b{i}": c["id"] for i, c in enumerate(cands, 1)}
         user = json.dumps(
@@ -892,7 +894,16 @@ def _ordered(results: list[Recommendation], ranked: list[tuple[str, str]], fallb
 
 # Deep work runs in workers so it can be cut off at a budget; an abandoned call still finishes and fills
 # its cache (rerank, proposals, catalogue checks), so the reader's next try is instant.
-_deep_pool = ThreadPoolExecutor(max_workers=4, thread_name_prefix="discover-deep")
+_deep_pool = ThreadPoolExecutor(max_workers=8, thread_name_prefix="discover-deep")   # model calls + catalogue pages
+
+
+def _model_job(fn, *args):
+    """Submit a model call only when a model slot is free (llm.reserve); None means busy, right now."""
+    if not llm.reserve():
+        return None
+    fut = _deep_pool.submit(fn, *args)
+    fut.add_done_callback(llm.release)
+    return fut
 
 
 def _within(fut, budget: float, what: str):
@@ -938,13 +949,20 @@ def _deep_rerank(req: DiscoverRequest, on: set[str], lap, t0: float):
         search = _deep_pool.submit(_catalogue_search, need, req.branch, max(0, req.offset // max(1, req.limit)), 20)
     rr = None
     if cands:
-        rr = _within(_deep_pool.submit(rerank, need, req.text, cands, req.lang), min(RERANK_BUDGET_S, left()), "rerank")
+        # a saved answer first; a new model call only when a slot is free, else "busy" at once
+        rr = rerank(need, req.text, cands, req.lang, cache_only=True)
+        if rr is None:
+            job = _model_job(rerank, need, req.text, cands, req.lang)
+            rr = _within(job, min(RERANK_BUDGET_S, left()), "rerank") if job is not None else None
+            if job is None:
+                log.info("deep rerank skipped: %d model calls already running or waiting", llm.pending())
         t = lap("rerank", t)
     engine, status, ranked, proposed, extra = "heuristic", ("busy" if cands and rr is None else "ok"), [], [], []
     if rr is not None:
         need, ranked, engine = rr.need, rr.picks, "llm"
     if (not cands or (rr is not None and len(ranked) < RERANK_MIN)) and left() > 2:
-        got = _within(_deep_pool.submit(_propose_checked, req.text, req.lang, req.branch, base), min(PROPOSE_BUDGET_S, left()), "propose")
+        job = _model_job(_propose_checked, req.text, req.lang, req.branch, base)
+        got = _within(job, min(PROPOSE_BUDGET_S, left()), "propose") if job is not None else None
         t = lap("propose", t)
         if got is not None:
             need_p, proposed, eng_p, extra = got

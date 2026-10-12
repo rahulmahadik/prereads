@@ -13,6 +13,7 @@ from __future__ import annotations
 import base64
 import json
 import logging
+import threading
 import time
 from typing import Optional, Type, TypeVar
 
@@ -37,6 +38,34 @@ HEAVY = False
 
 def _tier() -> str:
     return "heavy" if HEAVY else "llm"
+
+
+# ---- capacity: many readers at once ------------------------------------------------------------
+# Interactive features (chat, AI ranking) reserve a slot before queueing a model call and give it back
+# when the call finishes. With every slot taken, reserve() is False and the caller answers without the
+# model straight away (top picks by score, instant matches) rather than waiting behind other readers.
+_pending = 0
+_pending_lock = threading.Lock()
+
+
+def reserve() -> bool:
+    global _pending
+    with _pending_lock:
+        if _pending >= config.LLM_MAX_PENDING:
+            return False
+        _pending += 1
+        return True
+
+
+def release(*_args) -> None:
+    """Give a slot back; usable as a Future done-callback."""
+    global _pending
+    with _pending_lock:
+        _pending = max(0, _pending - 1)
+
+
+def pending() -> int:
+    return _pending
 
 
 # ------------------------------------------------------------------ ollama state

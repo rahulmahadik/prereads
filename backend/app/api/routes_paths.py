@@ -11,6 +11,7 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException, Query
 
 from ..core import config
+from ..core.ttl import ttl_cache
 from ..core.models import AskRequest, AskResponse, Route
 from ..integrations.catalog import NLBClient, nlb, openlibrary_search_many, resolve
 from ..services.ask import answer
@@ -101,9 +102,14 @@ def _cover_of(target_id: str) -> Optional[str]:
     return t.book.cover_url if t else None
 
 
+@ttl_cache(60)        # 27 cached paths read from disk per call; many readers share one answer
+def _targets() -> dict:
+    return {"targets": [{"id": s.get("isbn") or s.get("id"), "title": s["title"], "author": s.get("author", ""), "unfinished": bool(s.get("unfinished")), "cover_url": _cover_of(s.get("isbn") or s.get("id"))} for s in seeds()]}
+
+
 @router.get("/targets")
 def targets():
-    return {"targets": [{"id": s.get("isbn") or s.get("id"), "title": s["title"], "author": s.get("author", ""), "unfinished": bool(s.get("unfinished")), "cover_url": _cover_of(s.get("isbn") or s.get("id"))} for s in seeds()]}
+    return _targets()
 
 
 @router.get("/popular")

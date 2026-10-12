@@ -12,7 +12,7 @@ from fastapi.responses import Response
 from pydantic import BaseModel
 
 from ..ai import llm, stt
-from ..ai.tts import synthesize
+from ..ai.tts import Busy as tts_busy, synthesize
 from ..core import config
 from ..core.models import ScanResult
 
@@ -41,8 +41,12 @@ async def scan(image: UploadFile = File(...)):
 
 @router.post("/tts")
 def tts(req: TtsRequest):
-    """Natural voice for any text on screen. 503 -> browser voice fallback."""
-    out = synthesize(req.text, req.voice, req.lang)
+    """Natural voice for any text on screen. 503 -> browser voice fallback. 429 when every voice slot is
+    taken: the page uses the browser voice for this reading but keeps trying the natural one next time."""
+    try:
+        out = synthesize(req.text, req.voice, req.lang)
+    except tts_busy:
+        raise HTTPException(429, "Natural voice is busy; using the browser voice instead.")
     if out is None:
         raise HTTPException(503, "Natural voice is not available; using the browser voice instead.")
     audio, media = out

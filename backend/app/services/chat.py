@@ -19,16 +19,19 @@ scoring, so both features agree.
 """
 from __future__ import annotations
 
+import asyncio
 import concurrent.futures as cf
 import contextvars
 import json
 import logging
 import os
+import queue
 import re
+import threading
 import time
 from contextlib import contextmanager
 from difflib import SequenceMatcher
-from typing import Callable, Iterator, Literal, Optional
+from typing import AsyncIterator, Callable, Iterator, Literal, Optional
 
 from pydantic import BaseModel, Field
 
@@ -128,11 +131,8 @@ def _emit(event: dict) -> None:
             pass
 
 
-def stream(turn: "ChatTurn") -> Iterator[str]:
-    """NDJSON stream: one line per real step event, then the final reply."""
-    import queue
-    import threading
-
+def _start_stream(turn: "ChatTurn") -> "queue.Queue[Optional[str]]":
+    """Run the turn on its own thread; each real step event and then the reply land in the queue."""
     q: "queue.Queue[Optional[str]]" = queue.Queue()
 
     def run() -> None:
@@ -146,8 +146,29 @@ def stream(turn: "ChatTurn") -> Iterator[str]:
             q.put(None)
 
     threading.Thread(target=run, daemon=True).start()
+    return q
+
+
+def stream(turn: "ChatTurn") -> Iterator[str]:
+    """NDJSON stream: one line per real step event, then the final reply."""
+    q = _start_stream(turn)
     while True:
         line = q.get()
+        if line is None:
+            return
+        yield line + "\n"
+
+
+async def astream(turn: "ChatTurn") -> AsyncIterator[str]:
+    """stream() for the server: waits on the event loop, not on a worker thread, so a page full of
+    open chats can't use up the threads every other request needs."""
+    q = _start_stream(turn)
+    while True:
+        try:
+            line = q.get_nowait()
+        except queue.Empty:
+            await asyncio.sleep(0.03)
+            continue
         if line is None:
             return
         yield line + "\n"
@@ -304,7 +325,7 @@ ASK_SYSTEM = (
 
 _LANG: contextvars.ContextVar[Optional[str]] = contextvars.ContextVar("chat_lang", default=None)
 MODEL_BUDGET = float(os.getenv("CHAT_MODEL_BUDGET", "25"))   # seconds; past this the chat answers without the model
-_pool = cf.ThreadPoolExecutor(max_workers=2, thread_name_prefix="chat-llm")
+_pool = cf.ThreadPoolExecutor(max_workers=4, thread_name_prefix="chat-llm")   # Ollama runs 4 in parallel
 
 
 def ask_model(request: str, hits: list[tuple[dict, float, str]], history: Optional[list[dict]] = None) -> tuple[Optional[Understood], str]:
@@ -317,7 +338,10 @@ def ask_model(request: str, hits: list[tuple[dict, float, str]], history: Option
         "about": [x for x in e["subjects"] + e["concepts"] if len(x.split()) <= 4][:6],
     } for e, _, _ in hits]
     user = json.dumps(payload, ensure_ascii=False)
+    if not llm.reserve():               # other readers have the model: answer from the search now
+        return None, "AI busy with other readers"
     fut = _pool.submit(llm.structured, Understood, llm.with_lang(ASK_SYSTEM, _LANG.get()), user, kind="chat", temperature=0.2)
+    fut.add_done_callback(llm.release)
     try:
         r = fut.result(timeout=MODEL_BUDGET)
     except cf.TimeoutError:

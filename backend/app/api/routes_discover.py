@@ -8,6 +8,7 @@ from typing import Optional
 
 from fastapi import APIRouter, HTTPException
 
+from ..core.ttl import ttl_cache
 from ..services.discover import DiscoverRequest, DiscoverResponse, discover, similar
 
 router = APIRouter(prefix="/api", tags=["discover"])
@@ -29,6 +30,11 @@ def similar_(id: str, branch: Optional[str] = None):
 @router.get("/suggestions")
 def suggestions_(lang: Optional[str] = None, n: int = 4, seed: Optional[int] = None):
     """Example requests for Home's "Try:" row, generated from the catalogue (rotates daily)."""
+    return _suggestions(lang, max(1, min(n, 8)), seed)
+
+
+@ttl_cache(300)
+def _suggestions(lang: Optional[str], n: int, seed: Optional[int]):
     from ..services.suggest import suggestions
 
-    return suggestions(lang, max(1, min(n, 8)), seed)
+    return suggestions(lang, n, seed)

@@ -40,6 +40,16 @@ _kokoro = None
 _kokoro_failed = False
 _lock = threading.Lock()
 
+# Voices are made one at a time. Past this many being made or waiting, a new one answers "busy" at
+# once and the page reads aloud with the browser voice instead of queueing behind other readers.
+TTS_MAX_PENDING = int(os.getenv("TTS_MAX_PENDING", "3"))
+_pending = 0
+_pending_lock = threading.Lock()
+
+
+class Busy(Exception):
+    """Every voice slot is taken; try the browser voice."""
+
 # A warm, unhurried librarian. Kept short: the instructions field steers tone.
 STYLE = (
     "Speak like a friendly public librarian in Singapore: warm, clear, unhurried, "
@@ -116,6 +126,11 @@ def synthesize(text: str, voice: Optional[str] = None, lang: Optional[str] = Non
     path: Path = TTS_DIR / f"{key}.{ext}"
     if path.exists():
         return path.read_bytes(), media
+    global _pending
+    with _pending_lock:
+        if _pending >= TTS_MAX_PENDING:
+            raise Busy()
+        _pending += 1
     try:
         if local:
             data = _speak_kokoro(text, voice) or _speak_say(text)
@@ -124,6 +139,9 @@ def synthesize(text: str, voice: Optional[str] = None, lang: Optional[str] = Non
     except Exception as exc:  # noqa: BLE001
         log.warning("tts failed: %s", exc)
         return None
+    finally:
+        with _pending_lock:
+            _pending -= 1
     if not data:
         return None
     path.write_bytes(data)
