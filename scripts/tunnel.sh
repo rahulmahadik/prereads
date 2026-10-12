@@ -73,6 +73,7 @@ case "$CMD" in
         cat > "$RUN_CONFIG" <<EOF
 tunnel: $ID
 credentials-file: $CF_DIR/$ID.json
+protocol: ${TUNNEL_PROTOCOL:-auto}
 ingress:
   - hostname: $HOSTNAME
     service: http://127.0.0.1:$APP_PORT
