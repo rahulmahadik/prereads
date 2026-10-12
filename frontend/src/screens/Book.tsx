@@ -5,7 +5,6 @@ import ReadinessMeter from "../components/ReadinessMeter";
 import { readingAge, type ReadingAge } from "../readingAge";
 import ListenButton from "../components/ListenButton";
 import { bookScript } from "../speech";
-import { parseCallNumber, stepsFor } from "../components/WayfindMap";
 import WayfindMap from "../components/WayfindMap";
 import { Sheet, TopBar, getBranch, nlbSearchUrl, shelfStatus, shortBranch, useBack, useReadSet } from "../components/ui";
 import { navigate } from "../router";
@@ -158,16 +157,10 @@ export default function Book({ id, title, author, stopId }: { id: string; title:
   const inSomewhere = availability.some((a) => a.available > 0);
   const st = shelfStatus(stop, branchPref || undefined);
   const wayfind = st.kind === "available" || st.kind === "elsewhere" ? { callNumber: st.callNumber || "", branch: st.branch, code: st.code } : null;
-  const statusText =
-    st.kind === "available" ? t("say.available", { branch: shortBranch(st.branch) }) :
-    st.kind === "elsewhere" ? t("say.elsewhere", { here: shortBranch(st.here), branch: shortBranch(st.branch) }) :
-    st.kind === "waiting" ? t("say.waiting") :
-    t("say.none");
   const narration = () =>
     bookScript({
-      title: book.title, author: book.author, why: stop.role === "target" ? readiness.one_line || stop.why : stop.why,
-      level: readiness.level, hours: readiness.hours, status: statusText, callNumber: wayfind?.callNumber, branch: wayfind?.branch,
-      assumes: readiness.assumed_concepts, steps: lang === "en" && wayfind && wayfind.callNumber ? stepsFor(parseCallNumber(wayfind.callNumber), wayfind.callNumber, wayfind.code || wayfind.branch).map((x) => x.text) : [],
+      title: book.title, author: book.author, about: cleanSummary(book.summary),
+      why: stop.role === "target" ? readiness.one_line || stop.why : stop.why,
     });
   const queue = demand.reservations ?? 0;
   const reserveLabel = st.kind === "waiting" || st.kind === "none" ? (queue ? t("book.waitlistQueue", { n: queue }) : t("book.waitlist")) : t("book.reserve");

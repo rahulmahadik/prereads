@@ -4,7 +4,7 @@
    listen(): browser speech recognition for voice input (Chrome/Edge/Safari).
    lang is a BCP-47 code (en-SG, zh-CN, ms-MY, ta-IN; see voiceLang() in i18n.ts). The natural
    voice (Kokoro) is English-only, so other languages go straight to the browser voice. */
-import { currentLang, t } from "./i18n";
+import { t } from "./i18n";
 
 type Listener = (state: SpeechState) => void;
 export type SpeechState = { speaking: boolean; id: string | null; source: "natural" | "browser" | null };
@@ -13,11 +13,21 @@ let state: SpeechState = { speaking: false, id: null, source: null };
 const listeners = new Set<Listener>();
 let audio: HTMLAudioElement | null = null;
 let naturalAvailable: boolean | null = null; // learned on first call
+// Every speak() and stop() starts a new turn. A voice that finishes loading after its turn
+// has passed is dropped, so quick repeated taps never stack up several readings.
+let turn = 0;
+let loading: AbortController | null = null;
+const IDLE: SpeechState = { speaking: false, id: null, source: null };
 
 function emit(next: SpeechState) {
   state = next;
   listeners.forEach((l) => l(state));
 }
+
+/** Ends the reading only if it still belongs to the current turn. */
+const endFor = (mine: number) => () => {
+  if (mine === turn) emit(IDLE);
+};
 
 export function subscribe(l: Listener): () => void {
   listeners.add(l);
@@ -26,13 +36,16 @@ export function subscribe(l: Listener): () => void {
 }
 
 export function stop() {
+  turn++;
+  loading?.abort();
+  loading = null;
   if (audio) {
     audio.pause();
     audio.src = "";
     audio = null;
   }
   if ("speechSynthesis" in window) window.speechSynthesis.cancel();
-  emit({ speaking: false, id: null, source: null });
+  emit(IDLE);
 }
 
 function pickVoice(lang: string): SpeechSynthesisVoice | undefined {
@@ -50,8 +63,8 @@ function pickVoice(lang: string): SpeechSynthesisVoice | undefined {
   return best && score(best) >= 5 ? best : undefined;
 }
 
-async function speakBrowser(text: string, id: string, lang: string): Promise<void> {
-  if (!("speechSynthesis" in window)) return;
+async function speakBrowser(text: string, id: string, lang: string, mine: number): Promise<void> {
+  if (!("speechSynthesis" in window)) return endFor(mine)();
   await new Promise<void>((resolve) => {
     if (window.speechSynthesis.getVoices().length) return resolve();
     const t = setTimeout(resolve, 400);
@@ -60,6 +73,7 @@ async function speakBrowser(text: string, id: string, lang: string): Promise<voi
       resolve();
     };
   });
+  if (mine !== turn) return;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   const v = pickVoice(lang);
@@ -67,8 +81,8 @@ async function speakBrowser(text: string, id: string, lang: string): Promise<voi
   u.lang = v?.lang || lang;
   u.rate = 0.96;
   u.pitch = 1;
-  u.onend = () => emit({ speaking: false, id: null, source: null });
-  u.onerror = () => emit({ speaking: false, id: null, source: null });
+  u.onend = endFor(mine);
+  u.onerror = endFor(mine);
   emit({ speaking: true, id, source: "browser" });
   window.speechSynthesis.speak(u);
 }
@@ -78,25 +92,34 @@ export async function speak(text: string, id = "x", lang = "en-SG"): Promise<voi
   stop();
   const clean = text.replace(/\s+/g, " ").trim();
   if (!clean) return;
+  const mine = turn;
+  // Show Stop straight away, while the voice loads; a second tap cancels the load.
+  emit({ speaking: true, id, source: null });
   if (naturalAvailable !== false && lang.toLowerCase().startsWith("en")) {
+    const ctl = new AbortController();
+    loading = ctl;
     try {
-      const res = await fetch("/api/tts", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text: clean, lang }) });
+      const res = await fetch("/api/tts", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text: clean, lang }), signal: ctl.signal });
       if (res.ok) {
         naturalAvailable = true;
         const blob = await res.blob();
+        if (mine !== turn) return;
+        loading = null;
         audio = new Audio(URL.createObjectURL(blob));
-        audio.onended = () => emit({ speaking: false, id: null, source: null });
-        audio.onerror = () => emit({ speaking: false, id: null, source: null });
+        audio.onended = endFor(mine);
+        audio.onerror = endFor(mine);
         emit({ speaking: true, id, source: "natural" });
         await audio.play();
         return;
       }
       if (res.status === 503) naturalAvailable = false;
     } catch {
-      /* fall through to the browser voice */
+      /* cancelled, or fall through to the browser voice */
     }
+    if (mine !== turn) return;
+    loading = null;
   }
-  await speakBrowser(clean, id, lang);
+  await speakBrowser(clean, id, lang, mine);
 }
 
 /* ---------------- voice input ---------------- */
@@ -215,18 +238,10 @@ export const LEVEL_WORDS: Record<number, string> = {
   get 5() { return t("level.words.5"); },
 };
 
-export function bookScript(o: { title: string; author: string; why: string; level: number; hours: number; status: string; callNumber?: string; branch?: string; steps?: string[]; assumes?: string[] }): string {
-  const parts = [
-    t("say.by", { title: o.title, author: o.author }),
-    o.why,
-    t("say.level", { n: o.level, words: LEVEL_WORDS[o.level] || "", hours: Math.round(o.hours) }),
-  ];
-  if (o.assumes && o.assumes.length) parts.push(t("say.assumes", { list: o.assumes.slice(0, 4).join(t("say.sep")) }));
-  // English voices read "153.4" as "153 point 4"; other voices read the number as written.
-  const call = o.callNumber && (currentLang() === "en" ? o.callNumber.replace(/\./g, " point ") : o.callNumber);
-  parts.push(o.status + (call ? t("say.call", { call }) : t("say.end")));
-  if (o.steps && o.steps.length) parts.push("To find it: " + o.steps.join(" Then, ").replace(/Then, Go/g, "Then go"));
-  return parts.join(" ");
+/** Book page narration: the title, then the book's About text (the reason it's on the path
+ *  when the catalogue has no description). */
+export function bookScript(o: { title: string; author: string; about: string; why: string }): string {
+  return [t("say.by", { title: o.title, author: o.author }), o.about || o.why].join(" ");
 }
 
 export function lineScript(o: { target: string; before: { title: string; why: string; hours: number; where: string }[]; hours: number; trip?: string }): string {
