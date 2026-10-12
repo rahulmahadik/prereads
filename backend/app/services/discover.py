@@ -103,11 +103,11 @@ class Recommendation(BaseModel):
 
 
 class DiscoverRequest(BaseModel):
-    text: str
-    branch: Optional[str] = None
-    filters: list[str] = Field(default_factory=list)   # chip ids that are on
-    offset: int = 0
-    limit: int = 10
+    text: str = Field(max_length=500)
+    branch: Optional[str] = Field(None, max_length=12)
+    filters: list[str] = Field(default_factory=list, max_length=20)   # chip ids that are on
+    offset: int = Field(0, ge=0, le=500)
+    limit: int = Field(10, ge=1, le=60)
     mode: Literal["fast", "deep"] = "fast"             # fast: no model, no network; deep: model rerank (+ proposals when needed)
     lang: Optional[str] = None                         # reader's UI language: AI-written reasons follow it
     strategy: Optional[Literal["rerank", "propose"]] = None   # deep only; None = DEEP_STRATEGY

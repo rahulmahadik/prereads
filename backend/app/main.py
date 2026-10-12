@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import threading
 import time
 
@@ -19,6 +20,7 @@ from fastapi.staticfiles import StaticFiles
 
 from .api import ROUTERS
 from .core import config
+from .core.guard import BodyLimit, RateLimit
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 log = logging.getLogger("prereads.api")
@@ -85,6 +87,11 @@ def _warm_embeddings() -> None:
 
 
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+# Public-site protection (core/guard.py): body size limits, then per-visitor rate limits outermost,
+# so a flood is turned away before any body is read.
+app.add_middleware(BodyLimit)
+app.add_middleware(RateLimit)
+VISIT_LOG_MAX = 50_000_000       # rotate the visit log past 50 MB (one previous file kept)
 
 _visit_lock = threading.Lock()
 
@@ -95,7 +102,8 @@ async def visit_log(request: Request, call_next):
     checks are skipped; the visitor IP is Cloudflare's CF-Connecting-IP when present."""
     response = await call_next(request)
     path = request.url.path
-    if config.VISIT_LOG and not path.startswith(("/assets/", "/api/health")):
+    # 429s are left out: the rate limiter writes one "blocked" line per visitor per minute instead
+    if config.VISIT_LOG and response.status_code != 429 and not path.startswith(("/assets/", "/api/health")):
         rec = {
             "t": time.strftime("%Y-%m-%dT%H:%M:%S"),
             "ip": request.headers.get("cf-connecting-ip") or (request.client.host if request.client else ""),
@@ -107,8 +115,11 @@ async def visit_log(request: Request, call_next):
             "ua": request.headers.get("user-agent", "")[:300],
         }
         try:
-            with _visit_lock, open(config.VISIT_LOG, "a", encoding="utf-8") as f:
-                f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            with _visit_lock:
+                if os.path.exists(config.VISIT_LOG) and os.path.getsize(config.VISIT_LOG) > VISIT_LOG_MAX:
+                    os.replace(config.VISIT_LOG, config.VISIT_LOG + ".1")
+                with open(config.VISIT_LOG, "a", encoding="utf-8") as f:
+                    f.write(json.dumps(rec, ensure_ascii=False) + "\n")
         except OSError as exc:
             log.warning("visit log write failed: %s", exc)
     return response
@@ -127,8 +138,10 @@ if _dist.exists():
     async def spa(path: str):
         """Static file if it exists, else index.html (the hash router takes over). Async: the page
         itself never waits behind busy worker threads when many readers are using the AI at once."""
-        file = _dist / path
-        if path and file.exists() and file.is_file():
+        root = _dist.resolve()
+        file = (_dist / path).resolve()
+        # resolve() + is_relative_to: an encoded "../" (%2e%2e%2f) must never reach a file outside dist
+        if path and file.is_file() and file.is_relative_to(root):
             # the service worker, page shell and manifest must never be cached by the CDN,
             # or phones keep running an old app after a deploy
             fresh = path in ("sw.js", "index.html", "manifest.webmanifest")

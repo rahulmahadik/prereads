@@ -100,11 +100,11 @@ class ScanResult(BaseModel):
 
 
 class AskRequest(BaseModel):
-    target_id: str
+    target_id: str = Field(max_length=120)
     intent: Literal["why_before", "time_budget", "large_print", "free"]
     weeks: Optional[int] = None
-    question: Optional[str] = None
-    lang: Optional[str] = None          # reader's UI language (en/zh/ms/ta): AI-written text follows it
+    question: Optional[str] = Field(None, max_length=500)
+    lang: Optional[str] = Field(None, max_length=8)     # reader's UI language (en/zh/ms/ta): AI-written text follows it
 
 
 class AskResponse(BaseModel):

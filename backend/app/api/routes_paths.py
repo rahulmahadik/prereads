@@ -6,11 +6,14 @@ in `services.ask`, and every title shown has come back from a catalogue lookup.
 """
 from __future__ import annotations
 
+import threading
+import time
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Request
 
 from ..core import config
+from ..core.guard import is_local
 from ..core.ttl import ttl_cache
 from ..core.models import AskRequest, AskResponse, Route
 from ..integrations.catalog import NLBClient, nlb, openlibrary_search_many, resolve
@@ -22,7 +25,7 @@ router = APIRouter(prefix="/api", tags=["paths"])
 
 
 @router.get("/resolve")
-def resolve_q(q: str = Query(min_length=2), offset: int = 0, limit: int = 8):
+def resolve_q(q: str = Query(min_length=2, max_length=120), offset: int = Query(0, ge=0, le=200), limit: int = Query(8, ge=1, le=20)):
     """Title search, paged: cached targets first (instant), then the live catalogue."""
     ql = q.lower().strip()
     hits = [e for e in load_index() if ql in e["title"].lower() or ql in e.get("author", "").lower()]
@@ -46,17 +49,40 @@ def resolve_q(q: str = Query(min_length=2), offset: int = 0, limit: int = 8):
     return {"results": page, "total": total, "offset": offset, "limit": limit, "has_more": offset + limit < total}
 
 
+# Building a new path takes the model a minute or more, so the public site builds one at a time and at
+# most BUILDS_PER_HOUR an hour; past that a reader is asked to pick a listed title. Rebuilding a cached
+# path (refresh) is only for this machine, so nobody else can replace a curated path.
+BUILDS_PER_HOUR = 30
+_build_lock = threading.Lock()
+_builds: list[float] = []
+
+
 @router.get("/route", response_model=Route)
-def route(id: str, title: Optional[str] = None, author: Optional[str] = None, refresh: bool = False):
+def route(request: Request, id: str = Query(max_length=120), title: Optional[str] = Query(None, max_length=300),
+          author: Optional[str] = Query(None, max_length=200), refresh: bool = False):
     """The reading path for one target: cache first, else build it live and cache it.
 
     A target that is not a seed must come with a title so the catalogue can verify it."""
+    if refresh and not is_local(request.scope):
+        refresh = False
     if not refresh:
         cached = load_route(id)
         if cached:
             return cached
     if config.effective_demo():
         raise HTTPException(404, "No reading path for this title yet. Pick one from the list.")
+    now = time.time()
+    _builds[:] = [t for t in _builds if now - t < 3600]
+    if len(_builds) >= BUILDS_PER_HOUR or not _build_lock.acquire(blocking=False):
+        raise HTTPException(429, "PreReads is building another reading path right now. Try again in a minute, or pick a listed title.")
+    _builds.append(now)
+    try:
+        return _build(id, title, author)
+    finally:
+        _build_lock.release()
+
+
+def _build(id: str, title: Optional[str], author: Optional[str]) -> Route:
     seed = find_seed(id)
     if seed is None:
         # Unknown title: it must verify in a catalogue; no seed fallback.

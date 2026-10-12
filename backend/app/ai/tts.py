@@ -145,7 +145,25 @@ def synthesize(text: str, voice: Optional[str] = None, lang: Optional[str] = Non
     if not data:
         return None
     path.write_bytes(data)
+    _trim_cache()
     return data, media
+
+
+TTS_CACHE_MAX = int(os.getenv("TTS_CACHE_MAX_MB", "500")) * 1_000_000
+
+
+def _trim_cache() -> None:
+    """Keep the voice cache under TTS_CACHE_MAX: drop the oldest clips first (a flood of unique
+    texts must not fill the disk)."""
+    try:
+        files = sorted((f for f in TTS_DIR.iterdir() if f.is_file()), key=lambda f: f.stat().st_mtime)
+        total = sum(f.stat().st_size for f in files)
+        while files and total > TTS_CACHE_MAX:
+            f = files.pop(0)
+            total -= f.stat().st_size
+            f.unlink(missing_ok=True)
+    except OSError as exc:
+        log.warning("tts cache trim failed: %s", exc)
 
 
 def _speak_openai(text: str, voice: Optional[str], lang: Optional[str]) -> Optional[bytes]:

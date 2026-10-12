@@ -51,14 +51,14 @@ class ChatState(BaseModel):
     step: Step = "start"
     book_id: Optional[str] = None       # the cached reading path (its target id)
     focus_id: Optional[str] = None      # the book the reader picked: the target, or a stop on that path
-    candidates: list[dict] = Field(default_factory=list)
+    candidates: list[dict] = Field(default_factory=list, max_length=12)
     level: Optional[int] = None
     branch: Optional[str] = None
     # Conversation memory, round-tripped by the client with the rest of the state, so a
     # follow-up ("something easier", "the second one", "who wrote it?") has something to refer to.
-    topic: Optional[str] = None         # the subject in play, as a standalone search ("investing")
-    shown: list[dict] = Field(default_factory=list)    # the books last put in front of the reader, in order
-    history: list[dict] = Field(default_factory=list)  # recent turns [{role, text}], oldest first
+    topic: Optional[str] = Field(None, max_length=200)   # the subject in play, as a standalone search ("investing")
+    shown: list[dict] = Field(default_factory=list, max_length=12)    # the books last put in front of the reader, in order
+    history: list[dict] = Field(default_factory=list, max_length=12)  # recent turns [{role, text}], oldest first
 
 
 class ChatOption(BaseModel):
@@ -68,7 +68,7 @@ class ChatOption(BaseModel):
 
 
 class ChatTurn(BaseModel):
-    text: str
+    text: str = Field(max_length=500)
     state: ChatState
     lang: Optional[str] = None          # reader's UI language: AI-written reasons follow it
 

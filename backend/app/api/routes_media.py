@@ -8,19 +8,21 @@ from __future__ import annotations
 from typing import Optional
 
 from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import Response
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from ..ai import llm, stt
 from ..ai.tts import Busy as tts_busy, synthesize
 from ..core import config
+from ..core.guard import image_kind
 from ..core.models import ScanResult
 
 router = APIRouter(prefix="/api", tags=["media"])
 
 
 class TtsRequest(BaseModel):
-    text: str
+    text: str = Field(max_length=5000)
     voice: Optional[str] = None
     lang: Optional[str] = None
 
@@ -30,10 +32,18 @@ async def scan(image: UploadFile = File(...)):
     """Read title/author off a cover photo. The client still resolves the result in the catalogue."""
     if not config.llm_enabled():
         raise HTTPException(503, "Scanning needs a vision model, and none is available right now. Type the title instead.")
-    data = await image.read()
+    data = await image.read(8_000_001)
     if len(data) > 8_000_000:
         raise HTTPException(413, "Image too large; keep it under 8 MB.")
-    res = llm.scan(data, image.content_type or "image/jpeg")
+    kind = image_kind(data)          # from the bytes, not the client's label: no scripts or bombs
+    if kind is None:
+        raise HTTPException(415, "That file isn't a photo we can read. Use a JPEG, PNG, WebP or HEIC picture of the cover.")
+    if not llm.reserve():
+        raise HTTPException(429, "The AI is busy with other readers; try again in a moment or type the title.")
+    try:
+        res = await run_in_threadpool(llm.scan, data, kind)
+    finally:
+        llm.release()
     if res is None or not res.title:
         raise HTTPException(422, "Could not read a book in that photo. Try the cover, closer, with more light.")
     return res

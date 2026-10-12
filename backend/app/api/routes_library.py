@@ -15,13 +15,13 @@ router = APIRouter(prefix="/api", tags=["library"])
 
 
 @router.get("/digital")
-def digital_copies(title: str = Query(..., min_length=1), author: str = ""):
+def digital_copies(title: str = Query(..., min_length=1, max_length=300), author: str = Query("", max_length=200)):
     from ..integrations.digital import lookup
     return lookup(title, author)
 
 
 @router.get("/online")
-def online_copies(title: str = Query(..., min_length=1), author: str = ""):
+def online_copies(title: str = Query(..., min_length=1, max_length=300), author: str = Query("", max_length=200)):
     """Legally free online copies (Project Gutenberg, Open Library); {} when none or on failure."""
     from ..integrations.online import lookup
     return lookup(title, author)
