@@ -17,7 +17,9 @@ async function json<T>(res: Response): Promise<T> {
     } catch {
       /* keep statusText */
     }
-    throw new Error(detail);
+    const err = new Error(detail) as Error & { status?: number };
+    err.status = res.status;          // screens tell "not found" (404) from "busy" (429)
+    throw err;
   }
   return res.json() as Promise<T>;
 }

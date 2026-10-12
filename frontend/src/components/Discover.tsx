@@ -495,7 +495,10 @@ export default function Discover({ initialText = "" }: { initialText?: string })
                 <p className="hint">{t("disc.empty")}</p>
               ) : (
                 <>
-                  <p className="hint">{t("disc.none")}</p>
+                  <div className="not-found" role="status">
+                    <p><strong>{t("disc.none")}</strong></p>
+                    <p className="hint">{t("notfound.why")}</p>
+                  </div>
                   {tryRow}
                 </>
               )

@@ -1003,6 +1003,10 @@ def discover(req: DiscoverRequest) -> DiscoverResponse:
     the two phases). Every result is a cached catalogue entry or a catalogue-verified proposal."""
     t0 = time.perf_counter()
     timings: dict[str, float] = {}
+    if llm.needs_english(req.text):                 # Marathi, Chinese, Tamil...: search the English catalogue in English
+        english = llm.english_query(req.text)
+        if english:
+            req = req.model_copy(update={"text": english})
 
     def lap(name: str, since: float) -> float:
         now = time.perf_counter()

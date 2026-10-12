@@ -65,6 +65,7 @@ export default function Line({ id, title, author }: { id: string; title: string;
   const goBack = useBack("home");
   const [route, setRoute] = useState<Route | null>(null);
   const [error, setError] = useState("");
+  const [errStatus, setErrStatus] = useState(0);
   const [readSet, toggleRead] = useReadSet();
   const [walk, setWalk] = useState(false);
   const [share, setShare] = useState(false);
@@ -91,13 +92,17 @@ export default function Line({ id, title, author }: { id: string; title: string;
   useEffect(() => {
     setRoute(null);
     setError("");
+    setErrStatus(0);
     api
       .route(id, title, author)
       .then((r) => {
         setRoute(r);
         recordPath(r, title, author);
       })
-      .catch((e) => setError((e as Error).message));
+      .catch((e) => {
+        setErrStatus((e as { status?: number }).status ?? 0);
+        setError((e as Error).message);
+      });
   }, [id, title, author]);
   useStoreVersion();
 
@@ -207,9 +212,13 @@ export default function Line({ id, title, author }: { id: string; title: string;
       )}
 
       {error && (
-        <p className="error" role="alert">
-          {error}
-        </p>
+        <div className="not-found" role="alert">
+          <p className="error">{errStatus === 429 ? t("line.busy") : errStatus === 404 ? t("line.notFound", { title }) : error}</p>
+          {errStatus === 404 && <p className="hint">{t("notfound.why")}</p>}
+          <button type="button" className="secondary" onClick={() => navigate("home")}>
+            {t("line.backToSearch")}
+          </button>
+        </div>
       )}
 
       {route && target && (

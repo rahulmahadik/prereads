@@ -2465,3 +2465,10 @@ body:has(.sheet-backdrop) .chat-fab, body:has(.reader) .chat-fab, body:has(.wf-f
 .rec-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--hot); animation: rec-pulse 1s ease-in-out infinite; }
 @keyframes rec-pulse { 50% { opacity: 0.35; } }
 @media (prefers-reduced-motion: reduce) { .rec-dot { animation: none; } }
+
+/* "not found" explanation: what happened, why (may not be in NLB's collection), and a way back */
+.not-found { margin: 14px 0; padding: 14px 16px; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--paper); }
+.not-found p { margin: 0 0 6px; }
+.not-found p:last-child { margin-bottom: 0; }
+.not-found .error { margin-bottom: 8px; }
+.not-found button { margin-top: 10px; }

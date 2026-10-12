@@ -12,6 +12,7 @@ from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Query, Request
 
+from ..ai import llm
 from ..core import config
 from ..core.guard import is_local
 from ..core.ttl import ttl_cache
@@ -26,7 +27,10 @@ router = APIRouter(prefix="/api", tags=["paths"])
 
 @router.get("/resolve")
 def resolve_q(q: str = Query(min_length=2, max_length=120), offset: int = Query(0, ge=0, le=200), limit: int = Query(8, ge=1, le=20)):
-    """Title search, paged: cached targets first (instant), then the live catalogue."""
+    """Title search, paged: cached targets first (instant), then the live catalogue. A title typed in
+    another script (ययाति) is searched in its English spelling (Yayati)."""
+    if llm.needs_english(q):
+        q = llm.english_query(q) or q
     ql = q.lower().strip()
     hits = [e for e in load_index() if ql in e["title"].lower() or ql in e.get("author", "").lower()]
     hits = sorted(hits, key=lambda e: (not e["title"].lower().startswith(ql), e["title"]))

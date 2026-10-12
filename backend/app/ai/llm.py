@@ -298,6 +298,50 @@ def scan(image_bytes: bytes, mime: str = "image/jpeg") -> Optional[ScanResult]:
     return structured(ScanResult, SCAN_SYSTEM, "Identify this book.", kind="vision", temperature=TEMP_SCORE, image_url=f"data:{mime};base64,{b64}")
 
 
+# ---- requests in other languages ----------------------------------------------------------------
+# The catalogue is English books, and search, rules and embeddings read English. A request written in
+# another script (Marathi, Hindi, Chinese, Tamil...) is first turned into a short English search request.
+class EnglishQuery(BaseModel):
+    query: str
+
+
+ENGLISH_SYSTEM = (
+    "Turn the reader's message into a short English library-search request (2-12 words) that keeps its meaning: "
+    "the subject, need or audience. If it names a book or an author, give the title or name in its usual English "
+    "spelling (transliterate it, e.g. ययाति -> Yayati). Return only the English request."
+)
+_english_cache: dict[str, Optional[str]] = {}
+
+
+def needs_english(text: str) -> bool:
+    """True when most letters are outside the Latin alphabet (Devanagari, Chinese, Tamil...)."""
+    letters = [ch for ch in text if ch.isalpha()]
+    if not letters:
+        return False
+    other = sum(1 for ch in letters if ord(ch) > 0x24F)
+    return other / len(letters) > 0.3
+
+
+def english_query(text: str) -> Optional[str]:
+    """The request in English (cached), or None when the model is off, busy or fails."""
+    key = " ".join(text.split())[:300]
+    if key in _english_cache:
+        return _english_cache[key]
+    if not config.llm_enabled() or not reserve():
+        return None
+    try:
+        r = structured(EnglishQuery, ENGLISH_SYSTEM, key, kind="chat", temperature=TEMP_SCORE)
+    except Exception as exc:  # noqa: BLE001
+        log.warning("english query failed: %s", exc)
+        r = None
+    finally:
+        release()
+    out = r.query.strip()[:200] if r and r.query.strip() and not needs_english(r.query) else None
+    if out:
+        _english_cache[key] = out
+    return out
+
+
 LANG_NAMES = {"zh": "Simplified Chinese (中文)", "ms": "Bahasa Melayu", "ta": "Tamil (தமிழ்)"}
 
 

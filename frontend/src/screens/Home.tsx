@@ -70,6 +70,7 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
   };
   const [q, setQ] = useState("");
   const [hits, setHits] = useState<ResolveHit[]>([]);
+  const [searched, setSearched] = useState("");      // the title the last finished search was for
   const [targets, setTargets] = useState<Target[]>([]);
   const [popular, setPopular] = useState<Popular[]>([]);
   const [popularMeta, setPopularMeta] = useState<PopularMeta>({});
@@ -96,12 +97,16 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
     window.clearTimeout(timer.current);
     if (mode !== "title" || q.trim().length < 2) {
       setHits([]);
+      setSearched("");
       return;
     }
     timer.current = window.setTimeout(() => {
       api
         .resolve(q.trim(), 0, 8)
-        .then((r) => setHits(r.results))
+        .then((r) => {
+          setHits(r.results);
+          setSearched(q.trim());
+        })
         .catch(() => setHits([]));
     }, 160);
     return () => window.clearTimeout(timer.current);
@@ -117,7 +122,7 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
       const res = await api.scan(file);
       const r = await api.resolve(res.title);
       if (r.results.length) go(r.results[0].id, r.results[0].title, r.results[0].author);
-      else setError(t("home.scanMiss", { title: res.title }));
+      else setError(`${t("home.scanMiss", { title: res.title })} ${t("notfound.why")}`);
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -208,6 +213,12 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
               <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("home.typeTitle")} autoComplete="off" inputMode="search" aria-label={t("home.typeTitleLabel")} />
             </label>
             {hits.length > 0 && <BookList books={hits} />}
+            {hits.length === 0 && searched !== "" && searched === q.trim() && (
+              <div className="not-found" role="status">
+                <p><strong>{t("home.noTitle", { q: searched })}</strong></p>
+                <p className="hint">{t("notfound.why")}</p>
+              </div>
+            )}
           </div>
         )}
 

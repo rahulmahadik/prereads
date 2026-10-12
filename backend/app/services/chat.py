@@ -539,7 +539,7 @@ def _search(tr: Trace, query: str, cat: list[dict], cats: frozenset = frozenset(
 
 def _recommend(tr: Trace, state: ChatState, cat: list[dict], hits: list[tuple[dict, float, str]], picks: list[tuple[dict, str]], label: str, request: str) -> ChatReply:
     if not hits or not picks:
-        return _clarify(tr, cat, f"PreReads doesn't cover '{request.strip()}' yet. Here's what I can help with.", state)
+        return _clarify(tr, cat, f"{_say('not_found', q=request.strip())} {_say('help')}", state)
     state.topic = label
     about = " ".join(w for w in label.split() if w.lower() not in _FILLER) or label
     about = about if len(about) <= 40 else "that"
@@ -549,6 +549,25 @@ def _recommend(tr: Trace, state: ChatState, cat: list[dict], hits: list[tuple[di
     else:
         lead = f"I don't have much on {about}, but these come closest." if weak else f"Here are {len(picks)} good places to start on {about}."
     return _offer(tr, state, picks, [lead])
+
+
+def _saved_path_for(title: str) -> Optional[dict]:
+    """A reading path built earlier for another reader (not in the curated list) whose title matches,
+    as a chat candidate; None when there is none."""
+    best = max(((_title_score(title, e.get("title", "")), e) for e in load_index()), key=lambda x: x[0], default=(0.0, None))
+    if best[1] is None or best[0] < 0.88:
+        return None
+    route = load_route(best[1]["id"])
+    target = next((x for x in route.stops if x.role == "target"), None) if route else None
+    if target is None:
+        return None
+    return {"id": route.target_id, "line_id": route.target_id, "title": target.book.title, "author": target.book.author,
+            "is_target": True, "level": target.readiness.level, "category": ""}
+
+
+def _asked(intent: Intent, text: str) -> str:
+    """What to quote back when nothing is found: the reader's own words unless the model's reading shares them."""
+    return intent.value if _content(intent.value) & _content(text) else text
 
 
 def _find_named(tr: Trace, state: ChatState, cat: list[dict], intent: Intent, text: str, nearest: Optional[list[tuple[dict, str]]] = None) -> ChatReply:
@@ -569,6 +588,10 @@ def _find_named(tr: Trace, state: ChatState, cat: list[dict], intent: Intent, te
         who = hits[0]["author"].split(",")[0].strip()
         state.topic = hits[0]["category"]
         return _offer(tr, state, picks, [f"I have {len(hits)} books by {who}. Which one?" if intent.kind == "author" else "A few books match. Which one did you mean?"])
+    # not in the curated list: a path built earlier for another reader?
+    saved = _saved_path_for(intent.value) or _saved_path_for(text)
+    if saved is not None:
+        return _choose_book(state, saved, tr.steps)
     # not held: offer the nearest books we do hold, by meaning
     if not nearest:
         with tr.step("Finding the closest books") as s:
@@ -576,9 +599,35 @@ def _find_named(tr: Trace, state: ChatState, cat: list[dict], intent: Intent, te
             s.detail = f"{len(near)} nearest from {len(cat)} books ({method})"
         nearest = top_by_score(near)
     if not nearest:
-        return _clarify(tr, cat, f"PreReads doesn't cover '{intent.value}' yet. Here's what I can help with.", state)
+        return _clarify(tr, cat, f"{_say('not_found', q=_asked(intent, text))} {_say('help')}", state)
     state.topic = intent.value
-    return _offer(tr, state, nearest, [f"PreReads doesn't cover '{intent.value}' yet.", "These are the closest books PreReads has:"])
+    return _offer(tr, state, nearest, [_say("not_found", q=_asked(intent, text)), _say("closest")])
+
+
+# ------------------------------------------------------------------ not found, in the reader's language
+CHAT_TEXT = {
+    "not_found": {
+        "en": "I couldn't find '{q}'. It may not be in Singapore's public library (NLB) collection, or PreReads doesn't have it yet: PreReads only shows books it can check in a library catalogue.",
+        "zh": "没有找到“{q}”。这本书可能不在新加坡公共图书馆（NLB）的馆藏中，或者 PreReads 还没有收录：PreReads 只显示能在图书馆目录中核实的书。",
+        "ms": "Saya tidak menjumpai \"{q}\". Buku ini mungkin tiada dalam koleksi perpustakaan awam Singapura (NLB), atau PreReads belum memilikinya: PreReads hanya menunjukkan buku yang dapat disemak dalam katalog perpustakaan.",
+        "ta": "\"{q}\" கிடைக்கவில்லை. இது சிங்கப்பூர் பொது நூலகத் (NLB) தொகுப்பில் இல்லாமல் இருக்கலாம், அல்லது PreReads-இல் இன்னும் சேர்க்கப்படவில்லை: நூலகப் பட்டியலில் சரிபார்க்கக்கூடிய நூல்களை மட்டுமே PreReads காட்டும்.",
+    },
+    "help": {"en": "Here's what I can help with.", "zh": "这些是我能帮忙的主题：", "ms": "Ini perkara yang boleh saya bantu:", "ta": "நான் உதவக்கூடியவை இவை:"},
+    "closest": {"en": "These are the closest books PreReads has:", "zh": "这些是 PreReads 里最接近的书：", "ms": "Ini buku paling hampir yang ada dalam PreReads:", "ta": "PreReads-இல் உள்ள மிக நெருக்கமான நூல்கள் இவை:"},
+    "unreadable": {
+        "en": "I couldn't read that one right now. Try writing it in English, or pick a subject below.",
+        "zh": "暂时无法理解这条消息。请试试用英文输入，或在下面选一个主题。",
+        "ms": "Saya tidak dapat membaca mesej itu sekarang. Cuba tulis dalam bahasa Inggeris, atau pilih subjek di bawah.",
+        "ta": "இந்தச் செய்தியை இப்போது புரிந்துகொள்ள முடியவில்லை. ஆங்கிலத்தில் எழுதிப் பாருங்கள், அல்லது கீழே ஒரு தலைப்பைத் தேர்ந்தெடுங்கள்.",
+    },
+}
+
+
+def _say(key: str, **kw) -> str:
+    """A fixed chat sentence in the reader's UI language (English when it's another one)."""
+    lang = (_LANG.get() or "en").strip().lower()[:2]
+    table = CHAT_TEXT[key]
+    return table.get(lang, table["en"]).format(**kw)
 
 
 # ------------------------------------------------------------------ follow-ups
@@ -833,7 +882,21 @@ def _start(state: ChatState, text: str) -> ChatReply:
         hits = _search(tr, query, cat, frozenset(group[2]) if group else frozenset())
         res, why_not = _ask(tr, f"Books on {query}", hits, "Asking the model") if hits else (None, "")
         return _recommend(tr, fresh, cat, hits, _picked(tr, hits, res, why_not), label.lower() if group else label, label)
+    if llm.needs_english(text):
+        # Marathi, Hindi, Chinese, Tamil...: the catalogue is English books, so read the request in English
+        with tr.step("Reading your language") as s:
+            english = llm.english_query(text)
+            s.detail = f"in English: {english}" if english else "couldn't read it right now"
+        if not english:
+            return _clarify(tr, cat, _say("unreadable"), state)
+        text = english
     decided = rules(text, cat)
+    if not decided:
+        saved = _saved_path_for(text)
+        if saved is not None:
+            with tr.step("Understanding your request") as s:
+                s.detail = f"title: {saved['title']} · a saved reading path"
+            return _choose_book(fresh, saved, tr.steps)
     if decided:
         intent, how = decided
         with tr.step("Understanding your request") as s:
