@@ -2431,7 +2431,8 @@ html.senior .reader-page { font-size: calc(var(--reader-size) * var(--fs-scale))
 .chat-head-actions { display: flex; flex: 0 0 auto; gap: 6px; align-items: center; }
 .chat-head-actions .icon-btn { width: var(--tap); height: var(--tap); min-height: 0; flex: 0 0 auto; display: inline-grid; place-items: center; }
 .chat-restart { white-space: nowrap; min-height: var(--tap); }
-@media (max-width: 380px) {
+/* up to the largest phones (430px): the ↺ icon alone, so the title isn't cut to "Ask PreRe" */
+@media (max-width: 440px) {
   .chat-restart-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .chat-head { padding-left: 12px; }
 }
