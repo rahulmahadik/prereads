@@ -16,6 +16,7 @@ from app.core.models import AskRequest, Book, CandidateList, Judgment, Readiness
 @pytest.fixture
 def live(monkeypatch):
     monkeypatch.setattr(config, "DEMO", False)
+    monkeypatch.setattr(config, "DATA_SOURCE", "api")      # whatever the local .env says
     monkeypatch.setattr(config, "llm_enabled", lambda: True)
     monkeypatch.setattr(config, "nlb_enabled", lambda: True)
 

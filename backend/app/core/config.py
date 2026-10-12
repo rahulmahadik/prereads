@@ -68,6 +68,11 @@ NLB_BASE: str = os.getenv("NLB_BASE", "https://openweb.nlb.gov.sg/api/v2/Catalog
 # GetTitleDetails, GetAvailabilityInfo, GetNewTitles, GetMostCheckoutsTrendsTitles.
 NLB_TRENDS_PATH: str = os.getenv("NLB_TRENDS_PATH", "GetMostCheckoutsTrendsTitles").strip("/")
 NLB_TRENDS_DURATION: str = os.getenv("NLB_TRENDS_DURATION", "past30days")
+# NLB's limits for this key: 1 request a second, 15 a minute, across the whole app. A call that
+# would have to wait longer than NLB_MAX_WAIT seconds is skipped (the caller falls back), not queued.
+NLB_RATE_PER_SECOND: int = int(os.getenv("NLB_RATE_PER_SECOND", "1"))
+NLB_RATE_PER_MINUTE: int = int(os.getenv("NLB_RATE_PER_MINUTE", "15"))
+NLB_MAX_WAIT: float = float(os.getenv("NLB_MAX_WAIT", "2"))
 
 OPENLIBRARY_BASE: str = "https://openlibrary.org"
 
@@ -90,6 +95,7 @@ CACHE_DIR: Path = DATA_DIR / "cache"
 ROUTES_DIR: Path = CACHE_DIR / "routes"
 ROUTES_DIR.mkdir(parents=True, exist_ok=True)
 NLB_DATA_DIR: Path = DATA_DIR / "nlb"       # derived NLB open data (scripts/fetch_nlb_datasets.py)
+NLB_CACHE_DIR: Path = CACHE_DIR / "nlb"     # Catalogue API responses (TTL per endpoint; see catalog.NLBClient)
 
 HTTP_TIMEOUT: float = float(os.getenv("HTTP_TIMEOUT", "12"))
 

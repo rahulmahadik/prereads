@@ -229,6 +229,7 @@ backend/data/models/
 backend/data/cache/digital/
 backend/data/cache/embeddings/
 backend/data/cache/enrich/
+backend/data/cache/nlb/
 backend/data/cache/online/
 backend/data/cache/reading_age/
 backend/data/cache/rerank/

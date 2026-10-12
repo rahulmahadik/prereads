@@ -9,11 +9,14 @@ services.discover, api/routes_paths). enrich() fills missing metadata from integ
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import re
+import threading
 import time
-from typing import Any, Optional
+from collections import deque
+from typing import Any, Callable, Optional
 
 import httpx
 
@@ -48,6 +51,40 @@ def _clean_isbn(raw: Any) -> Optional[str]:
 
 
 # --------------------------------------------------------------------------- NLB
+class RateLimiter:
+    """At most `per_second` calls in any second and `per_minute` in any minute, shared by every
+    thread. Slots are reserved under the lock, so concurrent callers queue in order.
+    `margin` widens both windows: NLB counts when a request arrives, which drifts from when it
+    was sent (connection set-up), and a call exactly 1.0 s after the last one got a 429."""
+
+    def __init__(self, per_second: int, per_minute: int, margin: float = 0.0,
+                 clock: Callable[[], float] = time.monotonic, sleep: Callable[[float], None] = time.sleep) -> None:
+        self.per_second, self.per_minute, self.margin = per_second, per_minute, margin
+        self.clock, self.sleep = clock, sleep
+        self.slots: deque[float] = deque(maxlen=max(per_second, per_minute))   # reserved send times, ascending
+        self.lock = threading.Lock()
+
+    def acquire(self, max_wait: float) -> bool:
+        """Wait for a slot and take it; False (taking nothing) when the wait would exceed max_wait."""
+        with self.lock:
+            now = self.clock()
+            at = now
+            if len(self.slots) >= self.per_second:
+                at = max(at, self.slots[-self.per_second] + 1.0 + self.margin)
+            if len(self.slots) >= self.per_minute:
+                at = max(at, self.slots[-self.per_minute] + 60.0 + self.margin)
+            if at - now > max_wait:
+                return False
+            self.slots.append(at)
+        if at > now:
+            self.sleep(at - now)
+        return True
+
+
+# How long each endpoint's answer stays good: shelf status moves quickly, trends daily, records rarely.
+_NLB_TTL = {"GetAvailabilityInfo": 15 * 60, "trends": 24 * 3600, "default": 7 * 24 * 3600}
+
+
 class NLBClient:
     def __init__(self) -> None:
         self.base = config.NLB_BASE
@@ -56,33 +93,91 @@ class NLBClient:
             "X-App-Code": config.NLB_APP_CODE,
             "Accept": "application/json",
         }
+        self.limiter = RateLimiter(config.NLB_RATE_PER_SECOND, config.NLB_RATE_PER_MINUTE, margin=0.5)
+        self.cooldown_until = 0.0      # set by a 429: no calls at all until then
+        self._mem: dict[str, tuple[float, Optional[dict]]] = {}
+        self._http: Optional[httpx.Client] = None   # one kept-alive connection: steadier timing, faster calls
+
+    def _send(self, path: str, params: dict) -> httpx.Response:
+        if self._http is None:
+            self._http = httpx.Client(headers=self.headers, timeout=config.HTTP_TIMEOUT)
+        return self._http.get(f"{self.base}/{path}", params=params)
 
     def enabled(self) -> bool:
         return config.nlb_enabled()
 
+    @staticmethod
+    def _ttl(path: str) -> int:
+        if path == config.NLB_TRENDS_PATH:
+            return _NLB_TTL["trends"]
+        return _NLB_TTL.get(path, _NLB_TTL["default"])
+
+    def _cached(self, key: str, path: str) -> tuple[bool, Optional[dict]]:
+        """(hit, data) from memory, then disk. A cached None means NLB had no records."""
+        now = time.time()
+        if key in self._mem and now - self._mem[key][0] < self._ttl(path):
+            return True, self._mem[key][1]
+        f = config.NLB_CACHE_DIR / f"{key}.json"
+        try:
+            rec = json.loads(f.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            return False, None
+        if now - rec.get("t", 0) >= self._ttl(path):
+            return False, None
+        self._mem[key] = (rec["t"], rec.get("data"))
+        return True, rec.get("data")
+
+    def _store(self, key: str, path: str, data: Optional[dict]) -> None:
+        t = time.time()
+        self._mem[key] = (t, data)
+        try:
+            config.NLB_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+            (config.NLB_CACHE_DIR / f"{key}.json").write_text(json.dumps({"t": t, "path": path, "data": data}), encoding="utf-8")
+        except OSError as exc:
+            log.warning("NLB cache write failed: %s", exc)
+
     def _get(self, path: str, **params) -> Optional[dict]:
-        """GET with a small backoff on 429 (NLB rate-limits bursts)."""
+        """Cached GET within NLB's rate limits. Never retries: a retry spends the same small budget.
+        None for "no records" (cached) and for any failure or skipped call (not cached)."""
         if not self.enabled():
             return None
-        for attempt in range(3):
+        key = hashlib.sha1(json.dumps([path, sorted(params.items())], default=str).encode()).hexdigest()
+        hit, data = self._cached(key, path)
+        if hit:
+            return data
+        pause = self.cooldown_until - time.monotonic()
+        if pause > config.NLB_MAX_WAIT:
+            return None
+        if pause > 0:
+            time.sleep(pause)                    # a short 429 pause (Retry-After: 1) is waited out
+        if not self.limiter.acquire(config.NLB_MAX_WAIT):
+            log.info("NLB %s skipped: over %s/min, falling back", path, config.NLB_RATE_PER_MINUTE)
+            return None
+        try:
+            r = self._send(path, params)
+        except Exception as exc:  # noqa: BLE001
+            log.warning("NLB %s failed: %s", path, exc)
+            return None
+        if r.status_code == 429:
             try:
-                r = httpx.get(f"{self.base}/{path}", params=params, headers=self.headers, timeout=config.HTTP_TIMEOUT)
-            except Exception as exc:  # noqa: BLE001
-                log.warning("NLB %s failed: %s", path, exc)
-                return None
-            if r.status_code == 429:
-                time.sleep(0.8 * (2 ** attempt))
-                continue
-            if r.status_code == 404:
-                return None                      # NLB uses 404 for "no records"
-            if r.status_code != 200:
-                log.warning("NLB %s -> %s %s", path, r.status_code, r.text[:200])
-                return None
-            try:
-                return r.json()
+                wait = float(r.headers.get("Retry-After", 60))
             except ValueError:
-                return None
-        return None
+                wait = 60.0
+            self.cooldown_until = time.monotonic() + wait
+            log.warning("NLB rate limit hit; pausing NLB calls for %.0f s", wait)
+            return None
+        if r.status_code == 404:
+            self._store(key, path, None)         # NLB uses 404 for "no records"
+            return None
+        if r.status_code != 200:
+            log.warning("NLB %s -> %s %s", path, r.status_code, r.text[:200])
+            return None
+        try:
+            data = r.json()
+        except ValueError:
+            return None
+        self._store(key, path, data)
+        return data
 
     def search(self, title: str, author: str = "", limit: int = 5) -> list[dict]:
         """GetTitles ANDs Title/Author/ISBN/Subject/Keywords; SearchTitles is free text."""
