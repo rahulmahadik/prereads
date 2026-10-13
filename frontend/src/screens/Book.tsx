@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Footer from "../components/Footer";
 import { api } from "../api";
 import Cover from "../components/Cover";
 import ReadinessMeter from "../components/ReadinessMeter";
@@ -388,7 +389,7 @@ export default function Book({ id, title, author, stopId, at }: { id: string; ti
         </button>
       </div>
       {reading && access?.gid ? <SampleReader gutenbergId={access.gid} onClose={() => setReading(false)} /> : null}
-      <footer className="footer">{t("home.footer")}</footer>
+      <Footer />
 
       <Sheet open={ask} title={t("book.askTitle")} onClose={() => setAsk(false)}>
         <div className="chip-row">

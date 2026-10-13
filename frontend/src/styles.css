@@ -2472,3 +2472,10 @@ body:has(.sheet-backdrop) .chat-fab, body:has(.reader) .chat-fab, body:has(.wf-f
 .not-found p:last-child { margin-bottom: 0; }
 .not-found .error { margin-bottom: 8px; }
 .not-found button { margin-top: 10px; }
+
+/* NLB credit and sources (components/Footer.tsx) */
+.footer p { margin: 0 0 6px; }
+.footer p:last-child { margin-bottom: 0; }
+.footer a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.footer .footer-credit { font-weight: 700; color: var(--ink); }
+.footer .footer-sources { font-size: calc(var(--fs) * 0.82); }

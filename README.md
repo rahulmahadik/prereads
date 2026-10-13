@@ -61,15 +61,20 @@ Voice (optional): `backend/.venv/bin/pip install -r backend/requirements-optiona
 Useful: `python3 scripts/setup.py doctor` (checks everything), `make test` (backend + frontend tests), `make eval` (audits every cached path), `make warmup` (primes caches), `bash scripts/tunnel.sh quick` (share a public link).
 
 ## Data sources
-- Catalogue checks, descriptions and Dewey classes: Open Library.
-- Library locations and NLB's yearly loan totals: NLB open data (data.gov.sg), refreshed daily. Opening hours: NLB's library pages.
-- eBook and audiobook copies: NLB's OverDrive catalogue. Public-domain texts: Project Gutenberg.
-- Per-branch copies, call numbers and queues: NLB Catalogue v2 when `NLB_API_KEY` and `NLB_APP_CODE` are set, otherwise a built-in table. Pick the source with `DATA_SOURCE=auto|demo|dataset|api` in `.env` or in Settings.
+**Data provided by the National Library Board, Singapore (NLB)** ([NLB Labs](https://www.nlb.gov.sg/main/partner-us/contribute-and-create-with-us/NLBLabs)). The NLB datasets and APIs PreReads uses:
+
+- [Libraries](https://data.gov.sg/datasets/d_27b8dae65d9ca1539e14d09578b17cbf/view) (data.gov.sg, `d_27b8dae65d9ca1539e14d09578b17cbf`): library names and locations.
+- [National Library Board Library Reach Index, Collections And Loans, Annual](https://data.gov.sg/datasets/d_bf36da418f88e5485aff69079694ecef/view) (data.gov.sg, `d_bf36da418f88e5485aff69079694ecef`): yearly loan totals, refreshed daily.
+- [NLB library pages](https://www.nlb.gov.sg/main/visit-us/our-libraries-and-locations): opening hours.
+- [NLB's eBook catalogue](https://nlb.overdrive.com) (OverDrive/Libby): live eBook and audiobook copies.
+- NLB Catalogue API v2 ([NLB Labs](https://www.nlb.gov.sg/main/partner-us/contribute-and-create-with-us/NLBLabs)): per-branch copies, call numbers and queues when `NLB_API_KEY` and `NLB_APP_CODE` are set; otherwise a built-in table. Pick the source with `DATA_SOURCE=auto|demo|dataset|api` in `.env` or in Settings.
+
+Also: catalogue checks, descriptions and Dewey classes from Open Library; public-domain texts from Project Gutenberg.
 
 Full guide (setup, modes, API, adding titles, troubleshooting): [`docs/GUIDE.md`](docs/GUIDE.md).
 
 ## Credits
-Open Library (CC0), data.gov.sg (Singapore Open Data Licence), NLB's public OverDrive catalogue, Project Gutenberg, Ollama and the open models above, faster-whisper, Kokoro, and Google Fonts (Atkinson Hyperlegible, Fraunces, Noto Sans SC, Noto Sans Tamil; SIL OFL).
+Data provided by the National Library Board, Singapore (NLB), via data.gov.sg (Singapore Open Data Licence), NLB's library pages and NLB's public OverDrive catalogue; Open Library (CC0), Project Gutenberg, Ollama and the open models above, faster-whisper, Kokoro, and Google Fonts (Atkinson Hyperlegible, Fraunces, Noto Sans SC, Noto Sans Tamil; SIL OFL).
 
 ## License
 [MIT](LICENSE)

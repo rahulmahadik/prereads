@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Footer from "../components/Footer";
 import { api } from "../api";
 import Cover from "../components/Cover";
 import Discover from "../components/Discover";
@@ -337,7 +338,7 @@ export default function Home({ senior, onSenior }: { senior: boolean; onSenior: 
         </section>
       )}
 
-      <footer className="footer">{t("home.footer")}</footer>
+      <Footer />
     </main>
   );
 }
