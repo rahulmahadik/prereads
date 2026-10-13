@@ -1,0 +1,241 @@
+{
+  "target_id": "9780143333166",
+  "stops": [
+    {
+      "role": "target",
+      "order": 0,
+      "book": {
+        "id": "9780143333166",
+        "title": "The Magic of the Lost Temple",
+        "author": "Sudha Murti",
+        "isbn": "9780143333166",
+        "brn": null,
+        "year": 2015,
+        "pages": 164,
+        "ddc": null,
+        "subjects": [
+          "Country life",
+          "Juvenile fiction",
+          "English literature"
+        ],
+        "summary": "",
+        "cover_url": "https://covers.openlibrary.org/b/id/8775980-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 1,
+        "hours": 2.5,
+        "assumed_concepts": [
+          "fantasy tropes",
+          "temple mythology",
+          "adventure",
+          "friendship",
+          "courage"
+        ],
+        "style_tags": [],
+        "one_line": "A light, adventurous read that takes you on a magical journey through a lost temple—perfect for anyone looking for a quick escape."
+      },
+      "why": "The book you asked about.",
+      "confidence": 1.0,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 001.4 MUR",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 001.4 MUR",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 001.4 MUR",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 001.4 MUR",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 001.4 MUR",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 001.4 MUR",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 001.4 MUR",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library",
+          "Bukit Batok Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    },
+    {
+      "role": "after",
+      "order": 1,
+      "book": {
+        "id": "9780008514440",
+        "title": "The Jungle Book",
+        "author": "Rudyard Kipling",
+        "isbn": "9780008514440",
+        "brn": null,
+        "year": 1893,
+        "pages": 192,
+        "ddc": "082.1",
+        "subjects": [
+          "Jungles",
+          "Fiction",
+          "Juvenile fiction",
+          "Animals",
+          "Romans, nouvelles, etc. pour la jeunesse",
+          "Novela juvenil",
+          "Selvas",
+          "Animales",
+          "Jungle animals",
+          "Mowgli (Fictitious character)",
+          "Boys",
+          "Short stories",
+          "Feral children",
+          "English Adventure stories",
+          "Children's stories, English"
+        ],
+        "summary": "The adventures of Mowgli, a man-child raised by wolves in the jungle, have captured the imaginations not just of children, but of all readers, for generations.",
+        "cover_url": "https://covers.openlibrary.org/b/id/3344204-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 1,
+        "hours": 4.0,
+        "assumed_concepts": [
+          "Jungle",
+          "Animals",
+          "Adventure",
+          "Childhood",
+          "Mythical stories"
+        ],
+        "style_tags": [],
+        "one_line": "A timeless adventure that follows a young boy raised by wolves as he navigates the jungle’s wonders and dangers—perfect for readers of all ages."
+      },
+      "why": "It continues the exploration of Indian settings and folklore, deepening the cultural backdrop that readers of a temple adventure might enjoy.",
+      "confidence": 0.8,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 082.1 KIP",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 082.1 KIP",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 082.1 KIP",
+          "available": 3,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 082.1 KIP",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 082.1 KIP",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 082.1 KIP",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 082.1 KIP",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Jurong West Public Library",
+          "Tampines Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    }
+  ],
+  "generated_at": "2026-10-12T06:51:11.354927+00:00",
+  "engine": "llm",
+  "notes": [
+    "Left off: The Enchanted Castle could not be found in the catalogue.",
+    "Left off: The Secret Garden is at a similar level to your book, so it need not come first.",
+    "Left off: A day with the little prince is not closely enough related to your book.",
+    "Left off: Peter Pan could not be found in the catalogue.",
+    "Left off: The Tale of Despereaux is at a similar level to your book, so it need not come first.",
+    "Left off: Charlie and the Chocolate Factory is not easier than your book."
+  ]
+}

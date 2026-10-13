@@ -1,0 +1,117 @@
+{
+  "target_id": "9780143333623",
+  "stops": [
+    {
+      "role": "target",
+      "order": 0,
+      "book": {
+        "id": "9780143333623",
+        "title": "Grandma's Bag of Stories",
+        "author": "Sudha Murthy",
+        "isbn": "9780143333623",
+        "brn": null,
+        "year": 2015,
+        "pages": 192,
+        "ddc": null,
+        "subjects": [],
+        "summary": "",
+        "cover_url": "https://covers.openlibrary.org/b/id/13189254-M.jpg",
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 1,
+        "hours": 4.0,
+        "assumed_concepts": [
+          "short stories",
+          "Indian culture",
+          "family values",
+          "moral lessons"
+        ],
+        "style_tags": [],
+        "one_line": "A gentle, heartwarming collection of short stories that celebrate family, culture, and kindness—perfect for a relaxed read."
+      },
+      "why": "The book you asked about.",
+      "confidence": 1.0,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 001.4 MUR",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Jurong West Public Library",
+          "branch_code": "JWPL",
+          "call_number": "English 001.4 MUR",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 001.4 MUR",
+          "available": 2,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 001.4 MUR",
+          "available": 1,
+          "total": 3,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 001.4 MUR",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 001.4 MUR",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 001.4 MUR",
+          "available": 0,
+          "total": 2,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bishan Public Library",
+          "Woodlands Regional Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    }
+  ],
+  "generated_at": "2026-10-12T06:48:10.281149+00:00",
+  "engine": "llm",
+  "notes": [
+    "Left off: The Jungle Book is at a similar level to your book, so it need not come first.",
+    "Left off: Aesop's Fables is at a similar level to your book, so it need not come first.",
+    "Left off: The Giving Tree is at a similar level to your book, so it need not come first.",
+    "Left off: The Tale of Peter Rabbit is not closely enough related to your book.",
+    "Left off: The Classic Tale of the Velveteen Rabbit is at a similar level to your book, so it need not come first.",
+    "Left off: A day with the little prince is not easier than your book."
+  ]
+}

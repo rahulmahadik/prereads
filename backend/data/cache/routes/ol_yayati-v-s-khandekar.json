@@ -1,0 +1,117 @@
+{
+  "target_id": "ol:yayati-v-s-khandekar",
+  "stops": [
+    {
+      "role": "target",
+      "order": 0,
+      "book": {
+        "id": "ol:yayati-v-s-khandekar",
+        "title": "Yayati",
+        "author": "V.S Khandekar",
+        "isbn": null,
+        "brn": null,
+        "year": 1978,
+        "pages": 251,
+        "ddc": null,
+        "subjects": [],
+        "summary": "",
+        "cover_url": null,
+        "reservations": 0,
+        "audience": [],
+        "source": "openlibrary",
+        "field_sources": {}
+      },
+      "readiness": {
+        "level": 3,
+        "hours": 9.0,
+        "assumed_concepts": [
+          "Indian mythology",
+          "Marathi literature",
+          "Sanskrit",
+          "Epic tales",
+          "Mythic retellings"
+        ],
+        "style_tags": [],
+        "one_line": "A beautifully crafted retelling of the ancient myth of King Yayati, this novel invites readers into a world of myth, morality, and the human condition—just bring a curiosity about Indian legends and a love for literary exploration."
+      },
+      "why": "The book you asked about.",
+      "confidence": 1.0,
+      "availability": [
+        {
+          "branch": "Bishan Public Library",
+          "branch_code": "BIPL",
+          "call_number": "English 001.4 KHA",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Tampines Regional Library",
+          "branch_code": "TRL",
+          "call_number": "English 001.4 KHA",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Woodlands Regional Library",
+          "branch_code": "WRL",
+          "call_number": "English 001.4 KHA",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Central Public Library",
+          "branch_code": "CLPL",
+          "call_number": "English 001.4 KHA",
+          "available": 1,
+          "total": 1,
+          "demo": true
+        },
+        {
+          "branch": "Punggol Regional Library",
+          "branch_code": "PRL",
+          "call_number": "English 001.4 KHA",
+          "available": 1,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Bukit Batok Library",
+          "branch_code": "BBPL",
+          "call_number": "English 001.4 KHA",
+          "available": 2,
+          "total": 2,
+          "demo": true
+        },
+        {
+          "branch": "Ang Mo Kio Public Library",
+          "branch_code": "AMKPL",
+          "call_number": "English 001.4 KHA",
+          "available": 0,
+          "total": 1,
+          "demo": true
+        }
+      ],
+      "demand": {
+        "hot_branches": [
+          "Bukit Batok Library"
+        ],
+        "hidden_gem": false,
+        "reservations": 0,
+        "demo": true
+      }
+    }
+  ],
+  "generated_at": "2026-10-12T17:07:25.415534+00:00",
+  "engine": "llm",
+  "notes": [
+    "Left off: Indian Mythology: A Very Short Introduction could not be found in the catalogue.",
+    "Left off: The Bhagavad Gita: A New Translation could not be found in the catalogue.",
+    "Left off: The Ramayana could not be found in the catalogue.",
+    "Left off: The Mahabharata (abridged) could not be found in the catalogue.",
+    "Left off: The Mahabharata: A Reader’s Companion could not be found in the catalogue.",
+    "Left off: The Mahabharata could not be found in the catalogue."
+  ]
+}
