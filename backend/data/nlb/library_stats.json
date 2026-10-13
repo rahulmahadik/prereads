@@ -4,7 +4,7 @@
   "dataset": "National Library Board Library Reach Index, Collections And Loans, Annual",
   "origin": "National Library Board via SingStat table M890961",
   "licence": "Singapore Open Data Licence v1.0 (https://data.gov.sg/open-data-licence)",
-  "as_of": "2026-10-11",
+  "as_of": "2026-10-13",
   "granularity": "annual, all of NLB (no per-branch or per-title split)",
   "year": 2024,
   "values": {
