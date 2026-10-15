@@ -2,14 +2,16 @@
 
 **Search, plan and manage your library reading from a few words.**
 
+🏆 **People's Choice Award (Culture × Tech)** and **Top 4 finalist** at [Common Ground](https://luma.com/yjffwqr2), a one-day creative tech and AI makeathon in Singapore (11 October 2026), built solo among 100+ participants and 38+ teams. [All projects](https://thisisshaw-04.github.io/Common-Ground-Makeathon/).
+
 Readers spend more time finding books than reading them: searching catalogues, guessing what to read first, then hunting for the right rack. Describe what you want and PreReads finds real library books, builds *your reading path* (easier books first, then your book, then what to read next), keeps your shelf, notes and progress, and shows where each book is at your library today.
 
 - **Demo video:** https://youtu.be/q-sLmH-rzR0
-- **Live demo:** https://prereads.vitbhatti.com
 - **No-server prototype:** [`docs/index.html`](docs/index.html) (embedded data, works offline)
-- **Design:** [Figma screens and clickable prototype](https://www.figma.com/design/c5wM6zZUx2NT91NIEYwbFZ) · [architecture diagrams](https://www.figma.com/board/5TEfAaBhbQFeLO91qIPSuP)
+- **Design:** [Figma screens and clickable prototype](https://www.figma.com/design/c5wM6zZUx2NT91NIEYwbFZ) (desktop and phone) · [architecture board](https://www.figma.com/board/5TEfAaBhbQFeLO91qIPSuP)
+- **Architecture:** [diagram below](#architecture) · [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
 
-Built by Rahul Mahadik for the Common Ground makeathon (Singapore, October 2026) with open-source AI models (via Ollama) and open library data.
+Built solo by Rahul Mahadik on open data (Open Library, NLB open data on data.gov.sg, NLB's eBook catalogue, Project Gutenberg) and open-source AI models (via Ollama).
 
 | | | |
 |:---:|:---:|:---:|
@@ -17,13 +19,13 @@ Built by Rahul Mahadik for the Common Ground makeathon (Singapore, October 2026)
 | <img src="docs/screenshots/book.jpg" width="220" alt="Book page"><br>About the book and where it is | <img src="docs/screenshots/map.jpg" width="220" alt="Shelf map"><br>Walk to the shelf | <img src="docs/screenshots/chat.jpg" width="220" alt="Chat with steps"><br>Chat that shows its steps |
 
 ## What it does
-- **Find books** by describing what you want, typing a title, scanning a cover, or speaking.
-- **Your reading path**: PreReads → your book → NextReads, each with a reading level, hours and a reason. Rules are enforced in code: before-books must be easier, confidence ≥ 0.6, at most 3 before and 3 after, one author per before-path, and no book appears twice.
-- **At the library**: shelf status per branch, the same-shelf trip ("3 of your PreReads are on the same shelf (332)"), an animated walk to the bay and row, the nearest library with opening hours, reserve or waitlist links.
-- **Read or borrow digitally**: live eBook and audiobook copies from NLB's digital collection, publisher samples, and the first chapter in-app for public-domain books.
-- **Manage your reading**: My shelf, notes per book, PreReads marked as read and hours left, Meet at the book (two readers, one target), share by QR, printable A6 shelf-talkers.
-- **Ask PreReads**: a chat that streams the steps it really runs (understanding, searching, ranking, checking shelves).
-- **For everyone**: English, 中文, Bahasa Melayu and தமிழ், light, dark and reading themes, larger text, voice in and out, works offline once opened.
+- 🔎 **Find**: describe what you want, say it, scan a book cover or type a title. Real library books only, with AI picks and the reason for each. "Because you liked…" suggests similar books.
+- 🧭 **Plan**: *your reading path*. Easier PreReads first, then your book, then NextReads, each with a reading level, hours and a reason. Rules are enforced in code: before-books must be easier, confidence ≥ 0.6, at most 3 before and 3 after, one author per before-path, and no book appears twice.
+- 📍 **Go**: shelf status at your branch (available, nearest copy or waiting list), the nearest library with opening hours, reserve or waitlist links, and an animated map to the exact bay and row. Several books on one shelf? One trip ("3 of your PreReads are on the same shelf (332)").
+- 📖 **Read**: a publisher sample or the first chapter in the app (public-domain books), live eBook and audiobook copies from NLB's digital collection on Libby, and **Listen** to hear any book or path read aloud.
+- 💬 **Ask**: a chat that suggests options, streams the steps it really runs (understanding, searching, ranking, checking shelves) and remembers what you said. Ask in any language and get English books.
+- ❤️ **Keep**: My shelf with notes and progress (PreReads marked as read, hours left), share a path by QR code, Meet at the book (read it with a friend), printable A6 shelf cards.
+- 🌏 **For everyone**: English, 中文, Bahasa Melayu and தமிழ் · light, dark and reading themes · larger text · voice in and out · works offline once opened · phone and desktop.
 
 ## Tech stack
 | Layer | Technology |
@@ -34,7 +36,7 @@ Built by Rahul Mahadik for the Common Ground makeathon (Singapore, October 2026)
 | AI (open-source models via Ollama) | gpt-oss:20b (discovery, reading levels, path judgments), gemma3:12b (chat, and fallback for any missing model), gpt-oss:120b (optional heavy model for precompute and eval), qwen2.5vl:7b (cover scan), nomic-embed-text (semantic search); optional OpenAI via `AI_PROVIDER=openai` |
 | Speech | faster-whisper large-v3-turbo (speech to text), Kokoro (voice); browser speech as fallback |
 | Data | Open Library, NLB open data and library locations (data.gov.sg), NLB's OverDrive catalogue, Project Gutenberg (Gutendex), NLB Catalogue v2 when keyed |
-| Ops | Make, `scripts/setup.py`, Cloudflare Tunnel (`scripts/tunnel.sh`) |
+| Ops | Make, `scripts/setup.py` |
 
 ```
 backend/app/
@@ -47,7 +49,20 @@ frontend/src/    screens (Home, Line, Book, Meet), components, i18n, wayfinding
 ```
 More in [`backend/app/README.md`](backend/app/README.md).
 
+## Architecture
+```mermaid
+flowchart LR
+  UI["React + TypeScript app<br/>(PWA, works offline)"] -->|"/api"| API["FastAPI<br/>paths · discover · chat · media · library"]
+  API --> SVC["Services<br/>reading-path engine · discovery · chat · reading age"]
+  SVC --> AI["Open-source AI via Ollama<br/>LLM · vision · embeddings"]
+  API --> SPEECH["Speech<br/>faster-whisper · Kokoro"]
+  SVC --> DATA["Data<br/>Open Library · NLB open data · NLB eBooks (Libby)<br/>Project Gutenberg · NLB Catalogue API"]
+  SVC --> CACHE[("Verified catalogue<br/>+ cached reading paths")]
+```
+How a reading path is built, what each layer owns, and the data flow: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
 ## Quick start
+Requirements: Python 3.11+, Node 18+, macOS or Linux. [Ollama](https://ollama.com) is optional but recommended.
 ```bash
 make setup          # Python venv + npm install (copies .env.example to .env)
 make serve          # build the UI and serve everything on http://localhost:8000
@@ -58,7 +73,11 @@ for m in gpt-oss:20b gemma3:12b qwen2.5vl:7b nomic-embed-text; do ollama pull "$
 ```
 Voice (optional): `backend/.venv/bin/pip install -r backend/requirements-optional.txt`. Without these the app still runs on cached reading paths and built-in rules.
 
-Useful: `python3 scripts/setup.py doctor` (checks everything), `make test` (backend + frontend tests), `make eval` (audits every cached path), `make warmup` (primes caches), `bash scripts/tunnel.sh quick` (share a public link).
+Keys (optional, in `.env`): `NLB_API_KEY` and `NLB_APP_CODE` for live per-branch copies from the NLB Catalogue API, `DATAGOV_API_KEY` to avoid data.gov.sg rate limits. Nothing is required to try it: `make precompute-demo` builds the cache offline.
+
+Prefer a background service? `python3 scripts/setup.py install` then `python3 scripts/setup.py start` (also `status`, `logs`, `stop`).
+
+Useful: `python3 scripts/setup.py doctor` (checks everything), `make test` (backend + frontend tests), `make eval` (audits every cached path), `make warmup` (primes caches).
 
 ## Data sources
 **Data provided by the National Library Board, Singapore (NLB)** ([NLB Labs](https://www.nlb.gov.sg/main/partner-us/contribute-and-create-with-us/NLBLabs)). The NLB datasets and APIs PreReads uses:
