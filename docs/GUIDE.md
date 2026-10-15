@@ -10,8 +10,8 @@ Design: [Figma screens with desktop and phone clickable prototypes](https://www.
 
 PreReads uses open-source AI models via Ollama.
 
-Built for the Common Ground makeathon (Design × Tech), Singapore, 11 Oct 2026, by team
-"404 Not Found". Not an NLB product. Book data comes from Open Library, library
+Built solo for the Common Ground makeathon, Singapore, 11 Oct 2026, where it won the People's
+Choice Award (Culture × Tech) and was a Top 4 finalist. Book data comes from Open Library, library
 locations and opening hours from NLB open data (data.gov.sg), and digital copies from NLB's
 OverDrive catalogue. Per-branch copies, call numbers and queues come from the NLB Catalogue
 API when its keys are set (see [Data sources](#data-sources)).
@@ -244,5 +244,5 @@ preview when downloads are blocked). To wrap it as a mobile app later, use a Web
 - Open-source models via [Ollama](https://ollama.com) (gpt-oss, Gemma 3, Qwen2.5-VL, nomic-embed-text), [faster-whisper](https://github.com/SYSTRAN/faster-whisper) and [Kokoro](https://github.com/thewh1teagle/kokoro-onnx), each under its own licence.
 - Fonts: Atkinson Hyperlegible, Fraunces, Noto Sans SC and Noto Sans Tamil from Google Fonts (SIL Open Font License).
 
-PreReads is not an NLB product.
+Data provided by the National Library Board, Singapore (NLB) ([NLB Labs](https://www.nlb.gov.sg/main/partner-us/contribute-and-create-with-us/NLBLabs)).
 
