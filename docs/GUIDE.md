@@ -5,7 +5,7 @@ The short version is in the [README](../README.md). This guide has the details: 
 **Say what you want to read. PreReads finds catalogue-verified books and the ones to read before them.**
 Your reading path shows each book's reading level, hours, the shelf status per library, and floor-plan directions to the shelf.
 
-Live demo: https://prereads.vitbhatti.com
+Demo video: https://youtu.be/q-sLmH-rzR0
 Design: [Figma screens with desktop and phone clickable prototypes](https://www.figma.com/design/c5wM6zZUx2NT91NIEYwbFZ) and [FigJam architecture diagrams](https://www.figma.com/board/5TEfAaBhbQFeLO91qIPSuP)
 
 PreReads uses open-source AI models via Ollama.
@@ -55,10 +55,10 @@ make backend   # FastAPI on :8000 with --reload
 make frontend  # Vite on :5173, proxies /api to :8000
 ```
 
-### Run and share
+### Run
 
 `scripts/setup.py` (Python stdlib only) runs the app as a background service, so you do
-not need a terminal tab for it. `scripts/tunnel.sh` puts it on the internet.
+not need a terminal tab for it.
 
 ```bash
 python3 scripts/setup.py doctor    # check Python/Node, Ollama + models, ports, optional speech packages
@@ -79,18 +79,6 @@ fallback (for example `gemma3:12b`) the app would use. A missing `gpt-oss` model
 not an error. `faster-whisper` and `kokoro-onnx` (speech) are reported as optional.
 If Ollama is not running, `start` launches `ollama serve` in the background; `stop` does not
 stop Ollama. PID and logs live in `.run/` (git-ignored).
-
-To share the running app outside your network with Cloudflare:
-
-```bash
-bash scripts/tunnel.sh quick    # no account: prints a random https://<words>.trycloudflare.com URL
-bash scripts/tunnel.sh setup    # one-time: named tunnel "prereads" + DNS prereads.vitbhatti.com
-bash scripts/tunnel.sh          # run the named tunnel (status: bash scripts/tunnel.sh status)
-```
-
-Needs `cloudflared` (`brew install cloudflare/cloudflare/cloudflared`). Override with
-`PREREADS_TUNNEL`, `PREREADS_HOSTNAME` and `PREREADS_PORT`. Anyone with the link can use the
-app, so stop the tunnel (Ctrl+C) when you are done.
 
 ## 2. Modes
 

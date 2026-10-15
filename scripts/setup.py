@@ -24,8 +24,6 @@ Files:
     .run/app.log        app output (previous run kept as .run/app.log.1)
     .run/ollama.log     output of `ollama serve` when this script started it
 
-Share it publicly: bash scripts/tunnel.sh (named tunnel) or bash scripts/tunnel.sh quick.
-
 """
 
 from __future__ import annotations
@@ -669,7 +667,6 @@ def _print_banner(url: str) -> None:
         print("   On your LAN:  not exposed (bind with PREREADS_HOST=0.0.0.0)")
     print("   Logs:         python3 scripts/setup.py logs")
     print("   Stop:         python3 scripts/setup.py stop")
-    print("   Share:        bash scripts/tunnel.sh quick")
     print("  ==========================================")
     print()
 
@@ -983,12 +980,6 @@ def cmd_doctor() -> int:
         else:
             warn(f"Port {port} ({label}) in use by another process ({describe_pid(pids[0])})")
             warnings += 1
-
-    step("share", "Sharing")
-    if which("cloudflared"):
-        ok("cloudflared found (scripts/tunnel.sh)")
-    else:
-        info("cloudflared not found (optional) — brew install cloudflare/cloudflare/cloudflared")
 
     print()
     if issues:
